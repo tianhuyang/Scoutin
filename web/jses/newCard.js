@@ -1,3 +1,12 @@
+function newCard_cancel_click(the)
+{
+    $(the).parents('.newCard_container_background').hide();
+}
+
+function contentAddNewCard()
+{
+   $('.newCard_container_background').show();
+}
 function card_eidt_description_edittable(target)
 {
 	var card_description = target.parentNode;

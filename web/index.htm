@@ -50,7 +50,7 @@
                 </td>
                 <td class="right">
                     <div class="content_bar">
-                        <table cellpadding="0" cellspacing="0"><tr><td class="content_bar_column"></td><td><div class="content_tastescout"></div></td><td class="content_bar_column"></td></tr>
+                        <table cellpadding="0" cellspacing="0"><tr><td class="content_bar_column"></td><td><a class="content_tastescout" href="/"></a></td><td class="content_bar_column"></td></tr>
                         </table>
                         <div class="content_search_image"></div>
                         <input class="content_search" type="text" name="search"></div>
@@ -76,7 +76,7 @@
                                     </tr></table>
                             </div>
                             <table cellpadding="0" cellspacing="0" class="content_header_function">
-                                <tr><td><div class="header_add pointer"><span class="content_header_add_image"></span><span class="header_add_text">Add a scout</span></div></td>
+                                <tr><td><div class="header_add pointer" onclick="contentAddNewCard()"><span class="content_header_add_image"></span><span class="header_add_text">Add a scout</span></div></td>
                                     <td><div class="text_ctr content_title_column"><div class="content_title">Los Angeles: Japanese Food</div><span class="content_title_icon"></span></div></td>
                                     <td><div class="pointer header_sort"><span class="content_header_sort_image"></span><span class="header_sort_text">Sort by date</span></div></td></tr></table>
                         </div>
@@ -143,12 +143,13 @@
                     </div>	
                 </td></tr>
         </table>
-        <div class="newCard_container_background">
+<!-- new Card begin -->        
+        <div class="newCard_container_background hidden">
 		<div class="newCard_shadow"> 
 			<div class="newCard">
 				<div class="newCard_header">
 					<p class="newCard_enter_name_label">Add a Scout:</p>
-					<div class="newCard_cancel"></div>
+					<div class="newCard_cancel" onclick="newCard_cancel_click(this)"></div>
 				</div>
 				
 				<img class="newCard_edit_image" src="images/lightning_bolt.png" onclick="newCard_edit_image(this)"/>
@@ -179,7 +180,7 @@
 			  </table>
 			  
 			  <div class="newCard_edit_description">
-			  	<div class="newCard_edit_description_prompt" onclick="card_eidt_description_edittable(this)">Enter Description & #AddTags</div>
+			  	<div class="newCard_edit_description_prompt" onclick="card_eidt_description_edittable(this)">Enter Description &amp; #AddTags</div>
 			    <textarea id="newCard_edit_description_textarea" class="newCard_edit_description_textarea"></textarea>
 			  </div>
 			  

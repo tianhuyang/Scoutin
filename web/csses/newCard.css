@@ -1,4 +1,4 @@
-* {font-family:"Myriad Pro";}
+﻿* {font-family:"Myriad Pro";}
 *{margin:0px;padding:0px;}
 .newCard_container_background
 {
@@ -6,7 +6,9 @@
 	top:0px;left:0px;
 	width:100%;
 	height:100%;
-	background-color:rgba(0,0,0,0.5);
+	background-color:black;
+	background-color:rgba(0,0,0,0.7);	
+	z-index:1;
 }
 .newCard_shadow {
   width:334px;
