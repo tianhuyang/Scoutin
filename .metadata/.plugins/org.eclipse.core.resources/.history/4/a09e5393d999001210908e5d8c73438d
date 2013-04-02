@@ -1,0 +1,11 @@
+package scoutin;
+
+import org.apache.struts.action.ActionForm;
+
+public class IndexActionForm extends ActionForm {
+
+	public IndexActionForm() {
+		// TODO Auto-generated constructor stub
+	}
+
+}

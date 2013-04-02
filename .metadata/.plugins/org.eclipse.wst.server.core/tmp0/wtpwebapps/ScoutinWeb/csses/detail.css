@@ -1,0 +1,160 @@
+.detail_content_table
+{
+	margin:0px 10px 0px 10px;
+}
+.detail_left_column
+{
+	width:267px;vertical-align:top;
+}
+.detail_left_content
+{
+	float:right;width:100%;margin-right:10px;
+}
+.detail_my_rating_lable
+{
+	margin-top:87px;
+	display:inline-block;
+	font-size:13px;
+	color:rgb(125,125,125); 
+}
+.detail_yelp_rating_lable
+{
+	display:inline-block;
+	font-size:13px;
+	color:rgb(125,125,125);
+}
+.detail_my_rating_stars
+{
+	margin-top:87px;float:right;
+}
+.detail_yelp_rating_stars
+{
+	float:right;
+}
+.detail_rating_star_red
+{
+	display:inline-block;width:22px;height:22px;background:url(../images/card/card_icons.png) -51px -75px no-repeat;
+}
+.detail_rating_star_gray
+{
+	display:inline-block;width:22px;height:22px;background:url(../images/card/card_icons.png) -3px -75px no-repeat;
+}
+.detail_rating_star_yellow
+{
+	display:inline-block;width:22px;height:22px;background:url(../images/card/card_icons.png) -51px -99px no-repeat;
+}
+.detail_rating_border
+{
+	margin:8px 0px 8px 0px;
+	border-top:1px solid rgb(154,154,154);
+}
+.detail_card_recommend
+{
+	margin:62px 0px 0px 0px;height:38px;width:100%
+}
+.detail_card_recommend_first_column
+{
+	width:38px; padding-left: 10px;
+}
+.detail_card_recommend_second_column
+{
+	padding-right: 10px;
+}
+.detail_card_recommend_image
+{
+	 background:url(../images/card/card_icons.png) -96px -24px no-repeat; width:38px;height:38px;cursor:pointer;display:inline-block;
+}	
+.detail_card_recommend_text
+{
+	color:rgb(125,125,125);font:16px "Myriad Pro"; height:38px; width:100%; border:1px solid rgb(155,154,154); border-left:none;
+}
+
+
+.detail_middle_content
+{
+	
+}
+.detail_middle_column
+{
+	width:508px;height:558px;	
+}
+.detail_title
+{
+	font:24px "Myriad Pro";color:rgb(102,102,102);
+}
+.detail_distance
+{
+	float:right;font:14px "Myriad Pro";color:rgb(241,95,97);margin:2px;
+}
+.detail_location
+{
+	width:18px;height:28px;cursor:pointer;display:inline-block;
+	background:url(../images/card/card_icons.png) -96px -72px no-repeat;
+	float:right;
+}
+.detail_image
+{
+	width:508px;
+}
+.detail_description
+{
+	font:14px "Myriad Pro";
+	color:rgb(35,31,32);
+}
+.detail_description_tag
+{
+	color:rgb(241,95,97);
+}
+
+
+.detail_right_column
+{
+	width:265px;height:558px;vertical-align:top;
+}
+.detail_right_content
+{
+	float:left;width:265px;margin:0px 15px 0px 15px;
+}
+.detail_repost
+{
+	margin-top:211px;
+}
+.detail_repost_number
+{
+	font:16px "Myriad Pro";color:rgb(241,95,97);
+}
+.detail_repost_label
+{
+	font:16px "Myriad Pro";color:rgb(35,31,32);
+}
+.detail_repost_border
+{
+	margin:8px 0px 8px 0px;border-top:1px solid rgb(154,154,154);
+}
+.detail_reposter_icon
+{
+	margin:0px 3px 0px 0px;
+}
+
+
+.detail_comment_content
+{
+	position:relative;
+}
+.detail_commenter_icon
+{
+	position:absolute;left:-50px;
+}
+.detail_comment_typing
+{
+	font:16px "Myriad Pro";color:rgb(125,125,125);width:508px;height:82px;vertical-align:top;
+}
+.detail_comment
+{
+	width:508px;height:82px;
+}
+.detail_comment_text
+{
+	font:16px "Myriad Pro";
+	color:rgb(35,31,32);
+}

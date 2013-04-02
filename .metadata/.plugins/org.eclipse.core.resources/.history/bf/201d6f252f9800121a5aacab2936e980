@@ -1,0 +1,23 @@
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"%>
+<% %>
+    <%!
+    static InitialContext ctx;
+    static{
+    	Properties jndiProps = new Properties();
+        jndiProps.put(Context.INITIAL_CONTEXT_FACTORY, "org.jboss.naming.remote.client.InitialContextFactory");
+        jndiProps.put(Context.PROVIDER_URL,"remote://localhost:4447");// create a context passing these properties
+    	Context ctx = new InitialContext(jndiProps);
+    }
+     
+    %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h1>Hello World!</h1>
+</body>
+</html>

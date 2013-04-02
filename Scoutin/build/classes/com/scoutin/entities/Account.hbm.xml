@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Apr 1, 2013 7:11:35 PM by Hibernate Tools 4.0.0 -->
+<hibernate-mapping>
+    <class name="com.scoutin.entities.Account" table="ACCOUNT" catalog="Scoutin">
+        <id name="accountId" type="int">
+            <column name="ACCOUNT_ID" />
+            <generator class="assigned" />
+        </id>
+        <property name="password" type="string">
+            <column name="PASSWORD" length="15" not-null="true" />
+        </property>
+        <property name="email" type="string">
+            <column name="EMAIL" />
+        </property>
+        <property name="username" type="string">
+            <column name="USERNAME" length="35" />
+        </property>
+        <property name="facebookId" type="string">
+            <column name="FACEBOOK_ID" length="20" />
+        </property>
+        <property name="twitterId" type="string">
+            <column name="TWITTER_ID" length="20" />
+        </property>
+        <property name="createdTime" type="timestamp">
+            <column name="CREATED_TIME" length="19" />
+        </property>
+        <property name="updatedTime" type="timestamp">
+            <column name="UPDATED_TIME" length="19" />
+        </property>
+        <set name="albums" table="ALBUM" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="ACCOUNT_ID" not-null="true" />
+            </key>
+            <one-to-many class="com.scoutin.entities.Album" />
+        </set>
+        <one-to-one name="stat" class="com.scoutin.entities.Stat"></one-to-one>
+        <one-to-one name="profile" class="com.scoutin.entities.Profile"></one-to-one>
+        <set name="followersForFollowingId" table="FOLLOWER" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="FOLLOWING_ID" not-null="true" />
+            </key>
+            <one-to-many class="com.scoutin.entities.Follower" />
+        </set>
+        <set name="cards" table="CARDLIKES" inverse="false" lazy="true" fetch="select">
+            <key>
+                <column name="ACCOUNT_ID" not-null="true" />
+            </key>
+            <many-to-many entity-name="com.scoutin.entities.Card">
+                <column name="CARD_ID" not-null="true" />
+            </many-to-many>
+        </set>
+        <set name="cards_1" table="CARDREPOSTS" inverse="false" lazy="true" fetch="select">
+            <key>
+                <column name="ACCOUNT_ID" not-null="true" />
+            </key>
+            <many-to-many entity-name="com.scoutin.entities.Card">
+                <column name="CARD_ID" not-null="true" />
+            </many-to-many>
+        </set>
+        <set name="comments" table="COMMENT" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="ACCOUNT_ID" not-null="true" />
+            </key>
+            <one-to-many class="com.scoutin.entities.Comment" />
+        </set>
+        <set name="followersForFollowedId" table="FOLLOWER" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="FOLLOWED_ID" not-null="true" />
+            </key>
+            <one-to-many class="com.scoutin.entities.Follower" />
+        </set>
+    </class>
+</hibernate-mapping>

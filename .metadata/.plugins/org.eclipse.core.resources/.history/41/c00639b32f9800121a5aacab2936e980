@@ -1,0 +1,42 @@
+import java.util.Properties;
+
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import test1.Test1Remote;
+
+
+public class test {
+
+	public test() {
+		// TODO Auto-generated constructor stub
+	}
+
+	static InitialContext ctx;
+    static{
+    	Properties jndiProps = new Properties();
+        jndiProps.put(InitialContext.INITIAL_CONTEXT_FACTORY, "org.jboss.naming.remote.client.InitialContextFactory");
+        jndiProps.put(InitialContext.PROVIDER_URL,"remote://localhost:4447");// create a context passing these properties
+        try {
+			ctx = new InitialContext(jndiProps);
+		} catch (NamingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
+	
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		try {
+			Test1Remote test1 = (Test1Remote)ctx.lookup("");
+			System.out.println(test1.getResult());
+			
+		} catch (NamingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+}

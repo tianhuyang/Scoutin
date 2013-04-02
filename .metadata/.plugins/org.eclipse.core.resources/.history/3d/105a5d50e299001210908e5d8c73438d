@@ -1,0 +1,34 @@
+<%@ page language="java" contentType="text/html; charset=utf-8"
+	pageEncoding="utf-8"%>
+<%@ page import="test.TestRemote"%>
+<%@ page import="javax.naming.InitialContext"%>
+<%!static InitialContext ctx;
+	{
+		Properties jndiProps = new Properties();
+		jndiProps.put(InitialContext.INITIAL_CONTEXT_FACTORY,
+				"org.jboss.naming.remote.client.InitialContextFactory");
+		jndiProps.put(InitialContext.PROVIDER_URL,
+				"remote://localhost:4447");// create a context passing these properties
+		// username
+		jndiProps.put(InitialContext.SECURITY_PRINCIPAL, "user");
+		// password
+		jndiProps.put(InitialContext.SECURITY_CREDENTIALS, "12345");
+		jndiProps.put("jboss.naming.client.ejb.context", true);
+		try {
+			ctx = new InitialContext(jndiProps);
+		} catch (NamingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
+擦
+	}%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>Congratulations</h1>
+</body>
+</html>

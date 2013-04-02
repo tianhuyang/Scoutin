@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="Scoutin">
+        <wb-resource deploy-path="/" source-path="/EarContent" tag="defaultRootSource"/>
+        <dependent-module archiveName="ScoutinEJB.jar" deploy-path="/" handle="module:/resource/ScoutinEJB/ScoutinEJB">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="ScoutinWeb.war" deploy-path="/" handle="module:/resource/ScoutinWeb/ScoutinWeb">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="ScoutinConnector.rar" deploy-path="/" handle="module:/resource/ScoutinConnector/ScoutinConnector">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="ScoutinClient.jar" deploy-path="/" handle="module:/resource/ScoutinClient/ScoutinClient">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+    </wb-module>
+</project-modules>

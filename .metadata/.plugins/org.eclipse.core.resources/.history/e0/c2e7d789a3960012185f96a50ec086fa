@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Mar 25, 2013 11:41:43 PM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="Profile" table="PROFILE" catalog="Scoutin">
+        <id name="profileId" type="int">
+            <column name="PROFILE_ID" />
+            <generator class="assigned" />
+        </id>
+        <property name="firstname" type="string">
+            <column name="FIRSTNAME" length="35" />
+        </property>
+        <property name="lastname" type="string">
+            <column name="LASTNAME" length="35" />
+        </property>
+        <property name="middlename" type="string">
+            <column name="MIDDLENAME" length="35" />
+        </property>
+        <property name="sex" type="java.lang.Byte">
+            <column name="SEX" />
+        </property>
+        <property name="birthday" type="date">
+            <column name="BIRTHDAY" length="10" />
+        </property>
+        <property name="mobile" type="string">
+            <column name="MOBILE" length="20" />
+        </property>
+        <property name="createdTime" type="timestamp">
+            <column name="CREATED_TIME" length="19" />
+        </property>
+        <property name="updatedTime" type="timestamp">
+            <column name="UPDATED_TIME" length="19" />
+        </property>
+    </class>
+</hibernate-mapping>

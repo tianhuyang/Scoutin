@@ -1,0 +1,16 @@
+package scoutin;
+
+import org.apache.struts.action.ActionForm;
+
+public class IndexActionForm extends ActionForm {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public IndexActionForm() {
+		// TODO Auto-generated constructor stub
+	}
+
+}

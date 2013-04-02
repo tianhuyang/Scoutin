@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Mar 25, 2013 11:41:43 PM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="Album" table="ALBUM" catalog="Scoutin">
+        <id name="albumId" type="long">
+            <column name="ALBUM_ID" />
+            <generator class="assigned" />
+        </id>
+        <property name="accountId" type="int">
+            <column name="ACCOUNT_ID" not-null="true" />
+        </property>
+        <property name="name" type="string">
+            <column name="NAME" length="35" />
+        </property>
+        <property name="coverPath" type="string">
+            <column name="COVER_PATH" />
+        </property>
+        <property name="createdTime" type="timestamp">
+            <column name="CREATED_TIME" length="19" />
+        </property>
+        <property name="updatedTime" type="timestamp">
+            <column name="UPDATED_TIME" length="19" />
+        </property>
+        <property name="followCount" type="java.lang.Integer">
+            <column name="FOLLOW_COUNT" />
+        </property>
+    </class>
+</hibernate-mapping>

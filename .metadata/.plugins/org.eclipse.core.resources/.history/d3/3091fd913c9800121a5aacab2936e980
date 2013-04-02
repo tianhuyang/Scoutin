@@ -1,0 +1,8 @@
+package test;
+
+import javax.ejb.Stateless;
+import test.TestBean;
+
+public @Stateless class TestBeanBean implements TestBean {
+
+}

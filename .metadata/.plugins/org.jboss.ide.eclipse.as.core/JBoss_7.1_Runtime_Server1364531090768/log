@@ -1,0 +1,289 @@
+!SESSION 2013-03-28 21:24:31.197 -----------------------------------------------
+eclipse.buildId=M20120208-0800
+java.version=1.7.0_15
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.jee.product
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.eclipse.epp.package.jee.product
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842760 2013-03-28 21:59:29.998
+!MESSAGE Server Starting
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16973825 2013-03-28 21:59:30.096
+!MESSAGE Server processes have been terminated.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842760 2013-03-28 22:00:08.467
+!MESSAGE Server Starting
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842769 2013-03-28 22:00:14.531
+!MESSAGE Server Startup Succeeded
+
+!ENTRY org.jboss.ide.eclipse.as.core 0 33685505 2013-03-28 22:11:58.579
+!MESSAGE Module EnterpriseApplication published without error.
+
+!ENTRY org.jboss.ide.eclipse.as.core 0 33685505 2013-03-28 22:11:58.608
+!MESSAGE Module EnterpriseServer published without error.
+
+!ENTRY org.jboss.ide.eclipse.as.core 0 33685505 2013-03-28 22:11:58.622
+!MESSAGE Module EnterpriseServerClient published without error.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16973825 2013-03-28 22:23:55.724
+!MESSAGE Server processes have been terminated.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16973825 2013-03-28 22:23:55.738
+!MESSAGE Server processes have been terminated.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16973825 2013-03-28 22:23:55.738
+!MESSAGE Server processes have been terminated.
+
+!ENTRY org.jboss.ide.eclipse.as.core 0 33685505 2013-03-28 22:49:32.790
+!MESSAGE 5 files modified in module EnterpriseServer
+
+!ENTRY org.jboss.ide.eclipse.as.core 0 33685505 2013-03-28 22:49:32.804
+!MESSAGE Module EnterpriseServerClient published without error.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842760 2013-03-28 22:49:37.956
+!MESSAGE Server Starting
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842769 2013-03-28 22:49:43.686
+!MESSAGE Server Startup Succeeded
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842776 2013-03-28 22:58:40.525
+!MESSAGE Server shutting down
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16973825 2013-03-28 22:58:40.780
+!MESSAGE Server processes have been terminated.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16973825 2013-03-28 22:58:40.780
+!MESSAGE Server processes have been terminated.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16973825 2013-03-28 22:58:40.780
+!MESSAGE Server processes have been terminated.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842760 2013-03-28 22:58:45.918
+!MESSAGE Server Starting
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842769 2013-03-28 22:58:51.633
+!MESSAGE Server Startup Succeeded
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842776 2013-03-28 23:01:39.086
+!MESSAGE Server shutting down
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16973825 2013-03-28 23:01:39.384
+!MESSAGE Server processes have been terminated.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16973825 2013-03-28 23:01:39.384
+!MESSAGE Server processes have been terminated.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16973825 2013-03-28 23:01:39.384
+!MESSAGE Server processes have been terminated.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842760 2013-03-28 23:01:44.508
+!MESSAGE Server Starting
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842769 2013-03-28 23:01:50.362
+!MESSAGE Server Startup Succeeded
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842776 2013-03-28 23:16:40.019
+!MESSAGE Server shutting down
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16973825 2013-03-28 23:16:40.318
+!MESSAGE Server processes have been terminated.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16973825 2013-03-28 23:16:40.321
+!MESSAGE Server processes have been terminated.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16973825 2013-03-28 23:16:40.325
+!MESSAGE Server processes have been terminated.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842760 2013-03-28 23:16:45.424
+!MESSAGE Server Starting
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842769 2013-03-28 23:16:51.145
+!MESSAGE Server Startup Succeeded
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842776 2013-03-28 23:40:16.962
+!MESSAGE Server shutting down
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16973825 2013-03-28 23:40:17.238
+!MESSAGE Server processes have been terminated.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16973825 2013-03-28 23:40:17.246
+!MESSAGE Server processes have been terminated.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16973825 2013-03-28 23:40:17.250
+!MESSAGE Server processes have been terminated.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842760 2013-03-28 23:40:57.159
+!MESSAGE Server Starting
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842769 2013-03-28 23:41:02.872
+!MESSAGE Server Startup Succeeded
+
+!ENTRY org.jboss.ide.eclipse.as.core 0 33685505 2013-03-28 23:47:50.452
+!MESSAGE 2 files modified in module EnterpriseServer
+
+!ENTRY org.jboss.ide.eclipse.as.core 0 33685505 2013-03-28 23:48:20.799
+!MESSAGE 3 files modified in module EnterpriseServer
+
+!ENTRY org.jboss.ide.eclipse.as.core 0 33685505 2013-03-28 23:48:40.158
+!MESSAGE 1 files modified in module EnterpriseServer
+
+!ENTRY org.jboss.ide.eclipse.as.core 0 33685505 2013-03-28 23:49:24.347
+!MESSAGE 2 files modified in module EnterpriseServer
+
+!ENTRY org.jboss.ide.eclipse.as.core 0 33685505 2013-03-28 23:49:24.372
+!MESSAGE Module EnterpriseServerClient published without error.
+
+!ENTRY org.jboss.ide.eclipse.as.core 0 33685505 2013-03-28 23:49:42.025
+!MESSAGE Module EnterpriseServerClient published without error.
+
+!ENTRY org.jboss.ide.eclipse.as.core 0 33685505 2013-03-28 23:49:58.204
+!MESSAGE 1 files modified in module EnterpriseServer
+
+!ENTRY org.jboss.ide.eclipse.as.core 0 33685505 2013-03-28 23:49:58.219
+!MESSAGE Module EnterpriseServerClient published without error.
+
+!ENTRY org.jboss.ide.eclipse.as.core 0 33685505 2013-03-28 23:50:24.041
+!MESSAGE 1 files modified in module EnterpriseServer
+
+!ENTRY org.jboss.ide.eclipse.as.core 0 33685505 2013-03-28 23:53:44.658
+!MESSAGE 3 files modified in module EnterpriseServer
+
+!ENTRY org.jboss.ide.eclipse.as.core 0 33685505 2013-03-28 23:53:44.680
+!MESSAGE Module EnterpriseServerClient published without error.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16973825 2013-03-29 00:12:15.013
+!MESSAGE Server processes have been terminated.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16973825 2013-03-29 00:12:15.016
+!MESSAGE Server processes have been terminated.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16973825 2013-03-29 00:12:15.017
+!MESSAGE Server processes have been terminated.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842760 2013-03-29 00:14:07.104
+!MESSAGE Server Starting
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842769 2013-03-29 00:14:12.954
+!MESSAGE Server Startup Succeeded
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842776 2013-03-29 00:24:39.139
+!MESSAGE Server shutting down
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16973825 2013-03-29 00:24:39.433
+!MESSAGE Server processes have been terminated.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16973825 2013-03-29 00:24:39.440
+!MESSAGE Server processes have been terminated.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16973825 2013-03-29 00:24:39.443
+!MESSAGE Server processes have been terminated.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842760 2013-03-29 00:24:44.549
+!MESSAGE Server Starting
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842769 2013-03-29 00:24:50.369
+!MESSAGE Server Startup Succeeded
+
+!ENTRY org.jboss.ide.eclipse.as.core 0 33685505 2013-03-29 00:57:21.467
+!MESSAGE Module EnterpriseServerClient published without error.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842776 2013-03-29 01:40:32.995
+!MESSAGE Server shutting down
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16973825 2013-03-29 01:40:33.235
+!MESSAGE Server processes have been terminated.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16973825 2013-03-29 01:40:33.237
+!MESSAGE Server processes have been terminated.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16973825 2013-03-29 01:40:33.239
+!MESSAGE Server processes have been terminated.
+!SESSION 2013-03-29 01:43:01.511 -----------------------------------------------
+eclipse.buildId=M20120208-0800
+java.version=1.7.0_15
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.jee.product
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.eclipse.epp.package.jee.product
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842760 2013-03-29 02:15:11.168
+!MESSAGE Server Starting
+
+!ENTRY org.jboss.ide.eclipse.as.core 0 33685505 2013-03-29 02:15:11.329
+!MESSAGE Module EnterpriseApplication published without error.
+
+!ENTRY org.jboss.ide.eclipse.as.core 0 33685505 2013-03-29 02:15:11.345
+!MESSAGE 3 files modified in module EnterpriseServer
+
+!ENTRY org.jboss.ide.eclipse.as.core 0 33685505 2013-03-29 02:15:11.360
+!MESSAGE 2 files modified in module EnterpriseServerClient
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842769 2013-03-29 02:15:17.190
+!MESSAGE Server Startup Succeeded
+
+!ENTRY org.jboss.ide.eclipse.as.core 0 33685505 2013-03-29 02:28:18.042
+!MESSAGE 2 files modified in module EnterpriseServer
+
+!ENTRY org.jboss.ide.eclipse.as.core 0 33685505 2013-03-29 02:28:18.059
+!MESSAGE Module EnterpriseServerClient published without error.
+!SESSION 2013-03-31 00:21:56.356 -----------------------------------------------
+eclipse.buildId=M20120208-0800
+java.version=1.7.0_15
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.jee.product
+Command-line arguments:  -data f:\eclipse\JEE -os win32 -ws win32 -arch x86_64 -product org.eclipse.epp.package.jee.product
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842760 2013-03-31 01:54:08.181
+!MESSAGE Server Starting
+
+!ENTRY org.jboss.ide.eclipse.as.core 0 33685505 2013-03-31 01:54:09.149
+!MESSAGE Module ScoutinEAR published without error.
+
+!ENTRY org.jboss.ide.eclipse.as.core 0 33685505 2013-03-31 01:54:09.166
+!MESSAGE Module Scoutin published without error.
+
+!ENTRY org.jboss.ide.eclipse.as.core 0 33685505 2013-03-31 01:54:09.271
+!MESSAGE Module ScoutinClient published without error.
+
+!ENTRY unknown 0 0 2013-03-31 01:54:09.287
+!MESSAGE OK
+
+!ENTRY unknown 0 0 2013-03-31 01:54:09.295
+!MESSAGE OK
+
+!ENTRY unknown 0 0 2013-03-31 01:54:09.303
+!MESSAGE OK
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842769 2013-03-31 01:54:26.130
+!MESSAGE Server Startup Succeeded
+
+!ENTRY org.jboss.ide.eclipse.as.core 0 33685505 2013-03-31 02:16:28.218
+!MESSAGE 4 files modified in module Scoutin
+
+!ENTRY org.jboss.ide.eclipse.as.core 0 33685505 2013-03-31 02:16:28.246
+!MESSAGE Module ScoutinClient published without error.
+!SESSION 2013-04-01 22:45:29.692 -----------------------------------------------
+eclipse.buildId=M20120208-0800
+java.version=1.7.0_15
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.jee.product
+Command-line arguments:  -data f:\eclipse\JEE -os win32 -ws win32 -arch x86_64 -product org.eclipse.epp.package.jee.product
+
+!ENTRY org.jboss.ide.eclipse.as.core 0 33685505 2013-04-01 22:57:03.560
+!MESSAGE Module ScoutinEAR published without error.
+
+!ENTRY org.jboss.ide.eclipse.as.core 0 33685505 2013-04-01 22:57:03.671
+!MESSAGE Module Scoutin published without error.
+
+!ENTRY org.jboss.ide.eclipse.as.core 0 33685505 2013-04-01 22:57:03.685
+!MESSAGE Module ScoutinClient published without error.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842760 2013-04-01 22:57:10.012
+!MESSAGE Server Starting
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842769 2013-04-01 22:57:27.366
+!MESSAGE Server Startup Succeeded
