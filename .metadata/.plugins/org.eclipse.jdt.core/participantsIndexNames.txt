@@ -1,3 +1,0 @@
-INDEX VERSION 1.126
-D:\Eclipse_indigo\workspace\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\2814336594.index
-\ScoutinWeb\src

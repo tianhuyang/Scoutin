@@ -1,5 +1,5 @@
 *.class
-/build
+/.metadata
 
 # Package Files #
 *.war
