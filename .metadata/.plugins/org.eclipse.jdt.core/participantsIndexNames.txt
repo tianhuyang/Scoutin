@@ -1,9 +1,3 @@
 INDEX VERSION 1.126
-F:\eclipse\JEE\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\648987399.index
-\test\src
-F:\eclipse\JEE\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\3271193799.index
-\test
-F:\eclipse\JEE\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\2814336594.index
+D:\Eclipse_indigo\workspace\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\2814336594.index
 \ScoutinWeb\src
-F:\eclipse\JEE\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\3521371129.index
-\EJBTest\src

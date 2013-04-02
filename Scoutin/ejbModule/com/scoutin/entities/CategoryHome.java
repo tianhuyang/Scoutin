@@ -1,6 +1,6 @@
 package com.scoutin.entities;
 
-// Generated Apr 1, 2013 7:11:35 PM by Hibernate Tools 4.0.0
+// Generated Apr 1, 2013 6:45:43 PM by Hibernate Tools 4.0.0
 
 import java.util.List;
 import javax.naming.InitialContext;
