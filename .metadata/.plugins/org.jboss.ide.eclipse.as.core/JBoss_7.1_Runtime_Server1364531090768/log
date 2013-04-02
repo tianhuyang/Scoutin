@@ -315,3 +315,25 @@ Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.eclipse.e
 
 !ENTRY org.jboss.ide.eclipse.as.core 0 33685505 2013-04-02 00:31:59.142
 !MESSAGE Module ScoutinClient published without error.
+!SESSION 2013-04-02 00:46:42.646 -----------------------------------------------
+eclipse.buildId=M20120208-0800
+java.version=1.7.0_15
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.jee.product
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.eclipse.epp.package.jee.product
+
+!ENTRY org.jboss.ide.eclipse.as.core 0 33685505 2013-04-02 01:03:49.246
+!MESSAGE Module ScoutinEAR published without error.
+
+!ENTRY org.jboss.ide.eclipse.as.core 0 33685505 2013-04-02 01:03:49.351
+!MESSAGE Module Scoutin published without error.
+
+!ENTRY org.jboss.ide.eclipse.as.core 0 33685505 2013-04-02 01:03:49.366
+!MESSAGE Module ScoutinClient published without error.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842760 2013-04-02 01:03:54.944
+!MESSAGE Server Starting
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842769 2013-04-02 01:04:01.197
+!MESSAGE Server Startup Succeeded

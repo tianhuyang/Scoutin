@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<workbench progressCount="96" version="2.0">
+<workbench progressCount="92" version="2.0">
 <workbenchAdvisor/>
 <window height="728" maximized="true" width="1024" x="-38" y="-8">
 <fastViewData fastViewLocation="1024"/>
@@ -8,7 +8,7 @@
 </perspectiveBar>
 <coolbarLayout>
 <coolItem id="group.file" itemType="typeGroupMarker"/>
-<coolItem id="org.eclipse.ui.workbench.file" itemType="typeToolBarContribution" x="122" y="22"/>
+<coolItem id="org.eclipse.ui.workbench.file" itemType="typeToolBarContribution" x="158" y="22"/>
 <coolItem id="additions" itemType="typeGroupMarker"/>
 <coolItem id="org.eclipse.debug.ui.launchActionSet" itemType="typeToolBarContribution" x="129" y="22"/>
 <coolItem id="org.eclipse.jdt.ui.JavaElementCreationActionSet" itemType="typeToolBarContribution" x="76" y="22"/>
@@ -19,18 +19,18 @@
 <coolItem id="org.eclipse.wst.ws.explorer.explorer" itemType="typeToolBarContribution" x="38" y="22"/>
 <coolItem id="org.jboss.tools.jst.jsp.toolbars.sampleToolbar" itemType="typeToolBarContribution" x="268" y="22"/>
 <coolItem id="org.eclipse.wst.xml.ui.perspective.NewFileToolBar" itemType="typeToolBarContribution" x="-1" y="-1"/>
-<coolItem id="org.eclipse.wst.xml.ui.design.DesignToolBar" itemType="typeToolBarContribution" x="61" y="22"/>
+<coolItem id="org.eclipse.wst.xml.ui.design.DesignToolBar" itemType="typeToolBarContribution" x="-1" y="-1"/>
 <coolItem id="org.jboss.tools.jst.web.ui.server.actionSet" itemType="typeToolBarContribution" x="153" y="22"/>
 <coolItem id="group.nav" itemType="typeGroupMarker"/>
 <coolItem id="org.eclipse.ui.workbench.navigate" itemType="typeToolBarContribution" x="190" y="22"/>
 <coolItem id="group.editor" itemType="typeGroupMarker"/>
 <coolItem id="org.jboss.tools.hibernate.ui.xml.editor.HibConfig3CompoundEditor" itemType="typePlaceholder" x="38" y="22"/>
-<coolItem id="org.eclipse.ui.browser.editor" itemType="typeToolBarContribution" x="-1" y="-1"/>
+<coolItem id="org.eclipse.ui.browser.editor" itemType="typePlaceholder" x="-1" y="-1"/>
 <coolItem id="org.jboss.tools.jst.jsp.jspeditor.JSPTextEditor" itemType="typeToolBarContribution" x="38" y="22"/>
-<coolItem id="com.android.ide.eclipse.editors.CommonXmlEditor" itemType="typeToolBarContribution" x="-1" y="-1"/>
+<coolItem id="com.android.ide.eclipse.editors.CommonXmlEditor" itemType="typePlaceholder" x="-1" y="-1"/>
 <coolItem id="org.jboss.tools.common.model.ui.editor.EditorPartWrapper" itemType="typePlaceholder" x="295" y="22"/>
 <coolItem id="org.eclipse.wst.xml.ui.internal.tabletree.XMLMultiPageEditorPart" itemType="typePlaceholder" x="-1" y="-1"/>
-<coolItem id="org.eclipse.jdt.ui.CompilationUnitEditor" itemType="typePlaceholder" x="-1" y="-1"/>
+<coolItem id="org.eclipse.jdt.ui.CompilationUnitEditor" itemType="typeToolBarContribution" x="-1" y="-1"/>
 <coolItem id="group.help" itemType="typeGroupMarker"/>
 <coolItem id="org.eclipse.ui.workbench.help" itemType="typeToolBarContribution" x="-1" y="-1"/>
 </coolbarLayout>
@@ -48,28 +48,13 @@
 <part id="5"/>
 <part id="6"/>
 <part id="7"/>
-<part id="8"/>
-<part id="9"/>
-<part id="10"/>
-<part id="11"/>
-<part id="12"/>
-<part id="13"/>
-<part id="14"/>
-<part id="15"/>
 </presentation>
 </folder>
 </info>
 </editorArea>
-<editor id="com.android.ide.eclipse.editors.CommonXmlEditor" name="web.xml" partName="web.xml" path="F:/eclipse/JEE/ScoutinWeb/WebContent/WEB-INF/web.xml" title="web.xml" tooltip="ScoutinWeb/WebContent/WEB-INF/web.xml" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/ScoutinWeb/WebContent/WEB-INF/web.xml"/>
-</editor>
-<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="IndexActionForm.java" partName="IndexActionForm.java" path="F:/eclipse/JEE/ScoutinWeb/src/scoutin/forms/IndexActionForm.java" title="IndexActionForm.java" tooltip="ScoutinWeb/src/scoutin/forms/IndexActionForm.java" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/ScoutinWeb/src/scoutin/forms/IndexActionForm.java"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="136" selectionTopPixel="0"/>
-</editor>
 <editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Test.java" partName="Test.java" path="F:/eclipse/JEE/Scoutin/ejbModule/test/Test.java" title="Test.java" tooltip="Scoutin/ejbModule/test/Test.java" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Scoutin/ejbModule/test/Test.java"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="430" selectionTopPixel="51"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="206" selectionTopPixel="51"/>
 </editor>
 <editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="TestRemote.java" partName="TestRemote.java" path="F:/eclipse/JEE/ScoutinClient/ejbModule/test/TestRemote.java" title="TestRemote.java" tooltip="ScoutinClient/ejbModule/test/TestRemote.java" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/ScoutinClient/ejbModule/test/TestRemote.java"/>
@@ -79,7 +64,7 @@
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Scoutin/ejbModule/test/Main.java"/>
 <editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="288" selectionTopPixel="0"/>
 </editor>
-<editor id="org.jboss.tools.jst.jsp.jspeditor.JSPTextEditor" name="index.jsp" partName="index.jsp" path="F:/eclipse/JEE/ScoutinWeb/WebContent/index.jsp" title="index.jsp" tooltip="F:/eclipse/JEE/ScoutinWeb/WebContent/index.jsp" workbook="DefaultEditorWorkbook">
+<editor activePart="true" focus="true" id="org.jboss.tools.jst.jsp.jspeditor.JSPTextEditor" name="index.jsp" partName="index.jsp" path="F:/eclipse/JEE/ScoutinWeb/WebContent/index.jsp" title="index.jsp" tooltip="F:/eclipse/JEE/ScoutinWeb/WebContent/index.jsp" workbook="DefaultEditorWorkbook">
 <input factoryID="org.jboss.tools.common.core.resources.XModelObjectEditorInputFactory" path="/ScoutinWeb/WebContent/index.jsp"/>
 </editor>
 <editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="AccountHome.java" partName="AccountHome.java" path="F:/eclipse/JEE/Scoutin/ejbModule/com/scoutin/entities/AccountHome.java" title="AccountHome.java" tooltip="Scoutin/ejbModule/com/scoutin/entities/AccountHome.java" workbook="DefaultEditorWorkbook">
@@ -201,7 +186,7 @@
 <viewState CommonNavigator.LINKING_ENABLED="0"/>
 </view>
 </views>
-<perspectives activePart="org.eclipse.ui.browser.editor" activePerspective="org.eclipse.jst.j2ee.J2EEPerspective">
+<perspectives activePart="org.eclipse.ui.navigator.ProjectExplorer" activePerspective="org.eclipse.jst.j2ee.J2EEPerspective">
 <perspective editorAreaTrimState="2" editorAreaVisible="1" fixed="0" version="0.016">
 <descriptor class="org.eclipse.jst.j2ee.internal.perspective.J2EEPerspective" id="org.eclipse.jst.j2ee.J2EEPerspective" label="Java EE"/>
 <alwaysOnActionSet id="org.eclipse.rse.core.search.searchActionSet"/>
@@ -293,8 +278,8 @@
 </folder>
 </info>
 <info part="org.eclipse.ui.editorss" ratio="0.19188192" ratioLeft="260" ratioRight="1095" relationship="2" relative="topLeft"/>
-<info folder="true" part="bottomRight" ratio="0.56058156" ratioLeft="347" ratioRight="272" relationship="4" relative="org.eclipse.ui.editorss">
-<folder activePageID="org.eclipse.ui.console.ConsoleView" appearance="2" expanded="2">
+<info folder="true" part="bottomRight" ratio="0.8073702" ratioLeft="482" ratioRight="115" relationship="4" relative="org.eclipse.ui.editorss">
+<folder activePageID="org.eclipse.wst.server.ui.ServersView" appearance="2" expanded="2">
 <page content="org.eclipse.ui.views.AllMarkersView" label="Markers"/>
 <page content="org.eclipse.ui.views.PropertySheet" label="Properties"/>
 <page content="org.eclipse.wst.server.ui.ServersView" label="Servers"/>
@@ -675,7 +660,50 @@
 </perspective>
 </perspectives>
 <workingSets/>
-<navigationHistory/>
+<navigationHistory>
+<editors>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.android.ide.eclipse.editors.CommonXmlEditor" path="/ScoutinWeb/WebContent/WEB-INF/web.xml"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/ScoutinWeb/src/scoutin/forms/IndexActionForm.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Scoutin/ejbModule/test/Test.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/ScoutinWeb/src/com/scoutin/forms/IndexActionForm.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/ScoutinClient/ejbModule/test/MainRemote.java"/>
+<editor factoryID="org.jboss.tools.common.core.resources.XModelObjectEditorInputFactory" id="org.jboss.tools.jst.jsp.jspeditor.JSPTextEditor" path="/ScoutinWeb/WebContent/index.jsp"/>
+</editors>
+<item historyLabel="web.xml" index="0"/>
+<item historyLabel="IndexActionForm.java" index="1">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="Test.java" index="2">
+<position info="not_deleted" x="430" y="0"/>
+</item>
+<item historyLabel="IndexActionForm.java" index="3">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="Test.java" index="2">
+<position info="not_deleted" x="430" y="0"/>
+</item>
+<item historyLabel="MainRemote.java" index="4">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="Test.java" index="2">
+<position info="not_deleted" x="430" y="0"/>
+</item>
+<item historyLabel="index.jsp" index="5">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="index.jsp" index="5">
+<position info="not_deleted" x="460" y="0"/>
+</item>
+<item historyLabel="index.jsp" index="5">
+<position info="not_deleted" x="706" y="0"/>
+</item>
+<item historyLabel="index.jsp" index="5">
+<position info="not_deleted" x="1184" y="0"/>
+</item>
+<item active="true" historyLabel="index.jsp" index="5">
+<position info="not_deleted" x="418" y="0"/>
+</item>
+</navigationHistory>
 <input factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/" type="8"/>
 </page>
 <workbenchWindowAdvisor/>
@@ -693,6 +721,12 @@
 </trimLayout>
 </window>
 <mruList>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="MainRemote.java" tooltip="ScoutinClient/ejbModule/test/MainRemote.java">
+<persistable path="/ScoutinClient/ejbModule/test/MainRemote.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="IndexActionForm.java" tooltip="ScoutinWeb/src/com/scoutin/forms/IndexActionForm.java">
+<persistable path="/ScoutinWeb/src/com/scoutin/forms/IndexActionForm.java"/>
+</file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Signin.java" tooltip="ScoutinWeb/src/com/scoutin/Signin.java">
 <persistable path="/ScoutinWeb/src/com/scoutin/Signin.java"/>
 </file>
