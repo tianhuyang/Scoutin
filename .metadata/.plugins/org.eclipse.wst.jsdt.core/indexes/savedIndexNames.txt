@@ -4,9 +4,3 @@ INDEX VERSION 1.122+F:\eclipse\JEE\.metadata\.plugins\org.eclipse.wst.jsdt.core\
 3045767068.index
 2497203910.index
 2189593979.index
-1564776388.index
-1867550447.index
-2956876941.index
-3056796753.index
-2089060013.index
-2814336594.index

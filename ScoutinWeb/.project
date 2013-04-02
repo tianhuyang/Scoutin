@@ -3,6 +3,7 @@
 	<name>ScoutinWeb</name>
 	<comment></comment>
 	<projects>
+		<project>ScoutinClient</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
