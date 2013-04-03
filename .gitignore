@@ -1,7 +1,6 @@
 *.class
-/build
 
 # Package Files #
 *.war
 *.ear
-.metadata/.plugins/org.eclipse.wst.server.core/tmp0/*
+/.metadata
