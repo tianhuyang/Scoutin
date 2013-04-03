@@ -1,3 +1,0 @@
-#Tomcat publish data
-#Tue Apr 02 01:07:54 PDT 2013
-org.eclipse.jst.j2ee.server\:ScoutinClient=WEB-INF/lib/ScoutinClient.jar
