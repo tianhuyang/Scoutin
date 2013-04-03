@@ -1,6 +1,6 @@
 package com.scoutin.entities;
 
-// Generated Apr 1, 2013 7:11:35 PM by Hibernate Tools 4.0.0
+// Generated Apr 1, 2013 6:45:42 PM by Hibernate Tools 4.0.0
 
 import java.util.Date;
 import java.util.HashSet;
@@ -11,10 +11,6 @@ import java.util.Set;
  */
 public class Account implements java.io.Serializable {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 8433280832080334506L;
 	private int accountId;
 	private String password;
 	private String email;

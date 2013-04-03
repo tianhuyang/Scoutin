@@ -1,6 +1,6 @@
 package com.scoutin.entities;
 
-// Generated Apr 1, 2013 7:11:35 PM by Hibernate Tools 4.0.0
+// Generated Apr 1, 2013 6:45:42 PM by Hibernate Tools 4.0.0
 
 import java.math.BigDecimal;
 import java.util.Date;
