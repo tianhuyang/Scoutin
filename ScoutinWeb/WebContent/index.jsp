@@ -13,7 +13,7 @@
 		<%
 		TestRemote tr = (TestRemote)EJBUtils.obtainBean("ScoutinApplication/Scoutin/Test!test.TestRemote");
 	    if(tr != null){
-	    	//out.println(tr.getResult());
+	    	out.println(tr.getResult());
 	    }
 	    %>
 	</h1>

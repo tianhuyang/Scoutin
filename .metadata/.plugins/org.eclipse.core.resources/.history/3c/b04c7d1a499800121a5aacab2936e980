@@ -1,6 +1,0 @@
-import test.TestRemote;
-
-
-public class Main {
-    TestRemote tr;
-}

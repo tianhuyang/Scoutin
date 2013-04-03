@@ -1,8 +1,0 @@
-package com.scoutin.utilities;
-
-public class EJBUtils {
-	public static Object obtainBean(String beanName)
-	{
-		Object bean=null;
-	}
-}
