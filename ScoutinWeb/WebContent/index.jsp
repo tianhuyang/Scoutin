@@ -1,28 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 <%@ page import="test.*"%>
-<%@ page import="javax.naming.*"%>
-<%@ page import="java.util.Properties"%>
-<%!static InitialContext ctx;
-	{
-		Properties jndiProps = new Properties();
-		jndiProps.put(InitialContext.INITIAL_CONTEXT_FACTORY,
-				"org.jboss.naming.remote.client.InitialContextFactory");
-		jndiProps.put(InitialContext.PROVIDER_URL,
-				"remote://localhost:4447");// create a context passing these properties
-		// username
-		jndiProps.put(InitialContext.SECURITY_PRINCIPAL, "user");
-		// password
-		jndiProps.put(InitialContext.SECURITY_CREDENTIALS, "12345");
-		jndiProps.put("jboss.naming.client.ejb.context", true);
-		try {
-			ctx = new InitialContext(jndiProps);
-		} catch (NamingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}	
-	}
-%>
+<%@ page import="com.scoutin.utilities.*"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -32,18 +11,11 @@
 <body>
 	<h1>
 		<%
-	try {
-			TestRemote test1 = (TestRemote) ctx
-					.lookup("ScoutinEAR/Scoutin/Test!test.TestRemote");
-			//TestRemote test1 = (TestRemote)ctx.lookup("java:app/EnterpriseServer");
-
-			String res = test1.getResult();
-			out.println(res);
-
-		} catch (NamingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}%>
+		TestRemote tr = (TestRemote)EJBUtils.obtainBean("ScoutinApplication/Scoutin/Test!test.TestRemote");
+	    if(tr != null){
+	    	out.println(tr.getResult());
+	    }
+	    %>
 	</h1>
 </body>
 </html>
