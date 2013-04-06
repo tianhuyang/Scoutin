@@ -18449,6 +18449,251 @@ processed
   </FOLDER>
  </file-system>
  <file-system NAME="lib1" location="%workspace.home%/../../lib" model-entity="FileSystemFolder"/>
+ <file-system NAME="lib-jboss-client.jar"
+  location="D:\Eclipse_indigo\workspace\ScoutinWeb\lib\jboss-client.jar" model-entity="FileSystemJar">
+  <FOLDER NAME="javax" model-entity="JarFolder">
+   <FOLDER NAME="ejb" model-entity="JarFolder">
+    <FOLDER NAME="embeddable" model-entity="JarFolder"/>
+    <FOLDER NAME="spi" model-entity="JarFolder"/>
+   </FOLDER>
+   <FOLDER NAME="jms" model-entity="JarFolder"/>
+   <FOLDER NAME="transaction" model-entity="JarFolder">
+    <FOLDER NAME="xa" model-entity="JarFolder"/>
+   </FOLDER>
+  </FOLDER>
+  <FOLDER NAME="jboss-as-checkstyle" model-entity="JarFolder"/>
+  <FOLDER NAME="META-INF" model-entity="JarFolder">
+   <FOLDER NAME="license" model-entity="JarFolder"/>
+   <FOLDER NAME="maven" model-entity="JarFolder">
+    <FOLDER NAME="org.jboss" model-entity="JarFolder">
+     <FOLDER NAME="jboss-ejb-client" model-entity="JarFolder"/>
+     <FOLDER NAME="jboss-remote-naming" model-entity="JarFolder"/>
+    </FOLDER>
+    <FOLDER NAME="org.jboss.as" model-entity="JarFolder">
+     <FOLDER NAME="jboss-as-build-config" model-entity="JarFolder"/>
+     <FOLDER NAME="jboss-as-client-all" model-entity="JarFolder"/>
+    </FOLDER>
+    <FOLDER NAME="org.jboss.logging" model-entity="JarFolder">
+     <FOLDER NAME="jboss-logging" model-entity="JarFolder"/>
+    </FOLDER>
+    <FOLDER NAME="org.jboss.logmanager" model-entity="JarFolder">
+     <FOLDER NAME="jboss-logmanager" model-entity="JarFolder"/>
+    </FOLDER>
+    <FOLDER NAME="org.jboss.marshalling" model-entity="JarFolder">
+     <FOLDER NAME="jboss-marshalling" model-entity="JarFolder"/>
+     <FOLDER NAME="jboss-marshalling-river" model-entity="JarFolder"/>
+    </FOLDER>
+    <FOLDER NAME="org.jboss.netty" model-entity="JarFolder">
+     <FOLDER NAME="netty" model-entity="JarFolder"/>
+    </FOLDER>
+    <FOLDER NAME="org.jboss.remoting3" model-entity="JarFolder">
+     <FOLDER NAME="jboss-remoting" model-entity="JarFolder"/>
+    </FOLDER>
+    <FOLDER NAME="org.jboss.remotingjmx" model-entity="JarFolder">
+     <FOLDER NAME="remoting-jmx" model-entity="JarFolder"/>
+    </FOLDER>
+    <FOLDER NAME="org.jboss.sasl" model-entity="JarFolder">
+     <FOLDER NAME="jboss-sasl" model-entity="JarFolder"/>
+    </FOLDER>
+    <FOLDER NAME="org.jboss.spec.javax.ejb" model-entity="JarFolder">
+     <FOLDER NAME="jboss-ejb-api_3.1_spec" model-entity="JarFolder"/>
+    </FOLDER>
+    <FOLDER NAME="org.jboss.spec.javax.jms" model-entity="JarFolder">
+     <FOLDER NAME="jboss-jms-api_1.1_spec" model-entity="JarFolder"/>
+    </FOLDER>
+    <FOLDER NAME="org.jboss.spec.javax.transaction" model-entity="JarFolder">
+     <FOLDER NAME="jboss-transaction-api_1.1_spec" model-entity="JarFolder"/>
+    </FOLDER>
+    <FOLDER NAME="org.jboss.xnio" model-entity="JarFolder">
+     <FOLDER NAME="xnio-api" model-entity="JarFolder"/>
+     <FOLDER NAME="xnio-nio" model-entity="JarFolder"/>
+    </FOLDER>
+   </FOLDER>
+   <FOLDER NAME="services" model-entity="JarFolder"/>
+  </FOLDER>
+  <FOLDER NAME="org" model-entity="JarFolder">
+   <FOLDER NAME="hornetq" model-entity="JarFolder">
+    <FOLDER NAME="api" model-entity="JarFolder">
+     <FOLDER NAME="core" model-entity="JarFolder">
+      <FOLDER NAME="client" model-entity="JarFolder">
+       <FOLDER NAME="loadbalance" model-entity="JarFolder"/>
+      </FOLDER>
+      <FOLDER NAME="management" model-entity="JarFolder"/>
+     </FOLDER>
+     <FOLDER NAME="jms" model-entity="JarFolder">
+      <FOLDER NAME="management" model-entity="JarFolder"/>
+     </FOLDER>
+    </FOLDER>
+    <FOLDER NAME="core" model-entity="JarFolder">
+     <FOLDER NAME="buffers" model-entity="JarFolder">
+      <FOLDER NAME="impl" model-entity="JarFolder"/>
+     </FOLDER>
+     <FOLDER NAME="client" model-entity="JarFolder">
+      <FOLDER NAME="impl" model-entity="JarFolder"/>
+     </FOLDER>
+     <FOLDER NAME="cluster" model-entity="JarFolder">
+      <FOLDER NAME="impl" model-entity="JarFolder"/>
+     </FOLDER>
+     <FOLDER NAME="exception" model-entity="JarFolder"/>
+     <FOLDER NAME="filter" model-entity="JarFolder">
+      <FOLDER NAME="impl" model-entity="JarFolder"/>
+     </FOLDER>
+     <FOLDER NAME="journal" model-entity="JarFolder"/>
+     <FOLDER NAME="logging" model-entity="JarFolder">
+      <FOLDER NAME="impl" model-entity="JarFolder"/>
+     </FOLDER>
+     <FOLDER NAME="message" model-entity="JarFolder">
+      <FOLDER NAME="impl" model-entity="JarFolder"/>
+     </FOLDER>
+     <FOLDER NAME="protocol" model-entity="JarFolder">
+      <FOLDER NAME="core" model-entity="JarFolder">
+       <FOLDER NAME="impl" model-entity="JarFolder">
+        <FOLDER NAME="wireformat" model-entity="JarFolder"/>
+       </FOLDER>
+      </FOLDER>
+     </FOLDER>
+     <FOLDER NAME="remoting" model-entity="JarFolder">
+      <FOLDER NAME="impl" model-entity="JarFolder">
+       <FOLDER NAME="invm" model-entity="JarFolder"/>
+       <FOLDER NAME="netty" model-entity="JarFolder"/>
+       <FOLDER NAME="ssl" model-entity="JarFolder"/>
+      </FOLDER>
+      <FOLDER NAME="server" model-entity="JarFolder">
+       <FOLDER NAME="impl" model-entity="JarFolder"/>
+      </FOLDER>
+     </FOLDER>
+     <FOLDER NAME="server" model-entity="JarFolder"/>
+     <FOLDER NAME="transaction" model-entity="JarFolder">
+      <FOLDER NAME="impl" model-entity="JarFolder"/>
+     </FOLDER>
+     <FOLDER NAME="version" model-entity="JarFolder">
+      <FOLDER NAME="impl" model-entity="JarFolder"/>
+     </FOLDER>
+    </FOLDER>
+    <FOLDER NAME="jms" model-entity="JarFolder">
+     <FOLDER NAME="client" model-entity="JarFolder"/>
+     <FOLDER NAME="referenceable" model-entity="JarFolder"/>
+    </FOLDER>
+    <FOLDER NAME="spi" model-entity="JarFolder">
+     <FOLDER NAME="core" model-entity="JarFolder">
+      <FOLDER NAME="logging" model-entity="JarFolder"/>
+      <FOLDER NAME="protocol" model-entity="JarFolder"/>
+      <FOLDER NAME="remoting" model-entity="JarFolder"/>
+     </FOLDER>
+    </FOLDER>
+    <FOLDER NAME="utils" model-entity="JarFolder">
+     <FOLDER NAME="json" model-entity="JarFolder"/>
+    </FOLDER>
+   </FOLDER>
+   <FOLDER NAME="jboss" model-entity="JarFolder">
+    <FOLDER NAME="ejb" model-entity="JarFolder">
+     <FOLDER NAME="client" model-entity="JarFolder">
+      <FOLDER NAME="naming" model-entity="JarFolder">
+       <FOLDER NAME="ejb" model-entity="JarFolder"/>
+      </FOLDER>
+      <FOLDER NAME="remoting" model-entity="JarFolder"/>
+     </FOLDER>
+    </FOLDER>
+    <FOLDER NAME="logging" model-entity="JarFolder"/>
+    <FOLDER NAME="logmanager" model-entity="JarFolder">
+     <FOLDER NAME="errormanager" model-entity="JarFolder"/>
+     <FOLDER NAME="filters" model-entity="JarFolder"/>
+     <FOLDER NAME="formatters" model-entity="JarFolder"/>
+     <FOLDER NAME="handlers" model-entity="JarFolder"/>
+    </FOLDER>
+    <FOLDER NAME="marshalling" model-entity="JarFolder">
+     <FOLDER NAME="cloner" model-entity="JarFolder"/>
+     <FOLDER NAME="reflect" model-entity="JarFolder"/>
+     <FOLDER NAME="river" model-entity="JarFolder"/>
+     <FOLDER NAME="util" model-entity="JarFolder"/>
+    </FOLDER>
+    <FOLDER NAME="naming" model-entity="JarFolder">
+     <FOLDER NAME="remote" model-entity="JarFolder">
+      <FOLDER NAME="client" model-entity="JarFolder">
+       <FOLDER NAME="ejb" model-entity="JarFolder"/>
+      </FOLDER>
+      <FOLDER NAME="protocol" model-entity="JarFolder">
+       <FOLDER NAME="v1" model-entity="JarFolder"/>
+      </FOLDER>
+      <FOLDER NAME="server" model-entity="JarFolder"/>
+     </FOLDER>
+    </FOLDER>
+    <FOLDER NAME="netty" model-entity="JarFolder">
+     <FOLDER NAME="bootstrap" model-entity="JarFolder"/>
+     <FOLDER NAME="buffer" model-entity="JarFolder"/>
+     <FOLDER NAME="channel" model-entity="JarFolder">
+      <FOLDER NAME="group" model-entity="JarFolder"/>
+      <FOLDER NAME="local" model-entity="JarFolder"/>
+      <FOLDER NAME="socket" model-entity="JarFolder">
+       <FOLDER NAME="http" model-entity="JarFolder"/>
+       <FOLDER NAME="nio" model-entity="JarFolder"/>
+       <FOLDER NAME="oio" model-entity="JarFolder"/>
+      </FOLDER>
+     </FOLDER>
+     <FOLDER NAME="container" model-entity="JarFolder">
+      <FOLDER NAME="microcontainer" model-entity="JarFolder"/>
+      <FOLDER NAME="osgi" model-entity="JarFolder"/>
+      <FOLDER NAME="spring" model-entity="JarFolder"/>
+     </FOLDER>
+     <FOLDER NAME="handler" model-entity="JarFolder">
+      <FOLDER NAME="codec" model-entity="JarFolder">
+       <FOLDER NAME="base64" model-entity="JarFolder"/>
+       <FOLDER NAME="compression" model-entity="JarFolder"/>
+       <FOLDER NAME="embedder" model-entity="JarFolder"/>
+       <FOLDER NAME="frame" model-entity="JarFolder"/>
+       <FOLDER NAME="http" model-entity="JarFolder">
+        <FOLDER NAME="websocket" model-entity="JarFolder"/>
+       </FOLDER>
+       <FOLDER NAME="oneone" model-entity="JarFolder"/>
+       <FOLDER NAME="protobuf" model-entity="JarFolder"/>
+       <FOLDER NAME="replay" model-entity="JarFolder"/>
+       <FOLDER NAME="rtsp" model-entity="JarFolder"/>
+       <FOLDER NAME="serialization" model-entity="JarFolder"/>
+       <FOLDER NAME="string" model-entity="JarFolder"/>
+      </FOLDER>
+      <FOLDER NAME="execution" model-entity="JarFolder"/>
+      <FOLDER NAME="logging" model-entity="JarFolder"/>
+      <FOLDER NAME="queue" model-entity="JarFolder"/>
+      <FOLDER NAME="ssl" model-entity="JarFolder"/>
+      <FOLDER NAME="stream" model-entity="JarFolder"/>
+      <FOLDER NAME="timeout" model-entity="JarFolder"/>
+     </FOLDER>
+     <FOLDER NAME="logging" model-entity="JarFolder"/>
+     <FOLDER NAME="util" model-entity="JarFolder">
+      <FOLDER NAME="internal" model-entity="JarFolder">
+       <FOLDER NAME="jzlib" model-entity="JarFolder"/>
+      </FOLDER>
+     </FOLDER>
+    </FOLDER>
+    <FOLDER NAME="remoting3" model-entity="JarFolder">
+     <FOLDER NAME="remote" model-entity="JarFolder"/>
+     <FOLDER NAME="security" model-entity="JarFolder"/>
+     <FOLDER NAME="spi" model-entity="JarFolder"/>
+    </FOLDER>
+    <FOLDER NAME="remotingjmx" model-entity="JarFolder">
+     <FOLDER NAME="protocol" model-entity="JarFolder">
+      <FOLDER NAME="v1" model-entity="JarFolder"/>
+     </FOLDER>
+    </FOLDER>
+    <FOLDER NAME="sasl" model-entity="JarFolder">
+     <FOLDER NAME="anonymous" model-entity="JarFolder"/>
+     <FOLDER NAME="callback" model-entity="JarFolder"/>
+     <FOLDER NAME="clienttoken" model-entity="JarFolder"/>
+     <FOLDER NAME="digest" model-entity="JarFolder"/>
+     <FOLDER NAME="localuser" model-entity="JarFolder"/>
+     <FOLDER NAME="plain" model-entity="JarFolder"/>
+     <FOLDER NAME="util" model-entity="JarFolder"/>
+    </FOLDER>
+   </FOLDER>
+   <FOLDER NAME="xnio" model-entity="JarFolder">
+    <FOLDER NAME="channels" model-entity="JarFolder"/>
+    <FOLDER NAME="nio" model-entity="JarFolder"/>
+    <FOLDER NAME="sasl" model-entity="JarFolder"/>
+    <FOLDER NAME="ssl" model-entity="JarFolder"/>
+    <FOLDER NAME="streams" model-entity="JarFolder"/>
+   </FOLDER>
+  </FOLDER>
+ </file-system>
  <web SERVLET_VERSION="3.0" model-entity="JstWeb" model-path="/web.xml">
   <module URI="/WEB-INF/struts-config.xml" model-entity="JstWebModule"
    model-path="/struts-config.xml" src="src" web-root="WEB-ROOT"/>

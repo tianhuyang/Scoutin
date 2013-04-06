@@ -11,7 +11,10 @@
     	message += it.next().getValues()[0];	
     }
     int status = (message=="")?1:0;
+    int user_id=0;
+    if(message.length()==0)
+    	user_id = (Integer)request.getAttribute("user_id");
 %>
 
-{status:<%=status%>,message:"<%=message%>",username:"haocai"}
+{status:<%=status%>,message:"<%=message%>",username:<%=user_id%>}
 	
