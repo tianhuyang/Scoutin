@@ -1,0 +1,32 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<div id="error_output"></div>
+	<span>Email:</span><input type="text" id="email" name="email"><br>
+	<span>Password:</span><input type="password" id="password" name="password"><br>
+	<input type="button" value="Sign In" onclick="signin()">
+	<script>
+		function signin()
+		{
+		  $.post("signin.do",
+				{email:$("#email").val(),password:$("#password").val()},
+				function(data,status){
+					var obj = eval("("+data+")");
+					if(obj.status==0)
+					{
+						$("#error_output").html(obj.message);
+					}
+					else
+					{
+						alert("Hello " + obj.username);
+					}
+			  });
+		}
+	</script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+</body>
+</html>

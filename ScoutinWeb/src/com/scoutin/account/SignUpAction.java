@@ -1,7 +1,4 @@
-/**
- * 
- */
-package com.scoutin;
+package com.scoutin.account;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -11,16 +8,13 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-/**
- * @author Tiger
- *
- */
-public class Signin extends Action {
+import com.scoutin.utilities.EJBUtils;
 
-	/**
-	 * 
-	 */
-	public Signin() {
+import test.TestRemote;
+
+public class SignUpAction extends Action {
+	
+	public SignUpAction() {
 		// TODO Auto-generated constructor stub
 	}
 
@@ -29,7 +23,7 @@ public class Signin extends Action {
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
 		// TODO Auto-generated method stub
-		return mapping.findForward("success");
+		//TestRemote tr = (TestRemote)EJBUtils.obtainBean("ScoutinApplication/Scoutin/Test!test.TestRemote");
+		return mapping.findForward("input");
 	}
-
 }
