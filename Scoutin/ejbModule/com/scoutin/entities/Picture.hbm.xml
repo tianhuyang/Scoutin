@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated Apr 1, 2013 6:45:42 PM by Hibernate Tools 4.0.0 -->
+<!-- Generated Apr 4, 2013 10:14:22 PM by Hibernate Tools 4.0.0 -->
 <hibernate-mapping>
     <class name="com.scoutin.entities.Picture" table="PICTURE" catalog="Scoutin">
-        <id name="pictureId" type="long">
+        <id name="pictureId" type="java.lang.Long">
             <column name="PICTURE_ID" />
-            <generator class="assigned" />
+            <generator class="identity" />
         </id>
         <many-to-one name="card" class="com.scoutin.entities.Card" fetch="select">
             <column name="CARD_ID" />

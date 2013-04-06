@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated Apr 1, 2013 6:45:42 PM by Hibernate Tools 4.0.0 -->
+<!-- Generated Apr 4, 2013 10:14:22 PM by Hibernate Tools 4.0.0 -->
 <hibernate-mapping>
     <class name="com.scoutin.entities.Album" table="ALBUM" catalog="Scoutin">
-        <id name="albumId" type="long">
+        <id name="albumId" type="java.lang.Long">
             <column name="ALBUM_ID" />
-            <generator class="assigned" />
+            <generator class="identity" />
         </id>
         <many-to-one name="account" class="com.scoutin.entities.Account" fetch="select">
             <column name="ACCOUNT_ID" not-null="true" />
@@ -32,6 +32,7 @@
             </key>
             <many-to-many entity-name="com.scoutin.entities.Follower">
                 <column name="FOLLOWED_ID" not-null="true" />
+                <column name="FOLLOWING_ID" not-null="true" />
             </many-to-many>
         </set>
         <set name="cards" table="ALBUMCARD" inverse="false" lazy="true" fetch="select">

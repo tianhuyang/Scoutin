@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
+<%@ page language="java" contentType="text/javascript; charset=utf-8"
 	pageEncoding="utf-8"%>
 <%@ page import="test.*"%>
 <%@ page import="com.scoutin.utilities.*"%>
