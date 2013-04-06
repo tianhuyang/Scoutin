@@ -25,7 +25,7 @@ public class CardBean implements CardBeanRemote {
 	@Override
 	public Card createCard(Card card) {
 		// TODO Auto-generated method stub
-		card = HibernateUtils.accountHome.attachDirty(card);
+		HibernateUtils.cardHome.attachDirty(card);
 		return card;
 	}
 
