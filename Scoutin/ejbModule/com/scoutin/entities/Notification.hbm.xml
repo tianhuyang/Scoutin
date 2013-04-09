@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated Apr 4, 2013 10:14:22 PM by Hibernate Tools 4.0.0 -->
+<!-- Generated Apr 6, 2013 8:03:56 AM by Hibernate Tools 4.0.0 -->
 <hibernate-mapping>
-    <class name="com.scoutin.entities.Notification" table="NOTIFICATION" catalog="Scoutin">
+    <class name="com.scoutin.entities.Notification" table="notification" catalog="Scoutin">
         <id name="notificationId" type="java.lang.Long">
             <column name="NOTIFICATION_ID" />
             <generator class="identity" />

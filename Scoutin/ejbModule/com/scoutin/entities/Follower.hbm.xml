@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated Apr 4, 2013 10:14:22 PM by Hibernate Tools 4.0.0 -->
+<!-- Generated Apr 6, 2013 8:03:56 AM by Hibernate Tools 4.0.0 -->
 <hibernate-mapping>
-    <class name="com.scoutin.entities.Follower" table="FOLLOWER" catalog="Scoutin">
+    <class name="com.scoutin.entities.Follower" table="follower" catalog="Scoutin">
         <composite-id name="id" class="com.scoutin.entities.FollowerId">
             <key-property name="followedId" type="int">
                 <column name="FOLLOWED_ID" />
@@ -12,23 +12,8 @@
                 <column name="FOLLOWING_ID" />
             </key-property>
         </composite-id>
-        <many-to-one name="accountByFollowedId" class="com.scoutin.entities.Account" update="false" insert="false" fetch="select">
-            <column name="FOLLOWED_ID" not-null="true" />
-        </many-to-one>
-        <many-to-one name="accountByFollowingId" class="com.scoutin.entities.Account" update="false" insert="false" fetch="select">
-            <column name="FOLLOWING_ID" not-null="true" />
-        </many-to-one>
         <property name="isFollowPerson" type="boolean">
             <column name="IS_FOLLOW_PERSON" not-null="true" />
         </property>
-        <set name="albums" table="FOLLOWALBUM" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="FOLLOWED_ID" not-null="true" />
-                <column name="FOLLOWING_ID" not-null="true" />
-            </key>
-            <many-to-many entity-name="com.scoutin.entities.Album">
-                <column name="ALBUM_ID" not-null="true" />
-            </many-to-many>
-        </set>
     </class>
 </hibernate-mapping>

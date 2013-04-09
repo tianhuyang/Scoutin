@@ -1,33 +1,31 @@
 package com.scoutin.exception;
 
-public class ScoutinException extends Exception {
+import com.scoutin.utilities.JSONConstants;
+
+public class ScoutinException extends Exception implements ScoutinError{
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 5951162812583275078L;
-	public static final int Account_Signup_Failure_Code = 1;
-	public static final String Account_Signup_Failure_Text = "account.signup.failure";
-	public static final int Account_Signin_Failure_Code = 1;
-	public static final String Account_Signin_Failure_Text = "account.signin.failure";
+	private static final long serialVersionUID = 5951162812583275078L;	
 	
-	private int code;
+	private int status;
 
-	public int getCode() {
-		return code;
+	public int getStatus() {
+		return status;
 	}
 
-	public void setCode(int code) {
-		this.code = code;
+	public void setStatus(int status) {
+		this.status = status;
 	}
 
 	public ScoutinException() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public ScoutinException(int code,String text) {
-		super(text);
-		this.code=code;
+	public ScoutinException(int status,String message) {
+		super(message);
+		this.status=status;
 		// TODO Auto-generated constructor stub
 	}
 
@@ -46,5 +44,10 @@ public class ScoutinException extends Exception {
 		super(arg0, arg1, arg2, arg3);
 		// TODO Auto-generated constructor stub
 	}
+	
+	public String toString(){
+		return status + ": "+ this.getMessage();
+	}	
+	
 
 }

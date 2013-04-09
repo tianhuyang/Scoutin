@@ -6,5 +6,5 @@ import com.scoutin.entities.*;
 @Remote
 public interface AccountBeanRemote {
 	
-	public int signup(Account account);
+	public Account signup(Account account);
 }

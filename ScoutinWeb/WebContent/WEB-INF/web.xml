@@ -8,10 +8,19 @@
         <session-timeout>
             30
         </session-timeout>
-    </session-config>
-    
+    </session-config>    
  <display-name>ScoutinWeb</display-name>
- <servlet>
+ 
+<filter>
+  <filter-name>struts2</filter-name>
+  <filter-class>org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter</filter-class>
+</filter>
+
+<filter-mapping>
+  <filter-name>struts2</filter-name>
+   <url-pattern>*.action</url-pattern>
+</filter-mapping>
+ <!-- <servlet>
   <servlet-name>action</servlet-name>
   <servlet-class>org.apache.struts.action.ActionServlet</servlet-class>
   <init-param>
@@ -22,7 +31,8 @@
  <servlet-mapping>
      <servlet-name>action</servlet-name>
      <url-pattern>*.do</url-pattern>
- </servlet-mapping>
+ </servlet-mapping> -->
+ 
  <welcome-file-list>
   <welcome-file>index.html</welcome-file>
   <welcome-file>index.htm</welcome-file>

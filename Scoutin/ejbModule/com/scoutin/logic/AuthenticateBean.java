@@ -28,7 +28,7 @@ public class AuthenticateBean implements AuthenticateBeanRemote {
 		// TODO Auto-generated method stub
 		Account account = null;
 		switch(type){
-		case Account.AuthenticateTypeEmail:
+		case AuthenticateType.AuthenticateTypeEmail:
 			account = HibernateUtils.accountHome.authenticateWithEmail(args[0],args[1]);
 			break;
 		}		

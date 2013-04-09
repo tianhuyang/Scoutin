@@ -1,6 +1,6 @@
 package com.scoutin.entities;
 
-// Generated Apr 4, 2013 10:13:24 PM by Hibernate Tools 4.0.0
+// Generated Apr 6, 2013 8:06:34 AM by Hibernate Tools 4.0.0
 
 import java.util.Date;
 
@@ -10,8 +10,8 @@ import java.util.Date;
 public class Comment implements java.io.Serializable {
 
 	private Long commentId;
-	private Card card;
-	private Account account;
+	private long cardId;
+	private int accountId;
 	private String content;
 	private Date updatedTime;
 	private Date createdTime;
@@ -19,15 +19,15 @@ public class Comment implements java.io.Serializable {
 	public Comment() {
 	}
 
-	public Comment(Card card, Account account) {
-		this.card = card;
-		this.account = account;
+	public Comment(long cardId, int accountId) {
+		this.cardId = cardId;
+		this.accountId = accountId;
 	}
 
-	public Comment(Card card, Account account, String content,
+	public Comment(long cardId, int accountId, String content,
 			Date updatedTime, Date createdTime) {
-		this.card = card;
-		this.account = account;
+		this.cardId = cardId;
+		this.accountId = accountId;
 		this.content = content;
 		this.updatedTime = updatedTime;
 		this.createdTime = createdTime;
@@ -41,20 +41,20 @@ public class Comment implements java.io.Serializable {
 		this.commentId = commentId;
 	}
 
-	public Card getCard() {
-		return this.card;
+	public long getCardId() {
+		return this.cardId;
 	}
 
-	public void setCard(Card card) {
-		this.card = card;
+	public void setCardId(long cardId) {
+		this.cardId = cardId;
 	}
 
-	public Account getAccount() {
-		return this.account;
+	public int getAccountId() {
+		return this.accountId;
 	}
 
-	public void setAccount(Account account) {
-		this.account = account;
+	public void setAccountId(int accountId) {
+		this.accountId = accountId;
 	}
 
 	public String getContent() {

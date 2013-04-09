@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 </head>
 <body>
 	<div id="error_output"></div>
@@ -15,19 +15,18 @@
 		
 	function signup()
 	{
-	  $.post("signup.do",
+	  $.post("account/emailSignup.action",
 			{email:$("#email").val(), password:$("#password").val(), repassword:$("#repassword").val()},
-			function(data){
-				var obj = eval("("+data+")");
-				if(obj.status==0)
+			function(data,status){
+				if(data.status!=0)
 				{
-					$("#error_output").html(obj.message);
+					$("#error_output").html(data.message);
 				}
 				else
 				{
-					alert("Hello " + obj.username);
+					alert("Hello " + data.user.email);
 				}
-		  });
+		  },"json");
 	}
 	</script>
 </body>

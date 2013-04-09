@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Apr 6, 2013 8:03:56 AM by Hibernate Tools 4.0.0 -->
+<hibernate-mapping>
+    <class name="com.scoutin.entities.Followalbum" table="followalbum" catalog="Scoutin">
+        <composite-id name="id" class="com.scoutin.entities.FollowalbumId">
+            <key-property name="albumId" type="long">
+                <column name="ALBUM_ID" />
+            </key-property>
+            <key-property name="followedId" type="int">
+                <column name="FOLLOWED_ID" />
+            </key-property>
+            <key-property name="followingId" type="int">
+                <column name="FOLLOWING_ID" />
+            </key-property>
+        </composite-id>
+    </class>
+</hibernate-mapping>

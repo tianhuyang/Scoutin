@@ -22,12 +22,10 @@ public class AccountBean implements AccountBeanRemote {
     }
 
 	@Override
-	public int signup(Account account) {
+	public Account signup(Account account) {
 		// TODO Auto-generated method stub
-		int ret = -1;
 		HibernateUtils.accountHome.attachDirty(account);
-		ret = account.getAccountId();
-		return ret;
+		return account;
 	}
 
 }

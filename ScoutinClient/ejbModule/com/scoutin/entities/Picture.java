@@ -1,6 +1,6 @@
 package com.scoutin.entities;
 
-// Generated Apr 4, 2013 10:13:24 PM by Hibernate Tools 4.0.0
+// Generated Apr 6, 2013 8:06:34 AM by Hibernate Tools 4.0.0
 
 import java.util.Date;
 
@@ -10,14 +10,14 @@ import java.util.Date;
 public class Picture implements java.io.Serializable {
 
 	private Long pictureId;
-	private Card card;
+	private Long cardId;
 	private Date createdTime;
 
 	public Picture() {
 	}
 
-	public Picture(Card card, Date createdTime) {
-		this.card = card;
+	public Picture(Long cardId, Date createdTime) {
+		this.cardId = cardId;
 		this.createdTime = createdTime;
 	}
 
@@ -29,12 +29,12 @@ public class Picture implements java.io.Serializable {
 		this.pictureId = pictureId;
 	}
 
-	public Card getCard() {
-		return this.card;
+	public Long getCardId() {
+		return this.cardId;
 	}
 
-	public void setCard(Card card) {
-		this.card = card;
+	public void setCardId(Long cardId) {
+		this.cardId = cardId;
 	}
 
 	public Date getCreatedTime() {

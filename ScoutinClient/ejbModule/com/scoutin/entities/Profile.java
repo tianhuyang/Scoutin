@@ -1,6 +1,6 @@
 package com.scoutin.entities;
 
-// Generated Apr 4, 2013 10:13:24 PM by Hibernate Tools 4.0.0
+// Generated Apr 6, 2013 8:06:34 AM by Hibernate Tools 4.0.0
 
 import java.util.Date;
 
@@ -10,7 +10,6 @@ import java.util.Date;
 public class Profile implements java.io.Serializable {
 
 	private int accountId;
-	private Account account;
 	private String firstname;
 	private String lastname;
 	private String middlename;
@@ -23,14 +22,14 @@ public class Profile implements java.io.Serializable {
 	public Profile() {
 	}
 
-	public Profile(Account account) {
-		this.account = account;
+	public Profile(int accountId) {
+		this.accountId = accountId;
 	}
 
-	public Profile(Account account, String firstname, String lastname,
+	public Profile(int accountId, String firstname, String lastname,
 			String middlename, Byte sex, Date birthday, String mobile,
 			Date createdTime, Date updatedTime) {
-		this.account = account;
+		this.accountId = accountId;
 		this.firstname = firstname;
 		this.lastname = lastname;
 		this.middlename = middlename;
@@ -47,14 +46,6 @@ public class Profile implements java.io.Serializable {
 
 	public void setAccountId(int accountId) {
 		this.accountId = accountId;
-	}
-
-	public Account getAccount() {
-		return this.account;
-	}
-
-	public void setAccount(Account account) {
-		this.account = account;
 	}
 
 	public String getFirstname() {

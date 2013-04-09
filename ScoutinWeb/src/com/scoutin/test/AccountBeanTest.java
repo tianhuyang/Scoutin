@@ -5,6 +5,7 @@ import com.scoutin.exception.ScoutinException;
 import com.scoutin.logic.AccountBeanRemote;
 import com.scoutin.logic.AccountService;
 import com.scoutin.logic.AuthenticateBeanRemote;
+import com.scoutin.logic.AuthenticateType;
 import com.scoutin.utilities.EJBUtils;
 
 public class AccountBeanTest {
@@ -18,8 +19,8 @@ public class AccountBeanTest {
 	public static void testSignup(){
 		String[] args={"tianhuyang@hotmail.com","password"};
 		try {
-			int id = AccountService.signup(args, Account.AuthenticateTypeEmail);
-			System.out.println(id);
+			Account account = AccountService.signup(args, AuthenticateType.AuthenticateTypeEmail);
+			System.out.println(account.getAccountId());
 		} catch (ScoutinException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -31,7 +32,7 @@ public class AccountBeanTest {
 		args[0] = "tianhuyang@gmail.com";
 		args[1] = "password1";
 		try {
-			System.out.println(AccountService.authenticate(args, Account.AuthenticateTypeEmail));
+			System.out.println(AccountService.authenticate(args, AuthenticateType.AuthenticateTypeEmail));
 		} catch (ScoutinException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -39,8 +40,8 @@ public class AccountBeanTest {
 	}
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		//testSignup();
-		testAuthenticate();
+		testSignup();
+		//testAuthenticate();
 	}
 
 }
