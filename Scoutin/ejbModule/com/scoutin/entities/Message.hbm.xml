@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated Apr 6, 2013 8:03:56 AM by Hibernate Tools 4.0.0 -->
+<!-- Generated Apr 10, 2013 1:12:27 AM by Hibernate Tools 4.0.0 -->
 <hibernate-mapping>
-    <class name="com.scoutin.entities.Message" table="message" catalog="Scoutin">
-        <id name="messageId" type="java.lang.Long">
+    <class name="com.scoutin.entities.Message" table="MESSAGE" catalog="Scoutin">
+        <id name="messageId" type="long">
             <column name="MESSAGE_ID" />
-            <generator class="identity" />
+            <generator class="assigned" />
         </id>
     </class>
 </hibernate-mapping>

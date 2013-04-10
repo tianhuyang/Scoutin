@@ -4,8 +4,8 @@ import javax.annotation.Resource;
 import javax.ejb.*;
 
 import com.scoutin.entities.Account;
-import com.scoutin.utilities.HibernateUtils;
-import com.scoutin.daos.*;
+import com.scoutin.homes.*;
+import com.scoutin.utilities.DAOUtils;
 
 /**
  * Session Bean implementation class AccountBean
@@ -24,7 +24,7 @@ public class AccountBean implements AccountBeanRemote {
 	@Override
 	public Account signup(Account account) {
 		// TODO Auto-generated method stub
-		HibernateUtils.accountHome.attachDirty(account);
+		DAOUtils.accountHome.attachDirty(account);
 		return account;
 	}
 

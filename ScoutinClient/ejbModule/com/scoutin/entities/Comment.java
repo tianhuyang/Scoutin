@@ -1,6 +1,6 @@
 package com.scoutin.entities;
 
-// Generated Apr 6, 2013 8:06:34 AM by Hibernate Tools 4.0.0
+// Generated Apr 10, 2013 1:11:48 AM by Hibernate Tools 4.0.0
 
 import java.util.Date;
 
@@ -9,9 +9,9 @@ import java.util.Date;
  */
 public class Comment implements java.io.Serializable {
 
-	private Long commentId;
-	private long cardId;
-	private int accountId;
+	private long commentId;
+	private Card card;
+	private Account account;
 	private String content;
 	private Date updatedTime;
 	private Date createdTime;
@@ -19,42 +19,44 @@ public class Comment implements java.io.Serializable {
 	public Comment() {
 	}
 
-	public Comment(long cardId, int accountId) {
-		this.cardId = cardId;
-		this.accountId = accountId;
+	public Comment(long commentId, Card card, Account account) {
+		this.commentId = commentId;
+		this.card = card;
+		this.account = account;
 	}
 
-	public Comment(long cardId, int accountId, String content,
+	public Comment(long commentId, Card card, Account account, String content,
 			Date updatedTime, Date createdTime) {
-		this.cardId = cardId;
-		this.accountId = accountId;
+		this.commentId = commentId;
+		this.card = card;
+		this.account = account;
 		this.content = content;
 		this.updatedTime = updatedTime;
 		this.createdTime = createdTime;
 	}
 
-	public Long getCommentId() {
+	public long getCommentId() {
 		return this.commentId;
 	}
 
-	public void setCommentId(Long commentId) {
+	public void setCommentId(long commentId) {
 		this.commentId = commentId;
 	}
 
-	public long getCardId() {
-		return this.cardId;
+	public Card getCard() {
+		return this.card;
 	}
 
-	public void setCardId(long cardId) {
-		this.cardId = cardId;
+	public void setCard(Card card) {
+		this.card = card;
 	}
 
-	public int getAccountId() {
-		return this.accountId;
+	public Account getAccount() {
+		return this.account;
 	}
 
-	public void setAccountId(int accountId) {
-		this.accountId = accountId;
+	public void setAccount(Account account) {
+		this.account = account;
 	}
 
 	public String getContent() {

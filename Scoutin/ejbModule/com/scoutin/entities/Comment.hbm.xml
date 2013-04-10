@@ -1,19 +1,19 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated Apr 6, 2013 8:03:56 AM by Hibernate Tools 4.0.0 -->
+<!-- Generated Apr 10, 2013 1:12:27 AM by Hibernate Tools 4.0.0 -->
 <hibernate-mapping>
-    <class name="com.scoutin.entities.Comment" table="comment" catalog="Scoutin">
-        <id name="commentId" type="java.lang.Long">
+    <class name="com.scoutin.entities.Comment" table="COMMENT" catalog="Scoutin">
+        <id name="commentId" type="long">
             <column name="COMMENT_ID" />
-            <generator class="identity" />
+            <generator class="assigned" />
         </id>
-        <property name="cardId" type="long">
+        <many-to-one name="card" class="com.scoutin.entities.Card" fetch="select">
             <column name="CARD_ID" not-null="true" />
-        </property>
-        <property name="accountId" type="int">
+        </many-to-one>
+        <many-to-one name="account" class="com.scoutin.entities.Account" fetch="select">
             <column name="ACCOUNT_ID" not-null="true" />
-        </property>
+        </many-to-one>
         <property name="content" type="string">
             <column name="CONTENT" />
         </property>

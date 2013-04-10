@@ -1,6 +1,6 @@
 package com.scoutin.entities;
 
-// Generated Apr 6, 2013 8:06:34 AM by Hibernate Tools 4.0.0
+// Generated Apr 10, 2013 1:11:48 AM by Hibernate Tools 4.0.0
 
 import java.util.Date;
 
@@ -9,32 +9,37 @@ import java.util.Date;
  */
 public class Picture implements java.io.Serializable {
 
-	private Long pictureId;
-	private Long cardId;
+	private long pictureId;
+	private Card card;
 	private Date createdTime;
 
 	public Picture() {
 	}
 
-	public Picture(Long cardId, Date createdTime) {
-		this.cardId = cardId;
-		this.createdTime = createdTime;
-	}
-
-	public Long getPictureId() {
-		return this.pictureId;
-	}
-
-	public void setPictureId(Long pictureId) {
+	public Picture(long pictureId) {
 		this.pictureId = pictureId;
 	}
 
-	public Long getCardId() {
-		return this.cardId;
+	public Picture(long pictureId, Card card, Date createdTime) {
+		this.pictureId = pictureId;
+		this.card = card;
+		this.createdTime = createdTime;
 	}
 
-	public void setCardId(Long cardId) {
-		this.cardId = cardId;
+	public long getPictureId() {
+		return this.pictureId;
+	}
+
+	public void setPictureId(long pictureId) {
+		this.pictureId = pictureId;
+	}
+
+	public Card getCard() {
+		return this.card;
+	}
+
+	public void setCard(Card card) {
+		this.card = card;
 	}
 
 	public Date getCreatedTime() {

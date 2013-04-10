@@ -1,6 +1,6 @@
 package com.scoutin.entities;
 
-// Generated Apr 6, 2013 8:06:34 AM by Hibernate Tools 4.0.0
+// Generated Apr 10, 2013 1:11:48 AM by Hibernate Tools 4.0.0
 
 import java.util.Date;
 
@@ -10,10 +10,8 @@ import java.util.Date;
 public class Profile implements java.io.Serializable {
 
 	private int accountId;
-	private String firstname;
-	private String lastname;
+	private Account account;
 	private String middlename;
-	private Byte sex;
 	private Date birthday;
 	private String mobile;
 	private Date createdTime;
@@ -22,18 +20,14 @@ public class Profile implements java.io.Serializable {
 	public Profile() {
 	}
 
-	public Profile(int accountId) {
-		this.accountId = accountId;
+	public Profile(Account account) {
+		this.account = account;
 	}
 
-	public Profile(int accountId, String firstname, String lastname,
-			String middlename, Byte sex, Date birthday, String mobile,
-			Date createdTime, Date updatedTime) {
-		this.accountId = accountId;
-		this.firstname = firstname;
-		this.lastname = lastname;
+	public Profile(Account account, String middlename, Date birthday,
+			String mobile, Date createdTime, Date updatedTime) {
+		this.account = account;
 		this.middlename = middlename;
-		this.sex = sex;
 		this.birthday = birthday;
 		this.mobile = mobile;
 		this.createdTime = createdTime;
@@ -48,20 +42,12 @@ public class Profile implements java.io.Serializable {
 		this.accountId = accountId;
 	}
 
-	public String getFirstname() {
-		return this.firstname;
+	public Account getAccount() {
+		return this.account;
 	}
 
-	public void setFirstname(String firstname) {
-		this.firstname = firstname;
-	}
-
-	public String getLastname() {
-		return this.lastname;
-	}
-
-	public void setLastname(String lastname) {
-		this.lastname = lastname;
+	public void setAccount(Account account) {
+		this.account = account;
 	}
 
 	public String getMiddlename() {
@@ -70,14 +56,6 @@ public class Profile implements java.io.Serializable {
 
 	public void setMiddlename(String middlename) {
 		this.middlename = middlename;
-	}
-
-	public Byte getSex() {
-		return this.sex;
-	}
-
-	public void setSex(Byte sex) {
-		this.sex = sex;
 	}
 
 	public Date getBirthday() {

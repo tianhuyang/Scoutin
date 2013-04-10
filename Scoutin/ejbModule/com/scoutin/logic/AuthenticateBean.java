@@ -5,9 +5,9 @@ import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 
-import com.scoutin.daos.AccountHome;
 import com.scoutin.entities.Account;
-import com.scoutin.utilities.HibernateUtils;
+import com.scoutin.homes.AccountHome;
+import com.scoutin.utilities.DAOUtils;
 
 /**
  * Session Bean implementation class AuthenticateBean
@@ -29,7 +29,7 @@ public class AuthenticateBean implements AuthenticateBeanRemote {
 		Account account = null;
 		switch(type){
 		case AuthenticateType.AuthenticateTypeEmail:
-			account = HibernateUtils.accountHome.authenticateWithEmail(args[0],args[1]);
+			account = DAOUtils.accountHome.authenticateWithEmail(args[0],args[1]);
 			break;
 		}		
 		return account;

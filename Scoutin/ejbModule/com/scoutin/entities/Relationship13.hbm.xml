@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Apr 9, 2013 11:44:59 PM by Hibernate Tools 4.0.0 -->
+<hibernate-mapping>
+    <class name="com.scoutin.entities.Relationship13" table="relationship_13" catalog="Scoutin">
+        <composite-id name="id" class="com.scoutin.entities.Relationship13Id">
+            <key-property name="albumId" type="long">
+                <column name="ALBUM_ID" />
+            </key-property>
+            <key-property name="cardId" type="long">
+                <column name="CARD_ID" />
+            </key-property>
+        </composite-id>
+    </class>
+</hibernate-mapping>

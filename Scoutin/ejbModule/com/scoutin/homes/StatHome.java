@@ -1,0 +1,125 @@
+package com.scoutin.homes;
+
+// Generated Apr 9, 2013 10:38:05 PM by Hibernate Tools 4.0.0
+
+import java.util.List;
+import javax.naming.InitialContext;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.hibernate.LockMode;
+import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Example;
+
+import com.scoutin.entities.Stat;
+
+/**
+ * Home object for domain model class Stat.
+ * @see com.scoutin.entities.Stat
+ * @author Hibernate Tools
+ */
+public class StatHome {
+
+	private static final Log log = LogFactory.getLog(StatHome.class);
+
+	private final SessionFactory sessionFactory = getSessionFactory();
+
+	protected SessionFactory getSessionFactory() {
+		try {
+			return (SessionFactory) new InitialContext()
+					.lookup("SessionFactory");
+		} catch (Exception e) {
+			log.error("Could not locate SessionFactory in JNDI", e);
+			throw new IllegalStateException(
+					"Could not locate SessionFactory in JNDI");
+		}
+	}
+
+	public void persist(Stat transientInstance) {
+		log.debug("persisting Stat instance");
+		try {
+			sessionFactory.getCurrentSession().persist(transientInstance);
+			log.debug("persist successful");
+		} catch (RuntimeException re) {
+			log.error("persist failed", re);
+			throw re;
+		}
+	}
+
+	public void attachDirty(Stat instance) {
+		log.debug("attaching dirty Stat instance");
+		try {
+			sessionFactory.getCurrentSession().saveOrUpdate(instance);
+			log.debug("attach successful");
+		} catch (RuntimeException re) {
+			log.error("attach failed", re);
+			throw re;
+		}
+	}
+
+	public void attachClean(Stat instance) {
+		log.debug("attaching clean Stat instance");
+		try {
+			sessionFactory.getCurrentSession().lock(instance, LockMode.NONE);
+			log.debug("attach successful");
+		} catch (RuntimeException re) {
+			log.error("attach failed", re);
+			throw re;
+		}
+	}
+
+	public void delete(Stat persistentInstance) {
+		log.debug("deleting Stat instance");
+		try {
+			sessionFactory.getCurrentSession().delete(persistentInstance);
+			log.debug("delete successful");
+		} catch (RuntimeException re) {
+			log.error("delete failed", re);
+			throw re;
+		}
+	}
+
+	public Stat merge(Stat detachedInstance) {
+		log.debug("merging Stat instance");
+		try {
+			Stat result = (Stat) sessionFactory.getCurrentSession().merge(
+					detachedInstance);
+			log.debug("merge successful");
+			return result;
+		} catch (RuntimeException re) {
+			log.error("merge failed", re);
+			throw re;
+		}
+	}
+
+	public Stat findById(int id) {
+		log.debug("getting Stat instance with id: " + id);
+		try {
+			Stat instance = (Stat) sessionFactory.getCurrentSession().get(
+					"com.scoutin.homes.Stat", id);
+			if (instance == null) {
+				log.debug("get successful, no instance found");
+			} else {
+				log.debug("get successful, instance found");
+			}
+			return instance;
+		} catch (RuntimeException re) {
+			log.error("get failed", re);
+			throw re;
+		}
+	}
+
+	public List findByExample(Stat instance) {
+		log.debug("finding Stat instance by example");
+		try {
+			List results = sessionFactory.getCurrentSession()
+					.createCriteria("com.scoutin.homes.Stat")
+					.add(Example.create(instance)).list();
+			log.debug("find by example successful, result size: "
+					+ results.size());
+			return results;
+		} catch (RuntimeException re) {
+			log.error("find by example failed", re);
+			throw re;
+		}
+	}
+}
