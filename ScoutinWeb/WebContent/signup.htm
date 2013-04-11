@@ -7,14 +7,16 @@
 </head>
 <body>
 	<div id="error_output"></div>
-	<span>Email:</span><input id="email" type="text" name="email"><br>
-	<span>Password:</span><input id="password" type="password" name="password"><br>
-	<span>Password Again:</span><input id="repassword" type="password" name="repassword"><br>
+	<input id="email" type="text" name="email" placeholder="Email"><br>
+	<input id="password" type="password" name="password" placeholder="Password"><br>
+	<input id="repassword" type="password" name="repassword" placeholder="Re-password"><br>
+	<input id="firstname" type="text" name="firstname" placeholder="First Name">&nbsp;&nbsp;
+	<input id="lastname" type="text" name="lastname" placeholder="Last Name"><br>
 	<input type="button" value="Sign Up" onclick="emailSignup()">
 	<script>
 	function emailSignup()
 	{
-		Account.emailSignup($("#email").val(),$("#password").val(),$("#repassword").val(),showResult);
+		Account.emailSignup($("#email").val(),$("#password").val(),$("#repassword").val(),$("#firstname").val(),$("#lastname").val(),showResult);
 	}
 	function showResult(result)
 	{

@@ -24,7 +24,9 @@ public class SignupAction extends ActionSupport implements ServletRequestAware {
 	private String email;
 	private String phone;
 	private String password;
-	private String repassword;		
+	private String repassword;
+	private String firstname;
+	private String lastname;
 	private String method;
 	private HttpServletRequest request;
 	Map<String, Object> dataMap;
@@ -60,7 +62,7 @@ public class SignupAction extends ActionSupport implements ServletRequestAware {
 	}
 	
     private void signup(String domain,int type){
-    	String[] args={domain,password};
+    	String[] args={domain,password,firstname,lastname};
     	boolean succeed = true;
 		try {
 			Account account = AccountService.signup(args, type);
@@ -120,6 +122,22 @@ public class SignupAction extends ActionSupport implements ServletRequestAware {
 	
 	public Map<String, Object> getDataMap() {   
         return dataMap;   
-    }   
+    }
+
+	public String getFirstname() {
+		return firstname;
+	}
+
+	public void setFirstname(String firstname) {
+		this.firstname = firstname;
+	}
+
+	public String getLastname() {
+		return lastname;
+	}
+
+	public void setLastname(String lastname) {
+		this.lastname = lastname;
+	}   
 
 }

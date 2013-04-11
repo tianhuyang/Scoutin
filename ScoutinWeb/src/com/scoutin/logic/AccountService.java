@@ -14,6 +14,8 @@ public class AccountService {
 		Account account= new Account();
 		account.setEmail(args[0]);
 		account.setPassword(args[1]);
+		account.setFirstname(args[2]);
+		account.setLastname(args[3]);
 		AccountBeanRemote abr = (AccountBeanRemote)EJBUtils.obtainBean(accountPath);		
 		try{
 			account = abr.signup(account);

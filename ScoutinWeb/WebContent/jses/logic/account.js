@@ -1,7 +1,7 @@
 var Account = {
-	emailSignup: function(email,password,repassword,callback){
+	emailSignup: function(email,password,repassword,firstname,lastname,callback){
 	  $.post("account/emailSignup.action",
-		{email:email, password:password, repassword:repassword},
+		{email:email, password:password, repassword:repassword, firstname:firstname, lastname:lastname},
 		function(data,status){
 			callback(data);
 		},"json");

@@ -33,6 +33,16 @@
 			<message key="error.account.signup.password.mismatch">Passwords don't match</message>
 		</field-validator>
 	</field>
+	<field name="firstname">
+		<field-validator type="requiredstring">
+			<message key="error.account.signup.firstname.requred">Please input firstname</message>
+		</field-validator>
+	</field>
+	<field name="lastname">
+		<field-validator type="requiredstring">
+			<message key="error.account.signup.lastname.requred">Please input lastname</message>
+		</field-validator>
+	</field>
 	
 	<!-- <field name="bar">
 		<field-validator type="required">

@@ -18,7 +18,7 @@ public class TestAccount {
 	
 	@Test
 	public  void testSignup(){
-		String[] args={"tianhuyang@hotmail.com","password"};
+		String[] args={"tianhuyang@hotmail.com","password","Tianhu","Yang"};
 		try {
 			Account account = AccountService.signup(args, AuthenticateType.AuthenticateTypeEmail);
 			System.out.println(account.getAccountId());
