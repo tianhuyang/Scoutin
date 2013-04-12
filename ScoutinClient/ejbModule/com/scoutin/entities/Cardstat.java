@@ -1,6 +1,6 @@
 package com.scoutin.entities;
 
-// Generated Apr 10, 2013 1:11:48 AM by Hibernate Tools 4.0.0
+// Generated Apr 11, 2013 7:59:48 AM by Hibernate Tools 4.0.0
 
 import java.util.Date;
 import java.util.HashSet;
@@ -24,9 +24,8 @@ public class Cardstat implements java.io.Serializable {
 	public Cardstat() {
 	}
 
-	public Cardstat(long cardstatId, Card card) {
+	public Cardstat(long cardstatId) {
 		this.cardstatId = cardstatId;
-		this.card = card;
 	}
 
 	public Cardstat(long cardstatId, Card card, Integer rating,

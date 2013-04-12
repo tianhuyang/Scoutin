@@ -1,6 +1,6 @@
 package com.scoutin.entities;
 
-// Generated Apr 10, 2013 1:11:48 AM by Hibernate Tools 4.0.0
+// Generated Apr 11, 2013 7:59:48 AM by Hibernate Tools 4.0.0
 
 import java.util.Date;
 import java.util.HashSet;
@@ -22,7 +22,6 @@ public class Card implements java.io.Serializable {
 	private Date createdTime;
 	private Date updatedTime;
 	private String tag;
-	private Set pictures = new HashSet(0);
 	private Set albums = new HashSet(0);
 	private Set accounts = new HashSet(0);
 	private Set categories = new HashSet(0);
@@ -40,9 +39,8 @@ public class Card implements java.io.Serializable {
 	public Card(long cardId, Cardbody cardbody, String title,
 			String description, Integer rating, Integer commentsCount,
 			Integer repostsCount, Integer likesCount, Date createdTime,
-			Date updatedTime, String tag, Set pictures, Set albums,
-			Set accounts, Set categories, Set cardstats, Set cardrepostses,
-			Set comments) {
+			Date updatedTime, String tag, Set albums, Set accounts,
+			Set categories, Set cardstats, Set cardrepostses, Set comments) {
 		this.cardId = cardId;
 		this.cardbody = cardbody;
 		this.title = title;
@@ -54,7 +52,6 @@ public class Card implements java.io.Serializable {
 		this.createdTime = createdTime;
 		this.updatedTime = updatedTime;
 		this.tag = tag;
-		this.pictures = pictures;
 		this.albums = albums;
 		this.accounts = accounts;
 		this.categories = categories;
@@ -149,14 +146,6 @@ public class Card implements java.io.Serializable {
 
 	public void setTag(String tag) {
 		this.tag = tag;
-	}
-
-	public Set getPictures() {
-		return this.pictures;
-	}
-
-	public void setPictures(Set pictures) {
-		this.pictures = pictures;
 	}
 
 	public Set getAlbums() {

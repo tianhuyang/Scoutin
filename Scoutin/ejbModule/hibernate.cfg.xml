@@ -8,7 +8,7 @@
         <property name="hibernate.connection.autocommit">true</property>
         <property name="hibernate.connection.driver_class">org.gjt.mm.mysql.Driver</property>
         <property name="hibernate.connection.password">Scoutin12345!</property>
-        <property name="hibernate.connection.url">jdbc:mysql://50.63.244.5:3306/Scoutin</property>
+        <property name="hibernate.connection.url">jdbc:mysql://ec2-54-244-195-174.us-west-2.compute.amazonaws.com:3306/Scoutin</property>
         <property name="hibernate.connection.username">Scoutin</property>
         <property name="hibernate.current_session_context_class">jta</property>
         <property name="hibernate.dialect">org.hibernate.dialect.MySQL5InnoDBDialect</property>
@@ -17,7 +17,6 @@
         <property name="hibernate.transaction.factory_class">org.hibernate.transaction.JTATransactionFactory</property>
         <property name="hibernate.transaction.manager_lookup_class">org.hibernate.transaction.JBossTransactionManagerLookup</property>
         <mapping resource="com/scoutin/entities/Album.hbm.xml" />
-        <mapping resource="com/scoutin/entities/Picture.hbm.xml" />
         <mapping resource="com/scoutin/entities/Category.hbm.xml" />
         <mapping resource="com/scoutin/entities/Follower.hbm.xml" />
         <mapping resource="com/scoutin/entities/Card.hbm.xml" />

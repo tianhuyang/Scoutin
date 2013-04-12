@@ -1,6 +1,6 @@
-package com.scoutin.homes;
+package com.scoutin.entities;
 
-// Generated Apr 9, 2013 10:38:05 PM by Hibernate Tools 4.0.0
+// Generated Apr 11, 2013 5:17:27 AM by Hibernate Tools 4.0.0
 
 import java.util.List;
 import javax.naming.InitialContext;
@@ -10,16 +10,14 @@ import org.hibernate.LockMode;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Example;
 
-import com.scoutin.entities.Follower;
-
 /**
- * Home object for domain model class Follower.
- * @see com.scoutin.entities.Follower
+ * Home object for domain model class Cardreposts.
+ * @see com.scoutin.entities.Cardreposts
  * @author Hibernate Tools
  */
-public class FollowerHome {
+public class CardrepostsHome {
 
-	private static final Log log = LogFactory.getLog(FollowerHome.class);
+	private static final Log log = LogFactory.getLog(CardrepostsHome.class);
 
 	private final SessionFactory sessionFactory = getSessionFactory();
 
@@ -34,8 +32,8 @@ public class FollowerHome {
 		}
 	}
 
-	public void persist(Follower transientInstance) {
-		log.debug("persisting Follower instance");
+	public void persist(Cardreposts transientInstance) {
+		log.debug("persisting Cardreposts instance");
 		try {
 			sessionFactory.getCurrentSession().persist(transientInstance);
 			log.debug("persist successful");
@@ -45,8 +43,8 @@ public class FollowerHome {
 		}
 	}
 
-	public void attachDirty(Follower instance) {
-		log.debug("attaching dirty Follower instance");
+	public void attachDirty(Cardreposts instance) {
+		log.debug("attaching dirty Cardreposts instance");
 		try {
 			sessionFactory.getCurrentSession().saveOrUpdate(instance);
 			log.debug("attach successful");
@@ -56,8 +54,8 @@ public class FollowerHome {
 		}
 	}
 
-	public void attachClean(Follower instance) {
-		log.debug("attaching clean Follower instance");
+	public void attachClean(Cardreposts instance) {
+		log.debug("attaching clean Cardreposts instance");
 		try {
 			sessionFactory.getCurrentSession().lock(instance, LockMode.NONE);
 			log.debug("attach successful");
@@ -67,8 +65,8 @@ public class FollowerHome {
 		}
 	}
 
-	public void delete(Follower persistentInstance) {
-		log.debug("deleting Follower instance");
+	public void delete(Cardreposts persistentInstance) {
+		log.debug("deleting Cardreposts instance");
 		try {
 			sessionFactory.getCurrentSession().delete(persistentInstance);
 			log.debug("delete successful");
@@ -78,11 +76,11 @@ public class FollowerHome {
 		}
 	}
 
-	public Follower merge(Follower detachedInstance) {
-		log.debug("merging Follower instance");
+	public Cardreposts merge(Cardreposts detachedInstance) {
+		log.debug("merging Cardreposts instance");
 		try {
-			Follower result = (Follower) sessionFactory.getCurrentSession()
-					.merge(detachedInstance);
+			Cardreposts result = (Cardreposts) sessionFactory
+					.getCurrentSession().merge(detachedInstance);
 			log.debug("merge successful");
 			return result;
 		} catch (RuntimeException re) {
@@ -91,11 +89,12 @@ public class FollowerHome {
 		}
 	}
 
-	public Follower findById(com.scoutin.entities.FollowerId id) {
-		log.debug("getting Follower instance with id: " + id);
+	public Cardreposts findById(com.scoutin.entities.CardrepostsId id) {
+		log.debug("getting Cardreposts instance with id: " + id);
 		try {
-			Follower instance = (Follower) sessionFactory.getCurrentSession()
-					.get("com.scoutin.homes.Follower", id);
+			Cardreposts instance = (Cardreposts) sessionFactory
+					.getCurrentSession().get(
+							"com.scoutin.entities.Cardreposts", id);
 			if (instance == null) {
 				log.debug("get successful, no instance found");
 			} else {
@@ -108,11 +107,11 @@ public class FollowerHome {
 		}
 	}
 
-	public List findByExample(Follower instance) {
-		log.debug("finding Follower instance by example");
+	public List findByExample(Cardreposts instance) {
+		log.debug("finding Cardreposts instance by example");
 		try {
 			List results = sessionFactory.getCurrentSession()
-					.createCriteria("com.scoutin.homes.Follower")
+					.createCriteria("com.scoutin.entities.Cardreposts")
 					.add(Example.create(instance)).list();
 			log.debug("find by example successful, result size: "
 					+ results.size());

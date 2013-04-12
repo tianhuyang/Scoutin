@@ -5,8 +5,8 @@ import org.apache.commons.logging.LogFactory;
 import org.hibernate.Query;
 
 import com.scoutin.entities.Account;
-import com.scoutin.homes.AccountHome;
-import com.scoutin.utilities.DAOUtils;
+import com.scoutin.entities.AccountHome;
+import com.scoutin.utilities.DaoUtils;
 
 public class AccountDao extends AccountHome {
 
@@ -17,7 +17,7 @@ public class AccountDao extends AccountHome {
 		log.debug("authenticate with email");
 		Account account = null;
 		try {
-			Query query = DAOUtils.sessionFactory.getCurrentSession().createQuery(emailAuthSql);
+			Query query = DaoUtils.sessionFactory.getCurrentSession().createQuery(emailAuthSql);
 			query.setString(0, email);
 			query.setString(1, password);
 			account = (Account)query.uniqueResult();
@@ -27,5 +27,18 @@ public class AccountDao extends AccountHome {
 			throw re;
 		}
 		return account;
+	}
+	
+	public Account load(int id) {
+		log.debug("loading Account instance with id: " + id);
+		try {
+			Account instance = (Account) DaoUtils.sessionFactory.getCurrentSession()
+					.load("com.scoutin.entities.Account", id);	
+			log.debug("loading successful, instance found");
+			return instance;
+		} catch (RuntimeException re) {
+			log.error("loading failed", re);
+			throw re;
+		}
 	}
 }

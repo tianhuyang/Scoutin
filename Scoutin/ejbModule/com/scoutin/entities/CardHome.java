@@ -1,6 +1,6 @@
-package com.scoutin.homes;
+package com.scoutin.entities;
 
-// Generated Apr 9, 2013 10:38:05 PM by Hibernate Tools 4.0.0
+// Generated Apr 11, 2013 5:17:27 AM by Hibernate Tools 4.0.0
 
 import java.util.List;
 import javax.naming.InitialContext;
@@ -9,8 +9,6 @@ import org.apache.commons.logging.LogFactory;
 import org.hibernate.LockMode;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Example;
-
-import com.scoutin.entities.Card;
 
 /**
  * Home object for domain model class Card.
@@ -91,11 +89,11 @@ public class CardHome {
 		}
 	}
 
-	public Card findById(java.lang.Long id) {
+	public Card findById(long id) {
 		log.debug("getting Card instance with id: " + id);
 		try {
 			Card instance = (Card) sessionFactory.getCurrentSession().get(
-					"com.scoutin.homes.Card", id);
+					"com.scoutin.entities.Card", id);
 			if (instance == null) {
 				log.debug("get successful, no instance found");
 			} else {
@@ -112,7 +110,7 @@ public class CardHome {
 		log.debug("finding Card instance by example");
 		try {
 			List results = sessionFactory.getCurrentSession()
-					.createCriteria("com.scoutin.homes.Card")
+					.createCriteria("com.scoutin.entities.Card")
 					.add(Example.create(instance)).list();
 			log.debug("find by example successful, result size: "
 					+ results.size());

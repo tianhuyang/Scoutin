@@ -1,6 +1,6 @@
 package com.scoutin.entities;
 
-// Generated Apr 10, 2013 1:11:48 AM by Hibernate Tools 4.0.0
+// Generated Apr 11, 2013 7:59:48 AM by Hibernate Tools 4.0.0
 
 import java.util.Date;
 import java.util.HashSet;
@@ -24,9 +24,8 @@ public class Album implements java.io.Serializable {
 	public Album() {
 	}
 
-	public Album(long albumId, Account account) {
+	public Album(long albumId) {
 		this.albumId = albumId;
-		this.account = account;
 	}
 
 	public Album(long albumId, Account account, String name, String coverPath,

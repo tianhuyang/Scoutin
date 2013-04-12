@@ -1,6 +1,6 @@
-package com.scoutin.homes;
+package com.scoutin.entities;
 
-// Generated Apr 9, 2013 10:38:05 PM by Hibernate Tools 4.0.0
+// Generated Apr 11, 2013 5:17:27 AM by Hibernate Tools 4.0.0
 
 import java.util.List;
 import javax.naming.InitialContext;
@@ -10,16 +10,14 @@ import org.hibernate.LockMode;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Example;
 
-import com.scoutin.entities.Stat;
-
 /**
- * Home object for domain model class Stat.
- * @see com.scoutin.entities.Stat
+ * Home object for domain model class Album.
+ * @see com.scoutin.entities.Album
  * @author Hibernate Tools
  */
-public class StatHome {
+public class AlbumHome {
 
-	private static final Log log = LogFactory.getLog(StatHome.class);
+	private static final Log log = LogFactory.getLog(AlbumHome.class);
 
 	private final SessionFactory sessionFactory = getSessionFactory();
 
@@ -34,8 +32,8 @@ public class StatHome {
 		}
 	}
 
-	public void persist(Stat transientInstance) {
-		log.debug("persisting Stat instance");
+	public void persist(Album transientInstance) {
+		log.debug("persisting Album instance");
 		try {
 			sessionFactory.getCurrentSession().persist(transientInstance);
 			log.debug("persist successful");
@@ -45,8 +43,8 @@ public class StatHome {
 		}
 	}
 
-	public void attachDirty(Stat instance) {
-		log.debug("attaching dirty Stat instance");
+	public void attachDirty(Album instance) {
+		log.debug("attaching dirty Album instance");
 		try {
 			sessionFactory.getCurrentSession().saveOrUpdate(instance);
 			log.debug("attach successful");
@@ -56,8 +54,8 @@ public class StatHome {
 		}
 	}
 
-	public void attachClean(Stat instance) {
-		log.debug("attaching clean Stat instance");
+	public void attachClean(Album instance) {
+		log.debug("attaching clean Album instance");
 		try {
 			sessionFactory.getCurrentSession().lock(instance, LockMode.NONE);
 			log.debug("attach successful");
@@ -67,8 +65,8 @@ public class StatHome {
 		}
 	}
 
-	public void delete(Stat persistentInstance) {
-		log.debug("deleting Stat instance");
+	public void delete(Album persistentInstance) {
+		log.debug("deleting Album instance");
 		try {
 			sessionFactory.getCurrentSession().delete(persistentInstance);
 			log.debug("delete successful");
@@ -78,10 +76,10 @@ public class StatHome {
 		}
 	}
 
-	public Stat merge(Stat detachedInstance) {
-		log.debug("merging Stat instance");
+	public Album merge(Album detachedInstance) {
+		log.debug("merging Album instance");
 		try {
-			Stat result = (Stat) sessionFactory.getCurrentSession().merge(
+			Album result = (Album) sessionFactory.getCurrentSession().merge(
 					detachedInstance);
 			log.debug("merge successful");
 			return result;
@@ -91,11 +89,11 @@ public class StatHome {
 		}
 	}
 
-	public Stat findById(int id) {
-		log.debug("getting Stat instance with id: " + id);
+	public Album findById(long id) {
+		log.debug("getting Album instance with id: " + id);
 		try {
-			Stat instance = (Stat) sessionFactory.getCurrentSession().get(
-					"com.scoutin.homes.Stat", id);
+			Album instance = (Album) sessionFactory.getCurrentSession().get(
+					"com.scoutin.entities.Album", id);
 			if (instance == null) {
 				log.debug("get successful, no instance found");
 			} else {
@@ -108,11 +106,11 @@ public class StatHome {
 		}
 	}
 
-	public List findByExample(Stat instance) {
-		log.debug("finding Stat instance by example");
+	public List findByExample(Album instance) {
+		log.debug("finding Album instance by example");
 		try {
 			List results = sessionFactory.getCurrentSession()
-					.createCriteria("com.scoutin.homes.Stat")
+					.createCriteria("com.scoutin.entities.Album")
 					.add(Example.create(instance)).list();
 			log.debug("find by example successful, result size: "
 					+ results.size());

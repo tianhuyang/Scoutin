@@ -6,9 +6,9 @@ import org.hibernate.cfg.Configuration;
 
 import com.scoutin.daos.*;
 
-public class DAOUtils {
+public class DaoUtils {
 
-	private static final Log log = LogFactory.getLog(DAOUtils.class);
+	private static final Log log = LogFactory.getLog(DaoUtils.class);
 	public static final SessionFactory sessionFactory = getSessionFactory();
 	protected static SessionFactory getSessionFactory() {
 		try {
@@ -20,6 +20,9 @@ public class DAOUtils {
 					"Could not locate SessionFactory in JNDI"+e.getMessage());
 		}
 	}
-	public static final AccountDao accountHome = new AccountDao();
-	public static final CardDao cardHome = new CardDao();
+	public static final AccountDao accountDAO = new AccountDao();
+	public static final CardDao cardDAO = new CardDao();
+	public static final CardStatDao cardStatDao = new CardStatDao();
+	public static final CardBodyDao cardBodyDao = new CardBodyDao();
+	public static final AlbumDao albumDao = new AlbumDao();
 }

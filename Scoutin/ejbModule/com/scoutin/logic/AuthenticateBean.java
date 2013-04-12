@@ -2,12 +2,8 @@ package com.scoutin.logic;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
-import javax.ejb.TransactionAttribute;
-import javax.ejb.TransactionAttributeType;
-
 import com.scoutin.entities.Account;
-import com.scoutin.homes.AccountHome;
-import com.scoutin.utilities.DAOUtils;
+import com.scoutin.utilities.DaoUtils;
 
 /**
  * Session Bean implementation class AuthenticateBean
@@ -28,8 +24,8 @@ public class AuthenticateBean implements AuthenticateBeanRemote {
 		// TODO Auto-generated method stub
 		Account account = null;
 		switch(type){
-		case AuthenticateType.AuthenticateTypeEmail:
-			account = DAOUtils.accountHome.authenticateWithEmail(args[0],args[1]);
+		case AccountConstants.AuthenticateTypeEmail:
+			account = DaoUtils.accountDAO.authenticateWithEmail(args[0],args[1]);
 			break;
 		}		
 		return account;

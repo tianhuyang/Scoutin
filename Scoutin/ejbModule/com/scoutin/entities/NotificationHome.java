@@ -1,6 +1,6 @@
-package com.scoutin.homes;
+package com.scoutin.entities;
 
-// Generated Apr 9, 2013 10:38:05 PM by Hibernate Tools 4.0.0
+// Generated Apr 11, 2013 5:17:27 AM by Hibernate Tools 4.0.0
 
 import java.util.List;
 import javax.naming.InitialContext;
@@ -10,16 +10,14 @@ import org.hibernate.LockMode;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Example;
 
-import com.scoutin.entities.Account;
-
 /**
- * Home object for domain model class Account.
- * @see com.scoutin.entities.Account
+ * Home object for domain model class Notification.
+ * @see com.scoutin.entities.Notification
  * @author Hibernate Tools
  */
-public class AccountHome {
+public class NotificationHome {
 
-	private static final Log log = LogFactory.getLog(AccountHome.class);
+	private static final Log log = LogFactory.getLog(NotificationHome.class);
 
 	private final SessionFactory sessionFactory = getSessionFactory();
 
@@ -34,8 +32,8 @@ public class AccountHome {
 		}
 	}
 
-	public void persist(Account transientInstance) {
-		log.debug("persisting Account instance");
+	public void persist(Notification transientInstance) {
+		log.debug("persisting Notification instance");
 		try {
 			sessionFactory.getCurrentSession().persist(transientInstance);
 			log.debug("persist successful");
@@ -45,8 +43,8 @@ public class AccountHome {
 		}
 	}
 
-	public void attachDirty(Account instance) {
-		log.debug("attaching dirty Account instance");
+	public void attachDirty(Notification instance) {
+		log.debug("attaching dirty Notification instance");
 		try {
 			sessionFactory.getCurrentSession().saveOrUpdate(instance);
 			log.debug("attach successful");
@@ -56,8 +54,8 @@ public class AccountHome {
 		}
 	}
 
-	public void attachClean(Account instance) {
-		log.debug("attaching clean Account instance");
+	public void attachClean(Notification instance) {
+		log.debug("attaching clean Notification instance");
 		try {
 			sessionFactory.getCurrentSession().lock(instance, LockMode.NONE);
 			log.debug("attach successful");
@@ -67,8 +65,8 @@ public class AccountHome {
 		}
 	}
 
-	public void delete(Account persistentInstance) {
-		log.debug("deleting Account instance");
+	public void delete(Notification persistentInstance) {
+		log.debug("deleting Notification instance");
 		try {
 			sessionFactory.getCurrentSession().delete(persistentInstance);
 			log.debug("delete successful");
@@ -78,11 +76,11 @@ public class AccountHome {
 		}
 	}
 
-	public Account merge(Account detachedInstance) {
-		log.debug("merging Account instance");
+	public Notification merge(Notification detachedInstance) {
+		log.debug("merging Notification instance");
 		try {
-			Account result = (Account) sessionFactory.getCurrentSession()
-					.merge(detachedInstance);
+			Notification result = (Notification) sessionFactory
+					.getCurrentSession().merge(detachedInstance);
 			log.debug("merge successful");
 			return result;
 		} catch (RuntimeException re) {
@@ -91,11 +89,12 @@ public class AccountHome {
 		}
 	}
 
-	public Account findById(java.lang.Integer id) {
-		log.debug("getting Account instance with id: " + id);
+	public Notification findById(long id) {
+		log.debug("getting Notification instance with id: " + id);
 		try {
-			Account instance = (Account) sessionFactory.getCurrentSession()
-					.get("com.scoutin.homes.Account", id);
+			Notification instance = (Notification) sessionFactory
+					.getCurrentSession().get(
+							"com.scoutin.entities.Notification", id);
 			if (instance == null) {
 				log.debug("get successful, no instance found");
 			} else {
@@ -108,11 +107,11 @@ public class AccountHome {
 		}
 	}
 
-	public List findByExample(Account instance) {
-		log.debug("finding Account instance by example");
+	public List findByExample(Notification instance) {
+		log.debug("finding Notification instance by example");
 		try {
 			List results = sessionFactory.getCurrentSession()
-					.createCriteria("com.scoutin.homes.Account")
+					.createCriteria("com.scoutin.entities.Notification")
 					.add(Example.create(instance)).list();
 			log.debug("find by example successful, result size: "
 					+ results.size());

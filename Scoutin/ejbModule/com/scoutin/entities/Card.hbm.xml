@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated Apr 10, 2013 1:12:27 AM by Hibernate Tools 4.0.0 -->
+<!-- Generated Apr 11, 2013 6:57:39 PM by Hibernate Tools 4.0.0 -->
 <hibernate-mapping>
     <class name="com.scoutin.entities.Card" table="CARD" catalog="Scoutin">
-        <id name="cardId" type="long">
+        <id name="cardId" type="java.lang.Long">
             <column name="CARD_ID" />
-            <generator class="assigned" />
+            <generator class="identity" />
         </id>
         <many-to-one name="cardbody" class="com.scoutin.entities.Cardbody" fetch="select">
             <column name="CARDBODY_ID" />
@@ -38,12 +38,6 @@
         <property name="tag" type="string">
             <column name="TAG" length="65535" />
         </property>
-        <set name="pictures" table="PICTURE" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="CARD_ID" />
-            </key>
-            <one-to-many class="com.scoutin.entities.Picture" />
-        </set>
         <set name="albums" table="ALBUMCARD" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="CARD_ID" not-null="true" />
@@ -70,7 +64,7 @@
         </set>
         <set name="cardstats" table="CARDSTAT" inverse="true" lazy="true" fetch="select">
             <key>
-                <column name="CARD_ID" not-null="true" />
+                <column name="CARD_ID" />
             </key>
             <one-to-many class="com.scoutin.entities.Cardstat" />
         </set>

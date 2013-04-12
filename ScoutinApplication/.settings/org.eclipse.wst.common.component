@@ -38,5 +38,8 @@
         <dependent-module archiveName="javassist-3.15.0-GA.jar" deploy-path="/lib" handle="module:/classpath/lib/Scoutin/lib/javassist-3.15.0-GA.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module archiveName="commons-beanutils-1.8.3.jar" deploy-path="/lib" handle="module:/classpath/lib/Scoutin/lib/commons-beanutils-1.8.3.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
     </wb-module>
 </project-modules>

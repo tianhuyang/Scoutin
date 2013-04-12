@@ -1,6 +1,6 @@
 package com.scoutin.logic;
 
-public interface AuthenticateType {
+public interface AccountConstants {
 	public static final int AuthenticateTypeEmail=0;
 	public static final int AuthenticateTypeFacebook=1;
 	public static final int AuthenticateTypeTwitter=2;

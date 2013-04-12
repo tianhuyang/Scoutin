@@ -1,6 +1,6 @@
 package com.scoutin.entities;
 
-// Generated Apr 10, 2013 1:11:48 AM by Hibernate Tools 4.0.0
+// Generated Apr 11, 2013 7:59:48 AM by Hibernate Tools 4.0.0
 
 import java.util.HashSet;
 import java.util.Set;

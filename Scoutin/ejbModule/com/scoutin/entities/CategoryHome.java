@@ -1,6 +1,6 @@
-package com.scoutin.homes;
+package com.scoutin.entities;
 
-// Generated Apr 9, 2013 10:38:05 PM by Hibernate Tools 4.0.0
+// Generated Apr 11, 2013 5:17:27 AM by Hibernate Tools 4.0.0
 
 import java.util.List;
 import javax.naming.InitialContext;
@@ -10,16 +10,14 @@ import org.hibernate.LockMode;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Example;
 
-import com.scoutin.entities.Message;
-
 /**
- * Home object for domain model class Message.
- * @see com.scoutin.entities.Message
+ * Home object for domain model class Category.
+ * @see com.scoutin.entities.Category
  * @author Hibernate Tools
  */
-public class MessageHome {
+public class CategoryHome {
 
-	private static final Log log = LogFactory.getLog(MessageHome.class);
+	private static final Log log = LogFactory.getLog(CategoryHome.class);
 
 	private final SessionFactory sessionFactory = getSessionFactory();
 
@@ -34,8 +32,8 @@ public class MessageHome {
 		}
 	}
 
-	public void persist(Message transientInstance) {
-		log.debug("persisting Message instance");
+	public void persist(Category transientInstance) {
+		log.debug("persisting Category instance");
 		try {
 			sessionFactory.getCurrentSession().persist(transientInstance);
 			log.debug("persist successful");
@@ -45,8 +43,8 @@ public class MessageHome {
 		}
 	}
 
-	public void attachDirty(Message instance) {
-		log.debug("attaching dirty Message instance");
+	public void attachDirty(Category instance) {
+		log.debug("attaching dirty Category instance");
 		try {
 			sessionFactory.getCurrentSession().saveOrUpdate(instance);
 			log.debug("attach successful");
@@ -56,8 +54,8 @@ public class MessageHome {
 		}
 	}
 
-	public void attachClean(Message instance) {
-		log.debug("attaching clean Message instance");
+	public void attachClean(Category instance) {
+		log.debug("attaching clean Category instance");
 		try {
 			sessionFactory.getCurrentSession().lock(instance, LockMode.NONE);
 			log.debug("attach successful");
@@ -67,8 +65,8 @@ public class MessageHome {
 		}
 	}
 
-	public void delete(Message persistentInstance) {
-		log.debug("deleting Message instance");
+	public void delete(Category persistentInstance) {
+		log.debug("deleting Category instance");
 		try {
 			sessionFactory.getCurrentSession().delete(persistentInstance);
 			log.debug("delete successful");
@@ -78,10 +76,10 @@ public class MessageHome {
 		}
 	}
 
-	public Message merge(Message detachedInstance) {
-		log.debug("merging Message instance");
+	public Category merge(Category detachedInstance) {
+		log.debug("merging Category instance");
 		try {
-			Message result = (Message) sessionFactory.getCurrentSession()
+			Category result = (Category) sessionFactory.getCurrentSession()
 					.merge(detachedInstance);
 			log.debug("merge successful");
 			return result;
@@ -91,11 +89,11 @@ public class MessageHome {
 		}
 	}
 
-	public Message findById(java.lang.Long id) {
-		log.debug("getting Message instance with id: " + id);
+	public Category findById(short id) {
+		log.debug("getting Category instance with id: " + id);
 		try {
-			Message instance = (Message) sessionFactory.getCurrentSession()
-					.get("com.scoutin.homes.Message", id);
+			Category instance = (Category) sessionFactory.getCurrentSession()
+					.get("com.scoutin.entities.Category", id);
 			if (instance == null) {
 				log.debug("get successful, no instance found");
 			} else {
@@ -108,11 +106,11 @@ public class MessageHome {
 		}
 	}
 
-	public List findByExample(Message instance) {
-		log.debug("finding Message instance by example");
+	public List findByExample(Category instance) {
+		log.debug("finding Category instance by example");
 		try {
 			List results = sessionFactory.getCurrentSession()
-					.createCriteria("com.scoutin.homes.Message")
+					.createCriteria("com.scoutin.entities.Category")
 					.add(Example.create(instance)).list();
 			log.debug("find by example successful, result size: "
 					+ results.size());

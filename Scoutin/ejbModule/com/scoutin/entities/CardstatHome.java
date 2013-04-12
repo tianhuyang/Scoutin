@@ -1,6 +1,6 @@
-package com.scoutin.homes;
+package com.scoutin.entities;
 
-// Generated Apr 9, 2013 10:38:05 PM by Hibernate Tools 4.0.0
+// Generated Apr 11, 2013 5:17:27 AM by Hibernate Tools 4.0.0
 
 import java.util.List;
 import javax.naming.InitialContext;
@@ -10,16 +10,14 @@ import org.hibernate.LockMode;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Example;
 
-import com.scoutin.entities.Comment;
-
 /**
- * Home object for domain model class Comment.
- * @see com.scoutin.entities.Comment
+ * Home object for domain model class Cardstat.
+ * @see com.scoutin.entities.Cardstat
  * @author Hibernate Tools
  */
-public class CommentHome {
+public class CardstatHome {
 
-	private static final Log log = LogFactory.getLog(CommentHome.class);
+	private static final Log log = LogFactory.getLog(CardstatHome.class);
 
 	private final SessionFactory sessionFactory = getSessionFactory();
 
@@ -34,8 +32,8 @@ public class CommentHome {
 		}
 	}
 
-	public void persist(Comment transientInstance) {
-		log.debug("persisting Comment instance");
+	public void persist(Cardstat transientInstance) {
+		log.debug("persisting Cardstat instance");
 		try {
 			sessionFactory.getCurrentSession().persist(transientInstance);
 			log.debug("persist successful");
@@ -45,8 +43,8 @@ public class CommentHome {
 		}
 	}
 
-	public void attachDirty(Comment instance) {
-		log.debug("attaching dirty Comment instance");
+	public void attachDirty(Cardstat instance) {
+		log.debug("attaching dirty Cardstat instance");
 		try {
 			sessionFactory.getCurrentSession().saveOrUpdate(instance);
 			log.debug("attach successful");
@@ -56,8 +54,8 @@ public class CommentHome {
 		}
 	}
 
-	public void attachClean(Comment instance) {
-		log.debug("attaching clean Comment instance");
+	public void attachClean(Cardstat instance) {
+		log.debug("attaching clean Cardstat instance");
 		try {
 			sessionFactory.getCurrentSession().lock(instance, LockMode.NONE);
 			log.debug("attach successful");
@@ -67,8 +65,8 @@ public class CommentHome {
 		}
 	}
 
-	public void delete(Comment persistentInstance) {
-		log.debug("deleting Comment instance");
+	public void delete(Cardstat persistentInstance) {
+		log.debug("deleting Cardstat instance");
 		try {
 			sessionFactory.getCurrentSession().delete(persistentInstance);
 			log.debug("delete successful");
@@ -78,10 +76,10 @@ public class CommentHome {
 		}
 	}
 
-	public Comment merge(Comment detachedInstance) {
-		log.debug("merging Comment instance");
+	public Cardstat merge(Cardstat detachedInstance) {
+		log.debug("merging Cardstat instance");
 		try {
-			Comment result = (Comment) sessionFactory.getCurrentSession()
+			Cardstat result = (Cardstat) sessionFactory.getCurrentSession()
 					.merge(detachedInstance);
 			log.debug("merge successful");
 			return result;
@@ -91,11 +89,11 @@ public class CommentHome {
 		}
 	}
 
-	public Comment findById(java.lang.Long id) {
-		log.debug("getting Comment instance with id: " + id);
+	public Cardstat findById(long id) {
+		log.debug("getting Cardstat instance with id: " + id);
 		try {
-			Comment instance = (Comment) sessionFactory.getCurrentSession()
-					.get("com.scoutin.homes.Comment", id);
+			Cardstat instance = (Cardstat) sessionFactory.getCurrentSession()
+					.get("com.scoutin.entities.Cardstat", id);
 			if (instance == null) {
 				log.debug("get successful, no instance found");
 			} else {
@@ -108,11 +106,11 @@ public class CommentHome {
 		}
 	}
 
-	public List findByExample(Comment instance) {
-		log.debug("finding Comment instance by example");
+	public List findByExample(Cardstat instance) {
+		log.debug("finding Cardstat instance by example");
 		try {
 			List results = sessionFactory.getCurrentSession()
-					.createCriteria("com.scoutin.homes.Comment")
+					.createCriteria("com.scoutin.entities.Cardstat")
 					.add(Example.create(instance)).list();
 			log.debug("find by example successful, result size: "
 					+ results.size());

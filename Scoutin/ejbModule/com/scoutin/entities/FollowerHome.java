@@ -1,6 +1,6 @@
-package com.scoutin.homes;
+package com.scoutin.entities;
 
-// Generated Apr 9, 2013 10:38:05 PM by Hibernate Tools 4.0.0
+// Generated Apr 11, 2013 5:17:27 AM by Hibernate Tools 4.0.0
 
 import java.util.List;
 import javax.naming.InitialContext;
@@ -10,16 +10,14 @@ import org.hibernate.LockMode;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Example;
 
-import com.scoutin.entities.Profile;
-
 /**
- * Home object for domain model class Profile.
- * @see com.scoutin.entities.Profile
+ * Home object for domain model class Follower.
+ * @see com.scoutin.entities.Follower
  * @author Hibernate Tools
  */
-public class ProfileHome {
+public class FollowerHome {
 
-	private static final Log log = LogFactory.getLog(ProfileHome.class);
+	private static final Log log = LogFactory.getLog(FollowerHome.class);
 
 	private final SessionFactory sessionFactory = getSessionFactory();
 
@@ -34,8 +32,8 @@ public class ProfileHome {
 		}
 	}
 
-	public void persist(Profile transientInstance) {
-		log.debug("persisting Profile instance");
+	public void persist(Follower transientInstance) {
+		log.debug("persisting Follower instance");
 		try {
 			sessionFactory.getCurrentSession().persist(transientInstance);
 			log.debug("persist successful");
@@ -45,8 +43,8 @@ public class ProfileHome {
 		}
 	}
 
-	public void attachDirty(Profile instance) {
-		log.debug("attaching dirty Profile instance");
+	public void attachDirty(Follower instance) {
+		log.debug("attaching dirty Follower instance");
 		try {
 			sessionFactory.getCurrentSession().saveOrUpdate(instance);
 			log.debug("attach successful");
@@ -56,8 +54,8 @@ public class ProfileHome {
 		}
 	}
 
-	public void attachClean(Profile instance) {
-		log.debug("attaching clean Profile instance");
+	public void attachClean(Follower instance) {
+		log.debug("attaching clean Follower instance");
 		try {
 			sessionFactory.getCurrentSession().lock(instance, LockMode.NONE);
 			log.debug("attach successful");
@@ -67,8 +65,8 @@ public class ProfileHome {
 		}
 	}
 
-	public void delete(Profile persistentInstance) {
-		log.debug("deleting Profile instance");
+	public void delete(Follower persistentInstance) {
+		log.debug("deleting Follower instance");
 		try {
 			sessionFactory.getCurrentSession().delete(persistentInstance);
 			log.debug("delete successful");
@@ -78,10 +76,10 @@ public class ProfileHome {
 		}
 	}
 
-	public Profile merge(Profile detachedInstance) {
-		log.debug("merging Profile instance");
+	public Follower merge(Follower detachedInstance) {
+		log.debug("merging Follower instance");
 		try {
-			Profile result = (Profile) sessionFactory.getCurrentSession()
+			Follower result = (Follower) sessionFactory.getCurrentSession()
 					.merge(detachedInstance);
 			log.debug("merge successful");
 			return result;
@@ -91,11 +89,11 @@ public class ProfileHome {
 		}
 	}
 
-	public Profile findById(int id) {
-		log.debug("getting Profile instance with id: " + id);
+	public Follower findById(com.scoutin.entities.FollowerId id) {
+		log.debug("getting Follower instance with id: " + id);
 		try {
-			Profile instance = (Profile) sessionFactory.getCurrentSession()
-					.get("com.scoutin.homes.Profile", id);
+			Follower instance = (Follower) sessionFactory.getCurrentSession()
+					.get("com.scoutin.entities.Follower", id);
 			if (instance == null) {
 				log.debug("get successful, no instance found");
 			} else {
@@ -108,11 +106,11 @@ public class ProfileHome {
 		}
 	}
 
-	public List findByExample(Profile instance) {
-		log.debug("finding Profile instance by example");
+	public List findByExample(Follower instance) {
+		log.debug("finding Follower instance by example");
 		try {
 			List results = sessionFactory.getCurrentSession()
-					.createCriteria("com.scoutin.homes.Profile")
+					.createCriteria("com.scoutin.entities.Follower")
 					.add(Example.create(instance)).list();
 			log.debug("find by example successful, result size: "
 					+ results.size());

@@ -1,6 +1,6 @@
-package com.scoutin.homes;
+package com.scoutin.entities;
 
-// Generated Apr 9, 2013 10:38:05 PM by Hibernate Tools 4.0.0
+// Generated Apr 11, 2013 5:17:27 AM by Hibernate Tools 4.0.0
 
 import java.util.List;
 import javax.naming.InitialContext;
@@ -10,16 +10,14 @@ import org.hibernate.LockMode;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Example;
 
-import com.scoutin.entities.Notification;
-
 /**
- * Home object for domain model class Notification.
- * @see com.scoutin.entities.Notification
+ * Home object for domain model class Profile.
+ * @see com.scoutin.entities.Profile
  * @author Hibernate Tools
  */
-public class NotificationHome {
+public class ProfileHome {
 
-	private static final Log log = LogFactory.getLog(NotificationHome.class);
+	private static final Log log = LogFactory.getLog(ProfileHome.class);
 
 	private final SessionFactory sessionFactory = getSessionFactory();
 
@@ -34,8 +32,8 @@ public class NotificationHome {
 		}
 	}
 
-	public void persist(Notification transientInstance) {
-		log.debug("persisting Notification instance");
+	public void persist(Profile transientInstance) {
+		log.debug("persisting Profile instance");
 		try {
 			sessionFactory.getCurrentSession().persist(transientInstance);
 			log.debug("persist successful");
@@ -45,8 +43,8 @@ public class NotificationHome {
 		}
 	}
 
-	public void attachDirty(Notification instance) {
-		log.debug("attaching dirty Notification instance");
+	public void attachDirty(Profile instance) {
+		log.debug("attaching dirty Profile instance");
 		try {
 			sessionFactory.getCurrentSession().saveOrUpdate(instance);
 			log.debug("attach successful");
@@ -56,8 +54,8 @@ public class NotificationHome {
 		}
 	}
 
-	public void attachClean(Notification instance) {
-		log.debug("attaching clean Notification instance");
+	public void attachClean(Profile instance) {
+		log.debug("attaching clean Profile instance");
 		try {
 			sessionFactory.getCurrentSession().lock(instance, LockMode.NONE);
 			log.debug("attach successful");
@@ -67,8 +65,8 @@ public class NotificationHome {
 		}
 	}
 
-	public void delete(Notification persistentInstance) {
-		log.debug("deleting Notification instance");
+	public void delete(Profile persistentInstance) {
+		log.debug("deleting Profile instance");
 		try {
 			sessionFactory.getCurrentSession().delete(persistentInstance);
 			log.debug("delete successful");
@@ -78,11 +76,11 @@ public class NotificationHome {
 		}
 	}
 
-	public Notification merge(Notification detachedInstance) {
-		log.debug("merging Notification instance");
+	public Profile merge(Profile detachedInstance) {
+		log.debug("merging Profile instance");
 		try {
-			Notification result = (Notification) sessionFactory
-					.getCurrentSession().merge(detachedInstance);
+			Profile result = (Profile) sessionFactory.getCurrentSession()
+					.merge(detachedInstance);
 			log.debug("merge successful");
 			return result;
 		} catch (RuntimeException re) {
@@ -91,12 +89,11 @@ public class NotificationHome {
 		}
 	}
 
-	public Notification findById(java.lang.Long id) {
-		log.debug("getting Notification instance with id: " + id);
+	public Profile findById(int id) {
+		log.debug("getting Profile instance with id: " + id);
 		try {
-			Notification instance = (Notification) sessionFactory
-					.getCurrentSession().get("com.scoutin.homes.Notification",
-							id);
+			Profile instance = (Profile) sessionFactory.getCurrentSession()
+					.get("com.scoutin.entities.Profile", id);
 			if (instance == null) {
 				log.debug("get successful, no instance found");
 			} else {
@@ -109,11 +106,11 @@ public class NotificationHome {
 		}
 	}
 
-	public List findByExample(Notification instance) {
-		log.debug("finding Notification instance by example");
+	public List findByExample(Profile instance) {
+		log.debug("finding Profile instance by example");
 		try {
 			List results = sessionFactory.getCurrentSession()
-					.createCriteria("com.scoutin.homes.Notification")
+					.createCriteria("com.scoutin.entities.Profile")
 					.add(Example.create(instance)).list();
 			log.debug("find by example successful, result size: "
 					+ results.size());

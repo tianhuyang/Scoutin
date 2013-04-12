@@ -1,6 +1,6 @@
-package com.scoutin.homes;
+package com.scoutin.entities;
 
-// Generated Apr 9, 2013 10:38:05 PM by Hibernate Tools 4.0.0
+// Generated Apr 11, 2013 5:17:27 AM by Hibernate Tools 4.0.0
 
 import java.util.List;
 import javax.naming.InitialContext;
@@ -10,16 +10,14 @@ import org.hibernate.LockMode;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Example;
 
-import com.scoutin.entities.Album;
-
 /**
- * Home object for domain model class Album.
- * @see com.scoutin.entities.Album
+ * Home object for domain model class Cardbody.
+ * @see com.scoutin.entities.Cardbody
  * @author Hibernate Tools
  */
-public class AlbumHome {
+public class CardbodyHome {
 
-	private static final Log log = LogFactory.getLog(AlbumHome.class);
+	private static final Log log = LogFactory.getLog(CardbodyHome.class);
 
 	private final SessionFactory sessionFactory = getSessionFactory();
 
@@ -34,8 +32,8 @@ public class AlbumHome {
 		}
 	}
 
-	public void persist(Album transientInstance) {
-		log.debug("persisting Album instance");
+	public void persist(Cardbody transientInstance) {
+		log.debug("persisting Cardbody instance");
 		try {
 			sessionFactory.getCurrentSession().persist(transientInstance);
 			log.debug("persist successful");
@@ -45,8 +43,8 @@ public class AlbumHome {
 		}
 	}
 
-	public void attachDirty(Album instance) {
-		log.debug("attaching dirty Album instance");
+	public void attachDirty(Cardbody instance) {
+		log.debug("attaching dirty Cardbody instance");
 		try {
 			sessionFactory.getCurrentSession().saveOrUpdate(instance);
 			log.debug("attach successful");
@@ -56,8 +54,8 @@ public class AlbumHome {
 		}
 	}
 
-	public void attachClean(Album instance) {
-		log.debug("attaching clean Album instance");
+	public void attachClean(Cardbody instance) {
+		log.debug("attaching clean Cardbody instance");
 		try {
 			sessionFactory.getCurrentSession().lock(instance, LockMode.NONE);
 			log.debug("attach successful");
@@ -67,8 +65,8 @@ public class AlbumHome {
 		}
 	}
 
-	public void delete(Album persistentInstance) {
-		log.debug("deleting Album instance");
+	public void delete(Cardbody persistentInstance) {
+		log.debug("deleting Cardbody instance");
 		try {
 			sessionFactory.getCurrentSession().delete(persistentInstance);
 			log.debug("delete successful");
@@ -78,11 +76,11 @@ public class AlbumHome {
 		}
 	}
 
-	public Album merge(Album detachedInstance) {
-		log.debug("merging Album instance");
+	public Cardbody merge(Cardbody detachedInstance) {
+		log.debug("merging Cardbody instance");
 		try {
-			Album result = (Album) sessionFactory.getCurrentSession().merge(
-					detachedInstance);
+			Cardbody result = (Cardbody) sessionFactory.getCurrentSession()
+					.merge(detachedInstance);
 			log.debug("merge successful");
 			return result;
 		} catch (RuntimeException re) {
@@ -91,11 +89,11 @@ public class AlbumHome {
 		}
 	}
 
-	public Album findById(java.lang.Long id) {
-		log.debug("getting Album instance with id: " + id);
+	public Cardbody findById(long id) {
+		log.debug("getting Cardbody instance with id: " + id);
 		try {
-			Album instance = (Album) sessionFactory.getCurrentSession().get(
-					"com.scoutin.homes.Album", id);
+			Cardbody instance = (Cardbody) sessionFactory.getCurrentSession()
+					.get("com.scoutin.entities.Cardbody", id);
 			if (instance == null) {
 				log.debug("get successful, no instance found");
 			} else {
@@ -108,11 +106,11 @@ public class AlbumHome {
 		}
 	}
 
-	public List findByExample(Album instance) {
-		log.debug("finding Album instance by example");
+	public List findByExample(Cardbody instance) {
+		log.debug("finding Cardbody instance by example");
 		try {
 			List results = sessionFactory.getCurrentSession()
-					.createCriteria("com.scoutin.homes.Album")
+					.createCriteria("com.scoutin.entities.Cardbody")
 					.add(Example.create(instance)).list();
 			log.debug("find by example successful, result size: "
 					+ results.size());

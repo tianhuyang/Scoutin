@@ -1,6 +1,6 @@
 package com.scoutin.entities;
 
-// Generated Apr 10, 2013 1:11:48 AM by Hibernate Tools 4.0.0
+// Generated Apr 11, 2013 7:59:48 AM by Hibernate Tools 4.0.0
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -23,6 +23,7 @@ public class Cardbody implements java.io.Serializable {
 	private BigDecimal latitude;
 	private BigDecimal longitude;
 	private String address;
+	private String url;
 	private Set cards = new HashSet(0);
 
 	public Cardbody() {
@@ -35,7 +36,7 @@ public class Cardbody implements java.io.Serializable {
 	public Cardbody(long cardbodyId, Cardstat cardstat, Integer rating,
 			Integer commentsCount, Integer repostsCount, Integer likesCount,
 			Date createdTime, Date updatedTime, BigDecimal latitude,
-			BigDecimal longitude, String address, Set cards) {
+			BigDecimal longitude, String address, String url, Set cards) {
 		this.cardbodyId = cardbodyId;
 		this.cardstat = cardstat;
 		this.rating = rating;
@@ -47,6 +48,7 @@ public class Cardbody implements java.io.Serializable {
 		this.latitude = latitude;
 		this.longitude = longitude;
 		this.address = address;
+		this.url = url;
 		this.cards = cards;
 	}
 
@@ -136,6 +138,14 @@ public class Cardbody implements java.io.Serializable {
 
 	public void setAddress(String address) {
 		this.address = address;
+	}
+
+	public String getUrl() {
+		return this.url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
 	}
 
 	public Set getCards() {

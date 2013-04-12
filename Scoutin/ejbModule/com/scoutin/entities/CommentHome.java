@@ -1,6 +1,6 @@
-package com.scoutin.homes;
+package com.scoutin.entities;
 
-// Generated Apr 9, 2013 10:38:05 PM by Hibernate Tools 4.0.0
+// Generated Apr 11, 2013 5:17:27 AM by Hibernate Tools 4.0.0
 
 import java.util.List;
 import javax.naming.InitialContext;
@@ -10,16 +10,14 @@ import org.hibernate.LockMode;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Example;
 
-import com.scoutin.entities.Picture;
-
 /**
- * Home object for domain model class Picture.
- * @see com.scoutin.entities.Picture
+ * Home object for domain model class Comment.
+ * @see com.scoutin.entities.Comment
  * @author Hibernate Tools
  */
-public class PictureHome {
+public class CommentHome {
 
-	private static final Log log = LogFactory.getLog(PictureHome.class);
+	private static final Log log = LogFactory.getLog(CommentHome.class);
 
 	private final SessionFactory sessionFactory = getSessionFactory();
 
@@ -34,8 +32,8 @@ public class PictureHome {
 		}
 	}
 
-	public void persist(Picture transientInstance) {
-		log.debug("persisting Picture instance");
+	public void persist(Comment transientInstance) {
+		log.debug("persisting Comment instance");
 		try {
 			sessionFactory.getCurrentSession().persist(transientInstance);
 			log.debug("persist successful");
@@ -45,8 +43,8 @@ public class PictureHome {
 		}
 	}
 
-	public void attachDirty(Picture instance) {
-		log.debug("attaching dirty Picture instance");
+	public void attachDirty(Comment instance) {
+		log.debug("attaching dirty Comment instance");
 		try {
 			sessionFactory.getCurrentSession().saveOrUpdate(instance);
 			log.debug("attach successful");
@@ -56,8 +54,8 @@ public class PictureHome {
 		}
 	}
 
-	public void attachClean(Picture instance) {
-		log.debug("attaching clean Picture instance");
+	public void attachClean(Comment instance) {
+		log.debug("attaching clean Comment instance");
 		try {
 			sessionFactory.getCurrentSession().lock(instance, LockMode.NONE);
 			log.debug("attach successful");
@@ -67,8 +65,8 @@ public class PictureHome {
 		}
 	}
 
-	public void delete(Picture persistentInstance) {
-		log.debug("deleting Picture instance");
+	public void delete(Comment persistentInstance) {
+		log.debug("deleting Comment instance");
 		try {
 			sessionFactory.getCurrentSession().delete(persistentInstance);
 			log.debug("delete successful");
@@ -78,10 +76,10 @@ public class PictureHome {
 		}
 	}
 
-	public Picture merge(Picture detachedInstance) {
-		log.debug("merging Picture instance");
+	public Comment merge(Comment detachedInstance) {
+		log.debug("merging Comment instance");
 		try {
-			Picture result = (Picture) sessionFactory.getCurrentSession()
+			Comment result = (Comment) sessionFactory.getCurrentSession()
 					.merge(detachedInstance);
 			log.debug("merge successful");
 			return result;
@@ -91,11 +89,11 @@ public class PictureHome {
 		}
 	}
 
-	public Picture findById(java.lang.Long id) {
-		log.debug("getting Picture instance with id: " + id);
+	public Comment findById(long id) {
+		log.debug("getting Comment instance with id: " + id);
 		try {
-			Picture instance = (Picture) sessionFactory.getCurrentSession()
-					.get("com.scoutin.homes.Picture", id);
+			Comment instance = (Comment) sessionFactory.getCurrentSession()
+					.get("com.scoutin.entities.Comment", id);
 			if (instance == null) {
 				log.debug("get successful, no instance found");
 			} else {
@@ -108,11 +106,11 @@ public class PictureHome {
 		}
 	}
 
-	public List findByExample(Picture instance) {
-		log.debug("finding Picture instance by example");
+	public List findByExample(Comment instance) {
+		log.debug("finding Comment instance by example");
 		try {
 			List results = sessionFactory.getCurrentSession()
-					.createCriteria("com.scoutin.homes.Picture")
+					.createCriteria("com.scoutin.entities.Comment")
 					.add(Example.create(instance)).list();
 			log.debug("find by example successful, result size: "
 					+ results.size());

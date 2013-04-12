@@ -14,7 +14,7 @@ import com.scoutin.entities.Account;
 import com.scoutin.exception.ScoutinError;
 import com.scoutin.exception.ScoutinException;
 import com.scoutin.logic.AccountService;
-import com.scoutin.logic.AuthenticateType;
+import com.scoutin.logic.AccountConstants;
 import com.scoutin.utilities.JSONUtils;
 
 public class SignupAction extends ActionSupport implements ServletRequestAware {
@@ -50,12 +50,12 @@ public class SignupAction extends ActionSupport implements ServletRequestAware {
 	}
 	
 	public String emailSignup() throws Exception{
-		signup(email, AuthenticateType.AuthenticateTypeEmail);
+		signup(email, AccountConstants.AuthenticateTypeEmail);
 		return SUCCESS;
 	}
 	
 	public String phoneSignup() throws Exception{
-		signup(phone, AuthenticateType.AuthenticateTypePhone);
+		signup(phone, AccountConstants.AuthenticateTypePhone);
 		return SUCCESS;
 	}
 	

@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated Apr 10, 2013 1:12:27 AM by Hibernate Tools 4.0.0 -->
+<!-- Generated Apr 11, 2013 6:57:39 PM by Hibernate Tools 4.0.0 -->
 <hibernate-mapping>
     <class name="com.scoutin.entities.Comment" table="COMMENT" catalog="Scoutin">
-        <id name="commentId" type="long">
+        <id name="commentId" type="java.lang.Long">
             <column name="COMMENT_ID" />
-            <generator class="assigned" />
+            <generator class="identity" />
         </id>
         <many-to-one name="card" class="com.scoutin.entities.Card" fetch="select">
             <column name="CARD_ID" not-null="true" />

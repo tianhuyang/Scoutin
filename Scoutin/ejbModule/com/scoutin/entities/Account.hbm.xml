@@ -1,24 +1,24 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated Apr 10, 2013 1:12:27 AM by Hibernate Tools 4.0.0 -->
+<!-- Generated Apr 11, 2013 6:57:39 PM by Hibernate Tools 4.0.0 -->
 <hibernate-mapping>
     <class name="com.scoutin.entities.Account" table="ACCOUNT" catalog="Scoutin">
-        <id name="accountId" type="int">
+        <id name="accountId" type="java.lang.Integer">
             <column name="ACCOUNT_ID" />
-            <generator class="assigned" />
+            <generator class="identity" />
         </id>
         <property name="password" type="string">
             <column name="PASSWORD" length="15" not-null="true" />
         </property>
         <property name="email" type="string">
-            <column name="EMAIL" />
+            <column name="EMAIL" unique="true" />
         </property>
         <property name="facebookId" type="string">
-            <column name="FACEBOOK_ID" length="20" />
+            <column name="FACEBOOK_ID" length="20" unique="true" />
         </property>
         <property name="twitterId" type="string">
-            <column name="TWITTER_ID" length="20" />
+            <column name="TWITTER_ID" length="20" unique="true" />
         </property>
         <property name="createdTime" type="timestamp">
             <column name="CREATED_TIME" length="19" />
@@ -43,7 +43,7 @@
         </set>
         <set name="albums" table="ALBUM" inverse="true" lazy="true" fetch="select">
             <key>
-                <column name="ACCOUNT_ID" not-null="true" />
+                <column name="ACCOUNT_ID" />
             </key>
             <one-to-many class="com.scoutin.entities.Album" />
         </set>

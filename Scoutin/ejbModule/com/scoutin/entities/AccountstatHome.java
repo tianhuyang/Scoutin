@@ -1,6 +1,6 @@
-package com.scoutin.homes;
+package com.scoutin.entities;
 
-// Generated Apr 9, 2013 10:38:05 PM by Hibernate Tools 4.0.0
+// Generated Apr 11, 2013 5:17:27 AM by Hibernate Tools 4.0.0
 
 import java.util.List;
 import javax.naming.InitialContext;
@@ -10,16 +10,14 @@ import org.hibernate.LockMode;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Example;
 
-import com.scoutin.entities.Category;
-
 /**
- * Home object for domain model class Category.
- * @see com.scoutin.entities.Category
+ * Home object for domain model class Accountstat.
+ * @see com.scoutin.entities.Accountstat
  * @author Hibernate Tools
  */
-public class CategoryHome {
+public class AccountstatHome {
 
-	private static final Log log = LogFactory.getLog(CategoryHome.class);
+	private static final Log log = LogFactory.getLog(AccountstatHome.class);
 
 	private final SessionFactory sessionFactory = getSessionFactory();
 
@@ -34,8 +32,8 @@ public class CategoryHome {
 		}
 	}
 
-	public void persist(Category transientInstance) {
-		log.debug("persisting Category instance");
+	public void persist(Accountstat transientInstance) {
+		log.debug("persisting Accountstat instance");
 		try {
 			sessionFactory.getCurrentSession().persist(transientInstance);
 			log.debug("persist successful");
@@ -45,8 +43,8 @@ public class CategoryHome {
 		}
 	}
 
-	public void attachDirty(Category instance) {
-		log.debug("attaching dirty Category instance");
+	public void attachDirty(Accountstat instance) {
+		log.debug("attaching dirty Accountstat instance");
 		try {
 			sessionFactory.getCurrentSession().saveOrUpdate(instance);
 			log.debug("attach successful");
@@ -56,8 +54,8 @@ public class CategoryHome {
 		}
 	}
 
-	public void attachClean(Category instance) {
-		log.debug("attaching clean Category instance");
+	public void attachClean(Accountstat instance) {
+		log.debug("attaching clean Accountstat instance");
 		try {
 			sessionFactory.getCurrentSession().lock(instance, LockMode.NONE);
 			log.debug("attach successful");
@@ -67,8 +65,8 @@ public class CategoryHome {
 		}
 	}
 
-	public void delete(Category persistentInstance) {
-		log.debug("deleting Category instance");
+	public void delete(Accountstat persistentInstance) {
+		log.debug("deleting Accountstat instance");
 		try {
 			sessionFactory.getCurrentSession().delete(persistentInstance);
 			log.debug("delete successful");
@@ -78,11 +76,11 @@ public class CategoryHome {
 		}
 	}
 
-	public Category merge(Category detachedInstance) {
-		log.debug("merging Category instance");
+	public Accountstat merge(Accountstat detachedInstance) {
+		log.debug("merging Accountstat instance");
 		try {
-			Category result = (Category) sessionFactory.getCurrentSession()
-					.merge(detachedInstance);
+			Accountstat result = (Accountstat) sessionFactory
+					.getCurrentSession().merge(detachedInstance);
 			log.debug("merge successful");
 			return result;
 		} catch (RuntimeException re) {
@@ -91,11 +89,12 @@ public class CategoryHome {
 		}
 	}
 
-	public Category findById(java.lang.Short id) {
-		log.debug("getting Category instance with id: " + id);
+	public Accountstat findById(int id) {
+		log.debug("getting Accountstat instance with id: " + id);
 		try {
-			Category instance = (Category) sessionFactory.getCurrentSession()
-					.get("com.scoutin.homes.Category", id);
+			Accountstat instance = (Accountstat) sessionFactory
+					.getCurrentSession().get(
+							"com.scoutin.entities.Accountstat", id);
 			if (instance == null) {
 				log.debug("get successful, no instance found");
 			} else {
@@ -108,11 +107,11 @@ public class CategoryHome {
 		}
 	}
 
-	public List findByExample(Category instance) {
-		log.debug("finding Category instance by example");
+	public List findByExample(Accountstat instance) {
+		log.debug("finding Accountstat instance by example");
 		try {
 			List results = sessionFactory.getCurrentSession()
-					.createCriteria("com.scoutin.homes.Category")
+					.createCriteria("com.scoutin.entities.Accountstat")
 					.add(Example.create(instance)).list();
 			log.debug("find by example successful, result size: "
 					+ results.size());
