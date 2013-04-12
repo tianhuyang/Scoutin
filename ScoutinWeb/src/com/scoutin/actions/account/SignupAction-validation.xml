@@ -4,7 +4,7 @@
 	<field name="email">
 	    <field-validator type="fieldexpression">
 		    <param name="expression">!(( email == "" || email == null) and method == "emailSignup")</param> 
-			<message key="error.account.signup.e.required">Please input an email</message>
+			<message key="error.account.signup.email.required">Please input an email</message>
 		</field-validator>
 		<field-validator type="email">
 			<message key="error.account.signup.email">The email seems invalid</message>
@@ -19,6 +19,9 @@
 	</field>
 	
 	<field name="password">
+	    <field-validator type="requiredstring">
+	    	<message key="error.account.signup.password.required">Please input password</message>
+	    </field-validator>
 	    <field-validator type="stringlength">
 	        <param name="minLength">8</param>
 			<message key="error.account.signup.password.short">The password should be at least ${minLength} characters</message>
@@ -28,6 +31,16 @@
 	    <field-validator type="fieldexpression">
 	        <param name="expression">password==repassword</param> 
 			<message key="error.account.signup.password.mismatch">Passwords don't match</message>
+		</field-validator>
+	</field>
+	<field name="firstname">
+		<field-validator type="requiredstring">
+			<message key="error.account.signup.firstname.requred">Please input firstname</message>
+		</field-validator>
+	</field>
+	<field name="lastname">
+		<field-validator type="requiredstring">
+			<message key="error.account.signup.lastname.requred">Please input lastname</message>
 		</field-validator>
 	</field>
 	

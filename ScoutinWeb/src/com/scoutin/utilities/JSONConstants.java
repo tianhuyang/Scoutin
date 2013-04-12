@@ -2,6 +2,6 @@ package com.scoutin.utilities;
 
 public interface JSONConstants {
 
-	public final String KYE_STATUS="status";
-	public final String KYE_MESSAGE="message";
+	public final String KEY_STATUS="status";
+	public final String KEY_MESSAGE="message";
 }

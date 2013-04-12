@@ -5,27 +5,27 @@
 	<formset>
 		<form name="SignUpActionForm">
 			<field property="email" depends="required,email">
-				<arg key="error.signup.email"/>
+				<arg key="error.signup.email" />
 			</field>
 			<field property="password" depends="required,minlength">
-				<arg key="error.signup.password"/>
+				<arg key="error.signup.password" />
 				<var>
 					<var-name>minlength</var-name>
 					<var-value>6</var-value>
 				</var>
 			</field>
 			<field property="repassword" depends="required,validwhen">
-				<arg key="error.signup.password.mismatch"/>
+				<arg key="error.signup.password.mismatch" />
 				<var>
 					<var-name>test</var-name>
 					<var-value>((*this*==null)or(*this*==password))</var-value>
 				</var>
 			</field>
 		</form>
-		
+
 		<form name="SignInActionForm">
 			<field property="email" depends="required,email">
-				<arg key="error.signup.email"/>
+				<arg key="error.signup.email" />
 			</field>
 		</form>
 	</formset>

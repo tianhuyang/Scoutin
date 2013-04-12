@@ -23,7 +23,7 @@ public class TestAccount {
 
 	}
 
-	@Ignore
+	
 	@Test
 	public void testSignupWithEmail() {
 		Map<String, Object> properties = new TreeMap<String, Object>();

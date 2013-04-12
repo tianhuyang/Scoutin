@@ -2,31 +2,29 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 <title>Insert title here</title>
 </head>
 <body>
 	<div id="error_output"></div>
 	<span>Email:</span><input type="text" id="email" name="email"><br>
 	<span>Password:</span><input type="password" id="password" name="password"><br>
-	<input type="button" value="Sign In" onclick="signin()">
+	<input type="button" value="Sign In" onclick="emailSignin()">
 	<script>
-		function signin()
+		function emailSignin()
 		{
-		  $.post("signin.do",
-				{email:$("#email").val(),password:$("#password").val()},
-				function(data,status){
-					var obj = eval("("+data+")");
-					if(obj.status==0)
-					{
-						$("#error_output").html(obj.message);
-					}
-					else
-					{
-						alert("Hello " + obj.username);
-					}
-			  });
+			Account.emailSignin($("#email").val(),$("#password").val(),showResult);
+		}
+		function showResult(result)
+		{
+			if(result.status!=0){
+				$("#error_output").html(result.message);
+			}
+			else{
+				alert("Welcome " + result.user.email);
+			}
 		}
 	</script>
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+	<script src="jses/logic/account.js"></script>
 </body>
 </html>

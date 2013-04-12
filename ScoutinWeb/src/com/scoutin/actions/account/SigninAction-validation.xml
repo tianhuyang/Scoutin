@@ -3,7 +3,7 @@
 <validators>
 	<field name="email">
 	    <field-validator type="fieldexpression">
-		    <param name="expression">!(email == null and authType == 0)</param> 
+		    <param name="expression">!((email == null or email == "") and method == "emailSignin")</param> 
 			<message key="error.account.signin.email.required">Please input a phone number</message>
 		</field-validator>
 		<field-validator type="email">
@@ -13,23 +13,15 @@
 	
 	<field name="phone">
 		<field-validator type="fieldexpression">
-		    <param name="expression">!(phone == null and authType == 3)</param> 
+		    <param name="expression">!((phone == null or phone == "") and method == "phoneSignin")</param> 
 			<message key="error.account.signin.phone.required">Please input a phone number</message>
 		</field-validator>
 	</field>
 	
 	<field name="password">
-	    <field-validator type="stringlength">
-	        <param name="minLength">8</param>
-			<message key="error.account.signin.password.short">The password should be at least ${minLength} characters</message>
+	    <field-validator type="requiredstring">
+	        <message key="error.account.signin.password.required">please input password</message>
 		</field-validator>
 	</field>
 	
-	<field name="authType">
-		<field-validator type="int">
-			<param name="min">0</param>
-			<param name="max">3</param>
-			<message>authType must be between ${min} and ${max}, current value is ${authType}</message>
-		</field-validator>
-	</field>
 </validators>
