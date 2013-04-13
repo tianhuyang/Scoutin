@@ -15,27 +15,27 @@ public class AccountService {
 	public static String authenticatePath = "ScoutinApplication/Scoutin/AuthenticateBean!"
 			+ AuthenticateBeanRemote.class.getName();
 
-	public static Account signup(Map<String, Object> properties)
+	public static Account signup(Map<String, String[]> properties)
 			throws ScoutinException {	
 		
 		if (properties == null){
 			throw new IllegalArgumentException();
 		}
-		String email = (String) properties.get("email");
-		String phone = (String) properties.get("phone");
-		String password = (String) properties.get("password");
-
-		if ((email == null || email.length() == 0)
-				&& (phone == null || phone.length() == 0)
-				|| (password == null || password.length() == 0)) {
-			throw new IllegalArgumentException();
-		}
+//		String email = (String) properties.get("email");
+//		String phone = (String) properties.get("phone");
+//		String password = (String) properties.get("password");
+//
+//		if ((email == null || email.length() == 0)
+//				&& (phone == null || phone.length() == 0)
+//				|| (password == null || password.length() == 0)) {
+//			throw new IllegalArgumentException();
+//		}
 
 		Account account = null;
 		AccountBeanRemote abr = (AccountBeanRemote) EJBUtils
 				.obtainBean(accountPath);
 		try {
-			account = abr.signup(properties);
+			account = abr.signup((Map)properties);
 		} catch (RuntimeException re) {
 		}
 
@@ -58,6 +58,7 @@ public class AccountService {
 		try {
 			account = abr.authenticate(args, type);
 		} catch (RuntimeException re) {
+			re.printStackTrace();
 		}
 		if (account == null) {
 			throw new ScoutinException(

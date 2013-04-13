@@ -26,6 +26,14 @@ public class AuthenticateBean implements AuthenticateBeanRemote {
 		switch(type){
 		case AccountConstants.AuthenticateTypeEmail:
 			account = DaoUtils.accountDao.authenticateWithEmail(args[0],args[1]);
+			DaoUtils.sessionFactory.getCurrentSession().evict(account);
+			account.setAccountstat(null);
+			account.setAlbums(null);
+			account.setCardrepostses(null);
+			account.setComments(null);
+			account.setFollowersForFollowedId(null);
+			account.setFollowersForFollowingId(null);
+			account.setCards(null);
 			break;
 		}		
 		return account;

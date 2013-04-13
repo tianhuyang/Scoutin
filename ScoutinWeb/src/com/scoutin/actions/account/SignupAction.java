@@ -1,11 +1,14 @@
 package com.scoutin.actions.account;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 import javax.servlet.http.HttpServletRequest;
 
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.struts2.interceptor.ServletRequestAware;
 
 import com.opensymphony.xwork2.ActionContext;
@@ -62,10 +65,12 @@ public class SignupAction extends ActionSupport implements ServletRequestAware {
 	}
 	
     private void signup(String domain,int type){
-    	String[] args={domain,password,firstname,lastname};
+    	Map<String, String[]> properties = new TreeMap<String, String[]>();
+    	properties.putAll(request.getParameterMap());
+    	
     	boolean succeed = true;
 		try {
-			Account account = AccountService.signup(args, type);
+			Account account = AccountService.signup(properties);
 			request.getSession(true).setAttribute("user", account);
 			dataMap.put("user", account);
 		} catch (ScoutinException e) {

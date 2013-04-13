@@ -14,13 +14,12 @@ import com.scoutin.entities.Account;
 import com.scoutin.exception.ScoutinError;
 import com.scoutin.exception.ScoutinException;
 import com.scoutin.logic.AccountService;
-import com.scoutin.logic.AuthenticateType;
+import com.scoutin.logic.AccountConstants;
 import com.scoutin.utilities.JSONUtils;
 
 public class SigninAction extends ActionSupport implements SessionAware{
 
 	private static final long serialVersionUID = 8653684360644771752L;
-	private final static String COMPLETION="completion";
 
 	private String email;
 	private String phone;
@@ -38,7 +37,7 @@ public class SigninAction extends ActionSupport implements SessionAware{
 	@Override
 	public void setSession(Map<String, Object> arg0) {
 		// TODO Auto-generated method stub
-		this.session = arg0;
+		session = arg0;
 		this.method = ActionContext.getContext().getName();
 	}
 	
@@ -51,18 +50,18 @@ public class SigninAction extends ActionSupport implements SessionAware{
 	}
 	
 	public String emailSignin() throws Exception{
-		signin(email,AuthenticateType.AuthenticateTypeEmail);
+		signin(email,AccountConstants.AuthenticateTypeEmail);
 		return SUCCESS;
 	}
 	
 	private void signin(String domain, int type)
 	{
-		String[] args = {domain, password};
+		String[] args = {domain,password};
 		boolean succeed = true;
 		try
 		{
 			Account account = AccountService.authenticate(args, type);
-			this.session.put("user", account);
+			session.put("user", account);
 			dataMap.put("user", account);
 		}
 		catch(ScoutinException e){

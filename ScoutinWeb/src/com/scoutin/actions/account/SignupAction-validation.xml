@@ -35,12 +35,12 @@
 	</field>
 	<field name="firstname">
 		<field-validator type="requiredstring">
-			<message key="error.account.signup.firstname.requred">Please input firstname</message>
+			<message key="error.account.signup.firstname.requred">Please input your first name</message>
 		</field-validator>
 	</field>
 	<field name="lastname">
 		<field-validator type="requiredstring">
-			<message key="error.account.signup.lastname.requred">Please input lastname</message>
+			<message key="error.account.signup.lastname.requred">Please input your last name</message>
 		</field-validator>
 	</field>
 	
