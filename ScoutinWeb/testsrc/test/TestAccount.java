@@ -23,11 +23,11 @@ public class TestAccount {
 
 	}
 
-	
+	@Ignore
 	@Test
 	public void testSignupWithEmail() {
 		Map<String, Object> properties = new TreeMap<String, Object>();
-		properties.put("email", "tianhuyang@hotmail.com");
+		properties.put("email", "haocai@qq.com");
 		properties.put("password", "password");
 		properties.put("firstname", "Tianhu");
 		properties.put("lastname", "Yang");

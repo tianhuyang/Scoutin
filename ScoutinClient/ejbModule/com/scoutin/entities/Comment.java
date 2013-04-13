@@ -1,6 +1,6 @@
 package com.scoutin.entities;
 
-// Generated Apr 11, 2013 7:59:48 AM by Hibernate Tools 4.0.0
+// Generated Apr 12, 2013 6:29:04 AM by Hibernate Tools 4.0.0
 
 import java.util.Date;
 
@@ -9,7 +9,7 @@ import java.util.Date;
  */
 public class Comment implements java.io.Serializable {
 
-	private long commentId;
+	private Long commentId;
 	private Card card;
 	private Account account;
 	private String content;
@@ -19,15 +19,13 @@ public class Comment implements java.io.Serializable {
 	public Comment() {
 	}
 
-	public Comment(long commentId, Card card, Account account) {
-		this.commentId = commentId;
+	public Comment(Card card, Account account) {
 		this.card = card;
 		this.account = account;
 	}
 
-	public Comment(long commentId, Card card, Account account, String content,
+	public Comment(Card card, Account account, String content,
 			Date updatedTime, Date createdTime) {
-		this.commentId = commentId;
 		this.card = card;
 		this.account = account;
 		this.content = content;
@@ -35,11 +33,11 @@ public class Comment implements java.io.Serializable {
 		this.createdTime = createdTime;
 	}
 
-	public long getCommentId() {
+	public Long getCommentId() {
 		return this.commentId;
 	}
 
-	public void setCommentId(long commentId) {
+	public void setCommentId(Long commentId) {
 		this.commentId = commentId;
 	}
 

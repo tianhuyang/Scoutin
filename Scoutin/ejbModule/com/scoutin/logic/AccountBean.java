@@ -34,15 +34,19 @@ public class AccountBean implements AccountBeanRemote {
 		Account account = new Account();
 		try {
 			BeanUtils.populate(account, properties);
-			DaoUtils.accountDAO.persist(account);
-
+			Accountstat accountStat = new Accountstat();
+			accountStat.setAccount(account);
+			DaoUtils.accountStatDao.persist(accountStat);
+			Profile profile = new Profile();
+			profile.setAccount(account);
+			DaoUtils.profileDao.persist(profile);
 			
 		} catch (IllegalAccessException e) {
 			account = null;
-			//e.printStackTrace();
+			e.printStackTrace();
 		} catch (InvocationTargetException e) {
 			account = null;
-			//e.printStackTrace();
+			e.printStackTrace();
 		}
 		
 		return account;
@@ -56,12 +60,11 @@ public class AccountBean implements AccountBeanRemote {
 	public Album createAlbum(Map<String, Object> properties) {
 		// TODO Auto-generated method stub
 		Integer accountId = (Integer)properties.get("accountId");
-		Account account = DaoUtils.accountDAO.load(accountId);
+		Account account = DaoUtils.accountDao.load(accountId);
 		Album album = new Album();
 		album.setAccount(account);
 		try {
 			BeanUtils.populate(album, properties);
-			//BeanUtils.populate(account, properties);
 			DaoUtils.albumDao.persist(album);
 			DaoUtils.albumDao.evict(album);
 			album.setAccount(null);

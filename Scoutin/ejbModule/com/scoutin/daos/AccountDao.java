@@ -11,13 +11,13 @@ import com.scoutin.utilities.DaoUtils;
 public class AccountDao extends AccountHome {
 
 	private static final Log log = LogFactory.getLog(AccountHome.class);
-	private final String emailAuthSql = "from Account where email = ? and password = ?";
+	private final String emailAuthHql = "from Account where email = ? and password = ?";
 	
 	public Account authenticateWithEmail(String email, String password) {
 		log.debug("authenticate with email");
 		Account account = null;
 		try {
-			Query query = DaoUtils.sessionFactory.getCurrentSession().createQuery(emailAuthSql);
+			Query query = DaoUtils.sessionFactory.getCurrentSession().createQuery(emailAuthHql);
 			query.setString(0, email);
 			query.setString(1, password);
 			account = (Account)query.uniqueResult();
@@ -29,16 +29,4 @@ public class AccountDao extends AccountHome {
 		return account;
 	}
 	
-	public Account load(int id) {
-		log.debug("loading Account instance with id: " + id);
-		try {
-			Account instance = (Account) DaoUtils.sessionFactory.getCurrentSession()
-					.load("com.scoutin.entities.Account", id);	
-			log.debug("loading successful, instance found");
-			return instance;
-		} catch (RuntimeException re) {
-			log.error("loading failed", re);
-			throw re;
-		}
-	}
 }

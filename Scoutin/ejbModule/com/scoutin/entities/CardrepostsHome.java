@@ -1,13 +1,12 @@
 package com.scoutin.entities;
 
-// Generated Apr 11, 2013 5:17:27 AM by Hibernate Tools 4.0.0
+// Generated Apr 12, 2013 8:46:56 AM by Hibernate Tools 4.0.0
 
+import com.scoutin.utilities.DaoUtils;
 import java.util.List;
-import javax.naming.InitialContext;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.LockMode;
-import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Example;
 
 /**
@@ -19,23 +18,11 @@ public class CardrepostsHome {
 
 	private static final Log log = LogFactory.getLog(CardrepostsHome.class);
 
-	private final SessionFactory sessionFactory = getSessionFactory();
-
-	protected SessionFactory getSessionFactory() {
-		try {
-			return (SessionFactory) new InitialContext()
-					.lookup("SessionFactory");
-		} catch (Exception e) {
-			log.error("Could not locate SessionFactory in JNDI", e);
-			throw new IllegalStateException(
-					"Could not locate SessionFactory in JNDI");
-		}
-	}
-
 	public void persist(Cardreposts transientInstance) {
 		log.debug("persisting Cardreposts instance");
 		try {
-			sessionFactory.getCurrentSession().persist(transientInstance);
+			DaoUtils.sessionFactory.getCurrentSession().persist(
+					transientInstance);
 			log.debug("persist successful");
 		} catch (RuntimeException re) {
 			log.error("persist failed", re);
@@ -43,10 +30,21 @@ public class CardrepostsHome {
 		}
 	}
 
+	public void save(Cardreposts transientInstance) {
+		log.debug("saving Cardreposts instance");
+		try {
+			DaoUtils.sessionFactory.getCurrentSession().save(transientInstance);
+			log.debug("saving successful");
+		} catch (RuntimeException re) {
+			log.error("saving failed", re);
+			throw re;
+		}
+	}
+
 	public void attachDirty(Cardreposts instance) {
 		log.debug("attaching dirty Cardreposts instance");
 		try {
-			sessionFactory.getCurrentSession().saveOrUpdate(instance);
+			DaoUtils.sessionFactory.getCurrentSession().saveOrUpdate(instance);
 			log.debug("attach successful");
 		} catch (RuntimeException re) {
 			log.error("attach failed", re);
@@ -57,7 +55,8 @@ public class CardrepostsHome {
 	public void attachClean(Cardreposts instance) {
 		log.debug("attaching clean Cardreposts instance");
 		try {
-			sessionFactory.getCurrentSession().lock(instance, LockMode.NONE);
+			DaoUtils.sessionFactory.getCurrentSession().lock(instance,
+					LockMode.NONE);
 			log.debug("attach successful");
 		} catch (RuntimeException re) {
 			log.error("attach failed", re);
@@ -68,7 +67,8 @@ public class CardrepostsHome {
 	public void delete(Cardreposts persistentInstance) {
 		log.debug("deleting Cardreposts instance");
 		try {
-			sessionFactory.getCurrentSession().delete(persistentInstance);
+			DaoUtils.sessionFactory.getCurrentSession().delete(
+					persistentInstance);
 			log.debug("delete successful");
 		} catch (RuntimeException re) {
 			log.error("delete failed", re);
@@ -76,10 +76,22 @@ public class CardrepostsHome {
 		}
 	}
 
+	public void evict(Cardreposts persistentInstance) {
+		log.debug("evicting Cardreposts instance");
+		try {
+			DaoUtils.sessionFactory.getCurrentSession().evict(
+					persistentInstance);
+			log.debug("evicting successful");
+		} catch (RuntimeException re) {
+			log.error("evicting failed", re);
+			throw re;
+		}
+	}
+
 	public Cardreposts merge(Cardreposts detachedInstance) {
 		log.debug("merging Cardreposts instance");
 		try {
-			Cardreposts result = (Cardreposts) sessionFactory
+			Cardreposts result = (Cardreposts) DaoUtils.sessionFactory
 					.getCurrentSession().merge(detachedInstance);
 			log.debug("merge successful");
 			return result;
@@ -92,7 +104,7 @@ public class CardrepostsHome {
 	public Cardreposts findById(com.scoutin.entities.CardrepostsId id) {
 		log.debug("getting Cardreposts instance with id: " + id);
 		try {
-			Cardreposts instance = (Cardreposts) sessionFactory
+			Cardreposts instance = (Cardreposts) DaoUtils.sessionFactory
 					.getCurrentSession().get(
 							"com.scoutin.entities.Cardreposts", id);
 			if (instance == null) {
@@ -107,10 +119,28 @@ public class CardrepostsHome {
 		}
 	}
 
+	public Cardreposts load(com.scoutin.entities.CardrepostsId id) {
+		log.debug("loading Cardreposts instance with id: " + id);
+		try {
+			Cardreposts instance = (Cardreposts) DaoUtils.sessionFactory
+					.getCurrentSession().load(
+							"com.scoutin.entities.Cardreposts", id);
+			if (instance == null) {
+				log.debug("load successful, no instance found");
+			} else {
+				log.debug("load successful, instance found");
+			}
+			return instance;
+		} catch (RuntimeException re) {
+			log.error("load failed", re);
+			throw re;
+		}
+	}
+
 	public List findByExample(Cardreposts instance) {
 		log.debug("finding Cardreposts instance by example");
 		try {
-			List results = sessionFactory.getCurrentSession()
+			List results = DaoUtils.sessionFactory.getCurrentSession()
 					.createCriteria("com.scoutin.entities.Cardreposts")
 					.add(Example.create(instance)).list();
 			log.debug("find by example successful, result size: "

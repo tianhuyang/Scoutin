@@ -11,6 +11,6 @@ import com.scoutin.entities.Comment;
 public interface CardBeanRemote {
 
 	public Card createCard(Map<String,Object> properties);
-	public Card repostCard(int cardId, long albumId);
+	public Card repostCard(Map<String,Object> properties);
 	public Comment commentCard(Comment comment);
 }

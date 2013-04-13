@@ -1,6 +1,6 @@
 package com.scoutin.entities;
 
-// Generated Apr 11, 2013 7:59:48 AM by Hibernate Tools 4.0.0
+// Generated Apr 12, 2013 6:29:04 AM by Hibernate Tools 4.0.0
 
 import java.util.Date;
 import java.util.HashSet;
@@ -11,7 +11,7 @@ import java.util.Set;
  */
 public class Account implements java.io.Serializable {
 
-	private int accountId;
+	private Integer accountId;
 	private String password;
 	private String email;
 	private String facebookId;
@@ -33,22 +33,19 @@ public class Account implements java.io.Serializable {
 	public Account() {
 	}
 
-	public Account(int accountId, String password, String firstname,
-			String lastname, byte sex) {
-		this.accountId = accountId;
+	public Account(String password, String firstname, String lastname, byte sex) {
 		this.password = password;
 		this.firstname = firstname;
 		this.lastname = lastname;
 		this.sex = sex;
 	}
 
-	public Account(int accountId, String password, String email,
-			String facebookId, String twitterId, Date createdTime,
-			Date updatedTime, String firstname, String lastname, byte sex,
-			Set comments, Set albums, Set cardrepostses,
-			Accountstat accountstat, Profile profile,
-			Set followersForFollowingId, Set cards, Set followersForFollowedId) {
-		this.accountId = accountId;
+	public Account(String password, String email, String facebookId,
+			String twitterId, Date createdTime, Date updatedTime,
+			String firstname, String lastname, byte sex, Set comments,
+			Set albums, Set cardrepostses, Accountstat accountstat,
+			Profile profile, Set followersForFollowingId, Set cards,
+			Set followersForFollowedId) {
 		this.password = password;
 		this.email = email;
 		this.facebookId = facebookId;
@@ -68,11 +65,11 @@ public class Account implements java.io.Serializable {
 		this.followersForFollowedId = followersForFollowedId;
 	}
 
-	public int getAccountId() {
+	public Integer getAccountId() {
 		return this.accountId;
 	}
 
-	public void setAccountId(int accountId) {
+	public void setAccountId(Integer accountId) {
 		this.accountId = accountId;
 	}
 

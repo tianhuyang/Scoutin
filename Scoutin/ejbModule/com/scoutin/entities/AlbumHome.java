@@ -1,13 +1,12 @@
 package com.scoutin.entities;
 
-// Generated Apr 11, 2013 5:17:27 AM by Hibernate Tools 4.0.0
+// Generated Apr 12, 2013 8:46:56 AM by Hibernate Tools 4.0.0
 
+import com.scoutin.utilities.DaoUtils;
 import java.util.List;
-import javax.naming.InitialContext;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.LockMode;
-import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Example;
 
 /**
@@ -19,23 +18,11 @@ public class AlbumHome {
 
 	private static final Log log = LogFactory.getLog(AlbumHome.class);
 
-	private final SessionFactory sessionFactory = getSessionFactory();
-
-	protected SessionFactory getSessionFactory() {
-		try {
-			return (SessionFactory) new InitialContext()
-					.lookup("SessionFactory");
-		} catch (Exception e) {
-			log.error("Could not locate SessionFactory in JNDI", e);
-			throw new IllegalStateException(
-					"Could not locate SessionFactory in JNDI");
-		}
-	}
-
 	public void persist(Album transientInstance) {
 		log.debug("persisting Album instance");
 		try {
-			sessionFactory.getCurrentSession().persist(transientInstance);
+			DaoUtils.sessionFactory.getCurrentSession().persist(
+					transientInstance);
 			log.debug("persist successful");
 		} catch (RuntimeException re) {
 			log.error("persist failed", re);
@@ -43,10 +30,21 @@ public class AlbumHome {
 		}
 	}
 
+	public void save(Album transientInstance) {
+		log.debug("saving Album instance");
+		try {
+			DaoUtils.sessionFactory.getCurrentSession().save(transientInstance);
+			log.debug("saving successful");
+		} catch (RuntimeException re) {
+			log.error("saving failed", re);
+			throw re;
+		}
+	}
+
 	public void attachDirty(Album instance) {
 		log.debug("attaching dirty Album instance");
 		try {
-			sessionFactory.getCurrentSession().saveOrUpdate(instance);
+			DaoUtils.sessionFactory.getCurrentSession().saveOrUpdate(instance);
 			log.debug("attach successful");
 		} catch (RuntimeException re) {
 			log.error("attach failed", re);
@@ -57,7 +55,8 @@ public class AlbumHome {
 	public void attachClean(Album instance) {
 		log.debug("attaching clean Album instance");
 		try {
-			sessionFactory.getCurrentSession().lock(instance, LockMode.NONE);
+			DaoUtils.sessionFactory.getCurrentSession().lock(instance,
+					LockMode.NONE);
 			log.debug("attach successful");
 		} catch (RuntimeException re) {
 			log.error("attach failed", re);
@@ -68,7 +67,8 @@ public class AlbumHome {
 	public void delete(Album persistentInstance) {
 		log.debug("deleting Album instance");
 		try {
-			sessionFactory.getCurrentSession().delete(persistentInstance);
+			DaoUtils.sessionFactory.getCurrentSession().delete(
+					persistentInstance);
 			log.debug("delete successful");
 		} catch (RuntimeException re) {
 			log.error("delete failed", re);
@@ -76,11 +76,23 @@ public class AlbumHome {
 		}
 	}
 
+	public void evict(Album persistentInstance) {
+		log.debug("evicting Album instance");
+		try {
+			DaoUtils.sessionFactory.getCurrentSession().evict(
+					persistentInstance);
+			log.debug("evicting successful");
+		} catch (RuntimeException re) {
+			log.error("evicting failed", re);
+			throw re;
+		}
+	}
+
 	public Album merge(Album detachedInstance) {
 		log.debug("merging Album instance");
 		try {
-			Album result = (Album) sessionFactory.getCurrentSession().merge(
-					detachedInstance);
+			Album result = (Album) DaoUtils.sessionFactory.getCurrentSession()
+					.merge(detachedInstance);
 			log.debug("merge successful");
 			return result;
 		} catch (RuntimeException re) {
@@ -89,11 +101,11 @@ public class AlbumHome {
 		}
 	}
 
-	public Album findById(long id) {
+	public Album findById(java.lang.Long id) {
 		log.debug("getting Album instance with id: " + id);
 		try {
-			Album instance = (Album) sessionFactory.getCurrentSession().get(
-					"com.scoutin.entities.Album", id);
+			Album instance = (Album) DaoUtils.sessionFactory
+					.getCurrentSession().get("com.scoutin.entities.Album", id);
 			if (instance == null) {
 				log.debug("get successful, no instance found");
 			} else {
@@ -106,10 +118,27 @@ public class AlbumHome {
 		}
 	}
 
+	public Album load(java.lang.Long id) {
+		log.debug("loading Album instance with id: " + id);
+		try {
+			Album instance = (Album) DaoUtils.sessionFactory
+					.getCurrentSession().load("com.scoutin.entities.Album", id);
+			if (instance == null) {
+				log.debug("load successful, no instance found");
+			} else {
+				log.debug("load successful, instance found");
+			}
+			return instance;
+		} catch (RuntimeException re) {
+			log.error("load failed", re);
+			throw re;
+		}
+	}
+
 	public List findByExample(Album instance) {
 		log.debug("finding Album instance by example");
 		try {
-			List results = sessionFactory.getCurrentSession()
+			List results = DaoUtils.sessionFactory.getCurrentSession()
 					.createCriteria("com.scoutin.entities.Album")
 					.add(Example.create(instance)).list();
 			log.debug("find by example successful, result size: "

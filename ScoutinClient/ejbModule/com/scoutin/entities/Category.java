@@ -1,6 +1,6 @@
 package com.scoutin.entities;
 
-// Generated Apr 11, 2013 7:59:48 AM by Hibernate Tools 4.0.0
+// Generated Apr 12, 2013 6:29:04 AM by Hibernate Tools 4.0.0
 
 import java.util.HashSet;
 import java.util.Set;
@@ -10,28 +10,23 @@ import java.util.Set;
  */
 public class Category implements java.io.Serializable {
 
-	private short categoryId;
+	private Short categoryId;
 	private String name;
 	private Set cards = new HashSet(0);
 
 	public Category() {
 	}
 
-	public Category(short categoryId) {
-		this.categoryId = categoryId;
-	}
-
-	public Category(short categoryId, String name, Set cards) {
-		this.categoryId = categoryId;
+	public Category(String name, Set cards) {
 		this.name = name;
 		this.cards = cards;
 	}
 
-	public short getCategoryId() {
+	public Short getCategoryId() {
 		return this.categoryId;
 	}
 
-	public void setCategoryId(short categoryId) {
+	public void setCategoryId(Short categoryId) {
 		this.categoryId = categoryId;
 	}
 

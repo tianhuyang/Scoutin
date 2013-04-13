@@ -1,6 +1,6 @@
 package com.scoutin.entities;
 
-// Generated Apr 11, 2013 7:59:48 AM by Hibernate Tools 4.0.0
+// Generated Apr 12, 2013 6:29:04 AM by Hibernate Tools 4.0.0
 
 import java.util.Date;
 import java.util.HashSet;
@@ -11,7 +11,7 @@ import java.util.Set;
  */
 public class Card implements java.io.Serializable {
 
-	private long cardId;
+	private Long cardId;
 	private Cardbody cardbody;
 	private String title;
 	private String description;
@@ -32,16 +32,11 @@ public class Card implements java.io.Serializable {
 	public Card() {
 	}
 
-	public Card(long cardId) {
-		this.cardId = cardId;
-	}
-
-	public Card(long cardId, Cardbody cardbody, String title,
-			String description, Integer rating, Integer commentsCount,
-			Integer repostsCount, Integer likesCount, Date createdTime,
-			Date updatedTime, String tag, Set albums, Set accounts,
-			Set categories, Set cardstats, Set cardrepostses, Set comments) {
-		this.cardId = cardId;
+	public Card(Cardbody cardbody, String title, String description,
+			Integer rating, Integer commentsCount, Integer repostsCount,
+			Integer likesCount, Date createdTime, Date updatedTime, String tag,
+			Set albums, Set accounts, Set categories, Set cardstats,
+			Set cardrepostses, Set comments) {
 		this.cardbody = cardbody;
 		this.title = title;
 		this.description = description;
@@ -60,11 +55,11 @@ public class Card implements java.io.Serializable {
 		this.comments = comments;
 	}
 
-	public long getCardId() {
+	public Long getCardId() {
 		return this.cardId;
 	}
 
-	public void setCardId(long cardId) {
+	public void setCardId(Long cardId) {
 		this.cardId = cardId;
 	}
 
