@@ -2,6 +2,7 @@ package com.scoutin.actions.card;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -25,7 +26,7 @@ public class SaveCardAction extends ActionSupport implements ServletRequestAware
 	private String rating;
 	private String tag;
 	private float latitude;
-	private float longtitude;
+	private float longitude;
 	private String address;
 	private String url;
 	private short[] categoryIds;
@@ -51,10 +52,14 @@ public class SaveCardAction extends ActionSupport implements ServletRequestAware
 	}
 	
 	public String createCard() throws Exception{
+		Map<String,String[]> properties = new TreeMap<String,String[]>();
+		properties.putAll(request.getParameterMap());
 		return SUCCESS;
 	}
 	
 	public String editCard() throws Exception{
+		Map<String,String[]> properties = new TreeMap<String,String[]>();
+		properties.putAll(request.getParameterMap());
 		return SUCCESS;
 	}
 	
@@ -92,10 +97,10 @@ public class SaveCardAction extends ActionSupport implements ServletRequestAware
 		this.latitude = latitude;
 	}
 	public float getLongtitude() {
-		return longtitude;
+		return longitude;
 	}
 	public void setLongtitude(float longtitude) {
-		this.longtitude = longtitude;
+		this.longitude = longtitude;
 	}
 	public String getAddress() {
 		return address;

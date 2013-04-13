@@ -20,5 +20,21 @@
 				<param name="root">dataMap</param>
 			</result>
 		</action>
+		<action name="createComment" class="com.scoutin.actions.card.SaveCommentAction" method="createComment">
+			<result name="input" type="json">
+				<param name="root">dataMap</param>
+			</result>
+			<result name="success" type="json">
+				<param name="root">dataMap</param>
+			</result>
+		</action>
+		<action name="editComment" class="com.scoutin.actions.card.SaveCommentAction" method="editComment">
+			<result name="input" type="json">
+				<param name="root">dataMap</param>
+			</result>
+			<result name="success" type="json">
+				<param name="root">dataMap</param>
+			</result>
+		</action>
 	</package>
 </struts>
