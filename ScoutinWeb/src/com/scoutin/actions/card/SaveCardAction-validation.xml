@@ -41,8 +41,8 @@
 		</field-validator>
 	</field>
 	<field name="url">
-		<field-validator type="url">
-			<message key="error.card.save.url.value">The url is not valid</message>
+		<field-validator type="required">
+			<message key="error.card.save.url.require"></message>
 		</field-validator>
 	</field>
 </validators>
