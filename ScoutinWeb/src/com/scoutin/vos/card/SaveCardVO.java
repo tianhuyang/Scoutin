@@ -4,7 +4,7 @@ public class SaveCardVO {
 	
 	public String title;
 	public String description;
-	public String rating;
+	public int rating;
 	public String tag;
 	public float latitude;
 	public float longitude;
@@ -25,10 +25,10 @@ public class SaveCardVO {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public String getRating() {
+	public int getRating() {
 		return rating;
 	}
-	public void setRating(String rating) {
+	public void setRating(int rating) {
 		this.rating = rating;
 	}
 	public String getTag() {

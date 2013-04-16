@@ -10,6 +10,7 @@ import org.apache.struts2.interceptor.ServletRequestAware;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
+import com.scoutin.entities.Account;
 import com.scoutin.entities.Card;
 import com.scoutin.exception.ScoutinError;
 import com.scoutin.exception.ScoutinException;
@@ -23,11 +24,11 @@ public class SaveCardAction extends ActionSupport implements ServletRequestAware
 	private static final long serialVersionUID = -3691178891261906745L;
 	private HttpServletRequest request;
 	private Map<String, Object> dataMap;
-	private SaveCardVO card;
+	private SaveCardVO cardVO;
 		
 	public SaveCardAction(){
 		dataMap = new HashMap<String, Object>();
-		card = new SaveCardVO();
+		cardVO = new SaveCardVO();
 	}
 	
 	@Override
@@ -39,7 +40,7 @@ public class SaveCardAction extends ActionSupport implements ServletRequestAware
 	@Override
 	public SaveCardVO getModel() {
 		// TODO Auto-generated method stub
-		return card;
+		return cardVO;
 	}
 	
 	public void validate()
@@ -54,11 +55,12 @@ public class SaveCardAction extends ActionSupport implements ServletRequestAware
 	public String createCard() throws Exception{
 		boolean succeed = true;
 		Map<String,Object> properties = new TreeMap<String,Object>();
-		CommonUtils.describe(properties, card);
+		CommonUtils.describe(properties, cardVO);
+		Account account = (Account)request.getAttribute("user");
+		properties.put("accountId",account.getAccountId());
 		try{
-			System.out.println("YES");
 			Card card = CardService.createCard(properties);
-			System.out.println(card.getTitle());
+			dataMap.put("card", card);
 		}catch(ScoutinException e)
 		{
 			succeed = false;

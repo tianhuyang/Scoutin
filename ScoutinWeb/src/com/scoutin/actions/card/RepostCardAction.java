@@ -11,39 +11,35 @@ import org.apache.struts2.interceptor.ServletRequestAware;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 import com.scoutin.entities.Account;
-import com.scoutin.entities.Comment;
+import com.scoutin.entities.Card;
 import com.scoutin.exception.ScoutinError;
 import com.scoutin.exception.ScoutinException;
 import com.scoutin.logic.CardService;
 import com.scoutin.utilities.CommonUtils;
 import com.scoutin.utilities.JSONUtils;
-import com.scoutin.vos.card.SaveCommentVO;
+import com.scoutin.vos.card.RepostCardVO;
 
-public class SaveCommentAction extends ActionSupport implements ServletRequestAware, ModelDriven<SaveCommentVO>{
-
-	private static final long serialVersionUID = -113156085596203959L;
+public class RepostCardAction extends ActionSupport implements ServletRequestAware, ModelDriven<RepostCardVO>{
+	
+	private static final long serialVersionUID = 886206200486155745L;
 	private HttpServletRequest request;
+	private RepostCardVO cardVO;
 	private Map<String, Object> dataMap;
-	private SaveCommentVO commentVO;
-	
-	private long cardId;
-	
-	public SaveCommentAction()
+	public RepostCardAction()
 	{
 		dataMap = new HashMap<String, Object>();
-		commentVO = new SaveCommentVO(); 
+		cardVO = new RepostCardVO();
 	}
 	
 	@Override
 	public void setServletRequest(HttpServletRequest arg0) {
-		// TODO Auto-generated method stub
 		request = arg0;
 	}
 	
 	@Override
-	public SaveCommentVO getModel() {
+	public RepostCardVO getModel() {
 		// TODO Auto-generated method stub
-		return commentVO;
+		return cardVO;
 	}
 	
 	public void validate(){
@@ -53,17 +49,17 @@ public class SaveCommentAction extends ActionSupport implements ServletRequestAw
 			dataMap.put("fieldErrors", this.getFieldErrors());
 		}
 	}
-	
-	public String createComment() throws Exception
+
+	public String execute() throws Exception
 	{
 		boolean succeed = true;
-		Map<String,Object> properties = new TreeMap<String,Object>();
-		CommonUtils.describe(properties, commentVO);
-		Account account = (Account)request.getSession().getAttribute("user");
+		Map<String, Object> properties = new TreeMap<String, Object>();
+		CommonUtils.describe(properties, cardVO);
+		Account account = (Account)request.getAttribute("user");
 		properties.put("accountId", account.getAccountId());
 		try{
-			Comment comment = CardService.commentCard(properties);
-			dataMap.put("comment", comment);
+			Card card = CardService.repostCard(properties);
+			dataMap.put("card", card);
 		}catch(ScoutinException e){
 			succeed = false;
 			String localizedMessage = getText(e.getMessage(),e.getMessage());
@@ -72,31 +68,6 @@ public class SaveCommentAction extends ActionSupport implements ServletRequestAw
 		
 		if(succeed)
 			JSONUtils.putOKStatus(dataMap);
-		
 		return SUCCESS;
-	}
-	
-	public String editComment() throws Exception
-	{
-		Map<String,String[]> properties = new TreeMap<String,String[]>();
-		properties.putAll(request.getParameterMap());
-		return SUCCESS;
-	}
-	
-	public String execute() throws Exception
-	{
-		return createComment();
-	}
-	
-	public Map<String, Object> getDataMap() {
-		return dataMap;
-	}
-
-	public long getCardId() {
-		return cardId;
-	}
-
-	public void setCardId(long cardId) {
-		this.cardId = cardId;
 	}
 }

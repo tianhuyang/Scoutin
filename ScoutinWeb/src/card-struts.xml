@@ -36,5 +36,13 @@
 				<param name="root">dataMap</param>
 			</result>
 		</action>
+		<action name="repostCard" class="com.scoutin.actions.card.RepostCardAction">
+			<result name="input" type="json">
+				<param name="root">dataMap</param>
+			</result>
+			<result name="success" type="json">
+				<param name="root">dataMap</param>
+			</result>
+		</action>
 	</package>
 </struts>

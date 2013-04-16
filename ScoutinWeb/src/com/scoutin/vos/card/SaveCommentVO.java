@@ -1,8 +1,19 @@
 package com.scoutin.vos.card;
 
 public class SaveCommentVO {
-	private String content;
+	
+	public long cardId;
+	public String content;
+	
 
+	public long getCardId() {
+		return cardId;
+	}
+
+	public void setCardId(long cardId) {
+		this.cardId = cardId;
+	}
+	
 	public String getContent() {
 		return content;
 	}
@@ -10,4 +21,6 @@ public class SaveCommentVO {
 	public void setContent(String content) {
 		this.content = content;
 	}
+
+
 }
