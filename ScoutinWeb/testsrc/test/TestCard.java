@@ -27,7 +27,6 @@ public class TestCard {
 
 	}
 	
-	@Ignore
 	@Test
 	public void testCreateCard(){
 		Map<String, Object> properties = new TreeMap<String, Object>();
@@ -43,6 +42,7 @@ public class TestCard {
 		}
 	}
 	
+	@Ignore
 	@Test
 	public void testRepostCard(){
 		Map<String, Object> properties = new TreeMap<String, Object>();

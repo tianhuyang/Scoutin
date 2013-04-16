@@ -1,12 +1,13 @@
 package com.scoutin.entities;
 
-// Generated Apr 12, 2013 8:46:56 AM by Hibernate Tools 4.0.0
+// Generated Apr 15, 2013 7:30:19 AM by Hibernate Tools 4.0.0
 
 import com.scoutin.utilities.DaoUtils;
 import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.LockMode;
+import org.hibernate.Query;
 import org.hibernate.criterion.Example;
 
 /**
@@ -17,6 +18,7 @@ import org.hibernate.criterion.Example;
 public class CardbodyHome {
 
 	private static final Log log = LogFactory.getLog(CardbodyHome.class);
+	private final String cardbodyIdsExistHql = "select count(className) from Cardbody className where className.cardbodyId in :cardbodyIds";
 
 	public void persist(Cardbody transientInstance) {
 		log.debug("persisting Cardbody instance");
@@ -133,6 +135,92 @@ public class CardbodyHome {
 			return instance;
 		} catch (RuntimeException re) {
 			log.error("load failed", re);
+			throw re;
+		}
+	}
+
+	public boolean hasAll(java.lang.Long[] cardbodyIds) {
+		log.debug("Cardbody hasAll");
+		boolean hasAll = false;
+		try {
+			Query query = DaoUtils.sessionFactory.getCurrentSession()
+					.createQuery(cardbodyIdsExistHql);
+			query.setParameterList("cardbodyIds", cardbodyIds);
+			Long count = (Long) query.iterate().next();
+			hasAll = count == cardbodyIds.length;
+			log.debug("hasAll successful");
+		} catch (RuntimeException re) {
+			log.error("hasAll failed", re);
+			throw re;
+		}
+		return hasAll;
+	}
+
+	private final String cardstatIdHql = "select a.cardstat.cardstatId from Cardbody a where a.cardbodyId = :cardbodyId";
+
+	public java.lang.Long getCardstatIdId(java.lang.Long cardbodyId) {
+		log.debug("getCardstatIdId with cardbodyId" + cardbodyId);
+		java.lang.Long cardstatId;
+		try {
+			Query query = DaoUtils.sessionFactory.getCurrentSession()
+					.createQuery(cardstatIdHql);
+			query.setParameter("cardbodyId", cardbodyId);
+			cardstatId = (java.lang.Long) query.uniqueResult();
+			log.debug("getCardstatIdId successful");
+			return cardstatId;
+		} catch (RuntimeException re) {
+			log.error("getCardstatIdId failed", re);
+			throw re;
+		}
+	}
+
+	private final String increaseCommentsCountHql = "update Cardbody a set a.commentsCount = a.commentsCount + :count where a.cardbodyId =:cardbodyId";
+
+	public void increaseCommentsCount(java.lang.Long cardbodyId, int count) {
+		log.debug("increaseCommentsCount with cardbodyId:" + cardbodyId);
+		try {
+			Query query = DaoUtils.sessionFactory.getCurrentSession()
+					.createQuery(increaseCommentsCountHql);
+			query.setParameter("cardbodyId", cardbodyId);
+			query.setParameter("count", count);
+			query.executeUpdate();
+			log.debug("increaseCommentsCount successful");
+		} catch (RuntimeException re) {
+			log.error("increaseCommentsCount failed", re);
+			throw re;
+		}
+	}
+
+	private final String increaseRepostsCountHql = "update Cardbody a set a.repostsCount = a.repostsCount + :count where a.cardbodyId =:cardbodyId";
+
+	public void increaseRepostsCount(java.lang.Long cardbodyId, int count) {
+		log.debug("increaseRepostsCount with cardbodyId:" + cardbodyId);
+		try {
+			Query query = DaoUtils.sessionFactory.getCurrentSession()
+					.createQuery(increaseRepostsCountHql);
+			query.setParameter("cardbodyId", cardbodyId);
+			query.setParameter("count", count);
+			query.executeUpdate();
+			log.debug("increaseRepostsCount successful");
+		} catch (RuntimeException re) {
+			log.error("increaseRepostsCount failed", re);
+			throw re;
+		}
+	}
+
+	private final String increaseLikesCountHql = "update Cardbody a set a.likesCount = a.likesCount + :count where a.cardbodyId =:cardbodyId";
+
+	public void increaseLikesCount(java.lang.Long cardbodyId, int count) {
+		log.debug("increaseLikesCount with cardbodyId:" + cardbodyId);
+		try {
+			Query query = DaoUtils.sessionFactory.getCurrentSession()
+					.createQuery(increaseLikesCountHql);
+			query.setParameter("cardbodyId", cardbodyId);
+			query.setParameter("count", count);
+			query.executeUpdate();
+			log.debug("increaseLikesCount successful");
+		} catch (RuntimeException re) {
+			log.error("increaseLikesCount failed", re);
 			throw re;
 		}
 	}

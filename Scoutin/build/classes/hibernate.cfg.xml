@@ -16,9 +16,8 @@
         <property name="hibernate.show_sql">true</property>
         <property name="hibernate.transaction.factory_class">org.hibernate.transaction.JTATransactionFactory</property>
         <property name="hibernate.transaction.manager_lookup_class">org.hibernate.transaction.JBossTransactionManagerLookup</property>
-        <mapping resource="com/scoutin/entities/Albumcard.hbm.xml" />
-        <!-- auto mapping here -->
         <mapping resource="com/scoutin/entities/Album.hbm.xml" />
+        <mapping resource="com/scoutin/entities/Albumcard.hbm.xml" />
         <mapping resource="com/scoutin/entities/Category.hbm.xml" />
         <mapping resource="com/scoutin/entities/Follower.hbm.xml" />
         <mapping resource="com/scoutin/entities/Card.hbm.xml" />

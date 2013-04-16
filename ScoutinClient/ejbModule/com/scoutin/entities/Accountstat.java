@@ -1,6 +1,6 @@
 package com.scoutin.entities;
 
-// Generated Apr 12, 2013 6:29:04 AM by Hibernate Tools 4.0.0
+// Generated Apr 15, 2013 6:05:19 AM by Hibernate Tools 4.0.0
 
 import java.util.Date;
 
@@ -9,7 +9,7 @@ import java.util.Date;
  */
 public class Accountstat implements java.io.Serializable {
 
-	private int accountId;
+	private Integer accountId;
 	private Account account;
 	private Integer followingCount;
 	private Integer followersCount;
@@ -32,11 +32,11 @@ public class Accountstat implements java.io.Serializable {
 		this.unviewRecmdCount = unviewRecmdCount;
 	}
 
-	public int getAccountId() {
+	public Integer getAccountId() {
 		return this.accountId;
 	}
 
-	public void setAccountId(int accountId) {
+	public void setAccountId(Integer accountId) {
 		this.accountId = accountId;
 	}
 

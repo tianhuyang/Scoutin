@@ -46,7 +46,9 @@ public class CardBean implements CardBeanRemote {
 	public Card createCard(Map<String, Object> properties) {
 		// whether all the albumIds exists
 		long[] albumIds = (long[])properties.get("albumIds");
-		if (DaoUtils.albumDao.hasAll(albumIds) == false) {
+		Long[] lAlbumIds = new Long[albumIds.length];
+		CommonUtils.longToLong(lAlbumIds, albumIds);
+		if (DaoUtils.albumDao.hasAll(lAlbumIds) == false) {
 			throw new IllegalArgumentException("not all albumIds exist");
 		}
 		Card card = new Card();	
@@ -89,7 +91,9 @@ public class CardBean implements CardBeanRemote {
 	@Override
 	public Card repostCard(Map<String, Object> properties) {
 		long[] albumIds = (long[])properties.get("albumIds");
-		if (DaoUtils.albumDao.hasAll(albumIds) == false) {
+		Long[] lAlbumIds = new Long[albumIds.length];
+		CommonUtils.longToLong(lAlbumIds, albumIds);
+		if (DaoUtils.albumDao.hasAll(lAlbumIds) == false) {
 			throw new IllegalArgumentException("not all albumIds exist");
 		}
 		Card card = new Card();
@@ -97,8 +101,7 @@ public class CardBean implements CardBeanRemote {
 			//populate objects
 			BeanUtils.populate(card, properties); 
 			//get accountId
-			Album album = DaoUtils.albumDao.load(albumIds[0]);
-			int accountId = album.getAccount().getAccountId();
+			int accountId = DaoUtils.albumDao.getAccountIdId(albumIds[0]);
 			//create card
 			long repostedCardId = card.getCardId();
 			Card repostedCard = DaoUtils.cardDao.load(repostedCardId);
@@ -135,7 +138,18 @@ public class CardBean implements CardBeanRemote {
 	}
 
 	@Override
-	public Comment commentCard(Comment comment) {
+	public Comment commentCard(Map<String, Object> properties) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/*
+	 * should have non-null properties, correct cardId:long
+	 *  
+	 * @see com.scoutin.logic.CardBeanRemote#repostCard(int, long)
+	 */
+	@Override
+	public Map<String, Object> editCard(Map<String, Object> properties) {
 		// TODO Auto-generated method stub
 		return null;
 	}

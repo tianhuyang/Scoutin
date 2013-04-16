@@ -36,7 +36,7 @@ public class AccountBean implements AccountBeanRemote {
 			BeanUtils.populate(account, properties);
 			Accountstat accountStat = new Accountstat();
 			accountStat.setAccount(account);
-			DaoUtils.accountStatDao.persist(accountStat);
+			DaoUtils.accountStatDao.save(accountStat);
 			Profile profile = new Profile();
 			profile.setAccount(account);
 			DaoUtils.profileDao.persist(profile);
@@ -65,7 +65,7 @@ public class AccountBean implements AccountBeanRemote {
 		album.setAccount(account);
 		try {
 			BeanUtils.populate(album, properties);
-			DaoUtils.albumDao.persist(album);
+			DaoUtils.albumDao.save(album);
 			DaoUtils.albumDao.evict(album);
 			album.setAccount(null);
 		} catch (IllegalAccessException e) {

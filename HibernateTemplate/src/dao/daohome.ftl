@@ -11,9 +11,12 @@ ${pojo.getPackageDeclaration()}
 @${pojo.importType("javax.ejb.Stateless")}
 </#if>
 <#assign DaoUtils = pojo.importType("com.scoutin.utilities.DaoUtils")>
+<#assign classModel = "org.hibernate.type.ForeignKeyDirection">
+<#assign dummy = pojo.importType("org.hibernate.Query")>
 public class ${declarationName}Home {
 
     private static final ${pojo.importType("org.apache.commons.logging.Log")} log = ${pojo.importType("org.apache.commons.logging.LogFactory")}.getLog(${pojo.getDeclarationName()}Home.class);
+    private final String ${clazz.identifierProperty.name}sExistHql = "select count(className) from ${declarationName} className where className.${clazz.identifierProperty.name} in :${clazz.identifierProperty.name}s";
 
 <#if ejb3>
     @${pojo.importType("javax.persistence.PersistenceContext")} private ${pojo.importType("javax.persistence.EntityManager")} entityManager;
@@ -209,8 +212,86 @@ public class ${declarationName}Home {
             throw re;
         }
     }
-</#if>
     
+	public boolean hasAll(${c2j.getJavaTypeName(clazz.identifierProperty, jdk5)}[] ${clazz.identifierProperty.name}s) {
+		log.debug("${declarationName} hasAll");
+		boolean hasAll = false;
+		try {
+			Query query = DaoUtils.sessionFactory.getCurrentSession()
+					.createQuery(${clazz.identifierProperty.name}sExistHql);
+			query.setParameterList("${clazz.identifierProperty.name}s", ${clazz.identifierProperty.name}s);
+			Long count = (Long) query.iterate().next();
+			hasAll = count == ${clazz.identifierProperty.name}s.length;
+			log.debug("hasAll successful");
+		} catch (RuntimeException re) {
+			log.error("hasAll failed", re);
+			throw re;
+		}
+		return hasAll;
+	}	
+</#if>
+
+<#foreach field in pojo.getAllPropertiesIterator()>
+<#if field.type.isEntityType() && (field.type.getForeignKeyDirection() != "toParent")>
+<#assign entityName = field.type.getName()>
+<#assign rclazz = cfg.getClassMapping(entityName)>
+<#assign rClassName = pojo.importType(rclazz.getClassName())>
+<#assign rIdName = rclazz.identifierProperty.name>
+<#assign rbIdName = rIdName.substring(0,1).toUpperCase() + rIdName.substring(1)>
+<#assign rIdType = c2j.getJavaTypeName(rclazz.identifierProperty, jdk5)>
+<#assign idName = clazz.identifierProperty.name>
+<#assign ok = true>
+<#foreach column in clazz.getIdentifierProperty().getColumnIterator()>
+    <#foreach col in field.getColumnIterator()>
+    <#if col == column>
+    <#assign ok = false>
+    </#if>
+    </#foreach>
+</#foreach>
+<#if ok == true>
+    private final String ${rIdName}Hql = "select a.${field.name}.${rIdName} from ${declarationName} a where a.${idName} = :${idName}";
+	
+	public ${rIdType} get${rbIdName}Id(${c2j.getJavaTypeName(clazz.identifierProperty, jdk5)} ${idName}) {
+		log.debug("get${rbIdName}Id with ${idName}" + ${idName});
+		${rIdType}  ${rIdName};
+		try {
+			Query query = DaoUtils.sessionFactory.getCurrentSession().createQuery(${rIdName}Hql);
+			query.setParameter("${idName}", ${idName}); 
+			${rIdName} = (${rIdType})query.uniqueResult();
+			log.debug("get${rbIdName}Id successful");
+			return  ${rIdName};
+		} catch (RuntimeException re) {
+			log.error("get${rbIdName}Id failed", re);
+			throw re;
+		}	
+	}
+</#if>
+</#if>
+
+<#if field.name.endsWith("Count")>
+<#assign Name = field.name.substring(0,1).toUpperCase() + field.name.substring(1)>
+<#assign idName = clazz.identifierProperty.name>
+<#assign idType = c2j.getJavaTypeName(clazz.identifierProperty, jdk5)>
+<#assign className = pojo.importType(clazz.getClassName())>
+private final String increase${Name}Hql = "update ${className} a set a.${field.name} = a.${field.name} + :count where a.${idName} =:${idName}";
+
+	public void increase${Name}(${idType} ${idName}, int count) {
+		log.debug("increase${Name} with ${idName}:" + ${idName});
+		try {
+			Query query = DaoUtils.sessionFactory.getCurrentSession()
+					.createQuery(increase${Name}Hql);
+			query.setParameter("${idName}", ${idName});
+			query.setParameter("count", count);
+			query.executeUpdate();
+			log.debug("increase${Name} successful");
+		} catch (RuntimeException re) {
+			log.error("increase${Name} failed", re);
+			throw re;
+		}
+	}
+</#if>	
+</#foreach> 
+
 <#if clazz.hasNaturalId()>
     public ${declarationName} findByNaturalId(${c2j.asNaturalIdParameterList(clazz)}) {
         log.debug("getting ${declarationName} instance by natural id");

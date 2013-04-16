@@ -10,11 +10,6 @@ import com.scoutin.utilities.EJBUtils;
 
 public class AccountService {
 
-	public static String accountPath = "ScoutinApplication/Scoutin/AccountBean!"
-			+ AccountBeanRemote.class.getName();
-	public static String authenticatePath = "ScoutinApplication/Scoutin/AuthenticateBean!"
-			+ AuthenticateBeanRemote.class.getName();
-
 	public static Account signup(Map<String, String[]> properties)
 			throws ScoutinException {	
 		
@@ -31,11 +26,9 @@ public class AccountService {
 //			throw new IllegalArgumentException();
 //		}
 
-		Account account = null;
-		AccountBeanRemote abr = (AccountBeanRemote) EJBUtils
-				.obtainBean(accountPath);
+		Account account = null;		
 		try {
-			account = abr.signup((Map)properties);
+			account = EJBUtils.accountBeanRemote.signup((Map)properties);
 		} catch (RuntimeException re) {
 		}
 
@@ -53,10 +46,8 @@ public class AccountService {
 			throw new IllegalArgumentException();
 		}
 		Account account = null;
-		AuthenticateBeanRemote abr = (AuthenticateBeanRemote) EJBUtils
-				.obtainBean(authenticatePath);
 		try {
-			account = abr.authenticate(args, type);
+			account = EJBUtils.authenticateBeanRemote.authenticate(args, type);
 		} catch (RuntimeException re) {
 			re.printStackTrace();
 		}
@@ -77,11 +68,9 @@ public class AccountService {
 		if (accountId == null){
 			throw new IllegalArgumentException();
 		}
-		Album album = null;
-		AccountBeanRemote abr = (AccountBeanRemote) EJBUtils
-				.obtainBean(accountPath);
+		Album album = null;		
 		try {
-			album = abr.createAlbum(properties);
+			album = EJBUtils.accountBeanRemote.createAlbum(properties);
 		} catch (RuntimeException re) {
 		}
 		if (album == null) {

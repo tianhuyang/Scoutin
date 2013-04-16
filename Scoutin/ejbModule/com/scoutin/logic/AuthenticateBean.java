@@ -3,6 +3,7 @@ package com.scoutin.logic;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import com.scoutin.entities.Account;
+import com.scoutin.entities.AlbumcardId;
 import com.scoutin.utilities.DaoUtils;
 
 /**

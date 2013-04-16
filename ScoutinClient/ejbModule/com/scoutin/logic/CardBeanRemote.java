@@ -12,5 +12,6 @@ public interface CardBeanRemote {
 
 	public Card createCard(Map<String,Object> properties);
 	public Card repostCard(Map<String,Object> properties);
-	public Comment commentCard(Comment comment);
+	public Map<String,Object> editCard(Map<String,Object> properties);
+	public Comment commentCard(Map<String, Object> properties);
 }

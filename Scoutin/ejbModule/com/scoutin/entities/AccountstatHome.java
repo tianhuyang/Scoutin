@@ -1,12 +1,13 @@
 package com.scoutin.entities;
 
-// Generated Apr 12, 2013 8:46:56 AM by Hibernate Tools 4.0.0
+// Generated Apr 15, 2013 7:30:19 AM by Hibernate Tools 4.0.0
 
 import com.scoutin.utilities.DaoUtils;
 import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.LockMode;
+import org.hibernate.Query;
 import org.hibernate.criterion.Example;
 
 /**
@@ -17,6 +18,7 @@ import org.hibernate.criterion.Example;
 public class AccountstatHome {
 
 	private static final Log log = LogFactory.getLog(AccountstatHome.class);
+	private final String accountIdsExistHql = "select count(className) from Accountstat className where className.accountId in :accountIds";
 
 	public void persist(Accountstat transientInstance) {
 		log.debug("persisting Accountstat instance");
@@ -101,7 +103,7 @@ public class AccountstatHome {
 		}
 	}
 
-	public Accountstat findById(int id) {
+	public Accountstat findById(java.lang.Integer id) {
 		log.debug("getting Accountstat instance with id: " + id);
 		try {
 			Accountstat instance = (Accountstat) DaoUtils.sessionFactory
@@ -119,7 +121,7 @@ public class AccountstatHome {
 		}
 	}
 
-	public Accountstat load(int id) {
+	public Accountstat load(java.lang.Integer id) {
 		log.debug("loading Accountstat instance with id: " + id);
 		try {
 			Accountstat instance = (Accountstat) DaoUtils.sessionFactory
@@ -133,6 +135,74 @@ public class AccountstatHome {
 			return instance;
 		} catch (RuntimeException re) {
 			log.error("load failed", re);
+			throw re;
+		}
+	}
+
+	public boolean hasAll(java.lang.Integer[] accountIds) {
+		log.debug("Accountstat hasAll");
+		boolean hasAll = false;
+		try {
+			Query query = DaoUtils.sessionFactory.getCurrentSession()
+					.createQuery(accountIdsExistHql);
+			query.setParameterList("accountIds", accountIds);
+			Long count = (Long) query.iterate().next();
+			hasAll = count == accountIds.length;
+			log.debug("hasAll successful");
+		} catch (RuntimeException re) {
+			log.error("hasAll failed", re);
+			throw re;
+		}
+		return hasAll;
+	}
+
+	private final String increaseFollowingCountHql = "update Accountstat a set a.followingCount = a.followingCount + :count where a.accountId =:accountId";
+
+	public void increaseFollowingCount(java.lang.Integer accountId, int count) {
+		log.debug("increaseFollowingCount with accountId:" + accountId);
+		try {
+			Query query = DaoUtils.sessionFactory.getCurrentSession()
+					.createQuery(increaseFollowingCountHql);
+			query.setParameter("accountId", accountId);
+			query.setParameter("count", count);
+			query.executeUpdate();
+			log.debug("increaseFollowingCount successful");
+		} catch (RuntimeException re) {
+			log.error("increaseFollowingCount failed", re);
+			throw re;
+		}
+	}
+
+	private final String increaseFollowersCountHql = "update Accountstat a set a.followersCount = a.followersCount + :count where a.accountId =:accountId";
+
+	public void increaseFollowersCount(java.lang.Integer accountId, int count) {
+		log.debug("increaseFollowersCount with accountId:" + accountId);
+		try {
+			Query query = DaoUtils.sessionFactory.getCurrentSession()
+					.createQuery(increaseFollowersCountHql);
+			query.setParameter("accountId", accountId);
+			query.setParameter("count", count);
+			query.executeUpdate();
+			log.debug("increaseFollowersCount successful");
+		} catch (RuntimeException re) {
+			log.error("increaseFollowersCount failed", re);
+			throw re;
+		}
+	}
+
+	private final String increaseUnviewRecmdCountHql = "update Accountstat a set a.unviewRecmdCount = a.unviewRecmdCount + :count where a.accountId =:accountId";
+
+	public void increaseUnviewRecmdCount(java.lang.Integer accountId, int count) {
+		log.debug("increaseUnviewRecmdCount with accountId:" + accountId);
+		try {
+			Query query = DaoUtils.sessionFactory.getCurrentSession()
+					.createQuery(increaseUnviewRecmdCountHql);
+			query.setParameter("accountId", accountId);
+			query.setParameter("count", count);
+			query.executeUpdate();
+			log.debug("increaseUnviewRecmdCount successful");
+		} catch (RuntimeException re) {
+			log.error("increaseUnviewRecmdCount failed", re);
 			throw re;
 		}
 	}

@@ -1,12 +1,13 @@
 package com.scoutin.entities;
 
-// Generated Apr 12, 2013 8:46:56 AM by Hibernate Tools 4.0.0
+// Generated Apr 15, 2013 7:30:19 AM by Hibernate Tools 4.0.0
 
 import com.scoutin.utilities.DaoUtils;
 import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.LockMode;
+import org.hibernate.Query;
 import org.hibernate.criterion.Example;
 
 /**
@@ -17,6 +18,7 @@ import org.hibernate.criterion.Example;
 public class CardHome {
 
 	private static final Log log = LogFactory.getLog(CardHome.class);
+	private final String cardIdsExistHql = "select count(className) from Card className where className.cardId in :cardIds";
 
 	public void persist(Card transientInstance) {
 		log.debug("persisting Card instance");
@@ -131,6 +133,92 @@ public class CardHome {
 			return instance;
 		} catch (RuntimeException re) {
 			log.error("load failed", re);
+			throw re;
+		}
+	}
+
+	public boolean hasAll(java.lang.Long[] cardIds) {
+		log.debug("Card hasAll");
+		boolean hasAll = false;
+		try {
+			Query query = DaoUtils.sessionFactory.getCurrentSession()
+					.createQuery(cardIdsExistHql);
+			query.setParameterList("cardIds", cardIds);
+			Long count = (Long) query.iterate().next();
+			hasAll = count == cardIds.length;
+			log.debug("hasAll successful");
+		} catch (RuntimeException re) {
+			log.error("hasAll failed", re);
+			throw re;
+		}
+		return hasAll;
+	}
+
+	private final String cardbodyIdHql = "select a.cardbody.cardbodyId from Card a where a.cardId = :cardId";
+
+	public java.lang.Long getCardbodyIdId(java.lang.Long cardId) {
+		log.debug("getCardbodyIdId with cardId" + cardId);
+		java.lang.Long cardbodyId;
+		try {
+			Query query = DaoUtils.sessionFactory.getCurrentSession()
+					.createQuery(cardbodyIdHql);
+			query.setParameter("cardId", cardId);
+			cardbodyId = (java.lang.Long) query.uniqueResult();
+			log.debug("getCardbodyIdId successful");
+			return cardbodyId;
+		} catch (RuntimeException re) {
+			log.error("getCardbodyIdId failed", re);
+			throw re;
+		}
+	}
+
+	private final String increaseCommentsCountHql = "update Card a set a.commentsCount = a.commentsCount + :count where a.cardId =:cardId";
+
+	public void increaseCommentsCount(java.lang.Long cardId, int count) {
+		log.debug("increaseCommentsCount with cardId:" + cardId);
+		try {
+			Query query = DaoUtils.sessionFactory.getCurrentSession()
+					.createQuery(increaseCommentsCountHql);
+			query.setParameter("cardId", cardId);
+			query.setParameter("count", count);
+			query.executeUpdate();
+			log.debug("increaseCommentsCount successful");
+		} catch (RuntimeException re) {
+			log.error("increaseCommentsCount failed", re);
+			throw re;
+		}
+	}
+
+	private final String increaseRepostsCountHql = "update Card a set a.repostsCount = a.repostsCount + :count where a.cardId =:cardId";
+
+	public void increaseRepostsCount(java.lang.Long cardId, int count) {
+		log.debug("increaseRepostsCount with cardId:" + cardId);
+		try {
+			Query query = DaoUtils.sessionFactory.getCurrentSession()
+					.createQuery(increaseRepostsCountHql);
+			query.setParameter("cardId", cardId);
+			query.setParameter("count", count);
+			query.executeUpdate();
+			log.debug("increaseRepostsCount successful");
+		} catch (RuntimeException re) {
+			log.error("increaseRepostsCount failed", re);
+			throw re;
+		}
+	}
+
+	private final String increaseLikesCountHql = "update Card a set a.likesCount = a.likesCount + :count where a.cardId =:cardId";
+
+	public void increaseLikesCount(java.lang.Long cardId, int count) {
+		log.debug("increaseLikesCount with cardId:" + cardId);
+		try {
+			Query query = DaoUtils.sessionFactory.getCurrentSession()
+					.createQuery(increaseLikesCountHql);
+			query.setParameter("cardId", cardId);
+			query.setParameter("count", count);
+			query.executeUpdate();
+			log.debug("increaseLikesCount successful");
+		} catch (RuntimeException re) {
+			log.error("increaseLikesCount failed", re);
 			throw re;
 		}
 	}

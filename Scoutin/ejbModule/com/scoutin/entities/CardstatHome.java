@@ -1,12 +1,13 @@
 package com.scoutin.entities;
 
-// Generated Apr 12, 2013 8:46:56 AM by Hibernate Tools 4.0.0
+// Generated Apr 15, 2013 7:30:19 AM by Hibernate Tools 4.0.0
 
 import com.scoutin.utilities.DaoUtils;
 import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.LockMode;
+import org.hibernate.Query;
 import org.hibernate.criterion.Example;
 
 /**
@@ -17,6 +18,7 @@ import org.hibernate.criterion.Example;
 public class CardstatHome {
 
 	private static final Log log = LogFactory.getLog(CardstatHome.class);
+	private final String cardstatIdsExistHql = "select count(className) from Cardstat className where className.cardstatId in :cardstatIds";
 
 	public void persist(Cardstat transientInstance) {
 		log.debug("persisting Cardstat instance");
@@ -133,6 +135,92 @@ public class CardstatHome {
 			return instance;
 		} catch (RuntimeException re) {
 			log.error("load failed", re);
+			throw re;
+		}
+	}
+
+	public boolean hasAll(java.lang.Long[] cardstatIds) {
+		log.debug("Cardstat hasAll");
+		boolean hasAll = false;
+		try {
+			Query query = DaoUtils.sessionFactory.getCurrentSession()
+					.createQuery(cardstatIdsExistHql);
+			query.setParameterList("cardstatIds", cardstatIds);
+			Long count = (Long) query.iterate().next();
+			hasAll = count == cardstatIds.length;
+			log.debug("hasAll successful");
+		} catch (RuntimeException re) {
+			log.error("hasAll failed", re);
+			throw re;
+		}
+		return hasAll;
+	}
+
+	private final String cardIdHql = "select a.card.cardId from Cardstat a where a.cardstatId = :cardstatId";
+
+	public java.lang.Long getCardIdId(java.lang.Long cardstatId) {
+		log.debug("getCardIdId with cardstatId" + cardstatId);
+		java.lang.Long cardId;
+		try {
+			Query query = DaoUtils.sessionFactory.getCurrentSession()
+					.createQuery(cardIdHql);
+			query.setParameter("cardstatId", cardstatId);
+			cardId = (java.lang.Long) query.uniqueResult();
+			log.debug("getCardIdId successful");
+			return cardId;
+		} catch (RuntimeException re) {
+			log.error("getCardIdId failed", re);
+			throw re;
+		}
+	}
+
+	private final String increaseCommentsCountHql = "update Cardstat a set a.commentsCount = a.commentsCount + :count where a.cardstatId =:cardstatId";
+
+	public void increaseCommentsCount(java.lang.Long cardstatId, int count) {
+		log.debug("increaseCommentsCount with cardstatId:" + cardstatId);
+		try {
+			Query query = DaoUtils.sessionFactory.getCurrentSession()
+					.createQuery(increaseCommentsCountHql);
+			query.setParameter("cardstatId", cardstatId);
+			query.setParameter("count", count);
+			query.executeUpdate();
+			log.debug("increaseCommentsCount successful");
+		} catch (RuntimeException re) {
+			log.error("increaseCommentsCount failed", re);
+			throw re;
+		}
+	}
+
+	private final String increaseRepostsCountHql = "update Cardstat a set a.repostsCount = a.repostsCount + :count where a.cardstatId =:cardstatId";
+
+	public void increaseRepostsCount(java.lang.Long cardstatId, int count) {
+		log.debug("increaseRepostsCount with cardstatId:" + cardstatId);
+		try {
+			Query query = DaoUtils.sessionFactory.getCurrentSession()
+					.createQuery(increaseRepostsCountHql);
+			query.setParameter("cardstatId", cardstatId);
+			query.setParameter("count", count);
+			query.executeUpdate();
+			log.debug("increaseRepostsCount successful");
+		} catch (RuntimeException re) {
+			log.error("increaseRepostsCount failed", re);
+			throw re;
+		}
+	}
+
+	private final String increaseLikesCountHql = "update Cardstat a set a.likesCount = a.likesCount + :count where a.cardstatId =:cardstatId";
+
+	public void increaseLikesCount(java.lang.Long cardstatId, int count) {
+		log.debug("increaseLikesCount with cardstatId:" + cardstatId);
+		try {
+			Query query = DaoUtils.sessionFactory.getCurrentSession()
+					.createQuery(increaseLikesCountHql);
+			query.setParameter("cardstatId", cardstatId);
+			query.setParameter("count", count);
+			query.executeUpdate();
+			log.debug("increaseLikesCount successful");
+		} catch (RuntimeException re) {
+			log.error("increaseLikesCount failed", re);
 			throw re;
 		}
 	}

@@ -1,12 +1,13 @@
 package com.scoutin.entities;
 
-// Generated Apr 12, 2013 8:46:56 AM by Hibernate Tools 4.0.0
+// Generated Apr 15, 2013 7:30:19 AM by Hibernate Tools 4.0.0
 
 import com.scoutin.utilities.DaoUtils;
 import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.LockMode;
+import org.hibernate.Query;
 import org.hibernate.criterion.Example;
 
 /**
@@ -17,6 +18,7 @@ import org.hibernate.criterion.Example;
 public class NotificationHome {
 
 	private static final Log log = LogFactory.getLog(NotificationHome.class);
+	private final String notificationIdsExistHql = "select count(className) from Notification className where className.notificationId in :notificationIds";
 
 	public void persist(Notification transientInstance) {
 		log.debug("persisting Notification instance");
@@ -135,6 +137,23 @@ public class NotificationHome {
 			log.error("load failed", re);
 			throw re;
 		}
+	}
+
+	public boolean hasAll(java.lang.Long[] notificationIds) {
+		log.debug("Notification hasAll");
+		boolean hasAll = false;
+		try {
+			Query query = DaoUtils.sessionFactory.getCurrentSession()
+					.createQuery(notificationIdsExistHql);
+			query.setParameterList("notificationIds", notificationIds);
+			Long count = (Long) query.iterate().next();
+			hasAll = count == notificationIds.length;
+			log.debug("hasAll successful");
+		} catch (RuntimeException re) {
+			log.error("hasAll failed", re);
+			throw re;
+		}
+		return hasAll;
 	}
 
 	public List findByExample(Notification instance) {

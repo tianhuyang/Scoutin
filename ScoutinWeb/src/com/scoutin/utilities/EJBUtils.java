@@ -5,20 +5,33 @@ import java.util.Properties;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
+import com.scoutin.logic.AccountBeanRemote;
+import com.scoutin.logic.AuthenticateBeanRemote;
+import com.scoutin.logic.CardBeanRemote;
+
 public class EJBUtils {
-	static Properties  jndiProps = new Properties();
+	private final static String module = "ejb:ScoutinApplication/Scoutin/";
+	private final static String authenticatePath = module + "AuthenticateBean!"
+			+ AuthenticateBeanRemote.class.getName();
+	private final static String accountPath = module + "AccountBean!"
+			+ AccountBeanRemote.class.getName();
+	private final static String cardPath = module + "CardBean!"
+			+ CardBeanRemote.class.getName();
+	
+	static final Properties  jndiProps = new Properties();
 	static {
-		jndiProps.put(InitialContext.INITIAL_CONTEXT_FACTORY,
-				"org.jboss.naming.remote.client.InitialContextFactory");
-		jndiProps.put(InitialContext.PROVIDER_URL,
-				"remote://localhost:4447");// create a context passing these properties
-		// username
-		jndiProps.put(InitialContext.SECURITY_PRINCIPAL, "user");
-		// password
-		jndiProps.put(InitialContext.SECURITY_CREDENTIALS, "12345");
-		jndiProps.put("jboss.naming.client.ejb.context", true);
-		//jndiProps.put(InitialContext.URL_PKG_PREFIXES, "org.jboss.ejb.client.naming");			
+//		jndiProps.put(InitialContext.INITIAL_CONTEXT_FACTORY,
+//				"org.jboss.naming.remote.client.InitialContextFactory");
+//		jndiProps.put(InitialContext.PROVIDER_URL,
+//				"remote://localhost:4447");// create a context passing these properties
+//		// username
+//		jndiProps.put(InitialContext.SECURITY_PRINCIPAL, "user");
+//		// password
+//		jndiProps.put(InitialContext.SECURITY_CREDENTIALS, "12345");
+		//jndiProps.put("jboss.naming.client.ejb.context", true);
+		jndiProps.put(InitialContext.URL_PKG_PREFIXES, "org.jboss.ejb.client.naming");			
 	}
+	
 	public static Object obtainBean(String beanName)
 	{
 		Object bean=null;
@@ -31,4 +44,12 @@ public class EJBUtils {
 		}
 		return bean;
 	}
+	
+	public static final AuthenticateBeanRemote authenticateBeanRemote = (AuthenticateBeanRemote) EJBUtils.obtainBean(authenticatePath);
+	public static final AccountBeanRemote accountBeanRemote = (AccountBeanRemote) EJBUtils.obtainBean(accountPath);
+	public static final CardBeanRemote cardBeanRemote = (CardBeanRemote) EJBUtils.obtainBean(cardPath);
+	
+
+	
+
 }

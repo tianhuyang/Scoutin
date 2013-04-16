@@ -1,12 +1,13 @@
 package com.scoutin.entities;
 
-// Generated Apr 12, 2013 8:46:56 AM by Hibernate Tools 4.0.0
+// Generated Apr 15, 2013 7:30:19 AM by Hibernate Tools 4.0.0
 
 import com.scoutin.utilities.DaoUtils;
 import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.LockMode;
+import org.hibernate.Query;
 import org.hibernate.criterion.Example;
 
 /**
@@ -17,6 +18,7 @@ import org.hibernate.criterion.Example;
 public class CommentHome {
 
 	private static final Log log = LogFactory.getLog(CommentHome.class);
+	private final String commentIdsExistHql = "select count(className) from Comment className where className.commentId in :commentIds";
 
 	public void persist(Comment transientInstance) {
 		log.debug("persisting Comment instance");
@@ -133,6 +135,59 @@ public class CommentHome {
 			return instance;
 		} catch (RuntimeException re) {
 			log.error("load failed", re);
+			throw re;
+		}
+	}
+
+	public boolean hasAll(java.lang.Long[] commentIds) {
+		log.debug("Comment hasAll");
+		boolean hasAll = false;
+		try {
+			Query query = DaoUtils.sessionFactory.getCurrentSession()
+					.createQuery(commentIdsExistHql);
+			query.setParameterList("commentIds", commentIds);
+			Long count = (Long) query.iterate().next();
+			hasAll = count == commentIds.length;
+			log.debug("hasAll successful");
+		} catch (RuntimeException re) {
+			log.error("hasAll failed", re);
+			throw re;
+		}
+		return hasAll;
+	}
+
+	private final String cardIdHql = "select a.card.cardId from Comment a where a.commentId = :commentId";
+
+	public java.lang.Long getCardIdId(java.lang.Long commentId) {
+		log.debug("getCardIdId with commentId" + commentId);
+		java.lang.Long cardId;
+		try {
+			Query query = DaoUtils.sessionFactory.getCurrentSession()
+					.createQuery(cardIdHql);
+			query.setParameter("commentId", commentId);
+			cardId = (java.lang.Long) query.uniqueResult();
+			log.debug("getCardIdId successful");
+			return cardId;
+		} catch (RuntimeException re) {
+			log.error("getCardIdId failed", re);
+			throw re;
+		}
+	}
+
+	private final String accountIdHql = "select a.account.accountId from Comment a where a.commentId = :commentId";
+
+	public java.lang.Integer getAccountIdId(java.lang.Long commentId) {
+		log.debug("getAccountIdId with commentId" + commentId);
+		java.lang.Integer accountId;
+		try {
+			Query query = DaoUtils.sessionFactory.getCurrentSession()
+					.createQuery(accountIdHql);
+			query.setParameter("commentId", commentId);
+			accountId = (java.lang.Integer) query.uniqueResult();
+			log.debug("getAccountIdId successful");
+			return accountId;
+		} catch (RuntimeException re) {
+			log.error("getAccountIdId failed", re);
 			throw re;
 		}
 	}
