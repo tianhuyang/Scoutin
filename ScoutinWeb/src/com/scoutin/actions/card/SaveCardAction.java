@@ -9,37 +9,37 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.struts2.interceptor.ServletRequestAware;
 
 import com.opensymphony.xwork2.ActionSupport;
+import com.opensymphony.xwork2.ModelDriven;
+import com.scoutin.entities.Card;
 import com.scoutin.exception.ScoutinError;
+import com.scoutin.exception.ScoutinException;
+import com.scoutin.logic.CardService;
+import com.scoutin.utilities.CommonUtils;
 import com.scoutin.utilities.JSONUtils;
+import com.scoutin.vos.card.SaveCardVO;
 
-public class SaveCardAction extends ActionSupport implements ServletRequestAware{
-
-	/**
-	 * 
-	 */
+public class SaveCardAction extends ActionSupport implements ServletRequestAware, ModelDriven<SaveCardVO>
+{
 	private static final long serialVersionUID = -3691178891261906745L;
 	private HttpServletRequest request;
 	private Map<String, Object> dataMap;
-	
-	private String title;
-	private String description;
-	private String rating;
-	private String tag;
-	private float latitude;
-	private float longitude;
-	private String address;
-	private String url;
-	private short[] categoryIds;
-	private long[] albumsIds;
-	
-	public SaveCardAction()
-	{
+	private SaveCardVO card;
+		
+	public SaveCardAction(){
 		dataMap = new HashMap<String, Object>();
+		card = new SaveCardVO();
 	}
+	
 	@Override
 	public void setServletRequest(HttpServletRequest arg0) {
 		// TODO Auto-generated method stub
 		request = arg0;
+	}
+	
+	@Override
+	public SaveCardVO getModel() {
+		// TODO Auto-generated method stub
+		return card;
 	}
 	
 	public void validate()
@@ -52,8 +52,21 @@ public class SaveCardAction extends ActionSupport implements ServletRequestAware
 	}
 	
 	public String createCard() throws Exception{
-		Map<String,String[]> properties = new TreeMap<String,String[]>();
-		properties.putAll(request.getParameterMap());
+		boolean succeed = true;
+		Map<String,Object> properties = new TreeMap<String,Object>();
+		CommonUtils.describe(properties, card);
+		try{
+			System.out.println("YES");
+			Card card = CardService.createCard(properties);
+			System.out.println(card.getTitle());
+		}catch(ScoutinException e)
+		{
+			succeed = false;
+			String localizedMessage = getText(e.getMessage(),e.getMessage());
+			JSONUtils.putStatus(dataMap, e.getStatus(), localizedMessage);
+		}
+		if(succeed)
+			JSONUtils.putOKStatus(dataMap);
 		return SUCCESS;
 	}
 	
@@ -66,64 +79,5 @@ public class SaveCardAction extends ActionSupport implements ServletRequestAware
 	public Map<String, Object> getDataMap() {
 		return dataMap;
 	}
-	public String getTitle() {
-		return title;
-	}
-	public void setTitle(String title) {
-		this.title = title;
-	}
-	public String getDescription() {
-		return description;
-	}
-	public void setDescription(String description) {
-		this.description = description;
-	}
-	public String getRating() {
-		return rating;
-	}
-	public void setRating(String rating) {
-		this.rating = rating;
-	}
-	public String getTag() {
-		return tag;
-	}
-	public void setTag(String tag) {
-		this.tag = tag;
-	}
-	public float getLatitude() {
-		return latitude;
-	}
-	public void setLatitude(float latitude) {
-		this.latitude = latitude;
-	}
-	public float getLongtitude() {
-		return longitude;
-	}
-	public void setLongtitude(float longtitude) {
-		this.longitude = longtitude;
-	}
-	public String getAddress() {
-		return address;
-	}
-	public void setAddress(String address) {
-		this.address = address;
-	}
-	public String getUrl() {
-		return url;
-	}
-	public void setUrl(String url) {
-		this.url = url;
-	}
-	public short[] getCategoryId() {
-		return categoryIds;
-	}
-	public void setCategoryId(short[] categoryId) {
-		this.categoryIds = categoryId;
-	}
-	public long[] getAlbumsId() {
-		return albumsIds;
-	}
-	public void setAlbumsId(long[] albumsId) {
-		this.albumsIds = albumsId;
-	}
+
 }

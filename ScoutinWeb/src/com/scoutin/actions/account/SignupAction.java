@@ -1,42 +1,38 @@
 package com.scoutin.actions.account;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
 import javax.servlet.http.HttpServletRequest;
 
-
-import org.apache.commons.beanutils.BeanUtils;
 import org.apache.struts2.interceptor.ServletRequestAware;
 
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
+import com.opensymphony.xwork2.ModelDriven;
 import com.scoutin.entities.Account;
 import com.scoutin.exception.ScoutinError;
 import com.scoutin.exception.ScoutinException;
 import com.scoutin.logic.AccountService;
 import com.scoutin.logic.AccountConstants;
+import com.scoutin.utilities.CommonUtils;
 import com.scoutin.utilities.JSONUtils;
+import com.scoutin.vos.account.SignupVO;
 
-public class SignupAction extends ActionSupport implements ServletRequestAware {
+public class SignupAction extends ActionSupport implements ServletRequestAware, ModelDriven<SignupVO> {
 
 	private static final long serialVersionUID = -3591049023437005414L;
 
-	private String email;
-	private String phone;
-	private String password;
-	private String repassword;
-	private String firstname;
-	private String lastname;
 	private String method;
 	private HttpServletRequest request;
-	Map<String, Object> dataMap;
+	private Map<String, Object> dataMap;
+	private SignupVO user;
 	
 	public SignupAction() {
 		// TODO Auto-generated constructor stub
 		dataMap = new HashMap<String, Object>();
+		user = new SignupVO();
 	}
 	
 	@Override
@@ -44,6 +40,12 @@ public class SignupAction extends ActionSupport implements ServletRequestAware {
 		// TODO Auto-generated method stub
 		this.request = request;
 		this.method = ActionContext.getContext().getName();
+	}
+	
+	@Override
+	public SignupVO getModel() {
+		// TODO Auto-generated method stub
+		return user;
 	}
 	
 	public void validate(){			
@@ -55,18 +57,18 @@ public class SignupAction extends ActionSupport implements ServletRequestAware {
 	}
 	
 	public String emailSignup() throws Exception{
-		signup(email, AccountConstants.AuthenticateTypeEmail);
+		signup(user.getEmail(), AccountConstants.AuthenticateTypeEmail);
 		return SUCCESS;
 	}
 	
 	public String phoneSignup() throws Exception{
-		signup(phone, AccountConstants.AuthenticateTypePhone);
+		signup(user.getPhone(), AccountConstants.AuthenticateTypePhone);
 		return SUCCESS;
 	}
 	
     private void signup(String domain,int type){
-    	Map<String, String[]> properties = new TreeMap<String, String[]>();
-    	properties.putAll(request.getParameterMap());
+    	Map<String, Object> properties = new TreeMap<String, Object>();
+    	CommonUtils.describe(properties, user);
     	
     	boolean succeed = true;
 		try {
@@ -89,38 +91,6 @@ public class SignupAction extends ActionSupport implements ServletRequestAware {
 		return emailSignup();
 	}
     
-    public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getPhone() {
-		return phone;
-	}
-
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
-
-	public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-	public String getRepassword() {
-		return repassword;
-	}
-
-	public void setRepassword(String repassword) {
-		this.repassword = repassword;
-	}
-	
 	public String getMethod() {
 		return method;
 	}	
@@ -128,21 +98,4 @@ public class SignupAction extends ActionSupport implements ServletRequestAware {
 	public Map<String, Object> getDataMap() {   
         return dataMap;   
     }
-
-	public String getFirstname() {
-		return firstname;
-	}
-
-	public void setFirstname(String firstname) {
-		this.firstname = firstname;
-	}
-
-	public String getLastname() {
-		return lastname;
-	}
-
-	public void setLastname(String lastname) {
-		this.lastname = lastname;
-	}   
-
 }

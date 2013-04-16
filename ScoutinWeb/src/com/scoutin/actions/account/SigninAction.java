@@ -10,27 +10,27 @@ import org.apache.struts2.interceptor.SessionAware;
 
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
+import com.opensymphony.xwork2.ModelDriven;
 import com.scoutin.entities.Account;
 import com.scoutin.exception.ScoutinError;
 import com.scoutin.exception.ScoutinException;
 import com.scoutin.logic.AccountService;
 import com.scoutin.logic.AccountConstants;
 import com.scoutin.utilities.JSONUtils;
+import com.scoutin.vos.account.SigninVO;
 
-public class SigninAction extends ActionSupport implements SessionAware{
-
+public class SigninAction extends ActionSupport implements SessionAware, ModelDriven<SigninVO>
+{
 	private static final long serialVersionUID = 8653684360644771752L;
 
-	private String email;
-	private String phone;
-	private String password;
-	private int authType;
 	private Map<String, Object> session;
 	private String method;
 	private Map<String, Object> dataMap;
+	private SigninVO user; 
 	
 	public SigninAction() {
 		// TODO Auto-generated constructor stub
+		user = new SigninVO(); 
 		dataMap = new HashMap<String, Object>();
 	}
 	
@@ -41,6 +41,12 @@ public class SigninAction extends ActionSupport implements SessionAware{
 		this.method = ActionContext.getContext().getName();
 	}
 	
+	@Override
+	public SigninVO getModel() {
+		// TODO Auto-generated method stub
+		return user;
+	}   
+	
 	public void validate(){			
 		super.validate();
 		if(this.hasFieldErrors()){
@@ -50,13 +56,13 @@ public class SigninAction extends ActionSupport implements SessionAware{
 	}
 	
 	public String emailSignin() throws Exception{
-		signin(email,AccountConstants.AuthenticateTypeEmail);
+		signin(user.getEmail(),AccountConstants.AuthenticateTypeEmail);
 		return SUCCESS;
 	}
 	
 	private void signin(String domain, int type)
 	{
-		String[] args = {domain,password};
+		String[] args = {domain,user.getPassword()};
 		boolean succeed = true;
 		try
 		{
@@ -79,38 +85,6 @@ public class SigninAction extends ActionSupport implements SessionAware{
 	public String execute() throws Exception{
 		return emailSignin();
 	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String domain) {
-		this.email = domain;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public int getAuthType() {
-		return authType;
-	}
-
-	public void setAuthType(int authType) {
-		this.authType = authType;
-	}
-
-	public String getPhone() {
-		return phone;
-	}
-
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
 	
 	public String getMethod() {
 		return method;
@@ -118,5 +92,5 @@ public class SigninAction extends ActionSupport implements SessionAware{
 	
 	public Map<String, Object> getDataMap() {   
         return dataMap;   
-    }   
+    }
 }

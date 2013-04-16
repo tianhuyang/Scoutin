@@ -10,7 +10,7 @@ import com.scoutin.utilities.EJBUtils;
 
 public class AccountService {
 
-	public static Account signup(Map<String, String[]> properties)
+	public static Account signup(Map<String, Object> properties)
 			throws ScoutinException {	
 		
 		if (properties == null){
@@ -28,7 +28,7 @@ public class AccountService {
 
 		Account account = null;		
 		try {
-			account = EJBUtils.accountBeanRemote.signup((Map)properties);
+			account = EJBUtils.accountBeanRemote.signup(properties);
 		} catch (RuntimeException re) {
 		}
 
