@@ -20,15 +20,14 @@
         <mapping resource="com/scoutin/entities/Albumcard.hbm.xml" />
         <mapping resource="com/scoutin/entities/Category.hbm.xml" />
         <mapping resource="com/scoutin/entities/Follower.hbm.xml" />
+        <mapping resource="com/scoutin/entities/Cardbody.hbm.xml" />
         <mapping resource="com/scoutin/entities/Card.hbm.xml" />
         <mapping resource="com/scoutin/entities/Accountstat.hbm.xml" />
-        <mapping resource="com/scoutin/entities/Cardreposts.hbm.xml" />
-        <mapping resource="com/scoutin/entities/Notification.hbm.xml" />
-        <mapping resource="com/scoutin/entities/Cardstat.hbm.xml" />
-        <mapping resource="com/scoutin/entities/Cardbody.hbm.xml" />
         <mapping resource="com/scoutin/entities/Message.hbm.xml" />
+        <mapping resource="com/scoutin/entities/Cardreposts.hbm.xml" />
         <mapping resource="com/scoutin/entities/Comment.hbm.xml" />
         <mapping resource="com/scoutin/entities/Profile.hbm.xml" />
+        <mapping resource="com/scoutin/entities/Notification.hbm.xml" />
         <mapping resource="com/scoutin/entities/Account.hbm.xml" />
     </session-factory>
 </hibernate-configuration>

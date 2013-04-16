@@ -22,7 +22,6 @@ public class DaoUtils {
 	}
 	public static final AccountDao accountDao = new AccountDao();
 	public static final CardDao cardDao = new CardDao();
-	public static final CardStatDao cardStatDao = new CardStatDao();
 	public static final CardBodyDao cardBodyDao = new CardBodyDao();
 	public static final ProfileDao profileDao = new ProfileDao();
 	public static final AlbumDao albumDao = new AlbumDao();

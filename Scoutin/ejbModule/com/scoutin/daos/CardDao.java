@@ -17,20 +17,20 @@ public class CardDao extends CardHome {
 		return null;
 	}
 	
-    private final String cardBodyIdHql = "select cardbodyId from Card where cardId = :cardId";
-	
-	public long getCardbodyId(long cardId) {
-		log.debug("authenticate with email");
-		long cardbodyId = 0L;
-		try {
-			Query query = DaoUtils.sessionFactory.getCurrentSession().createQuery(cardBodyIdHql);
-			query.setParameter("cardId", cardId); 
-			cardbodyId = (Long)query.uniqueResult();
-			log.debug("authenticate successful");
-		} catch (RuntimeException re) {
-			log.error("authenticate failed", re);
-			throw re;
-		}
-		return cardbodyId;		
-	}
+//    private final String cardBodyIdHql = "select cardbodyId from Card where cardId = :cardId";
+//	
+//	public long getCardbodyId(long cardId) {
+//		log.debug("authenticate with email");
+//		long cardbodyId = 0L;
+//		try {
+//			Query query = DaoUtils.sessionFactory.getCurrentSession().createQuery(cardBodyIdHql);
+//			query.setParameter("cardId", cardId); 
+//			cardbodyId = (Long)query.uniqueResult();
+//			log.debug("authenticate successful");
+//		} catch (RuntimeException re) {
+//			log.error("authenticate failed", re);
+//			throw re;
+//		}
+//		return cardbodyId;		
+//	}
 }

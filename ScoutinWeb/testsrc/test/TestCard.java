@@ -3,6 +3,8 @@ package test;
 import java.util.Map;
 import java.util.TreeMap;
 
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -30,11 +32,12 @@ public class TestCard {
 	@Test
 	public void testCreateCard(){
 		Map<String, Object> properties = new TreeMap<String, Object>();
-		properties.put("albumIds", new long[]{1L,2L});
+		properties.put("albumIds", new long[]{1L,3L});
 		properties.put("url", "www.baidu.com");
 		try {
 			Card card = CardService.createCard(properties);
-			System.out.println(card.getCardId());
+			String info = ReflectionToStringBuilder.toString(card, ToStringStyle.MULTI_LINE_STYLE);
+			System.out.println(info);
 			Assert.assertTrue(true);
 		} catch (ScoutinException e) {
 			 e.printStackTrace();
@@ -46,7 +49,7 @@ public class TestCard {
 	@Test
 	public void testRepostCard(){
 		Map<String, Object> properties = new TreeMap<String, Object>();
-		properties.put("albumIds", new long[]{3L,4L});
+		properties.put("albumIds", new long[]{1L,2L});
 		properties.put("cardId", 1L);
 		try {
 			Card card = CardService.repostCard(properties);

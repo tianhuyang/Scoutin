@@ -3,6 +3,9 @@ package test;
 import java.util.Map;
 import java.util.TreeMap;
 
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import org.junit.*;
 
 import com.scoutin.entities.Account;
@@ -28,14 +31,15 @@ public class TestAccount {
 	@Test
 	public void testSignupWithEmail() {
 		Map<String, Object> properties = new TreeMap<String, Object>();
-		properties.put("email", "haocai@qq.com");
-		properties.put("password", "password");
-		properties.put("firstname", "Dana");
-		properties.put("lastname", "Li");
+		properties.put("email", "tianhu@169.com");
+		properties.put("password", "tiger");
+		properties.put("firstname", "Tianhu");
+		properties.put("lastname", "Yang");
 		properties.put("sex", 1);
 		try {
 			Account account = AccountService.signup((Map) properties);
-			System.out.println(account.getAccountId());
+			String info = ReflectionToStringBuilder.toString(account, ToStringStyle.MULTI_LINE_STYLE);
+			System.out.println(info);
 			Assert.assertTrue(true);
 		} catch (ScoutinException e) {
 			// e.printStackTrace();
@@ -44,18 +48,17 @@ public class TestAccount {
 
 	}
 
-	@Ignore
+	
 	@Test
 	public void testAuthenticate() {
 		String args[] = new String[2];
-		args[0] = "haocai@usc.edu";
+		args[0] = "haocai@qq.com";
 		args[1] = "password";
 		try {
 			Account account = AccountService.authenticate(args,
 					AccountConstants.AuthenticateTypeEmail);
-			System.out.println(account);
-			System.out.println(account.getEmail());
-			System.out.println(account.getProfile().getAccountId());
+			String info = ReflectionToStringBuilder.toString(account, ToStringStyle.MULTI_LINE_STYLE);
+			System.out.println(info);
 			Assert.assertTrue(true);
 		} catch (ScoutinException e) {
 			// e.printStackTrace();
@@ -136,7 +139,8 @@ public class TestAccount {
 		properties.put("name", "default");
 		try {
 			Album album = AccountService.createAlbum(properties);
-			System.out.println(album.getAlbumId());
+			String info = ReflectionToStringBuilder.toString(album, ToStringStyle.MULTI_LINE_STYLE);
+			System.out.println(info);
 			Assert.assertTrue(true);
 		} catch (ScoutinException e) {
 			e.printStackTrace();

@@ -16,7 +16,6 @@ import com.scoutin.entities.Card;
 import com.scoutin.entities.Cardbody;
 import com.scoutin.entities.Cardreposts;
 import com.scoutin.entities.CardrepostsId;
-import com.scoutin.entities.Cardstat;
 import com.scoutin.entities.Comment;
 import com.scoutin.utilities.CommonUtils;
 import com.scoutin.utilities.DaoUtils;
@@ -59,10 +58,7 @@ public class CardBean implements CardBeanRemote {
 			BeanUtils.populate(cardBody, properties);
 
 			// insert values
-			Cardstat cardStat = new Cardstat();
-			DaoUtils.cardStatDao.persist(cardStat);
-			cardBody.setCardstat(cardStat);
-			DaoUtils.cardBodyDao.persist(cardBody);
+			DaoUtils.cardBodyDao.save(cardBody);
 			card.setCardbody(cardBody);
 			DaoUtils.cardDao.save(card);
 			for (long albumId : albumIds) {
@@ -103,9 +99,9 @@ public class CardBean implements CardBeanRemote {
 			//get accountId
 			int accountId = DaoUtils.albumDao.getAccountIdId(albumIds[0]);
 			//create card
-			long repostedCardId = card.getCardId();
-			Card repostedCard = DaoUtils.cardDao.load(repostedCardId);
-			Cardbody cardBody = repostedCard.getCardbody();
+			Long repostedCardId = card.getCardId();
+			Long repostedCardbodyId = DaoUtils.cardDao.getCardbodyIdId(repostedCardId);
+			Cardbody cardBody = DaoUtils.cardBodyDao.load(repostedCardbodyId);
 			card.setCardbody(cardBody);
 			card.setCardId(null);			
 			DaoUtils.cardDao.save(card);
@@ -115,16 +111,13 @@ public class CardBean implements CardBeanRemote {
 			if(cardReposts == null){
 				cardReposts = new Cardreposts();
 				cardReposts.setId(cardRepostsId);
-				cardReposts.setCount(0);
+				cardReposts.setCount(1);
 			}
-			/* may lock */
-			cardReposts.setCount(cardReposts.getCount() + 1);
+			else{
+				DaoUtils.cardBodyDao.increaseRepostsCount(repostedCardbodyId, 1);
+			}
+			DaoUtils.cardBodyDao.persist(cardBody);
 			DaoUtils.cardRepostsDato.persist(cardReposts);
-			//increase cardBody
-			/* should lock and have trigger*/
-			cardBody.setRepostsCount(cardBody.getRepostsCount() + 1);
-			Cardstat cardStat = cardBody.getCardstat();
-			cardStat.setRepostsCount(cardStat.getRepostsCount() + 1);
 
 		}  catch (IllegalAccessException e) {
 			card = null;

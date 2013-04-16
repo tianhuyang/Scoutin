@@ -1,6 +1,6 @@
 package com.scoutin.entities;
 
-// Generated Apr 15, 2013 7:30:19 AM by Hibernate Tools 4.0.0
+// Generated Apr 15, 2013 10:22:39 PM by Hibernate Tools 4.0.0
 
 import com.scoutin.utilities.DaoUtils;
 import java.util.List;
@@ -156,20 +156,20 @@ public class CardbodyHome {
 		return hasAll;
 	}
 
-	private final String cardstatIdHql = "select a.cardstat.cardstatId from Cardbody a where a.cardbodyId = :cardbodyId";
+	private final String cardIdHql = "select a.card.cardId from Cardbody a where a.cardbodyId = :cardbodyId";
 
-	public java.lang.Long getCardstatIdId(java.lang.Long cardbodyId) {
-		log.debug("getCardstatIdId with cardbodyId" + cardbodyId);
-		java.lang.Long cardstatId;
+	public java.lang.Long getCardIdId(java.lang.Long cardbodyId) {
+		log.debug("getCardIdId with cardbodyId" + cardbodyId);
+		java.lang.Long cardId;
 		try {
 			Query query = DaoUtils.sessionFactory.getCurrentSession()
-					.createQuery(cardstatIdHql);
+					.createQuery(cardIdHql);
 			query.setParameter("cardbodyId", cardbodyId);
-			cardstatId = (java.lang.Long) query.uniqueResult();
-			log.debug("getCardstatIdId successful");
-			return cardstatId;
+			cardId = (java.lang.Long) query.uniqueResult();
+			log.debug("getCardIdId successful");
+			return cardId;
 		} catch (RuntimeException re) {
-			log.error("getCardstatIdId failed", re);
+			log.error("getCardIdId failed", re);
 			throw re;
 		}
 	}

@@ -34,12 +34,17 @@ public class AccountBean implements AccountBeanRemote {
 		Account account = new Account();
 		try {
 			BeanUtils.populate(account, properties);
+			//insert values
 			Accountstat accountStat = new Accountstat();
 			accountStat.setAccount(account);
 			DaoUtils.accountStatDao.save(accountStat);
 			Profile profile = new Profile();
 			profile.setAccount(account);
-			DaoUtils.profileDao.persist(profile);
+			DaoUtils.profileDao.save(profile);
+			// set return fields
+			DaoUtils.accountDao.evict(account);
+			account.setProfile(profile);
+			account.setAccountstat(accountStat);
 			
 		} catch (IllegalAccessException e) {
 			account = null;
@@ -53,7 +58,7 @@ public class AccountBean implements AccountBeanRemote {
 	}
 
 	/*
-	 * must have correct not-null accountId
+	 * must have not-null properties, correct not-null accountId:int
 	 * @see com.scoutin.logic.AccountBeanRemote#createAlbum(java.util.Map)
 	 */
 	@Override
