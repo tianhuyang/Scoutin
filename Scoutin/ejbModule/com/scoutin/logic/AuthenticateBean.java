@@ -1,5 +1,7 @@
 package com.scoutin.logic;
 
+import java.util.TreeSet;
+
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import com.scoutin.entities.Account;
@@ -29,13 +31,11 @@ public class AuthenticateBean implements AuthenticateBeanRemote {
 			account = DaoUtils.accountDao.authenticateWithEmail(args[0],
 					args[1]);
 			if (account != null) {
-				DaoUtils.accountDao.evict(account);
-				account.setAlbums(null);
-				account.setCardrepostses(null);
-				account.setComments(null);
-				account.setFollowersForFollowedId(null);
-				account.setFollowersForFollowingId(null);
-				account.setCards(null);
+				TreeSet<String> getFields = new TreeSet<String>();
+				getFields.add("profile");
+				getFields.add("albums");
+				getFields.add("accountstat");
+				DaoUtils.accountDao.getAndRemoveProxies(account, getFields);
 			}
 			break;
 		}

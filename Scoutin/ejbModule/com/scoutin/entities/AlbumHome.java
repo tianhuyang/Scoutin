@@ -1,9 +1,10 @@
 package com.scoutin.entities;
 
-// Generated Apr 15, 2013 10:22:39 PM by Hibernate Tools 4.0.0
+// Generated Apr 16, 2013 7:33:43 PM by Hibernate Tools 4.0.0
 
 import com.scoutin.utilities.DaoUtils;
 import java.util.List;
+import java.util.Set;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.LockMode;
@@ -156,7 +157,7 @@ public class AlbumHome {
 
 	private final String accountIdHql = "select a.account.accountId from Album a where a.albumId = :albumId";
 
-	public java.lang.Integer getAccountIdId(java.lang.Long albumId) {
+	public java.lang.Integer getAccountId(java.lang.Long albumId) {
 		log.debug("getAccountIdId with albumId" + albumId);
 		java.lang.Integer accountId;
 		try {
@@ -187,6 +188,22 @@ public class AlbumHome {
 			log.error("increaseFollowCount failed", re);
 			throw re;
 		}
+	}
+
+	public void getAndRemoveProxies(Album album, Set<String> getFields) {
+		if (getFields.contains("account"))
+			album.getAccount();
+		if (getFields.contains("followers"))
+			album.getFollowers().isEmpty();
+		if (getFields.contains("cards"))
+			album.getCards().isEmpty();
+		this.evict(album);
+		if (!getFields.contains("account"))
+			album.setAccount(null);
+		if (!getFields.contains("followers"))
+			album.setFollowers(null);
+		if (!getFields.contains("cards"))
+			album.setCards(null);
 	}
 
 	public List findByExample(Album instance) {

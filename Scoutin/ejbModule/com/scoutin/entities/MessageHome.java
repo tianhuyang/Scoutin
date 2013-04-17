@@ -1,9 +1,10 @@
 package com.scoutin.entities;
 
-// Generated Apr 15, 2013 10:22:39 PM by Hibernate Tools 4.0.0
+// Generated Apr 16, 2013 7:33:43 PM by Hibernate Tools 4.0.0
 
 import com.scoutin.utilities.DaoUtils;
 import java.util.List;
+import java.util.Set;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.LockMode;
@@ -154,6 +155,10 @@ public class MessageHome {
 			throw re;
 		}
 		return hasAll;
+	}
+
+	public void getAndRemoveProxies(Message message, Set<String> getFields) {
+		this.evict(message);
 	}
 
 	public List findByExample(Message instance) {

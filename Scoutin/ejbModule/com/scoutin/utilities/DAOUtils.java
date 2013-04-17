@@ -1,8 +1,10 @@
 package com.scoutin.utilities;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.hibernate.Hibernate;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.proxy.HibernateProxy;
 
 import com.scoutin.daos.*;
 
@@ -20,6 +22,18 @@ public class DaoUtils {
 					"Could not locate SessionFactory in JNDI"+e.getMessage());
 		}
 	}
+	 public static <T> T unproxy(T entity) {
+	        if (entity == null) {
+	            return null;
+	        }
+	  
+	        if (entity instanceof HibernateProxy) {
+	            Hibernate.initialize(entity);
+	            entity = (T) ((HibernateProxy) entity).getHibernateLazyInitializer().getImplementation();
+	        }
+	 
+	        return entity;
+	    }
 	public static final AccountDao accountDao = new AccountDao();
 	public static final CardDao cardDao = new CardDao();
 	public static final CardBodyDao cardBodyDao = new CardBodyDao();

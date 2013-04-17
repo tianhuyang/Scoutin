@@ -1,6 +1,6 @@
 package com.scoutin.entities;
 
-// Generated Apr 15, 2013 10:24:31 PM by Hibernate Tools 4.0.0
+// Generated Apr 16, 2013 2:22:33 AM by Hibernate Tools 4.0.0
 
 import java.util.Date;
 import java.util.HashSet;
@@ -22,20 +22,24 @@ public class Card implements java.io.Serializable {
 	private Date createdTime;
 	private Date updatedTime;
 	private String tag;
+	private Integer ratingCount;
 	private Set albums = new HashSet(0);
 	private Set accounts = new HashSet(0);
 	private Set categories = new HashSet(0);
-	private Set cardbodies = new HashSet(0);
 	private Set cardrepostses = new HashSet(0);
 	private Set comments = new HashSet(0);
 
 	public Card() {
 	}
 
+	public Card(Cardbody cardbody) {
+		this.cardbody = cardbody;
+	}
+
 	public Card(Cardbody cardbody, String title, String description,
 			Integer rating, Integer commentsCount, Integer repostsCount,
 			Integer likesCount, Date createdTime, Date updatedTime, String tag,
-			Set albums, Set accounts, Set categories, Set cardbodies,
+			Integer ratingCount, Set albums, Set accounts, Set categories,
 			Set cardrepostses, Set comments) {
 		this.cardbody = cardbody;
 		this.title = title;
@@ -47,10 +51,10 @@ public class Card implements java.io.Serializable {
 		this.createdTime = createdTime;
 		this.updatedTime = updatedTime;
 		this.tag = tag;
+		this.ratingCount = ratingCount;
 		this.albums = albums;
 		this.accounts = accounts;
 		this.categories = categories;
-		this.cardbodies = cardbodies;
 		this.cardrepostses = cardrepostses;
 		this.comments = comments;
 	}
@@ -143,6 +147,14 @@ public class Card implements java.io.Serializable {
 		this.tag = tag;
 	}
 
+	public Integer getRatingCount() {
+		return this.ratingCount;
+	}
+
+	public void setRatingCount(Integer ratingCount) {
+		this.ratingCount = ratingCount;
+	}
+
 	public Set getAlbums() {
 		return this.albums;
 	}
@@ -165,14 +177,6 @@ public class Card implements java.io.Serializable {
 
 	public void setCategories(Set categories) {
 		this.categories = categories;
-	}
-
-	public Set getCardbodies() {
-		return this.cardbodies;
-	}
-
-	public void setCardbodies(Set cardbodies) {
-		this.cardbodies = cardbodies;
 	}
 
 	public Set getCardrepostses() {

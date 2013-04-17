@@ -1,6 +1,6 @@
 package com.scoutin.entities;
 
-// Generated Apr 15, 2013 10:24:31 PM by Hibernate Tools 4.0.0
+// Generated Apr 16, 2013 2:22:33 AM by Hibernate Tools 4.0.0
 
 import java.util.Date;
 import java.util.HashSet;
@@ -28,6 +28,7 @@ public class Account implements java.io.Serializable {
 	private Profile profile;
 	private Set followersForFollowingId = new HashSet(0);
 	private Set cards = new HashSet(0);
+	private Set cardbodies = new HashSet(0);
 	private Set followersForFollowedId = new HashSet(0);
 
 	public Account() {
@@ -45,7 +46,7 @@ public class Account implements java.io.Serializable {
 			String firstname, String lastname, byte sex, Set comments,
 			Set albums, Set cardrepostses, Accountstat accountstat,
 			Profile profile, Set followersForFollowingId, Set cards,
-			Set followersForFollowedId) {
+			Set cardbodies, Set followersForFollowedId) {
 		this.password = password;
 		this.email = email;
 		this.facebookId = facebookId;
@@ -62,6 +63,7 @@ public class Account implements java.io.Serializable {
 		this.profile = profile;
 		this.followersForFollowingId = followersForFollowingId;
 		this.cards = cards;
+		this.cardbodies = cardbodies;
 		this.followersForFollowedId = followersForFollowedId;
 	}
 
@@ -199,6 +201,14 @@ public class Account implements java.io.Serializable {
 
 	public void setCards(Set cards) {
 		this.cards = cards;
+	}
+
+	public Set getCardbodies() {
+		return this.cardbodies;
+	}
+
+	public void setCardbodies(Set cardbodies) {
+		this.cardbodies = cardbodies;
 	}
 
 	public Set getFollowersForFollowedId() {

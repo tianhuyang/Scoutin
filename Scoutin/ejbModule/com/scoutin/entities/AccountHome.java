@@ -1,9 +1,10 @@
 package com.scoutin.entities;
 
-// Generated Apr 15, 2013 10:22:39 PM by Hibernate Tools 4.0.0
+// Generated Apr 16, 2013 7:33:43 PM by Hibernate Tools 4.0.0
 
 import com.scoutin.utilities.DaoUtils;
 import java.util.List;
+import java.util.Set;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.LockMode;
@@ -154,6 +155,46 @@ public class AccountHome {
 			throw re;
 		}
 		return hasAll;
+	}
+
+	public void getAndRemoveProxies(Account account, Set<String> getFields) {
+		if (getFields.contains("comments"))
+			account.getComments().isEmpty();
+		if (getFields.contains("albums"))
+			account.getAlbums().isEmpty();
+		if (getFields.contains("cardrepostses"))
+			account.getCardrepostses().isEmpty();
+		if (getFields.contains("accountstat"))
+			account.getAccountstat();
+		if (getFields.contains("profile"))
+			account.getProfile();
+		if (getFields.contains("followersForFollowingId"))
+			account.getFollowersForFollowingId().isEmpty();
+		if (getFields.contains("cards"))
+			account.getCards().isEmpty();
+		if (getFields.contains("cardbodies"))
+			account.getCardbodies().isEmpty();
+		if (getFields.contains("followersForFollowedId"))
+			account.getFollowersForFollowedId().isEmpty();
+		this.evict(account);
+		if (!getFields.contains("comments"))
+			account.setComments(null);
+		if (!getFields.contains("albums"))
+			account.setAlbums(null);
+		if (!getFields.contains("cardrepostses"))
+			account.setCardrepostses(null);
+		if (!getFields.contains("accountstat"))
+			account.setAccountstat(null);
+		if (!getFields.contains("profile"))
+			account.setProfile(null);
+		if (!getFields.contains("followersForFollowingId"))
+			account.setFollowersForFollowingId(null);
+		if (!getFields.contains("cards"))
+			account.setCards(null);
+		if (!getFields.contains("cardbodies"))
+			account.setCardbodies(null);
+		if (!getFields.contains("followersForFollowedId"))
+			account.setFollowersForFollowedId(null);
 	}
 
 	public List findByExample(Account instance) {

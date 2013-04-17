@@ -10,6 +10,9 @@ import com.scoutin.utilities.EJBUtils;
 
 public class AccountService {
 
+	/*
+	 * return Account, Account.Profile, and Account.Accountstat
+	 */
 	public static Account signup(Map<String, Object> properties)
 			throws ScoutinException {	
 		
@@ -40,6 +43,9 @@ public class AccountService {
 		return account;
 	}
 
+	/*
+	 * return Account, Account.Profile, and Account.Accountstat
+	 */
 	public static Account authenticate(String[] args, int type)
 			throws ScoutinException {
 		if (args == null){
@@ -59,6 +65,9 @@ public class AccountService {
 		return account;
 	}
 
+	/*
+	 * return Album
+	 */
 	public static Album createAlbum(Map<String, Object> properties)
 			throws ScoutinException {
 		if (properties == null){

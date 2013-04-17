@@ -13,6 +13,7 @@ ${pojo.getPackageDeclaration()}
 <#assign DaoUtils = pojo.importType("com.scoutin.utilities.DaoUtils")>
 <#assign classModel = "org.hibernate.type.ForeignKeyDirection">
 <#assign dummy = pojo.importType("org.hibernate.Query")>
+<#assign dummy = pojo.importType("java.util.Set")>
 public class ${declarationName}Home {
 
     private static final ${pojo.importType("org.apache.commons.logging.Log")} log = ${pojo.importType("org.apache.commons.logging.LogFactory")}.getLog(${pojo.getDeclarationName()}Home.class);
@@ -251,7 +252,7 @@ public class ${declarationName}Home {
 <#if ok == true>
     private final String ${rIdName}Hql = "select a.${field.name}.${rIdName} from ${declarationName} a where a.${idName} = :${idName}";
 	
-	public ${rIdType} get${rbIdName}Id(${c2j.getJavaTypeName(clazz.identifierProperty, jdk5)} ${idName}) {
+	public ${rIdType} get${rbIdName}(${c2j.getJavaTypeName(clazz.identifierProperty, jdk5)} ${idName}) {
 		log.debug("get${rbIdName}Id with ${idName}" + ${idName});
 		${rIdType}  ${rIdName};
 		try {
@@ -267,7 +268,6 @@ public class ${declarationName}Home {
 	}
 </#if>
 </#if>
-
 <#if field.name.endsWith("Count")>
 <#assign Name = field.name.substring(0,1).toUpperCase() + field.name.substring(1)>
 <#assign idName = clazz.identifierProperty.name>
@@ -290,7 +290,31 @@ private final String increase${Name}Hql = "update ${className} a set a.${field.n
 		}
 	}
 </#if>	
+<#assign className = pojo.importType(clazz.getClassName())>
+<#assign idName = clazz.identifierProperty.name>
+<#assign bIdName = idName.substring(0,1).toUpperCase() + idName.substring(1)>
+<#assign sClassName = className.substring(0,1).toLowerCase() + className.substring(1)>
 </#foreach> 
+    public void getAndRemoveProxies(${className} ${sClassName}, Set<String> getFields)
+    {
+<#foreach field in pojo.getAllPropertiesIterator()>
+<#if field.type.isAssociationType()>
+<#assign bFieldName = field.name.substring(0,1).toUpperCase() + field.name.substring(1)>
+<#if field.type.isCollectionType()>
+        if(getFields.contains("${field.name}")) ${sClassName}.get${bFieldName}().isEmpty();
+<#else>
+        if(getFields.contains("${field.name}")) ${sClassName}.get${bFieldName}();
+</#if>
+</#if>
+</#foreach>
+        this.evict(${sClassName});
+<#foreach field in pojo.getAllPropertiesIterator()>
+<#if field.type.isAssociationType()>
+<#assign bFieldName = field.name.substring(0,1).toUpperCase() + field.name.substring(1)>
+        if(!getFields.contains("${field.name}")) ${sClassName}.set${bFieldName}(null);
+</#if>
+</#foreach>
+    }
 
 <#if clazz.hasNaturalId()>
     public ${declarationName} findByNaturalId(${c2j.asNaturalIdParameterList(clazz)}) {

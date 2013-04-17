@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated Apr 15, 2013 10:22:39 PM by Hibernate Tools 4.0.0 -->
+<!-- Generated Apr 16, 2013 2:33:04 AM by Hibernate Tools 4.0.0 -->
 <hibernate-mapping>
     <class name="com.scoutin.entities.Account" table="ACCOUNT" catalog="Scoutin">
         <id name="accountId" type="java.lang.Integer">
@@ -68,6 +68,12 @@
             <many-to-many entity-name="com.scoutin.entities.Card">
                 <column name="CARD_ID" not-null="true" />
             </many-to-many>
+        </set>
+        <set name="cardbodies" table="CARDBODY" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="ACCOUNT_ID" not-null="true" />
+            </key>
+            <one-to-many class="com.scoutin.entities.Cardbody" />
         </set>
         <set name="followersForFollowedId" table="FOLLOWER" inverse="true" lazy="true" fetch="select">
             <key>

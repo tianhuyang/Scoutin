@@ -1,9 +1,10 @@
 package com.scoutin.entities;
 
-// Generated Apr 15, 2013 10:22:39 PM by Hibernate Tools 4.0.0
+// Generated Apr 16, 2013 7:33:43 PM by Hibernate Tools 4.0.0
 
 import com.scoutin.utilities.DaoUtils;
 import java.util.List;
+import java.util.Set;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.LockMode;
@@ -156,20 +157,20 @@ public class CardbodyHome {
 		return hasAll;
 	}
 
-	private final String cardIdHql = "select a.card.cardId from Cardbody a where a.cardbodyId = :cardbodyId";
+	private final String accountIdHql = "select a.account.accountId from Cardbody a where a.cardbodyId = :cardbodyId";
 
-	public java.lang.Long getCardIdId(java.lang.Long cardbodyId) {
-		log.debug("getCardIdId with cardbodyId" + cardbodyId);
-		java.lang.Long cardId;
+	public java.lang.Integer getAccountId(java.lang.Long cardbodyId) {
+		log.debug("getAccountIdId with cardbodyId" + cardbodyId);
+		java.lang.Integer accountId;
 		try {
 			Query query = DaoUtils.sessionFactory.getCurrentSession()
-					.createQuery(cardIdHql);
+					.createQuery(accountIdHql);
 			query.setParameter("cardbodyId", cardbodyId);
-			cardId = (java.lang.Long) query.uniqueResult();
-			log.debug("getCardIdId successful");
-			return cardId;
+			accountId = (java.lang.Integer) query.uniqueResult();
+			log.debug("getAccountIdId successful");
+			return accountId;
 		} catch (RuntimeException re) {
-			log.error("getCardIdId failed", re);
+			log.error("getAccountIdId failed", re);
 			throw re;
 		}
 	}
@@ -223,6 +224,35 @@ public class CardbodyHome {
 			log.error("increaseLikesCount failed", re);
 			throw re;
 		}
+	}
+
+	private final String increaseRatingCountHql = "update Cardbody a set a.ratingCount = a.ratingCount + :count where a.cardbodyId =:cardbodyId";
+
+	public void increaseRatingCount(java.lang.Long cardbodyId, int count) {
+		log.debug("increaseRatingCount with cardbodyId:" + cardbodyId);
+		try {
+			Query query = DaoUtils.sessionFactory.getCurrentSession()
+					.createQuery(increaseRatingCountHql);
+			query.setParameter("cardbodyId", cardbodyId);
+			query.setParameter("count", count);
+			query.executeUpdate();
+			log.debug("increaseRatingCount successful");
+		} catch (RuntimeException re) {
+			log.error("increaseRatingCount failed", re);
+			throw re;
+		}
+	}
+
+	public void getAndRemoveProxies(Cardbody cardbody, Set<String> getFields) {
+		if (getFields.contains("account"))
+			cardbody.getAccount();
+		if (getFields.contains("cards"))
+			cardbody.getCards().isEmpty();
+		this.evict(cardbody);
+		if (!getFields.contains("account"))
+			cardbody.setAccount(null);
+		if (!getFields.contains("cards"))
+			cardbody.setCards(null);
 	}
 
 	public List findByExample(Cardbody instance) {

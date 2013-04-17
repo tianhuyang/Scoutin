@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated Apr 15, 2013 10:22:39 PM by Hibernate Tools 4.0.0 -->
+<!-- Generated Apr 16, 2013 2:33:04 AM by Hibernate Tools 4.0.0 -->
 <hibernate-mapping>
     <class name="com.scoutin.entities.Card" table="CARD" catalog="Scoutin">
         <id name="cardId" type="java.lang.Long">
@@ -9,7 +9,7 @@
             <generator class="identity" />
         </id>
         <many-to-one name="cardbody" class="com.scoutin.entities.Cardbody" fetch="select">
-            <column name="CARDBODY_ID" />
+            <column name="CARDBODY_ID" not-null="true" />
         </many-to-one>
         <property name="title" type="string">
             <column name="TITLE" length="35" />
@@ -38,6 +38,9 @@
         <property name="tag" type="string">
             <column name="TAG" length="65535" />
         </property>
+        <property name="ratingCount" type="java.lang.Integer">
+            <column name="RATING_COUNT" />
+        </property>
         <set name="albums" table="ALBUMCARD" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="CARD_ID" not-null="true" />
@@ -61,12 +64,6 @@
             <many-to-many entity-name="com.scoutin.entities.Category">
                 <column name="CATEGORY_ID" not-null="true" />
             </many-to-many>
-        </set>
-        <set name="cardbodies" table="CARDBODY" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="CARDBODYOWNER_ID" />
-            </key>
-            <one-to-many class="com.scoutin.entities.Cardbody" />
         </set>
         <set name="cardrepostses" table="CARDREPOSTS" inverse="true" lazy="true" fetch="select">
             <key>

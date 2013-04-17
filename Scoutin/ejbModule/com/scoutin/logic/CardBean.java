@@ -9,6 +9,7 @@ import org.apache.commons.beanutils.BeanUtils;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
+import com.scoutin.entities.Account;
 import com.scoutin.entities.Album;
 import com.scoutin.entities.Albumcard;
 import com.scoutin.entities.AlbumcardId;
@@ -35,7 +36,8 @@ public class CardBean implements CardBeanRemote {
 	}
 
 	/*
-	 * card must have a correct albumIds:long[] and a valid url:String
+	 * card must have a correct albumIds:long[], a valid url:String,
+	 * accountId:int
 	 * 
 	 * @see
 	 * com.scoutin.logic.CardBeanRemote#createCard(com.scoutin.entities.Card)
@@ -44,13 +46,15 @@ public class CardBean implements CardBeanRemote {
 	@Override
 	public Card createCard(Map<String, Object> properties) {
 		// whether all the albumIds exists
-		long[] albumIds = (long[])properties.get("albumIds");
+		long[] albumIds = (long[]) properties.get("albumIds");
+		int accountId = (Integer) properties.get("accountId");
 		Long[] lAlbumIds = new Long[albumIds.length];
 		CommonUtils.longToLong(lAlbumIds, albumIds);
-		if (DaoUtils.albumDao.hasAll(lAlbumIds) == false) {
-			throw new IllegalArgumentException("not all albumIds exist");
+		if (DaoUtils.albumDao.verifyAccountAlbum(accountId, lAlbumIds) == false) {
+			throw new IllegalArgumentException(
+					"accountId doesn't match or not all albumIds exist");
 		}
-		Card card = new Card();	
+		Card card = new Card();
 		try {
 			// populate objects
 			BeanUtils.populate(card, properties);
@@ -58,6 +62,8 @@ public class CardBean implements CardBeanRemote {
 			BeanUtils.populate(cardBody, properties);
 
 			// insert values
+			Account account = DaoUtils.accountDao.load(accountId);
+			cardBody.setAccount(account);
 			DaoUtils.cardBodyDao.save(cardBody);
 			card.setCardbody(cardBody);
 			DaoUtils.cardDao.save(card);
@@ -66,8 +72,15 @@ public class CardBean implements CardBeanRemote {
 						card.getCardId()));
 				DaoUtils.albumcardDao.persist(albumcard);
 			}
-
 			DaoUtils.cardDao.evict(card);
+			// clear unused fields
+			card.setAccounts(null);
+			card.setAlbums(null);
+			card.setCardrepostses(null);
+			//
+			card.setCategories(null);
+			//
+			card.setComments(null);
 		} catch (IllegalAccessException e) {
 			card = null;
 			// e.printStackTrace();
@@ -80,46 +93,51 @@ public class CardBean implements CardBeanRemote {
 	}
 
 	/*
-	 * should have non-null properties, correct (reposted) cardId:long, (reposter's) albumIds:long[]
-	 * all albumIds should belong to the same accountId
+	 * should have non-null properties, correct (reposted) cardbodyId:long,
+	 * (reposter's) albumIds:long[] all albumIds should belong to the same
+	 * accountId
+	 * 
 	 * @see com.scoutin.logic.CardBeanRemote#repostCard(int, long)
 	 */
 	@Override
 	public Card repostCard(Map<String, Object> properties) {
-		long[] albumIds = (long[])properties.get("albumIds");
+		// whether all the albumIds exists
+		long[] albumIds = (long[]) properties.get("albumIds");
+		int accountId = (Integer) properties.get("accountId");
+		long repostedCardbodyId = (Long)properties.get("cardbodyId");
 		Long[] lAlbumIds = new Long[albumIds.length];
 		CommonUtils.longToLong(lAlbumIds, albumIds);
-		if (DaoUtils.albumDao.hasAll(lAlbumIds) == false) {
-			throw new IllegalArgumentException("not all albumIds exist");
+		if (DaoUtils.albumDao.verifyAccountAlbum(accountId, lAlbumIds) == false) {
+			throw new IllegalArgumentException(
+					"accountId doesn't match or not all albumIds exist");
 		}
 		Card card = new Card();
 		try {
-			//populate objects
-			BeanUtils.populate(card, properties); 
-			//get accountId
-			int accountId = DaoUtils.albumDao.getAccountIdId(albumIds[0]);
-			//create card
-			Long repostedCardId = card.getCardId();
-			Long repostedCardbodyId = DaoUtils.cardDao.getCardbodyIdId(repostedCardId);
+			// populate objects
+			BeanUtils.populate(card, properties);
+
+			// create card
 			Cardbody cardBody = DaoUtils.cardBodyDao.load(repostedCardbodyId);
 			card.setCardbody(cardBody);
-			card.setCardId(null);			
+			card.setCardId(null);
 			DaoUtils.cardDao.save(card);
-			//create cardReposts
-			CardrepostsId cardRepostsId = new CardrepostsId(accountId,card.getCardId());
-			Cardreposts cardReposts = DaoUtils.cardRepostsDato.findById(cardRepostsId);
-			if(cardReposts == null){
+			// create cardReposts
+			CardrepostsId cardRepostsId = new CardrepostsId(accountId,
+					card.getCardId());
+			Cardreposts cardReposts = DaoUtils.cardRepostsDato
+					.findById(cardRepostsId);
+			if (cardReposts == null) {
 				cardReposts = new Cardreposts();
 				cardReposts.setId(cardRepostsId);
 				cardReposts.setCount(1);
-			}
-			else{
-				DaoUtils.cardBodyDao.increaseRepostsCount(repostedCardbodyId, 1);
+			} else {
+				DaoUtils.cardBodyDao
+						.increaseRepostsCount(repostedCardbodyId, 1);
 			}
 			DaoUtils.cardBodyDao.persist(cardBody);
 			DaoUtils.cardRepostsDato.persist(cardReposts);
 
-		}  catch (IllegalAccessException e) {
+		} catch (IllegalAccessException e) {
 			card = null;
 			// e.printStackTrace();
 		} catch (InvocationTargetException e) {
@@ -138,7 +156,7 @@ public class CardBean implements CardBeanRemote {
 
 	/*
 	 * should have non-null properties, correct cardId:long
-	 *  
+	 * 
 	 * @see com.scoutin.logic.CardBeanRemote#repostCard(int, long)
 	 */
 	@Override

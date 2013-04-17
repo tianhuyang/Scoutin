@@ -1,6 +1,6 @@
 package com.scoutin.entities;
 
-// Generated Apr 15, 2013 10:24:31 PM by Hibernate Tools 4.0.0
+// Generated Apr 16, 2013 2:22:33 AM by Hibernate Tools 4.0.0
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -13,7 +13,7 @@ import java.util.Set;
 public class Cardbody implements java.io.Serializable {
 
 	private Long cardbodyId;
-	private Card card;
+	private Account account;
 	private Integer rating;
 	private Integer commentsCount;
 	private Integer repostsCount;
@@ -24,16 +24,21 @@ public class Cardbody implements java.io.Serializable {
 	private BigDecimal longitude;
 	private String address;
 	private String url;
+	private Integer ratingCount;
 	private Set cards = new HashSet(0);
 
 	public Cardbody() {
 	}
 
-	public Cardbody(Card card, Integer rating, Integer commentsCount,
+	public Cardbody(Account account) {
+		this.account = account;
+	}
+
+	public Cardbody(Account account, Integer rating, Integer commentsCount,
 			Integer repostsCount, Integer likesCount, Date createdTime,
 			Date updatedTime, BigDecimal latitude, BigDecimal longitude,
-			String address, String url, Set cards) {
-		this.card = card;
+			String address, String url, Integer ratingCount, Set cards) {
+		this.account = account;
 		this.rating = rating;
 		this.commentsCount = commentsCount;
 		this.repostsCount = repostsCount;
@@ -44,6 +49,7 @@ public class Cardbody implements java.io.Serializable {
 		this.longitude = longitude;
 		this.address = address;
 		this.url = url;
+		this.ratingCount = ratingCount;
 		this.cards = cards;
 	}
 
@@ -55,12 +61,12 @@ public class Cardbody implements java.io.Serializable {
 		this.cardbodyId = cardbodyId;
 	}
 
-	public Card getCard() {
-		return this.card;
+	public Account getAccount() {
+		return this.account;
 	}
 
-	public void setCard(Card card) {
-		this.card = card;
+	public void setAccount(Account account) {
+		this.account = account;
 	}
 
 	public Integer getRating() {
@@ -141,6 +147,14 @@ public class Cardbody implements java.io.Serializable {
 
 	public void setUrl(String url) {
 		this.url = url;
+	}
+
+	public Integer getRatingCount() {
+		return this.ratingCount;
+	}
+
+	public void setRatingCount(Integer ratingCount) {
+		this.ratingCount = ratingCount;
 	}
 
 	public Set getCards() {

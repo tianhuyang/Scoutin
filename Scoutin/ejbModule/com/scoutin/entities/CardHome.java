@@ -1,9 +1,10 @@
 package com.scoutin.entities;
 
-// Generated Apr 15, 2013 10:22:39 PM by Hibernate Tools 4.0.0
+// Generated Apr 16, 2013 7:33:43 PM by Hibernate Tools 4.0.0
 
 import com.scoutin.utilities.DaoUtils;
 import java.util.List;
+import java.util.Set;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.LockMode;
@@ -156,7 +157,7 @@ public class CardHome {
 
 	private final String cardbodyIdHql = "select a.cardbody.cardbodyId from Card a where a.cardId = :cardId";
 
-	public java.lang.Long getCardbodyIdId(java.lang.Long cardId) {
+	public java.lang.Long getCardbodyId(java.lang.Long cardId) {
 		log.debug("getCardbodyIdId with cardId" + cardId);
 		java.lang.Long cardbodyId;
 		try {
@@ -221,6 +222,51 @@ public class CardHome {
 			log.error("increaseLikesCount failed", re);
 			throw re;
 		}
+	}
+
+	private final String increaseRatingCountHql = "update Card a set a.ratingCount = a.ratingCount + :count where a.cardId =:cardId";
+
+	public void increaseRatingCount(java.lang.Long cardId, int count) {
+		log.debug("increaseRatingCount with cardId:" + cardId);
+		try {
+			Query query = DaoUtils.sessionFactory.getCurrentSession()
+					.createQuery(increaseRatingCountHql);
+			query.setParameter("cardId", cardId);
+			query.setParameter("count", count);
+			query.executeUpdate();
+			log.debug("increaseRatingCount successful");
+		} catch (RuntimeException re) {
+			log.error("increaseRatingCount failed", re);
+			throw re;
+		}
+	}
+
+	public void getAndRemoveProxies(Card card, Set<String> getFields) {
+		if (getFields.contains("cardbody"))
+			card.getCardbody();
+		if (getFields.contains("albums"))
+			card.getAlbums().isEmpty();
+		if (getFields.contains("accounts"))
+			card.getAccounts().isEmpty();
+		if (getFields.contains("categories"))
+			card.getCategories().isEmpty();
+		if (getFields.contains("cardrepostses"))
+			card.getCardrepostses().isEmpty();
+		if (getFields.contains("comments"))
+			card.getComments().isEmpty();
+		this.evict(card);
+		if (!getFields.contains("cardbody"))
+			card.setCardbody(null);
+		if (!getFields.contains("albums"))
+			card.setAlbums(null);
+		if (!getFields.contains("accounts"))
+			card.setAccounts(null);
+		if (!getFields.contains("categories"))
+			card.setCategories(null);
+		if (!getFields.contains("cardrepostses"))
+			card.setCardrepostses(null);
+		if (!getFields.contains("comments"))
+			card.setComments(null);
 	}
 
 	public List findByExample(Card instance) {

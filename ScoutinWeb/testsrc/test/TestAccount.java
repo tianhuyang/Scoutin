@@ -31,7 +31,7 @@ public class TestAccount {
 	@Test
 	public void testSignupWithEmail() {
 		Map<String, Object> properties = new TreeMap<String, Object>();
-		properties.put("email", "tianhu@169.com");
+		properties.put("email", "tianhu@qq.com");
 		properties.put("password", "tiger");
 		properties.put("firstname", "Tianhu");
 		properties.put("lastname", "Yang");
@@ -52,8 +52,8 @@ public class TestAccount {
 	@Test
 	public void testAuthenticate() {
 		String args[] = new String[2];
-		args[0] = "haocai@qq.com";
-		args[1] = "password";
+		args[0] = "tianhu@qq.com";
+		args[1] = "tiger";
 		try {
 			Account account = AccountService.authenticate(args,
 					AccountConstants.AuthenticateTypeEmail);
@@ -61,7 +61,7 @@ public class TestAccount {
 			System.out.println(info);
 			Assert.assertTrue(true);
 		} catch (ScoutinException e) {
-			// e.printStackTrace();
+			e.printStackTrace();
 			Assert.assertTrue(false);
 		}
 	}
@@ -131,7 +131,7 @@ public class TestAccount {
 		Assert.assertTrue(true);
 	}
 	
-	@Ignore
+	
 	@Test
 	public void testCreateAlbum() {
 		Map<String, Object> properties = new TreeMap<String, Object>();

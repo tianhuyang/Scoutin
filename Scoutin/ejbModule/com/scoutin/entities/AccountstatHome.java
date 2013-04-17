@@ -1,9 +1,10 @@
 package com.scoutin.entities;
 
-// Generated Apr 15, 2013 10:22:39 PM by Hibernate Tools 4.0.0
+// Generated Apr 16, 2013 7:33:43 PM by Hibernate Tools 4.0.0
 
 import com.scoutin.utilities.DaoUtils;
 import java.util.List;
+import java.util.Set;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.LockMode;
@@ -205,6 +206,15 @@ public class AccountstatHome {
 			log.error("increaseUnviewRecmdCount failed", re);
 			throw re;
 		}
+	}
+
+	public void getAndRemoveProxies(Accountstat accountstat,
+			Set<String> getFields) {
+		if (getFields.contains("account"))
+			accountstat.getAccount();
+		this.evict(accountstat);
+		if (!getFields.contains("account"))
+			accountstat.setAccount(null);
 	}
 
 	public List findByExample(Accountstat instance) {

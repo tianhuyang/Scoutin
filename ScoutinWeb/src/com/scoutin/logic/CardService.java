@@ -14,7 +14,8 @@ public class CardService {
 	}
 	
 	/*
-	 * must have non-null properties, correct albumIds:long[], url:String
+	 * must have non-null properties, correct albumIds:long[], url:String,accountId:int
+	 * return Card, Card.Cardbody
 	 */
 
 	public static Card createCard(Map<String, Object> properties)
@@ -22,10 +23,11 @@ public class CardService {
 		if (properties == null){
 			throw new IllegalArgumentException();
 		}
+		Integer accountId = (Integer) properties.get("accountId");
 		String url = (String) properties.get("url");
 		long[] albumIds = (long[]) properties.get("albumIds");
 
-		if (url == null || url.length() == 0 || albumIds == null || albumIds.length == 0) {
+		if (url == null || url.length() == 0 || accountId == null|| albumIds == null || albumIds.length == 0) {
 			throw new IllegalArgumentException();
 		}
 
@@ -46,7 +48,8 @@ public class CardService {
 	}	
 	
 	/*
-	 * must have non-null properties, correct albumIds, cardId:long
+	 * must have non-null properties, correct albumIds, cardId:long, accountId:int
+	 * return Card, Card.Cardbody
 	 */
 
 	public static Card repostCard(Map<String, Object> properties)
@@ -54,10 +57,11 @@ public class CardService {
 		if (properties == null){
 			throw new IllegalArgumentException();
 		}
+		Integer accountId = (Integer) properties.get("accountId");
 		Long cardId = (Long) properties.get("cardId");
 		long[] albumIds = (long[]) properties.get("albumIds");
 
-		if (cardId == null || albumIds == null || albumIds.length == 0) {
+		if (cardId == null || accountId == null || albumIds == null || albumIds.length == 0) {
 			throw new IllegalArgumentException();
 		}
 

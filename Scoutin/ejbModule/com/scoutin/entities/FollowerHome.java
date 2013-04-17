@@ -1,9 +1,10 @@
 package com.scoutin.entities;
 
-// Generated Apr 15, 2013 10:22:39 PM by Hibernate Tools 4.0.0
+// Generated Apr 16, 2013 7:33:43 PM by Hibernate Tools 4.0.0
 
 import com.scoutin.utilities.DaoUtils;
 import java.util.List;
+import java.util.Set;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.LockMode;
@@ -154,6 +155,22 @@ public class FollowerHome {
 			throw re;
 		}
 		return hasAll;
+	}
+
+	public void getAndRemoveProxies(Follower follower, Set<String> getFields) {
+		if (getFields.contains("accountByFollowedId"))
+			follower.getAccountByFollowedId();
+		if (getFields.contains("accountByFollowingId"))
+			follower.getAccountByFollowingId();
+		if (getFields.contains("albums"))
+			follower.getAlbums().isEmpty();
+		this.evict(follower);
+		if (!getFields.contains("accountByFollowedId"))
+			follower.setAccountByFollowedId(null);
+		if (!getFields.contains("accountByFollowingId"))
+			follower.setAccountByFollowingId(null);
+		if (!getFields.contains("albums"))
+			follower.setAlbums(null);
 	}
 
 	public List findByExample(Follower instance) {

@@ -1,9 +1,10 @@
 package com.scoutin.entities;
 
-// Generated Apr 15, 2013 10:22:39 PM by Hibernate Tools 4.0.0
+// Generated Apr 16, 2013 7:33:43 PM by Hibernate Tools 4.0.0
 
 import com.scoutin.utilities.DaoUtils;
 import java.util.List;
+import java.util.Set;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.LockMode;
@@ -158,7 +159,7 @@ public class CommentHome {
 
 	private final String cardIdHql = "select a.card.cardId from Comment a where a.commentId = :commentId";
 
-	public java.lang.Long getCardIdId(java.lang.Long commentId) {
+	public java.lang.Long getCardId(java.lang.Long commentId) {
 		log.debug("getCardIdId with commentId" + commentId);
 		java.lang.Long cardId;
 		try {
@@ -176,7 +177,7 @@ public class CommentHome {
 
 	private final String accountIdHql = "select a.account.accountId from Comment a where a.commentId = :commentId";
 
-	public java.lang.Integer getAccountIdId(java.lang.Long commentId) {
+	public java.lang.Integer getAccountId(java.lang.Long commentId) {
 		log.debug("getAccountIdId with commentId" + commentId);
 		java.lang.Integer accountId;
 		try {
@@ -190,6 +191,18 @@ public class CommentHome {
 			log.error("getAccountIdId failed", re);
 			throw re;
 		}
+	}
+
+	public void getAndRemoveProxies(Comment comment, Set<String> getFields) {
+		if (getFields.contains("card"))
+			comment.getCard();
+		if (getFields.contains("account"))
+			comment.getAccount();
+		this.evict(comment);
+		if (!getFields.contains("card"))
+			comment.setCard(null);
+		if (!getFields.contains("account"))
+			comment.setAccount(null);
 	}
 
 	public List findByExample(Comment instance) {
