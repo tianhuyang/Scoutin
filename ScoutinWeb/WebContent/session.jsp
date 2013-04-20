@@ -8,6 +8,12 @@
 <title>Insert title here</title>
 </head>
 <body>
-<% Account account = (Account)session.getAttribute("user"); out.print(account.getEmail());%>
+<%  
+	Account account = new Account();
+	account.setAccountId(1);
+	account.setEmail("haocai@usc.edu");
+	session.setAttribute("user",account);
+	//Account account = (Account)session.getAttribute("user"); out.print(account.getEmail());
+%>
 </body>
 </html>

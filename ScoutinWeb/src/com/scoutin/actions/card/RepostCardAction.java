@@ -23,12 +23,12 @@ public class RepostCardAction extends ActionSupport implements ServletRequestAwa
 	
 	private static final long serialVersionUID = 886206200486155745L;
 	private HttpServletRequest request;
-	private RepostCardVO cardVO;
+	private RepostCardVO repostCardVO;
 	private Map<String, Object> dataMap;
 	public RepostCardAction()
 	{
 		dataMap = new HashMap<String, Object>();
-		cardVO = new RepostCardVO();
+		repostCardVO = new RepostCardVO();
 	}
 	
 	@Override
@@ -39,7 +39,7 @@ public class RepostCardAction extends ActionSupport implements ServletRequestAwa
 	@Override
 	public RepostCardVO getModel() {
 		// TODO Auto-generated method stub
-		return cardVO;
+		return repostCardVO;
 	}
 	
 	public void validate(){
@@ -54,8 +54,8 @@ public class RepostCardAction extends ActionSupport implements ServletRequestAwa
 	{
 		boolean succeed = true;
 		Map<String, Object> properties = new TreeMap<String, Object>();
-		CommonUtils.describe(properties, cardVO);
-		Account account = (Account)request.getAttribute("user");
+		CommonUtils.describe(properties, repostCardVO);
+		Account account = (Account)request.getSession(true).getAttribute("user");
 		properties.put("accountId", account.getAccountId());
 		try{
 			Card card = CardService.repostCard(properties);
@@ -69,5 +69,9 @@ public class RepostCardAction extends ActionSupport implements ServletRequestAwa
 		if(succeed)
 			JSONUtils.putOKStatus(dataMap);
 		return SUCCESS;
+	}
+
+	public Map<String, Object> getDataMap() {
+		return dataMap;
 	}
 }

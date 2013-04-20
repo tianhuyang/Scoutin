@@ -1,7 +1,5 @@
 package com.scoutin.exception;
 
-import com.scoutin.utilities.JSONConstants;
-
 public class ScoutinException extends Exception implements ScoutinError{
 
 	/**

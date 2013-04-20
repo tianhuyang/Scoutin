@@ -24,14 +24,12 @@ public class SaveCommentAction extends ActionSupport implements ServletRequestAw
 	private static final long serialVersionUID = -113156085596203959L;
 	private HttpServletRequest request;
 	private Map<String, Object> dataMap;
-	private SaveCommentVO commentVO;
-	
-	private long cardId;
+	private SaveCommentVO saveCommentVO;
 	
 	public SaveCommentAction()
 	{
 		dataMap = new HashMap<String, Object>();
-		commentVO = new SaveCommentVO(); 
+		saveCommentVO = new SaveCommentVO(); 
 	}
 	
 	@Override
@@ -43,7 +41,7 @@ public class SaveCommentAction extends ActionSupport implements ServletRequestAw
 	@Override
 	public SaveCommentVO getModel() {
 		// TODO Auto-generated method stub
-		return commentVO;
+		return saveCommentVO;
 	}
 	
 	public void validate(){
@@ -58,8 +56,8 @@ public class SaveCommentAction extends ActionSupport implements ServletRequestAw
 	{
 		boolean succeed = true;
 		Map<String,Object> properties = new TreeMap<String,Object>();
-		CommonUtils.describe(properties, commentVO);
-		Account account = (Account)request.getSession().getAttribute("user");
+		CommonUtils.describe(properties, saveCommentVO);
+		Account account = (Account)request.getSession(true).getAttribute("user");
 		properties.put("accountId", account.getAccountId());
 		try{
 			Comment comment = CardService.commentCard(properties);
@@ -78,8 +76,11 @@ public class SaveCommentAction extends ActionSupport implements ServletRequestAw
 	
 	public String editComment() throws Exception
 	{
-		Map<String,String[]> properties = new TreeMap<String,String[]>();
-		properties.putAll(request.getParameterMap());
+		Map<String,Object> properties = new TreeMap<String,Object>();
+		CommonUtils.describe(properties, saveCommentVO);
+		Account account = (Account)request.getSession(true).getAttribute("user");
+		properties.put("accountId", account.getAccountId());
+		
 		return SUCCESS;
 	}
 	
@@ -90,13 +91,5 @@ public class SaveCommentAction extends ActionSupport implements ServletRequestAw
 	
 	public Map<String, Object> getDataMap() {
 		return dataMap;
-	}
-
-	public long getCardId() {
-		return cardId;
-	}
-
-	public void setCardId(long cardId) {
-		this.cardId = cardId;
 	}
 }

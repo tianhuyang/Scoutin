@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE validators PUBLIC "-//Apache Struts//XWork Validator 1.0.3//EN" 
+		"http://struts.apache.org/dtds/xwork-validator-1.0.3.dtd">
+<validators>
+	<field name="cardId">
+		<field-validator type="fieldexpression">
+			<param name="expression">!(cardId=="" || cardId==null)</param>
+			<message key="error.card.like.cardId.require">Please select a card to like</message>
+		</field-validator>
+		<field-validator type="long">
+			<message key="error.card.like.cardId.value">Invalid card ID</message>
+		</field-validator>
+	</field>
+</validators>
