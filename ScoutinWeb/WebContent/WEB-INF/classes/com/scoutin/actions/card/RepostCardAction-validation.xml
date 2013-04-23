@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE validators PUBLIC "-//Apache Struts//XWork Validator 1.0.3//EN" 
+		"http://struts.apache.org/dtds/xwork-validator-1.0.3.dtd">
+<validators>
+	<field name="description">
+		<field-validator type="stringlength">
+			<param name="maxLength">300</param>
+			<message key="error.card.repost.description.length">The description should be not more than ${maxLength} characters</message>
+		</field-validator>
+	</field>
+	<field name="rating">
+		<field-validator type="fieldexpression">
+			<param name="expression">!(rating=="" || rating==null)</param>
+			<message key="error.card.repost.rating.require">Please input rating</message>
+		</field-validator>
+		<field-validator type="int">
+			<param name="min">1</param>
+			<param name="max">5</param>
+			<message key="error.card.repost.rating.value">The rating should be an integer</message>
+		</field-validator>
+	</field>
+	<field name="cardbodyId">
+		<field-validator type="fieldexpression">
+			<param name="expression">!(cardbodyId=="" || cardbodyId==null)</param>
+			<message key="error.card.repost.cardbodyId.require">Please select a card to repost</message>
+		</field-validator>
+		<field-validator type="long">
+			<message key="error.card.repost.cardbodyId.value">Invalid card ID</message>
+		</field-validator>
+	</field>
+	<field name="albumIds">
+		<field-validator type="fieldexpression">
+			<param name="expression">!(albumIds=="" || albumIds==null)</param>
+			<message>Please select album</message>
+		</field-validator>
+	</field>
+</validators>

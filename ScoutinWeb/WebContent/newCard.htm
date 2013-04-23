@@ -1,0 +1,81 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="csses/newCard.css">
+	</head>
+	<body>
+	<div class="newCard_container_background">
+		<div class="newCard_shadow"> 
+			<div class="newCard">
+				<div class="newCard_header">
+					<p class="newCard_enter_name_label">Add a Scout:</p>
+					<div class="newCard_cancel"></div>
+				</div>
+				
+				<img class="newCard_edit_image" src="images/lightning_bolt.png" onclick="newCard_edit_image(this)"/>
+				
+				<div class="newCard_rating">
+					<p class="newCard_rating_lable">My Rating:</p>
+					<div class="newCard_rating_stars">
+						<input name="newCard_rating" type="hidden" value="0">
+						<span class="1 newCard_rating_star_gray" onclick="newCard_rating_change(this)" onmouseover="newCard_rating_hover(this)" onmouseout="newCard_rating_out(this)"></span>
+						<span class="2 newCard_rating_star_gray" onclick="newCard_rating_change(this)" onmouseover="newCard_rating_hover(this)" onmouseout="newCard_rating_out(this)"></span>
+						<span class="3 newCard_rating_star_gray" onclick="newCard_rating_change(this)" onmouseover="newCard_rating_hover(this)" onmouseout="newCard_rating_out(this)"></span>
+						<span class="4 newCard_rating_star_gray" onclick="newCard_rating_change(this)" onmouseover="newCard_rating_hover(this)" onmouseout="newCard_rating_out(this)"></span>
+						<span class="5 newCard_rating_star_gray" onclick="newCard_rating_change(this)" onmouseover="newCard_rating_hover(this)" onmouseout="newCard_rating_out(this)"></span>
+					</div>
+				</div>
+			  
+			  <table class="newCard_name_and_location" cellpadding="0" cellspacing="0">
+			  	<tr>
+				  <td class="newCard_name_first_column"><span class="newCard_name_image"></span></td>
+				  <td class="newCard_name_second_column"><input class="newCard_name_text" name="card_name_text" type="text" placeholder="Enter Name..."/></td>
+				  <td></td>
+				  </tr>
+			  	<tr>
+				  <td class="newCard_location_first_column"><span id="newCard_location_image" class="newCard_location_image_able"></span></td>
+				  <td class="newCard_location_second_column"><input id="newCard_location_text" class="newCard_location_text" name="card_location_text" type="text" value=""/></td>
+				  <td><div class="newCard_checkbox_checked" onclick="newCard_location_check(this)"></div></td>
+				  </tr>
+			  </table>
+			  
+			  <div class="newCard_edit_description">
+			  	<div class="newCard_edit_description_prompt" onclick="card_eidt_description_edittable(this)">Enter Description & #AddTags</div>
+			    <textarea id="newCard_edit_description_textarea" class="newCard_edit_description_textarea"></textarea>
+			  </div>
+			  
+			  <table class="newCard_edit_publish_table">
+				  	<tr>
+				  		<td>
+					  	<table class="newCard_edit_publish_childtable" cellspacing="0" cellpadding="0">
+								<tr>
+									<td><div class="newCard_edit_facebook_image"></div></td>
+									<td><div class="newCard_checkbox_checked" onclick="newCard_facebook_check(this)"></div></td>
+								</tr>
+								<tr>
+									<td><div class="newCard_edit_twitter_image"></div></td>
+									<td><div class="newCard_checkbox_checked" onclick="newCard_twitter_check(this)"></div></td>
+								</tr>
+							</table>
+							</td>
+							<td class="newCard_edit_publish_border_column">
+								<div class="newCard_edit_publish_border"></div>
+						  </td>
+						  <td>
+								<div class="newCard_edit_publish_button"></div>
+							</td>
+						<tr>
+					</table>
+			  
+			  
+			  <div class="newCard_footer">
+			  	<span class="newCard_footer_addlink">add link...</span>
+			  	<div class="newCard_footer_addlink_image"></div>	
+			  </div>
+			</div>
+		</div>
+  </div>
+	</body>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+	<script src="jses/newCard.js"></script>
+</html>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-module
+  type="WEB"
+  name="ScoutinWeb"
+  id="myeclipse.1366549686590"
+  context-root="/"
+  j2ee-spec="6.0"
+  archive="ScoutinWeb.war">
+  <attributes>
+    <attribute name="webrootdir" value="WebContent" />
+  </attributes>
+</project-module>
+

@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+</head>
+<body>
+	<div id="error_output"></div>
+	<input id="email" type="text" name="email" placeholder="Email"><br>
+	<input id="password" type="password" name="password" placeholder="Password"><br>
+	<input id="repassword" type="password" name="repassword" placeholder="Re-password"><br>
+	<input id="firstname" type="text" name="firstname" placeholder="First Name">&nbsp;&nbsp;
+	<input id="lastname" type="text" name="lastname" placeholder="Last Name"><br>
+	<input type="button" value="Sign Up" onclick="emailSignup()">
+	<script>
+	function emailSignup()
+	{
+		Account.emailSignup($("#email").val(),$("#password").val(),$("#repassword").val(),$("#firstname").val(),$("#lastname").val(),showResult);
+	}
+	function showResult(result)
+	{
+		if(result.status!=0){
+			$("#error_output").html(result.message);
+		}
+		else{
+			alert("Hello "+result.user.email);
+		}
+	}
+	</script>
+	<script src="jses/logic/account.js"></script>
+</body>
+</html>

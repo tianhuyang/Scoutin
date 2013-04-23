@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS model-entity="StrutsProcess">
+ <PROCESS-ITEM NAME="page0" PATH="/index.htm" SHAPE="240,241,0,0"
+  SUBTYPE="html" TITLE="index.htm" TYPE="page" model-entity="StrutsProcessItem"/>
+ <PROCESS-ITEM ID="#signup" NAME="action0" PATH="/signup"
+  SHAPE="32,241,0,0" TITLE="SignUpActionForm" TYPE="action" model-entity="StrutsProcessItem">
+  <PROCESS-ITEM-OUTPUT ID="input" NAME="forward0"
+   PATH="/WEB-INF/scripts/signup.jsp" TARGET="page3" TITLE="input"
+   TYPE="forward" model-entity="StrutsProcessItemOutput"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ID="#signin" NAME="action1" PATH="/signin"
+  SHAPE="32,353,0,0" TITLE="SignInActionForm" TYPE="action" model-entity="StrutsProcessItem">
+  <PROCESS-ITEM-OUTPUT ID="input" NAME="forward0"
+   PATH="/WEB-INF/scripts/signin.jsp" TARGET="page4" TITLE="input"
+   TYPE="forward" model-entity="StrutsProcessItemOutput"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="page1" PATH="/signup.htm" SHAPE="240,353,0,0"
+  SUBTYPE="html" TITLE="signup.htm" TYPE="page" model-entity="StrutsProcessItem"/>
+ <PROCESS-ITEM NAME="page2" PATH="/signin.htm" SHAPE="240,465,0,0"
+  SUBTYPE="html" TITLE="signin.htm" TYPE="page" model-entity="StrutsProcessItem"/>
+ <PROCESS-ITEM NAME="page3" PATH="/WEB-INF/scripts/signup.jsp"
+  SHAPE="448,241,0,0" SUBTYPE="jsp" TITLE="signup.jsp" TYPE="page" model-entity="StrutsProcessItem"/>
+ <PROCESS-ITEM NAME="page4" PATH="/WEB-INF/scripts/signin.jsp"
+  SHAPE="240,577,0,0" SUBTYPE="jsp" TITLE="signin.jsp" TYPE="page" model-entity="StrutsProcessItem"/>
+</PROCESS>
