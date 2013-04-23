@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE validators PUBLIC "-//Apache Struts//XWork Validator 1.0.3//EN" 
+		"http://struts.apache.org/dtds/xwork-validator-1.0.3.dtd">
+<validators>
+	<field name="title">
+		<field-validator type="requiredstring">
+			<message key="error.card.save.title.required">Please input a title</message>
+		</field-validator>
+		<field-validator type="stringlength">
+			<param name="maxLength">20</param>
+			<message key="error.card.save.title.length">The title should be not more than ${maxLength} characters</message>
+		</field-validator>
+	</field>
+	<field name="description">
+		<field-validator type="stringlength">
+			<param name="maxLength">300</param>
+			<message key="error.card.save.description.length">The description should be not more than ${maxLength} characters</message>
+		</field-validator>
+	</field>
+	<field name="rating">
+		<field-validator type="int">
+			<param name="min">1</param>
+			<param name="max">5</param>
+			<message key="error.card.save.rating.value">The rating must be an integer between ${min} and ${max}</message>
+		</field-validator>
+	</field>
+	<field name="latitude">
+		<field-validator type="double">
+			<message key="error.card.save.latitude.value">The latitude must be a valid number</message>
+		</field-validator>
+	</field>
+	<field name="longitude">
+		<field-validator type="double">
+			<message key="error.card.save.longitude.value">The longitude must be a valid number</message>
+		</field-validator>
+	</field>
+	<field name="address">
+		<field-validator type="stringlength">
+			<param name="maxLength">100</param>
+			<message key="error.card.save.maxLength.length">The address should not be more than 100 characters</message>
+		</field-validator>
+	</field>
+	<field name="url">
+		<field-validator type="required">
+			<message key="error.card.save.url.require"></message>
+		</field-validator>
+	</field>
+</validators>

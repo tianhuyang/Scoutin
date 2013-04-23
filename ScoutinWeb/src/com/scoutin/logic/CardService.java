@@ -48,7 +48,7 @@ public class CardService {
 	}	
 	
 	/*
-	 * must have non-null properties, correct albumIds, cardId:long, accountId:int
+	 * must have non-null properties, correct albumIds, cardbodyId:long, accountId:int
 	 * return Card, Card.Cardbody
 	 */
 
@@ -58,10 +58,10 @@ public class CardService {
 			throw new IllegalArgumentException();
 		}
 		Integer accountId = (Integer) properties.get("accountId");
-		Long cardId = (Long) properties.get("cardId");
+		Long cardbodyId = (Long) properties.get("cardbodyId");
 		long[] albumIds = (long[]) properties.get("albumIds");
 
-		if (cardId == null || accountId == null || albumIds == null || albumIds.length == 0) {
+		if (cardbodyId == null || accountId == null || albumIds == null || albumIds.length == 0) {
 			throw new IllegalArgumentException();
 		}
 

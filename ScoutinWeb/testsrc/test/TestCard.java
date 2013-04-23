@@ -28,7 +28,7 @@ public class TestCard {
 	public void destroy() {
 
 	}
-	
+	@Ignore
 	@Test
 	public void testCreateCard(){
 		Map<String, Object> properties = new TreeMap<String, Object>();
@@ -46,16 +46,17 @@ public class TestCard {
 		}
 	}
 	
-	@Ignore
+	
 	@Test
 	public void testRepostCard(){
 		Map<String, Object> properties = new TreeMap<String, Object>();
 		properties.put("albumIds", new long[]{1L,2L});
-		properties.put("cardId", 1L);
+		properties.put("cardbodyId", 1L);
 		properties.put("accountId", 1);
 		try {
 			Card card = CardService.repostCard(properties);
-			System.out.println(card.getCardId());
+			String info = ReflectionToStringBuilder.toString(card, ToStringStyle.MULTI_LINE_STYLE);
+			System.out.println(info);
 			Assert.assertTrue(true);
 		} catch (ScoutinException e) {
 			 e.printStackTrace();

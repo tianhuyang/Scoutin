@@ -5,12 +5,12 @@ import java.util.Properties;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
-import com.scoutin.logic.AccountBeanRemote;
-import com.scoutin.logic.AuthenticateBeanRemote;
-import com.scoutin.logic.CardBeanRemote;
+import com.scoutin.interfaces.AccountBeanRemote;
+import com.scoutin.interfaces.AuthenticateBeanRemote;
+import com.scoutin.interfaces.CardBeanRemote;
 
 public class EJBUtils {
-	private final static String module = "ejb:ScoutinApplication/Scoutin/";
+	private final static String module = "ejb:Scoutin/ScoutinEJB/";
 	private final static String authenticatePath = module + "AuthenticateBean!"
 			+ AuthenticateBeanRemote.class.getName();
 	private final static String accountPath = module + "AccountBean!"

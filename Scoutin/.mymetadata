@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<enterprise-project
+  version="1.0.0"
+  name="Scoutin"
+  id="myeclipse.1366549268448"
+  j2ee-spec="6.0"
+  archive="Scoutin.ear">
+  <project-modules>
+    <project-module
+      type="EJB"
+      name="ScoutinEJB"
+      id="myeclipse.1366549268359"
+      j2ee-spec="6.0"
+      archive="ScoutinEJB.jar" />
+  </project-modules>
+</enterprise-project>
+

@@ -11,8 +11,8 @@ import org.junit.*;
 import com.scoutin.entities.Account;
 import com.scoutin.entities.Album;
 import com.scoutin.exception.ScoutinException;
+import com.scoutin.interfaces.AccountConstants;
 import com.scoutin.logic.AccountService;
-import com.scoutin.logic.AccountConstants;
 import com.scoutin.utilities.EJBUtils;
 
 public class TestAccount {
@@ -57,6 +57,7 @@ public class TestAccount {
 		try {
 			Account account = AccountService.authenticate(args,
 					AccountConstants.AuthenticateTypeEmail);
+			//System.out.println(account.getAlbums().getClass().getName());
 			String info = ReflectionToStringBuilder.toString(account, ToStringStyle.MULTI_LINE_STYLE);
 			System.out.println(info);
 			Assert.assertTrue(true);
@@ -81,8 +82,8 @@ public class TestAccount {
 						Account account = AccountService.authenticate(args,
 								AccountConstants.AuthenticateTypeEmail);
 						System.out.println(account);
-						//System.out.println(account.getEmail());
-						//System.out.println(account.getProfile().getAccountId());
+						String info = ReflectionToStringBuilder.toString(account, ToStringStyle.MULTI_LINE_STYLE);
+						System.out.println(info);
 					} catch (ScoutinException e) {
 						// e.printStackTrace();
 						Assert.assertTrue(false);
@@ -131,7 +132,7 @@ public class TestAccount {
 		Assert.assertTrue(true);
 	}
 	
-	
+	@Ignore
 	@Test
 	public void testCreateAlbum() {
 		Map<String, Object> properties = new TreeMap<String, Object>();

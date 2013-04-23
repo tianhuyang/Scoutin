@@ -39,11 +39,6 @@ public class ScoutinException extends Exception implements ScoutinError{
 		// TODO Auto-generated constructor stub
 	}
 
-	public ScoutinException(String arg0, Throwable arg1, boolean arg2,
-			boolean arg3) {
-		super(arg0, arg1, arg2, arg3);
-		// TODO Auto-generated constructor stub
-	}
 	
 	public String toString(){
 		return status + ": "+ this.getMessage();
