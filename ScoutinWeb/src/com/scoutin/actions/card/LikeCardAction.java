@@ -11,24 +11,22 @@ import org.apache.struts2.interceptor.ServletRequestAware;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 import com.scoutin.entities.Account;
-import com.scoutin.entities.Card;
 import com.scoutin.exception.ScoutinError;
-import com.scoutin.exception.ScoutinException;
-import com.scoutin.logic.CardService;
 import com.scoutin.utilities.CommonUtils;
 import com.scoutin.utilities.JSONUtils;
-import com.scoutin.vos.card.SaveCardVO;
+import com.scoutin.vos.card.LikeCardVO;
 
-public class SaveCardAction extends ActionSupport implements ServletRequestAware, ModelDriven<SaveCardVO>
+public class LikeCardAction extends ActionSupport implements ServletRequestAware, ModelDriven<LikeCardVO>
 {
-	private static final long serialVersionUID = -3691178891261906745L;
+	private static final long serialVersionUID = -8744020611661952002L;
 	private HttpServletRequest request;
+	private LikeCardVO likeCardVO;
 	private Map<String, Object> dataMap;
-	private SaveCardVO saveCardVO;
-		
-	public SaveCardAction(){
+	
+	public LikeCardAction()
+	{
 		dataMap = new HashMap<String, Object>();
-		saveCardVO = new SaveCardVO();
+		likeCardVO = new LikeCardVO();
 	}
 	
 	@Override
@@ -38,11 +36,11 @@ public class SaveCardAction extends ActionSupport implements ServletRequestAware
 	}
 	
 	@Override
-	public SaveCardVO getModel() {
+	public LikeCardVO getModel() {
 		// TODO Auto-generated method stub
-		return saveCardVO;
+		return likeCardVO;
 	}
-	
+
 	public void validate()
 	{
 		super.validate();
@@ -52,30 +50,9 @@ public class SaveCardAction extends ActionSupport implements ServletRequestAware
 		}
 	}
 	
-	public String createCard() throws Exception{
-		boolean succeed = true;
+	public String execute() throws Exception{
 		Map<String,Object> properties = new TreeMap<String,Object>();
-		CommonUtils.describe(properties, saveCardVO);
-		Account account = (Account)request.getSession(true).getAttribute("user");
-		properties.put("accountId",account.getAccountId());
-		try{
-			Card card = CardService.createCard(properties);
-			dataMap.put("card", card);
-		}catch(ScoutinException e){
-			succeed = false;
-			String localizedMessage = getText(e.getMessage(),e.getMessage());
-			JSONUtils.putStatus(dataMap, e.getStatus(), localizedMessage);
-		}
-		
-		//success
-		if(succeed)
-			JSONUtils.putOKStatus(dataMap);
-		return SUCCESS;
-	}
-	
-	public String editCard() throws Exception{
-		Map<String,Object> properties = new TreeMap<String,Object>();
-		CommonUtils.describe(properties, saveCardVO);
+		CommonUtils.describe(properties, likeCardVO);
 		Account account = (Account)request.getSession(true).getAttribute("user");
 		properties.put("accountId",account.getAccountId());
 		
@@ -85,5 +62,6 @@ public class SaveCardAction extends ActionSupport implements ServletRequestAware
 	public Map<String, Object> getDataMap() {
 		return dataMap;
 	}
+
 
 }

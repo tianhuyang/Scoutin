@@ -7,6 +7,7 @@
 
 	<constant name="struts.devMode" value="true" />
 
+	<include file="/interceptor-struts.xml"/>
 	<include file="/account-struts.xml"/>
 	<include file="/card-struts.xml"/>
 

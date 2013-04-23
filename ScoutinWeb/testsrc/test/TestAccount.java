@@ -6,6 +6,7 @@ import java.util.TreeMap;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+import org.apache.struts2.ServletActionContext;
 import org.junit.*;
 
 import com.scoutin.entities.Account;

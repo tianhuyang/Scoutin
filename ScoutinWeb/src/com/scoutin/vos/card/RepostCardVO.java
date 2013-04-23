@@ -4,6 +4,7 @@ public class RepostCardVO {
 	public String description; 
 	public int rating;
 	public long cardbodyId;
+	public long[] albumIds;
 	
 	public String getDescription() {
 		return description;
@@ -29,6 +30,6 @@ public class RepostCardVO {
 	public void setAlbumIds(long[] albumIds) {
 		this.albumIds = albumIds;
 	}
-	public long[] albumIds;
+	
 	
 }

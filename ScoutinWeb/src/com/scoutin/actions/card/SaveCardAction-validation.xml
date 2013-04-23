@@ -3,8 +3,9 @@
 		"http://struts.apache.org/dtds/xwork-validator-1.0.3.dtd">
 <validators>
 	<field name="title">
-		<field-validator type="requiredstring">
-			<message key="error.card.save.title.required">Please input a title</message>
+		<field-validator type="fieldexpression">
+			<param name="expression">!(title=="" || title==null)</param>
+			<message key="error.card.save.title.require">Please input a title</message>
 		</field-validator>
 		<field-validator type="stringlength">
 			<param name="maxLength">20</param>
@@ -18,6 +19,10 @@
 		</field-validator>
 	</field>
 	<field name="rating">
+		<field-validator type="fieldexpression">
+			<param name="expression">!(rating=="" || rating==null)</param>
+			<message key="error.card.save.rating.require">Please input rating</message>
+		</field-validator>
 		<field-validator type="int">
 			<param name="min">1</param>
 			<param name="max">5</param>
@@ -41,8 +46,9 @@
 		</field-validator>
 	</field>
 	<field name="url">
-		<field-validator type="required">
-			<message key="error.card.save.url.require"></message>
+		<field-validator type="fieldexpression">
+			<param name="expression">!(url=="" || url==null)</param>
+			<message key="error.card.save.url.require">Please input url</message>
 		</field-validator>
 	</field>
 </validators>
