@@ -17,8 +17,8 @@ import com.scoutin.entities.Albumcard;
 import com.scoutin.entities.AlbumcardId;
 import com.scoutin.entities.Card;
 import com.scoutin.entities.Cardbody;
-import com.scoutin.entities.Cardreposts;
-import com.scoutin.entities.CardrepostsId;
+import com.scoutin.entities.Cardrepost;
+import com.scoutin.entities.CardrepostId;
 import com.scoutin.entities.Comment;
 import com.scoutin.interfaces.CardBeanRemote;
 import com.scoutin.utilities.CommonUtils;
@@ -53,7 +53,7 @@ public class CardBean implements CardBeanRemote {
 		int accountId = (Integer) properties.get("accountId");
 		Long[] lAlbumIds = new Long[albumIds.length];
 		CommonUtils.longToLong(lAlbumIds, albumIds);
-		if (daoUtils.albumDao.verifyAccountAlbum(accountId, lAlbumIds) == false) {
+		if (daoUtils.getAlbumDao().verifyAccountAlbum(accountId, lAlbumIds) == false) {
 			throw new IllegalArgumentException(
 					"accountId doesn't match or not all albumIds exist");
 		}
@@ -65,18 +65,18 @@ public class CardBean implements CardBeanRemote {
 			BeanUtils.populate(cardBody, properties);
 
 			// insert values
-			Account account = daoUtils.accountDao.findById(accountId);
+			Account account = daoUtils.getAccountDao().findById(accountId);
 			cardBody.setAccount(account);
-			daoUtils.cardBodyDao.save(cardBody);
+			daoUtils.getCardBodyDao().save(cardBody);
 			card.setCardbody(cardBody);
-			daoUtils.cardDao.save(card);
+			daoUtils.getCardDao().save(card);
 			for (long albumId : albumIds) {
 				AlbumcardId albumCardId = new AlbumcardId();
 				albumCardId.setAlbumId(albumId);
 				albumCardId.setCardId(card.getCardId());
 				Albumcard albumcard = new Albumcard();
 				albumcard.setId(albumCardId);
-				daoUtils.albumcardDao.save(albumcard);
+				daoUtils.getAlbumcardDao().save(albumcard);
 			}
 			//daoUtils.cardDao.evict(card);
 		} catch (IllegalAccessException e) {
@@ -106,7 +106,7 @@ public class CardBean implements CardBeanRemote {
 		long repostedCardbodyId = (Long)properties.get("cardbodyId");
 		Long[] lAlbumIds = new Long[albumIds.length];
 		CommonUtils.longToLong(lAlbumIds, albumIds);
-		if (daoUtils.albumDao.verifyAccountAlbum(accountId, lAlbumIds) == false) {
+		if (daoUtils.getAlbumDao().verifyAccountAlbum(accountId, lAlbumIds) == false) {
 			throw new IllegalArgumentException(
 					"accountId doesn't match or not all albumIds exist");
 		}
@@ -116,26 +116,26 @@ public class CardBean implements CardBeanRemote {
 			BeanUtils.populate(card, properties);
 
 			// create card
-			Cardbody cardBody = daoUtils.cardBodyDao.findById(repostedCardbodyId);
+			Cardbody cardBody = daoUtils.getCardBodyDao().findById(repostedCardbodyId);
 			card.setCardbody(cardBody);
 			card.setCardId(null);
-			daoUtils.cardDao.save(card);
+			daoUtils.getCardDao().save(card);
 			// create cardReposts
-			CardrepostsId cardRepostId = new CardrepostsId();
+			CardrepostId cardRepostId = new CardrepostId();
 			cardRepostId.setAccountId(accountId);
 			cardRepostId.setCardId(card.getCardId());			
-			Cardreposts cardRepost = daoUtils.cardRepostsDato
+			Cardrepost cardRepost = daoUtils.getCardRepostDao()
 					.findById(cardRepostId);
 			if (cardRepost == null) {
-				cardRepost = new Cardreposts();
+				cardRepost = new Cardrepost();
 				cardRepost.setId(cardRepostId);
 				cardRepost.setCount(1);
 			} else {
-				daoUtils.cardBodyDao
+				daoUtils.getCardBodyDao()
 						.increaseRepostsCount(repostedCardbodyId, 1);
 			}
-			daoUtils.cardBodyDao.save(cardBody);
-			daoUtils.cardRepostsDato.save(cardRepost);
+			daoUtils.getCardBodyDao().save(cardBody);
+			daoUtils.getCardRepostDao().save(cardRepost);
 
 		} catch (IllegalAccessException e) {
 			card = null;

@@ -40,7 +40,7 @@ public class Account implements java.io.Serializable {
 	private Short sex;
 	private Set<Comment> comments = new HashSet<Comment>(0);
 	private Set<Album> albums = new HashSet<Album>(0);
-	private Set<Cardreposts> cardrepostses = new HashSet<Cardreposts>(0);
+	private Set<Cardrepost> cardreposts = new HashSet<Cardrepost>(0);
 	private Accountstat accountstat;
 	private Profile profile;
 	private Set<Follower> followersForFollowingId = new HashSet<Follower>(0);
@@ -67,7 +67,7 @@ public class Account implements java.io.Serializable {
 			String twitterId, Timestamp createdTime, Timestamp updatedTime,
 			String firstname, String lastname, Short sex,
 			Set<Comment> comments, Set<Album> albums,
-			Set<Cardreposts> cardrepostses, Accountstat accountstat,
+			Set<Cardrepost> cardreposts, Accountstat accountstat,
 			Profile profile, Set<Follower> followersForFollowingId,
 			Set<Card> cards, Set<Cardbody> cardbodies,
 			Set<Follower> followersForFollowedId) {
@@ -82,7 +82,7 @@ public class Account implements java.io.Serializable {
 		this.sex = sex;
 		this.comments = comments;
 		this.albums = albums;
-		this.cardrepostses = cardrepostses;
+		this.cardreposts = cardreposts;
 		this.accountstat = accountstat;
 		this.profile = profile;
 		this.followersForFollowingId = followersForFollowingId;
@@ -203,12 +203,12 @@ public class Account implements java.io.Serializable {
 	}
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "account")
-	public Set<Cardreposts> getCardrepostses() {
-		return this.cardrepostses;
+	public Set<Cardrepost> getCardreposts() {
+		return this.cardreposts;
 	}
 
-	public void setCardrepostses(Set<Cardreposts> cardrepostses) {
-		this.cardrepostses = cardrepostses;
+	public void setCardreposts(Set<Cardrepost> cardreposts) {
+		this.cardreposts = cardreposts;
 	}
 
 	@OneToOne(fetch = FetchType.LAZY, mappedBy = "account")

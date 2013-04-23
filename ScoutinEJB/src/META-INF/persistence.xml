@@ -13,8 +13,8 @@
 		<class>com.scoutin.entities.Follower</class>
 		<class>com.scoutin.entities.Comment</class>
 		<class>com.scoutin.entities.Category</class>
-		<class>com.scoutin.entities.CardrepostsId</class>
-		<class>com.scoutin.entities.Cardreposts</class>
+		<class>com.scoutin.entities.CardrepostId</class>
+		<class>com.scoutin.entities.Cardrepost</class>
 		<class>com.scoutin.entities.Cardbody</class>
 		<class>com.scoutin.entities.Card</class>
 		<class>com.scoutin.entities.AlbumcardId</class>

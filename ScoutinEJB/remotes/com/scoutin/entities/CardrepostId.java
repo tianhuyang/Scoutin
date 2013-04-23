@@ -4,10 +4,10 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 /**
- * CardrepostsId entity. @author MyEclipse Persistence Tools
+ * CardrepostId entity. @author MyEclipse Persistence Tools
  */
 @Embeddable
-public class CardrepostsId implements java.io.Serializable {
+public class CardrepostId implements java.io.Serializable {
 
 	// Fields
 
@@ -17,11 +17,11 @@ public class CardrepostsId implements java.io.Serializable {
 	// Constructors
 
 	/** default constructor */
-	public CardrepostsId() {
+	public CardrepostId() {
 	}
 
 	/** full constructor */
-	public CardrepostsId(Integer accountId, Long cardId) {
+	public CardrepostId(Integer accountId, Long cardId) {
 		this.accountId = accountId;
 		this.cardId = cardId;
 	}
@@ -51,9 +51,9 @@ public class CardrepostsId implements java.io.Serializable {
 			return true;
 		if ((other == null))
 			return false;
-		if (!(other instanceof CardrepostsId))
+		if (!(other instanceof CardrepostId))
 			return false;
-		CardrepostsId castOther = (CardrepostsId) other;
+		CardrepostId castOther = (CardrepostId) other;
 
 		return ((this.getAccountId() == castOther.getAccountId()) || (this
 				.getAccountId() != null && castOther.getAccountId() != null && this

@@ -7,17 +7,17 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import com.scoutin.entities.Cardreposts;
-import com.scoutin.entities.CardrepostsId;
+import com.scoutin.entities.Cardrepost;
+import com.scoutin.entities.CardrepostId;
 
 /**
- * Facade for entity Cardreposts.
+ * Facade for entity Cardrepost.
  * 
- * @see com.scoutin.entities.Cardreposts
+ * @see com.scoutin.entities.Cardrepost
  * @author MyEclipse Persistence Tools
  */
 @Stateless
-public class CardrepostsFacade {
+public class CardrepostFacade {
 	// property constants
 	public static final String COUNT = "count";
 
@@ -25,17 +25,17 @@ public class CardrepostsFacade {
 	protected EntityManager entityManager;
 
 	/**
-	 * Perform an initial save of a previously unsaved Cardreposts entity. All
+	 * Perform an initial save of a previously unsaved Cardrepost entity. All
 	 * subsequent persist actions of this entity should use the #update()
 	 * method.
 	 * 
 	 * @param entity
-	 *            Cardreposts entity to persist
+	 *            Cardrepost entity to persist
 	 * @throws RuntimeException
 	 *             when the operation fails
 	 */
-	public void save(Cardreposts entity) {
-		LogUtil.log("saving Cardreposts instance", Level.INFO, null);
+	public void save(Cardrepost entity) {
+		LogUtil.log("saving Cardrepost instance", Level.INFO, null);
 		try {
 			entityManager.persist(entity);
 			LogUtil.log("save successful", Level.INFO, null);
@@ -46,17 +46,17 @@ public class CardrepostsFacade {
 	}
 
 	/**
-	 * Delete a persistent Cardreposts entity.
+	 * Delete a persistent Cardrepost entity.
 	 * 
 	 * @param entity
-	 *            Cardreposts entity to delete
+	 *            Cardrepost entity to delete
 	 * @throws RuntimeException
 	 *             when the operation fails
 	 */
-	public void delete(Cardreposts entity) {
-		LogUtil.log("deleting Cardreposts instance", Level.INFO, null);
+	public void delete(Cardrepost entity) {
+		LogUtil.log("deleting Cardrepost instance", Level.INFO, null);
 		try {
-			entity = entityManager.getReference(Cardreposts.class,
+			entity = entityManager.getReference(Cardrepost.class,
 					entity.getId());
 			entityManager.remove(entity);
 			LogUtil.log("delete successful", Level.INFO, null);
@@ -67,22 +67,22 @@ public class CardrepostsFacade {
 	}
 
 	/**
-	 * Persist a previously saved Cardreposts entity and return it or a copy of
-	 * it to the sender. A copy of the Cardreposts entity parameter is returned
+	 * Persist a previously saved Cardrepost entity and return it or a copy of
+	 * it to the sender. A copy of the Cardrepost entity parameter is returned
 	 * when the JPA persistence mechanism has not previously been tracking the
 	 * updated entity.
 	 * 
 	 * @param entity
-	 *            Cardreposts entity to update
-	 * @return Cardreposts the persisted Cardreposts entity instance, may not be
+	 *            Cardrepost entity to update
+	 * @return Cardrepost the persisted Cardrepost entity instance, may not be
 	 *         the same
 	 * @throws RuntimeException
 	 *             if the operation fails
 	 */
-	public Cardreposts update(Cardreposts entity) {
-		LogUtil.log("updating Cardreposts instance", Level.INFO, null);
+	public Cardrepost update(Cardrepost entity) {
+		LogUtil.log("updating Cardrepost instance", Level.INFO, null);
 		try {
-			Cardreposts result = entityManager.merge(entity);
+			Cardrepost result = entityManager.merge(entity);
 			LogUtil.log("update successful", Level.INFO, null);
 			return result;
 		} catch (RuntimeException re) {
@@ -91,11 +91,11 @@ public class CardrepostsFacade {
 		}
 	}
 
-	public Cardreposts findById(CardrepostsId id) {
-		LogUtil.log("finding Cardreposts instance with id: " + id, Level.INFO,
+	public Cardrepost findById(CardrepostId id) {
+		LogUtil.log("finding Cardrepost instance with id: " + id, Level.INFO,
 				null);
 		try {
-			Cardreposts instance = entityManager.find(Cardreposts.class, id);
+			Cardrepost instance = entityManager.find(Cardrepost.class, id);
 			return instance;
 		} catch (RuntimeException re) {
 			LogUtil.log("find failed", Level.SEVERE, re);
@@ -103,8 +103,8 @@ public class CardrepostsFacade {
 		}
 	}
 
-	public void detach(Cardreposts entity) {
-		LogUtil.log("detaching Cardreposts instance", Level.INFO, null);
+	public void detach(Cardrepost entity) {
+		LogUtil.log("detaching Cardrepost instance", Level.INFO, null);
 		try {
 			entityManager.detach(entity);
 		} catch (RuntimeException re) {
@@ -114,21 +114,21 @@ public class CardrepostsFacade {
 	}
 
 	/**
-	 * Find all Cardreposts entities with a specific property value.
+	 * Find all Cardrepost entities with a specific property value.
 	 * 
 	 * @param propertyName
-	 *            the name of the Cardreposts property to query
+	 *            the name of the Cardrepost property to query
 	 * @param value
 	 *            the property value to match
-	 * @return List<Cardreposts> found by query
+	 * @return List<Cardrepost> found by query
 	 */
 	@SuppressWarnings("unchecked")
-	public List<Cardreposts> findByProperty(String propertyName,
+	public List<Cardrepost> findByProperty(String propertyName,
 			final Object value) {
-		LogUtil.log("finding Cardreposts instance with property: "
+		LogUtil.log("finding Cardrepost instance with property: "
 				+ propertyName + ", value: " + value, Level.INFO, null);
 		try {
-			final String queryString = "select model from Cardreposts model where model."
+			final String queryString = "select model from Cardrepost model where model."
 					+ propertyName + "= :propertyValue";
 			Query query = entityManager.createQuery(queryString);
 			query.setParameter("propertyValue", value);
@@ -139,20 +139,20 @@ public class CardrepostsFacade {
 		}
 	}
 
-	public List<Cardreposts> findByCount(Object count) {
+	public List<Cardrepost> findByCount(Object count) {
 		return findByProperty(COUNT, count);
 	}
 
 	/**
-	 * Find all Cardreposts entities.
+	 * Find all Cardrepost entities.
 	 * 
-	 * @return List<Cardreposts> all Cardreposts entities
+	 * @return List<Cardrepost> all Cardrepost entities
 	 */
 	@SuppressWarnings("unchecked")
-	public List<Cardreposts> findAll() {
-		LogUtil.log("finding all Cardreposts instances", Level.INFO, null);
+	public List<Cardrepost> findAll() {
+		LogUtil.log("finding all Cardrepost instances", Level.INFO, null);
 		try {
-			final String queryString = "select model from Cardreposts model";
+			final String queryString = "select model from Cardrepost model";
 			Query query = entityManager.createQuery(queryString);
 			return query.getResultList();
 		} catch (RuntimeException re) {

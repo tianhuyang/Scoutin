@@ -11,15 +11,15 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
- * Cardreposts entity. @author MyEclipse Persistence Tools
+ * Cardrepost entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "CARDREPOSTS", catalog = "Scoutin")
-public class Cardreposts implements java.io.Serializable {
+@Table(name = "CARDREPOST", catalog = "Scoutin")
+public class Cardrepost implements java.io.Serializable {
 
 	// Fields
 
-	private CardrepostsId id;
+	private CardrepostId id;
 	private Card card;
 	private Account account;
 	private Integer count;
@@ -27,19 +27,18 @@ public class Cardreposts implements java.io.Serializable {
 	// Constructors
 
 	/** default constructor */
-	public Cardreposts() {
+	public Cardrepost() {
 	}
 
 	/** minimal constructor */
-	public Cardreposts(CardrepostsId id, Card card, Account account) {
+	public Cardrepost(CardrepostId id, Card card, Account account) {
 		this.id = id;
 		this.card = card;
 		this.account = account;
 	}
 
 	/** full constructor */
-	public Cardreposts(CardrepostsId id, Card card, Account account,
-			Integer count) {
+	public Cardrepost(CardrepostId id, Card card, Account account, Integer count) {
 		this.id = id;
 		this.card = card;
 		this.account = account;
@@ -51,11 +50,11 @@ public class Cardreposts implements java.io.Serializable {
 	@AttributeOverrides({
 			@AttributeOverride(name = "accountId", column = @Column(name = "ACCOUNT_ID", nullable = false)),
 			@AttributeOverride(name = "cardId", column = @Column(name = "CARD_ID", nullable = false)) })
-	public CardrepostsId getId() {
+	public CardrepostId getId() {
 		return this.id;
 	}
 
-	public void setId(CardrepostsId id) {
+	public void setId(CardrepostId id) {
 		this.id = id;
 	}
 

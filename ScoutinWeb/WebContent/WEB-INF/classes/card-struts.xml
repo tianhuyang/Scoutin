@@ -3,7 +3,9 @@
     "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
     "http://struts.apache.org/dtds/struts-2.0.dtd">
 <struts>
-	<package name="card" namespace="/card" extends="json-default">
+	<package name="card" namespace="/card" extends="json-default,scoutin-interceptor">	
+		<default-interceptor-ref name="authorizationStack"></default-interceptor-ref>
+		
 		<action name="createCard" class="com.scoutin.actions.card.SaveCardAction" method="createCard">
 			<result name="input" type="json">
 				<param name="root">dataMap</param>
@@ -12,6 +14,7 @@
 				<param name="root">dataMap</param>
 			</result>
 		</action>
+		
 		<action name="editCard" class="com.scoutin.actions.card.SaveCardAction" method="editCard">
 			<result name="input" type="json">
 				<param name="root">dataMap</param>
@@ -20,6 +23,7 @@
 				<param name="root">dataMap</param>
 			</result>
 		</action>
+		
 		<action name="createComment" class="com.scoutin.actions.card.SaveCommentAction" method="createComment">
 			<result name="input" type="json">
 				<param name="root">dataMap</param>
@@ -28,6 +32,7 @@
 				<param name="root">dataMap</param>
 			</result>
 		</action>
+		
 		<action name="editComment" class="com.scoutin.actions.card.SaveCommentAction" method="editComment">
 			<result name="input" type="json">
 				<param name="root">dataMap</param>
@@ -36,7 +41,17 @@
 				<param name="root">dataMap</param>
 			</result>
 		</action>
+		
 		<action name="repostCard" class="com.scoutin.actions.card.RepostCardAction">
+			<result name="input" type="json">
+				<param name="root">dataMap</param>
+			</result>
+			<result name="success" type="json">
+				<param name="root">dataMap</param>
+			</result>
+		</action>
+		
+		<action name="likeCard" class="com.scoutin.actions.card.LikeCardAction">
 			<result name="input" type="json">
 				<param name="root">dataMap</param>
 			</result>

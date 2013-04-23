@@ -41,7 +41,7 @@ public class Card implements java.io.Serializable {
 	private Set<Album> albums = new HashSet<Album>(0);
 	private Set<Account> accounts = new HashSet<Account>(0);
 	private Set<Category> categories = new HashSet<Category>(0);
-	private Set<Cardreposts> cardrepostses = new HashSet<Cardreposts>(0);
+	private Set<Cardrepost> cardreposts = new HashSet<Cardrepost>(0);
 	private Set<Comment> comments = new HashSet<Comment>(0);
 
 	// Constructors
@@ -61,7 +61,7 @@ public class Card implements java.io.Serializable {
 			Integer likesCount, Timestamp createdTime, Timestamp updatedTime,
 			String tag, Integer ratingCount, Set<Album> albums,
 			Set<Account> accounts, Set<Category> categories,
-			Set<Cardreposts> cardrepostses, Set<Comment> comments) {
+			Set<Cardrepost> cardreposts, Set<Comment> comments) {
 		this.cardbody = cardbody;
 		this.title = title;
 		this.description = description;
@@ -76,7 +76,7 @@ public class Card implements java.io.Serializable {
 		this.albums = albums;
 		this.accounts = accounts;
 		this.categories = categories;
-		this.cardrepostses = cardrepostses;
+		this.cardreposts = cardreposts;
 		this.comments = comments;
 	}
 
@@ -203,7 +203,7 @@ public class Card implements java.io.Serializable {
 	}
 
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinTable(name = "CARDLIKES", catalog = "Scoutin", joinColumns = { @JoinColumn(name = "CARD_ID", nullable = false, updatable = false) }, inverseJoinColumns = { @JoinColumn(name = "ACCOUNT_ID", nullable = false, updatable = false) })
+	@JoinTable(name = "CARDLIKE", catalog = "Scoutin", joinColumns = { @JoinColumn(name = "CARD_ID", nullable = false, updatable = false) }, inverseJoinColumns = { @JoinColumn(name = "ACCOUNT_ID", nullable = false, updatable = false) })
 	public Set<Account> getAccounts() {
 		return this.accounts;
 	}
@@ -222,12 +222,12 @@ public class Card implements java.io.Serializable {
 	}
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "card")
-	public Set<Cardreposts> getCardrepostses() {
-		return this.cardrepostses;
+	public Set<Cardrepost> getCardreposts() {
+		return this.cardreposts;
 	}
 
-	public void setCardrepostses(Set<Cardreposts> cardrepostses) {
-		this.cardrepostses = cardrepostses;
+	public void setCardreposts(Set<Cardrepost> cardreposts) {
+		this.cardreposts = cardreposts;
 	}
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "card")

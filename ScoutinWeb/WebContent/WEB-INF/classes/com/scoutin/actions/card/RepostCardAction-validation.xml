@@ -9,15 +9,19 @@
 		</field-validator>
 	</field>
 	<field name="rating">
-		<field-validator type="required">
+		<field-validator type="fieldexpression">
+			<param name="expression">!(rating=="" || rating==null)</param>
 			<message key="error.card.repost.rating.require">Please input rating</message>
 		</field-validator>
 		<field-validator type="int">
+			<param name="min">1</param>
+			<param name="max">5</param>
 			<message key="error.card.repost.rating.value">The rating should be an integer</message>
 		</field-validator>
 	</field>
 	<field name="cardbodyId">
-		<field-validator type="required">
+		<field-validator type="fieldexpression">
+			<param name="expression">!(cardbodyId=="" || cardbodyId==null)</param>
 			<message key="error.card.repost.cardbodyId.require">Please select a card to repost</message>
 		</field-validator>
 		<field-validator type="long">
@@ -25,11 +29,9 @@
 		</field-validator>
 	</field>
 	<field name="albumIds">
-		<field-validator type="required">
-			<message key="error.card.repost.albumIds.require">Please select an album to put your card</message>
-		</field-validator>
-		<field-validator type="long">
-			<message key="error.card.repost.albumIds.value">Invalid album ID</message>
+		<field-validator type="fieldexpression">
+			<param name="expression">!(albumIds=="" || albumIds==null)</param>
+			<message>Please select album</message>
 		</field-validator>
 	</field>
 </validators>

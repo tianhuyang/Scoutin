@@ -28,7 +28,7 @@ public class AccountFacade {
 	public static final String LASTNAME = "lastname";
 	public static final String SEX = "sex";
 
-	@PersistenceContext(unitName="ScoutinPersistence")
+	@PersistenceContext
 	protected EntityManager entityManager;
 
 	/**
