@@ -140,7 +140,24 @@ public class AlbumFacade {
 		}
 	}
 
-	private final String increaseFollowCountJPQL = "update Album a set a.followCount = a.followCount + :count where a.albumId =:albumId";
+	private final String increaseAccountJPQL = "update Album a set a.account = a.account + :count where a.albumId in (:albumId)";
+
+	public void increaseAccount(java.lang.Long albumId, int count) {
+		LogUtil.log("increaseFollowCount with albumId:" + albumId, Level.INFO,
+				null);
+		try {
+			Query query = entityManager.createQuery(increaseAccountJPQL);
+			query.setParameter("albumId", albumId);
+			query.setParameter("count", count);
+			query.executeUpdate();
+			LogUtil.log("increaseFollowCount successful", Level.INFO, null);
+		} catch (RuntimeException re) {
+			LogUtil.log("increaseFollowCount failed", Level.SEVERE, re);
+			throw re;
+		}
+	}
+
+	private final String increaseFollowCountJPQL = "update Album a set a.followCount = a.followCount + :count where a.albumId in (:albumId)";
 
 	public void increaseFollowCount(java.lang.Long albumId, int count) {
 		LogUtil.log("increaseFollowCount with albumId:" + albumId, Level.INFO,

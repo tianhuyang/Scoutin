@@ -28,6 +28,7 @@ public class CardbodyFacade {
 	public static final String LONGITUDE = "longitude";
 	public static final String ADDRESS = "address";
 	public static final String URL = "url";
+	public static final String TITLE = "title";
 	public static final String RATING_COUNT = "ratingCount";
 
 	@PersistenceContext
@@ -148,7 +149,24 @@ public class CardbodyFacade {
 		}
 	}
 
-	private final String increaseCommentsCountJPQL = "update Cardbody a set a.commentsCount = a.commentsCount + :count where a.cardbodyId =:cardbodyId";
+	private final String increaseAccountJPQL = "update Cardbody a set a.account = a.account + :count where a.cardbodyId in (:cardbodyId)";
+
+	public void increaseAccount(java.lang.Long cardbodyId, int count) {
+		LogUtil.log("increaseRatingCount with cardbodyId:" + cardbodyId,
+				Level.INFO, null);
+		try {
+			Query query = entityManager.createQuery(increaseAccountJPQL);
+			query.setParameter("cardbodyId", cardbodyId);
+			query.setParameter("count", count);
+			query.executeUpdate();
+			LogUtil.log("increaseRatingCount successful", Level.INFO, null);
+		} catch (RuntimeException re) {
+			LogUtil.log("increaseRatingCount failed", Level.SEVERE, re);
+			throw re;
+		}
+	}
+
+	private final String increaseCommentsCountJPQL = "update Cardbody a set a.commentsCount = a.commentsCount + :count where a.cardbodyId in (:cardbodyId)";
 
 	public void increaseCommentsCount(java.lang.Long cardbodyId, int count) {
 		LogUtil.log("increaseRatingCount with cardbodyId:" + cardbodyId,
@@ -165,7 +183,7 @@ public class CardbodyFacade {
 		}
 	}
 
-	private final String increaseRepostsCountJPQL = "update Cardbody a set a.repostsCount = a.repostsCount + :count where a.cardbodyId =:cardbodyId";
+	private final String increaseRepostsCountJPQL = "update Cardbody a set a.repostsCount = a.repostsCount + :count where a.cardbodyId in (:cardbodyId)";
 
 	public void increaseRepostsCount(java.lang.Long cardbodyId, int count) {
 		LogUtil.log("increaseRatingCount with cardbodyId:" + cardbodyId,
@@ -182,7 +200,7 @@ public class CardbodyFacade {
 		}
 	}
 
-	private final String increaseLikesCountJPQL = "update Cardbody a set a.likesCount = a.likesCount + :count where a.cardbodyId =:cardbodyId";
+	private final String increaseLikesCountJPQL = "update Cardbody a set a.likesCount = a.likesCount + :count where a.cardbodyId in (:cardbodyId)";
 
 	public void increaseLikesCount(java.lang.Long cardbodyId, int count) {
 		LogUtil.log("increaseRatingCount with cardbodyId:" + cardbodyId,
@@ -199,7 +217,7 @@ public class CardbodyFacade {
 		}
 	}
 
-	private final String increaseRatingCountJPQL = "update Cardbody a set a.ratingCount = a.ratingCount + :count where a.cardbodyId =:cardbodyId";
+	private final String increaseRatingCountJPQL = "update Cardbody a set a.ratingCount = a.ratingCount + :count where a.cardbodyId in (:cardbodyId)";
 
 	public void increaseRatingCount(java.lang.Long cardbodyId, int count) {
 		LogUtil.log("increaseRatingCount with cardbodyId:" + cardbodyId,
@@ -298,6 +316,10 @@ public class CardbodyFacade {
 
 	public List<Cardbody> findByUrl(Object url, int... rowStartIdxAndCount) {
 		return findByProperty(URL, url, rowStartIdxAndCount);
+	}
+
+	public List<Cardbody> findByTitle(Object title, int... rowStartIdxAndCount) {
+		return findByProperty(TITLE, title, rowStartIdxAndCount);
 	}
 
 	public List<Cardbody> findByRatingCount(Object ratingCount,

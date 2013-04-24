@@ -100,8 +100,8 @@ public class Follower implements java.io.Serializable {
 
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinTable(name = "FOLLOWALBUM", catalog = "Scoutin", joinColumns = {
-			@JoinColumn(name = "FOLLOWED_ID", referencedColumnName="FOLLOWED_ID", nullable = false, updatable = false),
-			@JoinColumn(name = "FOLLOWING_ID", referencedColumnName="FOLLOWING_ID", nullable = false, updatable = false) }, inverseJoinColumns = { @JoinColumn(name = "ALBUM_ID", nullable = false, updatable = false) })
+			@JoinColumn(name = "FOLLOWED_ID", nullable = false, updatable = false),
+			@JoinColumn(name = "FOLLOWING_ID", nullable = false, updatable = false) }, inverseJoinColumns = { @JoinColumn(name = "ALBUM_ID", nullable = false, updatable = false) })
 	public Set<Album> getAlbums() {
 		return this.albums;
 	}

@@ -36,8 +36,10 @@ public class Cardbody implements java.io.Serializable {
 	private Double longitude;
 	private String address;
 	private String url;
+	private String title;
 	private Integer ratingCount;
 	private Set<Card> cards = new HashSet<Card>(0);
+	private Set<Cardrepost> cardreposts = new HashSet<Cardrepost>(0);
 
 	// Constructors
 
@@ -54,7 +56,8 @@ public class Cardbody implements java.io.Serializable {
 	public Cardbody(Account account, Integer rating, Integer commentsCount,
 			Integer repostsCount, Integer likesCount, Timestamp createdTime,
 			Timestamp updatedTime, Double latitude, Double longitude,
-			String address, String url, Integer ratingCount, Set<Card> cards) {
+			String address, String url, String title, Integer ratingCount,
+			Set<Card> cards, Set<Cardrepost> cardreposts) {
 		this.account = account;
 		this.rating = rating;
 		this.commentsCount = commentsCount;
@@ -66,8 +69,10 @@ public class Cardbody implements java.io.Serializable {
 		this.longitude = longitude;
 		this.address = address;
 		this.url = url;
+		this.title = title;
 		this.ratingCount = ratingCount;
 		this.cards = cards;
+		this.cardreposts = cardreposts;
 	}
 
 	// Property accessors
@@ -182,6 +187,15 @@ public class Cardbody implements java.io.Serializable {
 		this.url = url;
 	}
 
+	@Column(name = "TITLE", length = 35)
+	public String getTitle() {
+		return this.title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
 	@Column(name = "RATING_COUNT")
 	public Integer getRatingCount() {
 		return this.ratingCount;
@@ -198,6 +212,15 @@ public class Cardbody implements java.io.Serializable {
 
 	public void setCards(Set<Card> cards) {
 		this.cards = cards;
+	}
+
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "cardbody")
+	public Set<Cardrepost> getCardreposts() {
+		return this.cardreposts;
+	}
+
+	public void setCardreposts(Set<Cardrepost> cardreposts) {
+		this.cardreposts = cardreposts;
 	}
 
 }

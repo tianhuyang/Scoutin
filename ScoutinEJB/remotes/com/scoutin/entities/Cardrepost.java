@@ -20,8 +20,8 @@ public class Cardrepost implements java.io.Serializable {
 	// Fields
 	private static final long serialVersionUID = 1L;
 	private CardrepostId id;
-	private Card card;
 	private Account account;
+	private Cardbody cardbody;
 	private Integer count;
 
 	// Constructors
@@ -31,41 +31,32 @@ public class Cardrepost implements java.io.Serializable {
 	}
 
 	/** minimal constructor */
-	public Cardrepost(CardrepostId id, Card card, Account account) {
+	public Cardrepost(CardrepostId id, Account account, Cardbody cardbody) {
 		this.id = id;
-		this.card = card;
 		this.account = account;
+		this.cardbody = cardbody;
 	}
 
 	/** full constructor */
-	public Cardrepost(CardrepostId id, Card card, Account account, Integer count) {
+	public Cardrepost(CardrepostId id, Account account, Cardbody cardbody,
+			Integer count) {
 		this.id = id;
-		this.card = card;
 		this.account = account;
+		this.cardbody = cardbody;
 		this.count = count;
 	}
 
 	// Property accessors
 	@EmbeddedId
 	@AttributeOverrides({
-			@AttributeOverride(name = "accountId", column = @Column(name = "ACCOUNT_ID", nullable = false)),
-			@AttributeOverride(name = "cardId", column = @Column(name = "CARD_ID", nullable = false)) })
+			@AttributeOverride(name = "cardbodyId", column = @Column(name = "CARDBODY_ID", nullable = false)),
+			@AttributeOverride(name = "accountId", column = @Column(name = "ACCOUNT_ID", nullable = false)) })
 	public CardrepostId getId() {
 		return this.id;
 	}
 
 	public void setId(CardrepostId id) {
 		this.id = id;
-	}
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "CARD_ID", nullable = false, insertable = false, updatable = false)
-	public Card getCard() {
-		return this.card;
-	}
-
-	public void setCard(Card card) {
-		this.card = card;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -76,6 +67,16 @@ public class Cardrepost implements java.io.Serializable {
 
 	public void setAccount(Account account) {
 		this.account = account;
+	}
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "CARDBODY_ID", nullable = false, insertable = false, updatable = false)
+	public Cardbody getCardbody() {
+		return this.cardbody;
+	}
+
+	public void setCardbody(Cardbody cardbody) {
+		this.cardbody = cardbody;
 	}
 
 	@Column(name = "COUNT")

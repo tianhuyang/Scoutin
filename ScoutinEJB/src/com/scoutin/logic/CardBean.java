@@ -52,9 +52,7 @@ public class CardBean implements CardBeanRemote {
 		// whether all the albumIds exists
 		long[] albumIds = (long[]) properties.get("albumIds");
 		int accountId = (Integer) properties.get("accountId");
-		Long[] lAlbumIds = new Long[albumIds.length];
-		CommonUtils.longToLong(lAlbumIds, albumIds);
-		if (daoUtils.getAlbumDao().verifyAccountAlbum(accountId, lAlbumIds) == false) {
+		if (daoUtils.getAlbumDao().verifyAccountAlbum(accountId, albumIds) == false) {
 			throw new IllegalArgumentException(
 					"accountId doesn't match or not all albumIds exist");
 		}
@@ -70,14 +68,12 @@ public class CardBean implements CardBeanRemote {
 			cardBody.setAccount(account);
 			daoUtils.getCardBodyDao().save(cardBody);
 			card.setCardbody(cardBody);
-			daoUtils.getCardDao().save(card);
+			
 			for (long albumId : albumIds) {
-				AlbumcardId albumCardId = new AlbumcardId(albumId,card.getCardId());
-				Albumcard albumcard = new Albumcard();
-				albumcard.setId(albumCardId);
-				daoUtils.getAlbumcardDao().save(albumcard);
+				Album album = daoUtils.getAlbumDao().getReference(albumId);
+				card.getAlbums().add(album);
 			}
-			//daoUtils.cardDao.evict(card);
+			daoUtils.getCardDao().save(card);
 		} catch (IllegalAccessException e) {
 			card = null;
 			// e.printStackTrace();
@@ -102,10 +98,9 @@ public class CardBean implements CardBeanRemote {
 		// whether all the albumIds exists
 		long[] albumIds = (long[]) properties.get("albumIds");
 		int accountId = (Integer) properties.get("accountId");
-		long repostedCardbodyId = (Long)properties.get("cardbodyId");
-		Long[] lAlbumIds = new Long[albumIds.length];
-		CommonUtils.longToLong(lAlbumIds, albumIds);
-		if (daoUtils.getAlbumDao().verifyAccountAlbum(accountId, lAlbumIds) == false) {
+		long repostedCardbodyId = (Long)properties.get("cardbodyId");		
+		
+		if (daoUtils.getAlbumDao().verifyAccountAlbum(accountId, albumIds) == false) {
 			throw new IllegalArgumentException(
 					"accountId doesn't match or not all albumIds exist");
 		}
@@ -115,26 +110,25 @@ public class CardBean implements CardBeanRemote {
 			BeanUtils.populate(card, properties);
 
 			// create card
-			Cardbody cardBody = daoUtils.getCardBodyDao().findById(repostedCardbodyId);
+			Cardbody cardBody = daoUtils.getCardBodyDao().getReference(repostedCardbodyId);
 			card.setCardbody(cardBody);
-			card.setCardId(null);
 			daoUtils.getCardDao().save(card);
 			// create cardReposts
-			CardrepostId cardRepostId = new CardrepostId();
-			cardRepostId.setAccountId(accountId);
-			cardRepostId.setCardId(card.getCardId());			
+			CardrepostId cardRepostId = new CardrepostId(repostedCardbodyId,accountId);		
 			Cardrepost cardRepost = daoUtils.getCardRepostDao()
 					.findById(cardRepostId);
 			if (cardRepost == null) {
 				cardRepost = new Cardrepost();
 				cardRepost.setId(cardRepostId);
 				cardRepost.setCount(1);
+				//card.getCardreposts().add(cardRepost);
+				daoUtils.getCardRepostDao().save(cardRepost);
 			} else {
-				daoUtils.getCardBodyDao()
-						.increaseRepostsCount(repostedCardbodyId, 1);
+				daoUtils.getCardRepostDao().increaseCount(cardRepostId, 1);
 			}
-			daoUtils.getCardBodyDao().save(cardBody);
-			daoUtils.getCardRepostDao().save(cardRepost);
+			daoUtils.getCardBodyDao().increaseRepostsCount(repostedCardbodyId, 1);
+			//daoUtils.getCardBodyDao().save(cardBody);
+			
 
 		} catch (IllegalAccessException e) {
 			card = null;

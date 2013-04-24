@@ -11,8 +11,8 @@ public class CardrepostId implements java.io.Serializable {
 
 	// Fields
 	private static final long serialVersionUID = 1L;
+	private Long cardbodyId;
 	private Integer accountId;
-	private Long cardId;
 
 	// Constructors
 
@@ -21,12 +21,21 @@ public class CardrepostId implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public CardrepostId(Integer accountId, Long cardId) {
+	public CardrepostId(Long cardbodyId, Integer accountId) {
+		this.cardbodyId = cardbodyId;
 		this.accountId = accountId;
-		this.cardId = cardId;
 	}
 
 	// Property accessors
+
+	@Column(name = "CARDBODY_ID", nullable = false)
+	public Long getCardbodyId() {
+		return this.cardbodyId;
+	}
+
+	public void setCardbodyId(Long cardbodyId) {
+		this.cardbodyId = cardbodyId;
+	}
 
 	@Column(name = "ACCOUNT_ID", nullable = false)
 	public Integer getAccountId() {
@@ -35,15 +44,6 @@ public class CardrepostId implements java.io.Serializable {
 
 	public void setAccountId(Integer accountId) {
 		this.accountId = accountId;
-	}
-
-	@Column(name = "CARD_ID", nullable = false)
-	public Long getCardId() {
-		return this.cardId;
-	}
-
-	public void setCardId(Long cardId) {
-		this.cardId = cardId;
 	}
 
 	public boolean equals(Object other) {
@@ -55,21 +55,24 @@ public class CardrepostId implements java.io.Serializable {
 			return false;
 		CardrepostId castOther = (CardrepostId) other;
 
-		return ((this.getAccountId() == castOther.getAccountId()) || (this
-				.getAccountId() != null && castOther.getAccountId() != null && this
-				.getAccountId().equals(castOther.getAccountId())))
-				&& ((this.getCardId() == castOther.getCardId()) || (this
-						.getCardId() != null && castOther.getCardId() != null && this
-						.getCardId().equals(castOther.getCardId())));
+		return ((this.getCardbodyId() == castOther.getCardbodyId()) || (this
+				.getCardbodyId() != null && castOther.getCardbodyId() != null && this
+				.getCardbodyId().equals(castOther.getCardbodyId())))
+				&& ((this.getAccountId() == castOther.getAccountId()) || (this
+						.getAccountId() != null
+						&& castOther.getAccountId() != null && this
+						.getAccountId().equals(castOther.getAccountId())));
 	}
 
 	public int hashCode() {
 		int result = 17;
 
+		result = 37
+				* result
+				+ (getCardbodyId() == null ? 0 : this.getCardbodyId()
+						.hashCode());
 		result = 37 * result
 				+ (getAccountId() == null ? 0 : this.getAccountId().hashCode());
-		result = 37 * result
-				+ (getCardId() == null ? 0 : this.getCardId().hashCode());
 		return result;
 	}
 

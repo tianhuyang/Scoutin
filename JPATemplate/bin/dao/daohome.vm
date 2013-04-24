@@ -299,12 +299,12 @@ public class $className #if ($daoExporter.getExtends())extends $pojo.importType(
 	}
 #end
 #end
-#if($field.name.endsWith("Count"))
+#if($field.name.endsWith("Count") || $field.name.endsWith("count"))
 #set($bName = $field.name.substring(0,1).toUpperCase().concat($field.name.substring(1)))
 #set($idName = $clazz.identifierProperty.name)
 #set($idType = $c2j.getJavaTypeName($clazz.identifierProperty, $jdk5))
 #set($className = $pojo.importType($clazz.getClassName()))
-    private final String increase${bName}JPQL = "update ${className} a set a.${field.name} = a.${field.name} + :count where a.${idName} =:${idName}";
+    private final String increase${bName}JPQL = "update ${className} a set a.${field.name} = a.${field.name} + :count where a.${idName} in (:${idName})";
 
 	public void increase${bName}(${idType} ${idName}, int count) {
 		#logInfo('"increase${bName} with ${idName}:" + ${idName}')

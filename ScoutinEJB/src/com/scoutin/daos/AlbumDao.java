@@ -1,5 +1,6 @@
 package com.scoutin.daos;
 
+import java.util.Arrays;
 import java.util.logging.Level;
 
 
@@ -15,19 +16,21 @@ import com.scoutin.utilities.DaoUtils;
 @Singleton
 public class AlbumDao extends AlbumFacade {
 
-	private final String verifyCreateCardHql = "select count(album) from Album album where album.account.accountId = :accountId and album.albumId in :albumIds";
+	private final String verifyCreateCardHql = "select count(album) from Album album where album.account.accountId = :accountId and album.albumId in (:albumIds)";
 
 	public AlbumDao() {
 		// TODO Auto-generated constructor stub
 	}	
 	
-	public boolean verifyAccountAlbum(int accountId, Long[] albumIds){
+	public boolean verifyAccountAlbum(int accountId, long[] albumIds){
 		LogUtil.log("Card verifyAccountAlbum", Level.INFO, null);
 		boolean success = false;
 		try {
 			Query query = entityManager.createQuery(verifyCreateCardHql);
 			query.setParameter("accountId", accountId);
-			query.setParameter("albumIds", albumIds);
+			Long[] lAlbumIds = new Long[albumIds.length];
+			CommonUtils.longToLong(lAlbumIds, albumIds);
+			query.setParameter("albumIds", Arrays.asList(lAlbumIds));
 			Long count = (Long) query.getSingleResult();
 			success = count == albumIds.length;
 			LogUtil.log("verifyAccountAlbum successful", Level.INFO, null);

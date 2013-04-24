@@ -138,6 +138,23 @@ public class CommentFacade {
 		}
 	}
 
+	private final String increaseAccountJPQL = "update Comment a set a.account = a.account + :count where a.commentId in (:commentId)";
+
+	public void increaseAccount(java.lang.Long commentId, int count) {
+		LogUtil.log("increaseAccount with commentId:" + commentId, Level.INFO,
+				null);
+		try {
+			Query query = entityManager.createQuery(increaseAccountJPQL);
+			query.setParameter("commentId", commentId);
+			query.setParameter("count", count);
+			query.executeUpdate();
+			LogUtil.log("increaseAccount successful", Level.INFO, null);
+		} catch (RuntimeException re) {
+			LogUtil.log("increaseAccount failed", Level.SEVERE, re);
+			throw re;
+		}
+	}
+
 	/**
 	 * Find all Comment entities with a specific property value.
 	 * 

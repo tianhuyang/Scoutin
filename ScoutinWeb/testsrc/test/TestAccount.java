@@ -104,11 +104,11 @@ public class TestAccount {
 		Assert.assertTrue(true);
 	}
 	
-	@Ignore
+	
 	@Test
 	public void testConcurrent()
 	{
-		int size = 10000 ;
+		int size = 10;
 		Thread[] threads = new Thread[size];
 		for (int i = 0; i < size; ++i) {
 			threads[i] = new Thread() {

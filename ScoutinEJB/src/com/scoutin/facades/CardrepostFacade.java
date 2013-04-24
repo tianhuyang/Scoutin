@@ -140,6 +140,38 @@ public class CardrepostFacade {
 		}
 	}
 
+	private final String increaseAccountJPQL = "update Cardrepost a set a.account = a.account + :count where a.id in (:id)";
+
+	public void increaseAccount(com.scoutin.entities.CardrepostId id, int count) {
+		LogUtil.log("increaseCount with id:" + id, Level.INFO, null);
+		try {
+			Query query = entityManager.createQuery(increaseAccountJPQL);
+			query.setParameter("id", id);
+			query.setParameter("count", count);
+			query.executeUpdate();
+			LogUtil.log("increaseCount successful", Level.INFO, null);
+		} catch (RuntimeException re) {
+			LogUtil.log("increaseCount failed", Level.SEVERE, re);
+			throw re;
+		}
+	}
+
+	private final String increaseCountJPQL = "update Cardrepost a set a.count = a.count + :count where a.id in (:id)";
+
+	public void increaseCount(com.scoutin.entities.CardrepostId id, int count) {
+		LogUtil.log("increaseCount with id:" + id, Level.INFO, null);
+		try {
+			Query query = entityManager.createQuery(increaseCountJPQL);
+			query.setParameter("id", id);
+			query.setParameter("count", count);
+			query.executeUpdate();
+			LogUtil.log("increaseCount successful", Level.INFO, null);
+		} catch (RuntimeException re) {
+			LogUtil.log("increaseCount failed", Level.SEVERE, re);
+			throw re;
+		}
+	}
+
 	/**
 	 * Find all Cardrepost entities with a specific property value.
 	 * 

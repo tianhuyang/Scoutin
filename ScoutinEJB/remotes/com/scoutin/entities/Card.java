@@ -28,11 +28,9 @@ public class Card implements java.io.Serializable {
 	private static final long serialVersionUID = 1L;
 	private Long cardId;
 	private Cardbody cardbody;
-	private String title;
 	private String description;
 	private Integer rating;
 	private Integer commentsCount;
-	private Integer repostsCount;
 	private Integer likesCount;
 	private Timestamp createdTime;
 	private Timestamp updatedTime;
@@ -41,7 +39,6 @@ public class Card implements java.io.Serializable {
 	private Set<Album> albums = new HashSet<Album>(0);
 	private Set<Account> accounts = new HashSet<Account>(0);
 	private Set<Category> categories = new HashSet<Category>(0);
-	private Set<Cardrepost> cardreposts = new HashSet<Cardrepost>(0);
 	private Set<Comment> comments = new HashSet<Comment>(0);
 
 	// Constructors
@@ -56,18 +53,15 @@ public class Card implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public Card(Cardbody cardbody, String title, String description,
-			Integer rating, Integer commentsCount, Integer repostsCount,
-			Integer likesCount, Timestamp createdTime, Timestamp updatedTime,
-			String tag, Integer ratingCount, Set<Album> albums,
-			Set<Account> accounts, Set<Category> categories,
-			Set<Cardrepost> cardreposts, Set<Comment> comments) {
+	public Card(Cardbody cardbody, String description, Integer rating,
+			Integer commentsCount, Integer likesCount, Timestamp createdTime,
+			Timestamp updatedTime, String tag, Integer ratingCount,
+			Set<Album> albums, Set<Account> accounts, Set<Category> categories,
+			Set<Comment> comments) {
 		this.cardbody = cardbody;
-		this.title = title;
 		this.description = description;
 		this.rating = rating;
 		this.commentsCount = commentsCount;
-		this.repostsCount = repostsCount;
 		this.likesCount = likesCount;
 		this.createdTime = createdTime;
 		this.updatedTime = updatedTime;
@@ -76,7 +70,6 @@ public class Card implements java.io.Serializable {
 		this.albums = albums;
 		this.accounts = accounts;
 		this.categories = categories;
-		this.cardreposts = cardreposts;
 		this.comments = comments;
 	}
 
@@ -100,15 +93,6 @@ public class Card implements java.io.Serializable {
 
 	public void setCardbody(Cardbody cardbody) {
 		this.cardbody = cardbody;
-	}
-
-	@Column(name = "TITLE", length = 35)
-	public String getTitle() {
-		return this.title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
 	}
 
 	@Column(name = "DESCRIPTION")
@@ -136,15 +120,6 @@ public class Card implements java.io.Serializable {
 
 	public void setCommentsCount(Integer commentsCount) {
 		this.commentsCount = commentsCount;
-	}
-
-	@Column(name = "REPOSTS_COUNT")
-	public Integer getRepostsCount() {
-		return this.repostsCount;
-	}
-
-	public void setRepostsCount(Integer repostsCount) {
-		this.repostsCount = repostsCount;
 	}
 
 	@Column(name = "LIKES_COUNT")
@@ -219,15 +194,6 @@ public class Card implements java.io.Serializable {
 
 	public void setCategories(Set<Category> categories) {
 		this.categories = categories;
-	}
-
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "card")
-	public Set<Cardrepost> getCardreposts() {
-		return this.cardreposts;
-	}
-
-	public void setCardreposts(Set<Cardrepost> cardreposts) {
-		this.cardreposts = cardreposts;
 	}
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "card")

@@ -140,6 +140,23 @@ public class ProfileFacade {
 		}
 	}
 
+	private final String increaseAccountJPQL = "update Profile a set a.account = a.account + :count where a.accountId in (:accountId)";
+
+	public void increaseAccount(java.lang.Integer accountId, int count) {
+		LogUtil.log("increaseAccount with accountId:" + accountId, Level.INFO,
+				null);
+		try {
+			Query query = entityManager.createQuery(increaseAccountJPQL);
+			query.setParameter("accountId", accountId);
+			query.setParameter("count", count);
+			query.executeUpdate();
+			LogUtil.log("increaseAccount successful", Level.INFO, null);
+		} catch (RuntimeException re) {
+			LogUtil.log("increaseAccount failed", Level.SEVERE, re);
+			throw re;
+		}
+	}
+
 	/**
 	 * Find all Profile entities with a specific property value.
 	 * 

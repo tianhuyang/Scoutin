@@ -20,11 +20,9 @@ import javax.persistence.Query;
 @Stateless
 public class CardFacade {
 	// property constants
-	public static final String TITLE = "title";
 	public static final String DESCRIPTION = "description";
 	public static final String RATING = "rating";
 	public static final String COMMENTS_COUNT = "commentsCount";
-	public static final String REPOSTS_COUNT = "repostsCount";
 	public static final String LIKES_COUNT = "likesCount";
 	public static final String TAG = "tag";
 	public static final String RATING_COUNT = "ratingCount";
@@ -144,7 +142,7 @@ public class CardFacade {
 		}
 	}
 
-	private final String increaseCommentsCountJPQL = "update Card a set a.commentsCount = a.commentsCount + :count where a.cardId =:cardId";
+	private final String increaseCommentsCountJPQL = "update Card a set a.commentsCount = a.commentsCount + :count where a.cardId in (:cardId)";
 
 	public void increaseCommentsCount(java.lang.Long cardId, int count) {
 		LogUtil.log("increaseRatingCount with cardId:" + cardId, Level.INFO,
@@ -161,24 +159,7 @@ public class CardFacade {
 		}
 	}
 
-	private final String increaseRepostsCountJPQL = "update Card a set a.repostsCount = a.repostsCount + :count where a.cardId =:cardId";
-
-	public void increaseRepostsCount(java.lang.Long cardId, int count) {
-		LogUtil.log("increaseRatingCount with cardId:" + cardId, Level.INFO,
-				null);
-		try {
-			Query query = entityManager.createQuery(increaseRepostsCountJPQL);
-			query.setParameter("cardId", cardId);
-			query.setParameter("count", count);
-			query.executeUpdate();
-			LogUtil.log("increaseRatingCount successful", Level.INFO, null);
-		} catch (RuntimeException re) {
-			LogUtil.log("increaseRatingCount failed", Level.SEVERE, re);
-			throw re;
-		}
-	}
-
-	private final String increaseLikesCountJPQL = "update Card a set a.likesCount = a.likesCount + :count where a.cardId =:cardId";
+	private final String increaseLikesCountJPQL = "update Card a set a.likesCount = a.likesCount + :count where a.cardId in (:cardId)";
 
 	public void increaseLikesCount(java.lang.Long cardId, int count) {
 		LogUtil.log("increaseRatingCount with cardId:" + cardId, Level.INFO,
@@ -195,7 +176,7 @@ public class CardFacade {
 		}
 	}
 
-	private final String increaseRatingCountJPQL = "update Card a set a.ratingCount = a.ratingCount + :count where a.cardId =:cardId";
+	private final String increaseRatingCountJPQL = "update Card a set a.ratingCount = a.ratingCount + :count where a.cardId in (:cardId)";
 
 	public void increaseRatingCount(java.lang.Long cardId, int count) {
 		LogUtil.log("increaseRatingCount with cardId:" + cardId, Level.INFO,
@@ -256,10 +237,6 @@ public class CardFacade {
 		}
 	}
 
-	public List<Card> findByTitle(Object title, int... rowStartIdxAndCount) {
-		return findByProperty(TITLE, title, rowStartIdxAndCount);
-	}
-
 	public List<Card> findByDescription(Object description,
 			int... rowStartIdxAndCount) {
 		return findByProperty(DESCRIPTION, description, rowStartIdxAndCount);
@@ -273,11 +250,6 @@ public class CardFacade {
 			int... rowStartIdxAndCount) {
 		return findByProperty(COMMENTS_COUNT, commentsCount,
 				rowStartIdxAndCount);
-	}
-
-	public List<Card> findByRepostsCount(Object repostsCount,
-			int... rowStartIdxAndCount) {
-		return findByProperty(REPOSTS_COUNT, repostsCount, rowStartIdxAndCount);
 	}
 
 	public List<Card> findByLikesCount(Object likesCount,
