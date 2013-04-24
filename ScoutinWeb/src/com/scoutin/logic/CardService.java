@@ -35,7 +35,7 @@ public class CardService {
 		
 		try {
 			card = EJBUtils.cardBeanRemote.createCard(properties);
-		} catch (RuntimeException re) {
+		} catch (Throwable re) {
 			//re.printStackTrace();
 		}
 
@@ -69,14 +69,14 @@ public class CardService {
 		
 		try {
 			card = EJBUtils.cardBeanRemote.repostCard(properties);
-		} catch (RuntimeException re) {
+		} catch (Throwable re) {
 			//re.printStackTrace();
 		}
 
 		if (card == null) {
 			throw new ScoutinException(
-					ScoutinException.Card_CreateCard_Failure_Status,
-					ScoutinException.Card_CreateCard_Failure_Message);
+					ScoutinException.Card_RepostCard_Failure_Status,
+					ScoutinException.Card_RepostCard_Failure_Message);
 		}
 		return card;
 	}
@@ -102,14 +102,14 @@ public class CardService {
 		
 		try {
 			comment = EJBUtils.cardBeanRemote.commentCard(properties);
-		} catch (RuntimeException re) {
+		} catch (Throwable re) {
 			//re.printStackTrace();
 		}
 
 		if (comment == null) {
 			throw new ScoutinException(
-					ScoutinException.Card_CreateCard_Failure_Status,
-					ScoutinException.Card_CreateCard_Failure_Message);
+					ScoutinException.Card_CreateComment_Failure_Status,
+					ScoutinException.Card_CreateComment_Failure_Message);
 		}
 		return comment;
 	}
