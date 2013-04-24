@@ -59,5 +59,23 @@
 				<param name="root">dataMap</param>
 			</result>
 		</action>
+		
+		<action name="createAlbum" class="com.scoutin.actions.album.SaveAlbumAction" method="createAlbum">
+			<result name="input" type="json">
+				<param name="root">dataMap</param>
+			</result>
+			<result name="success" type="json">
+				<param name="root">dataMap</param>
+			</result>
+		</action>
+		
+		<action name="editAlbum" class="com.scoutin.actions.album.SaveAlbumAction" method="editAlbum">
+			<result name="input" type="json">
+				<param name="root">dataMap</param>
+			</result>
+			<result name="success" type="json">
+				<param name="root">dataMap</param>
+			</result>
+		</action>
 	</package>
 </struts>

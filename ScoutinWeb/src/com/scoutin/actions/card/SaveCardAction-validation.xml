@@ -8,7 +8,7 @@
 			<message key="error.card.save.title.require">Please input a title</message>
 		</field-validator>
 		<field-validator type="stringlength">
-			<param name="maxLength">20</param>
+			<param name="maxLength">35</param>
 			<message key="error.card.save.title.length">The title should be not more than ${maxLength} characters</message>
 		</field-validator>
 	</field>

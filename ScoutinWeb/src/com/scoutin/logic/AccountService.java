@@ -1,7 +1,6 @@
 package com.scoutin.logic;
 
 import java.util.Map;
-import java.util.TreeMap;
 
 import com.scoutin.entities.Account;
 import com.scoutin.entities.Album;
@@ -32,7 +31,7 @@ public class AccountService {
 		Account account = null;		
 		try {
 			account = EJBUtils.accountBeanRemote.signup(properties);
-		} catch (RuntimeException re) {
+		} catch (Throwable re) {
 		}
 
 		if (account == null) {
@@ -54,7 +53,7 @@ public class AccountService {
 		Account account = null;
 		try {
 			account = EJBUtils.authenticateBeanRemote.authenticate(args, type);
-		} catch (RuntimeException re) {
+		} catch (Throwable re) {
 			re.printStackTrace();
 		}
 		if (account == null) {
@@ -66,7 +65,7 @@ public class AccountService {
 	}
 
 	/*
-	 * return Album
+	 * return Album, must have parameters: accountId, name
 	 */
 	public static Album createAlbum(Map<String, Object> properties)
 			throws ScoutinException {
@@ -80,12 +79,13 @@ public class AccountService {
 		Album album = null;		
 		try {
 			album = EJBUtils.accountBeanRemote.createAlbum(properties);
-		} catch (RuntimeException re) {
+		} catch (Throwable re) {
+			
 		}
 		if (album == null) {
 			throw new ScoutinException(
-					ScoutinException.Account_CreateAlbum_Failure_Status,
-					ScoutinException.Account_CreateAlbum_Failure_Message);
+					ScoutinException.Album_CreateAlbum_Failure_Status,
+					ScoutinException.Album_CreateAlbum_Failure_Message);
 		}
 		return album;
 	}

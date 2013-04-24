@@ -49,7 +49,7 @@ public class RepostCardAction extends ActionSupport implements ServletRequestAwa
 			dataMap.put("fieldErrors", this.getFieldErrors());
 		}
 	}
-
+	
 	public String execute() throws Exception
 	{
 		boolean succeed = true;

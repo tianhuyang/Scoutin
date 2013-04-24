@@ -62,5 +62,10 @@
 			<type>2</type>
 			<locationURI>WORKSPACE_LOC/ScoutinEJB/remotes</locationURI>
 		</link>
+		<link>
+			<name>src-1</name>
+			<type>2</type>
+			<location>D:/MyEclipse/workspace/ScoutinEJB/remotes</location>
+		</link>
 	</linkedResources>
 </projectDescription>

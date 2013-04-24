@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE validators PUBLIC "-//Apache Struts//XWork Validator 1.0.3//EN" 
+		"http://struts.apache.org/dtds/xwork-validator-1.0.3.dtd">
+<validators>
+	<field name="name">
+		<field-validator type="fieldexpression">
+			<param name="expression">!(name=="" || name==null)</param>
+			<message key="error.album.save.name.require">Please input album name</message>
+		</field-validator>
+		<field-validator type="stringlength">
+			<param name="maxLength">50</param>
+			<message key="error.album.save.name..length">The album name should be not more than ${maxLength} characters</message>
+		</field-validator>
+	</field>
+	<field name="coverPath">
+		<field-validator type="fieldexpression">
+			<param name="expression">!(coverPath=="" || coverPath==null)</param>
+			<message key="error.album.save.name.require">Please input cover path</message>
+		</field-validator>
+	</field>
+</validators>
