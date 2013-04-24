@@ -3,6 +3,7 @@
     <wb-module deploy-name="ScoutinEJB">
         <wb-resource deploy-path="/" source-path="/src"/>
         <wb-resource deploy-path="/" source-path="/remotes"/>
+        <wb-resource deploy-path="/" source-path="/lib"/>
         <property name="java-output-path" value="/ScoutinEJB/classes"/>
     </wb-module>
 </project-modules>

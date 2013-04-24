@@ -27,7 +27,8 @@
 		<properties>
 		<property name="eclipselink.target-database" value="MySQL"/>
 			<property name="eclipselink.target-server" value="JBoss"/>
-			<property name="eclipselink.weaving" value="true"/>		 
+			<property name="eclipselink.weaving" value="true"/>	
+			<property name="openjpa.Log" value="DefaultLevel=WARN, Runtime=INFO, Tool=INFO, SQL=TRACE"/>	 
 		</properties>
 	</persistence-unit>
 </persistence>

@@ -2,8 +2,6 @@ package com.scoutin.daos;
 
 import java.util.logging.Level;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 
 import javax.ejb.Singleton;
 import javax.persistence.Query;

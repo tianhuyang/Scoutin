@@ -18,7 +18,7 @@ import javax.persistence.Table;
 public class Cardrepost implements java.io.Serializable {
 
 	// Fields
-
+	private static final long serialVersionUID = 1L;
 	private CardrepostId id;
 	private Card card;
 	private Account account;

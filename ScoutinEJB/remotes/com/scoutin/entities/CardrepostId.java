@@ -10,7 +10,7 @@ import javax.persistence.Embeddable;
 public class CardrepostId implements java.io.Serializable {
 
 	// Fields
-
+	private static final long serialVersionUID = 1L;
 	private Integer accountId;
 	private Long cardId;
 

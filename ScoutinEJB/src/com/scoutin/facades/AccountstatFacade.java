@@ -1,5 +1,7 @@
 package com.scoutin.facades;
 
+import com.scoutin.entities.Accountstat;
+
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.logging.Level;
@@ -7,8 +9,6 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-
-import com.scoutin.entities.Accountstat;
 
 /**
  * Facade for entity Accountstat.
@@ -98,9 +98,24 @@ public class AccountstatFacade {
 				null);
 		try {
 			Accountstat instance = entityManager.find(Accountstat.class, id);
+			LogUtil.log("find successful", Level.INFO, null);
 			return instance;
 		} catch (RuntimeException re) {
 			LogUtil.log("find failed", Level.SEVERE, re);
+			throw re;
+		}
+	}
+
+	public Accountstat getReference(Integer id) {
+		LogUtil.log("getReferencing Accountstat instance with id: " + id,
+				Level.INFO, null);
+		try {
+			Accountstat instance = entityManager.getReference(
+					Accountstat.class, id);
+			LogUtil.log("getReference successful", Level.INFO, null);
+			return instance;
+		} catch (RuntimeException re) {
+			LogUtil.log("getReference failed", Level.SEVERE, re);
 			throw re;
 		}
 	}
@@ -109,8 +124,20 @@ public class AccountstatFacade {
 		LogUtil.log("detaching Accountstat instance", Level.INFO, null);
 		try {
 			entityManager.detach(entity);
+			LogUtil.log("detach successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("detach failed", Level.SEVERE, re);
+			throw re;
+		}
+	}
+
+	public void flush() {
+		LogUtil.log("flush Accountstat instance", Level.INFO, null);
+		try {
+			entityManager.flush();
+			LogUtil.log("flush successful", Level.INFO, null);
+		} catch (RuntimeException re) {
+			LogUtil.log("flush failed", Level.SEVERE, re);
 			throw re;
 		}
 	}
@@ -174,11 +201,16 @@ public class AccountstatFacade {
 	 *            the name of the Accountstat property to query
 	 * @param value
 	 *            the property value to match
+	 * @param rowStartIdxAndCount
+	 *            Optional int varargs. rowStartIdxAndCount[0] specifies the the
+	 *            row index in the query result-set to begin collecting the
+	 *            results. rowStartIdxAndCount[1] specifies the the maximum
+	 *            number of results to return.
 	 * @return List<Accountstat> found by query
 	 */
 	@SuppressWarnings("unchecked")
 	public List<Accountstat> findByProperty(String propertyName,
-			final Object value) {
+			final Object value, final int... rowStartIdxAndCount) {
 		LogUtil.log("finding Accountstat instance with property: "
 				+ propertyName + ", value: " + value, Level.INFO, null);
 		try {
@@ -186,6 +218,19 @@ public class AccountstatFacade {
 					+ propertyName + "= :propertyValue";
 			Query query = entityManager.createQuery(queryString);
 			query.setParameter("propertyValue", value);
+			if (rowStartIdxAndCount != null && rowStartIdxAndCount.length > 0) {
+				int rowStartIdx = Math.max(0, rowStartIdxAndCount[0]);
+				if (rowStartIdx > 0) {
+					query.setFirstResult(rowStartIdx);
+				}
+
+				if (rowStartIdxAndCount.length > 1) {
+					int rowCount = Math.max(0, rowStartIdxAndCount[1]);
+					if (rowCount > 0) {
+						query.setMaxResults(rowCount);
+					}
+				}
+			}
 			return query.getResultList();
 		} catch (RuntimeException re) {
 			LogUtil.log("find by property name failed", Level.SEVERE, re);
@@ -193,29 +238,53 @@ public class AccountstatFacade {
 		}
 	}
 
-	public List<Accountstat> findByFollowingCount(Object followingCount) {
-		return findByProperty(FOLLOWING_COUNT, followingCount);
+	public List<Accountstat> findByFollowingCount(Object followingCount,
+			int... rowStartIdxAndCount) {
+		return findByProperty(FOLLOWING_COUNT, followingCount,
+				rowStartIdxAndCount);
 	}
 
-	public List<Accountstat> findByFollowersCount(Object followersCount) {
-		return findByProperty(FOLLOWERS_COUNT, followersCount);
+	public List<Accountstat> findByFollowersCount(Object followersCount,
+			int... rowStartIdxAndCount) {
+		return findByProperty(FOLLOWERS_COUNT, followersCount,
+				rowStartIdxAndCount);
 	}
 
-	public List<Accountstat> findByUnviewRecmdCount(Object unviewRecmdCount) {
-		return findByProperty(UNVIEW_RECMD_COUNT, unviewRecmdCount);
+	public List<Accountstat> findByUnviewRecmdCount(Object unviewRecmdCount,
+			int... rowStartIdxAndCount) {
+		return findByProperty(UNVIEW_RECMD_COUNT, unviewRecmdCount,
+				rowStartIdxAndCount);
 	}
 
 	/**
 	 * Find all Accountstat entities.
 	 * 
+	 * @param rowStartIdxAndCount
+	 *            Optional int varargs. rowStartIdxAndCount[0] specifies the the
+	 *            row index in the query result-set to begin collecting the
+	 *            results. rowStartIdxAndCount[1] specifies the the maximum
+	 *            count of results to return.
 	 * @return List<Accountstat> all Accountstat entities
 	 */
 	@SuppressWarnings("unchecked")
-	public List<Accountstat> findAll() {
+	public List<Accountstat> findAll(final int... rowStartIdxAndCount) {
 		LogUtil.log("finding all Accountstat instances", Level.INFO, null);
 		try {
 			final String queryString = "select model from Accountstat model";
 			Query query = entityManager.createQuery(queryString);
+			if (rowStartIdxAndCount != null && rowStartIdxAndCount.length > 0) {
+				int rowStartIdx = Math.max(0, rowStartIdxAndCount[0]);
+				if (rowStartIdx > 0) {
+					query.setFirstResult(rowStartIdx);
+				}
+
+				if (rowStartIdxAndCount.length > 1) {
+					int rowCount = Math.max(0, rowStartIdxAndCount[1]);
+					if (rowCount > 0) {
+						query.setMaxResults(rowCount);
+					}
+				}
+			}
 			return query.getResultList();
 		} catch (RuntimeException re) {
 			LogUtil.log("find all failed", Level.SEVERE, re);

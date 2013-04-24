@@ -44,6 +44,7 @@ public class CardBean implements CardBeanRemote {
 	 *@param accountId:int
 	 * 
 	 * @see com.scoutin.logic.CardBeanRemote#createCard(com.scoutin.entities.Card)
+	 * @return Card
 	 */
 
 	@Override
@@ -65,15 +66,13 @@ public class CardBean implements CardBeanRemote {
 			BeanUtils.populate(cardBody, properties);
 
 			// insert values
-			Account account = daoUtils.getAccountDao().findById(accountId);
+			Account account = daoUtils.getAccountDao().getReference(accountId);
 			cardBody.setAccount(account);
 			daoUtils.getCardBodyDao().save(cardBody);
 			card.setCardbody(cardBody);
 			daoUtils.getCardDao().save(card);
 			for (long albumId : albumIds) {
-				AlbumcardId albumCardId = new AlbumcardId();
-				albumCardId.setAlbumId(albumId);
-				albumCardId.setCardId(card.getCardId());
+				AlbumcardId albumCardId = new AlbumcardId(albumId,card.getCardId());
 				Albumcard albumcard = new Albumcard();
 				albumcard.setId(albumCardId);
 				daoUtils.getAlbumcardDao().save(albumcard);

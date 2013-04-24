@@ -10,7 +10,7 @@ import javax.persistence.Embeddable;
 public class FollowerId implements java.io.Serializable {
 
 	// Fields
-
+	private static final long serialVersionUID = 1L;
 	private Integer followedId;
 	private Integer followingId;
 

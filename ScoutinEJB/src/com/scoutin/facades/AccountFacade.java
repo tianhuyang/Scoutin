@@ -1,5 +1,7 @@
 package com.scoutin.facades;
 
+import com.scoutin.entities.Account;
+
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Set;
@@ -8,8 +10,6 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-
-import com.scoutin.entities.Account;
 
 /**
  * Facade for entity Account.
@@ -102,9 +102,23 @@ public class AccountFacade {
 		LogUtil.log("finding Account instance with id: " + id, Level.INFO, null);
 		try {
 			Account instance = entityManager.find(Account.class, id);
+			LogUtil.log("find successful", Level.INFO, null);
 			return instance;
 		} catch (RuntimeException re) {
 			LogUtil.log("find failed", Level.SEVERE, re);
+			throw re;
+		}
+	}
+
+	public Account getReference(Integer id) {
+		LogUtil.log("getReferencing Account instance with id: " + id,
+				Level.INFO, null);
+		try {
+			Account instance = entityManager.getReference(Account.class, id);
+			LogUtil.log("getReference successful", Level.INFO, null);
+			return instance;
+		} catch (RuntimeException re) {
+			LogUtil.log("getReference failed", Level.SEVERE, re);
 			throw re;
 		}
 	}
@@ -113,8 +127,20 @@ public class AccountFacade {
 		LogUtil.log("detaching Account instance", Level.INFO, null);
 		try {
 			entityManager.detach(entity);
+			LogUtil.log("detach successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("detach failed", Level.SEVERE, re);
+			throw re;
+		}
+	}
+
+	public void flush() {
+		LogUtil.log("flush Account instance", Level.INFO, null);
+		try {
+			entityManager.flush();
+			LogUtil.log("flush successful", Level.INFO, null);
+		} catch (RuntimeException re) {
+			LogUtil.log("flush failed", Level.SEVERE, re);
 			throw re;
 		}
 	}
@@ -126,10 +152,16 @@ public class AccountFacade {
 	 *            the name of the Account property to query
 	 * @param value
 	 *            the property value to match
+	 * @param rowStartIdxAndCount
+	 *            Optional int varargs. rowStartIdxAndCount[0] specifies the the
+	 *            row index in the query result-set to begin collecting the
+	 *            results. rowStartIdxAndCount[1] specifies the the maximum
+	 *            number of results to return.
 	 * @return List<Account> found by query
 	 */
 	@SuppressWarnings("unchecked")
-	public List<Account> findByProperty(String propertyName, final Object value) {
+	public List<Account> findByProperty(String propertyName,
+			final Object value, final int... rowStartIdxAndCount) {
 		LogUtil.log("finding Account instance with property: " + propertyName
 				+ ", value: " + value, Level.INFO, null);
 		try {
@@ -137,6 +169,19 @@ public class AccountFacade {
 					+ propertyName + "= :propertyValue";
 			Query query = entityManager.createQuery(queryString);
 			query.setParameter("propertyValue", value);
+			if (rowStartIdxAndCount != null && rowStartIdxAndCount.length > 0) {
+				int rowStartIdx = Math.max(0, rowStartIdxAndCount[0]);
+				if (rowStartIdx > 0) {
+					query.setFirstResult(rowStartIdx);
+				}
+
+				if (rowStartIdxAndCount.length > 1) {
+					int rowCount = Math.max(0, rowStartIdxAndCount[1]);
+					if (rowCount > 0) {
+						query.setMaxResults(rowCount);
+					}
+				}
+			}
 			return query.getResultList();
 		} catch (RuntimeException re) {
 			LogUtil.log("find by property name failed", Level.SEVERE, re);
@@ -144,45 +189,68 @@ public class AccountFacade {
 		}
 	}
 
-	public List<Account> findByPassword(Object password) {
-		return findByProperty(PASSWORD, password);
+	public List<Account> findByPassword(Object password,
+			int... rowStartIdxAndCount) {
+		return findByProperty(PASSWORD, password, rowStartIdxAndCount);
 	}
 
-	public List<Account> findByEmail(Object email) {
-		return findByProperty(EMAIL, email);
+	public List<Account> findByEmail(Object email, int... rowStartIdxAndCount) {
+		return findByProperty(EMAIL, email, rowStartIdxAndCount);
 	}
 
-	public List<Account> findByFacebookId(Object facebookId) {
-		return findByProperty(FACEBOOK_ID, facebookId);
+	public List<Account> findByFacebookId(Object facebookId,
+			int... rowStartIdxAndCount) {
+		return findByProperty(FACEBOOK_ID, facebookId, rowStartIdxAndCount);
 	}
 
-	public List<Account> findByTwitterId(Object twitterId) {
-		return findByProperty(TWITTER_ID, twitterId);
+	public List<Account> findByTwitterId(Object twitterId,
+			int... rowStartIdxAndCount) {
+		return findByProperty(TWITTER_ID, twitterId, rowStartIdxAndCount);
 	}
 
-	public List<Account> findByFirstname(Object firstname) {
-		return findByProperty(FIRSTNAME, firstname);
+	public List<Account> findByFirstname(Object firstname,
+			int... rowStartIdxAndCount) {
+		return findByProperty(FIRSTNAME, firstname, rowStartIdxAndCount);
 	}
 
-	public List<Account> findByLastname(Object lastname) {
-		return findByProperty(LASTNAME, lastname);
+	public List<Account> findByLastname(Object lastname,
+			int... rowStartIdxAndCount) {
+		return findByProperty(LASTNAME, lastname, rowStartIdxAndCount);
 	}
 
-	public List<Account> findBySex(Object sex) {
-		return findByProperty(SEX, sex);
+	public List<Account> findBySex(Object sex, int... rowStartIdxAndCount) {
+		return findByProperty(SEX, sex, rowStartIdxAndCount);
 	}
 
 	/**
 	 * Find all Account entities.
 	 * 
+	 * @param rowStartIdxAndCount
+	 *            Optional int varargs. rowStartIdxAndCount[0] specifies the the
+	 *            row index in the query result-set to begin collecting the
+	 *            results. rowStartIdxAndCount[1] specifies the the maximum
+	 *            count of results to return.
 	 * @return List<Account> all Account entities
 	 */
 	@SuppressWarnings("unchecked")
-	public List<Account> findAll() {
+	public List<Account> findAll(final int... rowStartIdxAndCount) {
 		LogUtil.log("finding all Account instances", Level.INFO, null);
 		try {
 			final String queryString = "select model from Account model";
 			Query query = entityManager.createQuery(queryString);
+			if (rowStartIdxAndCount != null && rowStartIdxAndCount.length > 0) {
+				int rowStartIdx = Math.max(0, rowStartIdxAndCount[0]);
+				if (rowStartIdx > 0) {
+					query.setFirstResult(rowStartIdx);
+				}
+
+				if (rowStartIdxAndCount.length > 1) {
+					int rowCount = Math.max(0, rowStartIdxAndCount[1]);
+					if (rowCount > 0) {
+						query.setMaxResults(rowCount);
+					}
+				}
+			}
 			return query.getResultList();
 		} catch (RuntimeException re) {
 			LogUtil.log("find all failed", Level.SEVERE, re);

@@ -36,7 +36,7 @@ public class AlbumcardFacade {
 	public void save(Albumcard entity) {
 		LogUtil.log("saving Albumcard instance", Level.INFO, null);
 		try {
-			entityManager.persist(entity);
+			entityManager.persist(entity);			
 			LogUtil.log("save successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("save failed", Level.SEVERE, re);

@@ -1,5 +1,7 @@
 package com.scoutin.facades;
 
+import com.scoutin.entities.Comment;
+
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.logging.Level;
@@ -7,8 +9,6 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-
-import com.scoutin.entities.Comment;
 
 /**
  * Facade for entity Comment.
@@ -95,9 +95,23 @@ public class CommentFacade {
 		LogUtil.log("finding Comment instance with id: " + id, Level.INFO, null);
 		try {
 			Comment instance = entityManager.find(Comment.class, id);
+			LogUtil.log("find successful", Level.INFO, null);
 			return instance;
 		} catch (RuntimeException re) {
 			LogUtil.log("find failed", Level.SEVERE, re);
+			throw re;
+		}
+	}
+
+	public Comment getReference(Long id) {
+		LogUtil.log("getReferencing Comment instance with id: " + id,
+				Level.INFO, null);
+		try {
+			Comment instance = entityManager.getReference(Comment.class, id);
+			LogUtil.log("getReference successful", Level.INFO, null);
+			return instance;
+		} catch (RuntimeException re) {
+			LogUtil.log("getReference failed", Level.SEVERE, re);
 			throw re;
 		}
 	}
@@ -106,8 +120,20 @@ public class CommentFacade {
 		LogUtil.log("detaching Comment instance", Level.INFO, null);
 		try {
 			entityManager.detach(entity);
+			LogUtil.log("detach successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("detach failed", Level.SEVERE, re);
+			throw re;
+		}
+	}
+
+	public void flush() {
+		LogUtil.log("flush Comment instance", Level.INFO, null);
+		try {
+			entityManager.flush();
+			LogUtil.log("flush successful", Level.INFO, null);
+		} catch (RuntimeException re) {
+			LogUtil.log("flush failed", Level.SEVERE, re);
 			throw re;
 		}
 	}
@@ -119,10 +145,16 @@ public class CommentFacade {
 	 *            the name of the Comment property to query
 	 * @param value
 	 *            the property value to match
+	 * @param rowStartIdxAndCount
+	 *            Optional int varargs. rowStartIdxAndCount[0] specifies the the
+	 *            row index in the query result-set to begin collecting the
+	 *            results. rowStartIdxAndCount[1] specifies the the maximum
+	 *            number of results to return.
 	 * @return List<Comment> found by query
 	 */
 	@SuppressWarnings("unchecked")
-	public List<Comment> findByProperty(String propertyName, final Object value) {
+	public List<Comment> findByProperty(String propertyName,
+			final Object value, final int... rowStartIdxAndCount) {
 		LogUtil.log("finding Comment instance with property: " + propertyName
 				+ ", value: " + value, Level.INFO, null);
 		try {
@@ -130,6 +162,19 @@ public class CommentFacade {
 					+ propertyName + "= :propertyValue";
 			Query query = entityManager.createQuery(queryString);
 			query.setParameter("propertyValue", value);
+			if (rowStartIdxAndCount != null && rowStartIdxAndCount.length > 0) {
+				int rowStartIdx = Math.max(0, rowStartIdxAndCount[0]);
+				if (rowStartIdx > 0) {
+					query.setFirstResult(rowStartIdx);
+				}
+
+				if (rowStartIdxAndCount.length > 1) {
+					int rowCount = Math.max(0, rowStartIdxAndCount[1]);
+					if (rowCount > 0) {
+						query.setMaxResults(rowCount);
+					}
+				}
+			}
 			return query.getResultList();
 		} catch (RuntimeException re) {
 			LogUtil.log("find by property name failed", Level.SEVERE, re);
@@ -137,21 +182,40 @@ public class CommentFacade {
 		}
 	}
 
-	public List<Comment> findByContent(Object content) {
-		return findByProperty(CONTENT, content);
+	public List<Comment> findByContent(Object content,
+			int... rowStartIdxAndCount) {
+		return findByProperty(CONTENT, content, rowStartIdxAndCount);
 	}
 
 	/**
 	 * Find all Comment entities.
 	 * 
+	 * @param rowStartIdxAndCount
+	 *            Optional int varargs. rowStartIdxAndCount[0] specifies the the
+	 *            row index in the query result-set to begin collecting the
+	 *            results. rowStartIdxAndCount[1] specifies the the maximum
+	 *            count of results to return.
 	 * @return List<Comment> all Comment entities
 	 */
 	@SuppressWarnings("unchecked")
-	public List<Comment> findAll() {
+	public List<Comment> findAll(final int... rowStartIdxAndCount) {
 		LogUtil.log("finding all Comment instances", Level.INFO, null);
 		try {
 			final String queryString = "select model from Comment model";
 			Query query = entityManager.createQuery(queryString);
+			if (rowStartIdxAndCount != null && rowStartIdxAndCount.length > 0) {
+				int rowStartIdx = Math.max(0, rowStartIdxAndCount[0]);
+				if (rowStartIdx > 0) {
+					query.setFirstResult(rowStartIdx);
+				}
+
+				if (rowStartIdxAndCount.length > 1) {
+					int rowCount = Math.max(0, rowStartIdxAndCount[1]);
+					if (rowCount > 0) {
+						query.setMaxResults(rowCount);
+					}
+				}
+			}
 			return query.getResultList();
 		} catch (RuntimeException re) {
 			LogUtil.log("find all failed", Level.SEVERE, re);

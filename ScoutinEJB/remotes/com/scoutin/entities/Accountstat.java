@@ -19,7 +19,7 @@ import javax.persistence.Table;
 public class Accountstat implements java.io.Serializable {
 
 	// Fields
-
+	private static final long serialVersionUID = 1L;
 	private Integer accountId;
 	private Account account;
 	private Integer followingCount;

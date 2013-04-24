@@ -19,7 +19,7 @@ import javax.persistence.Table;
 public class Comment implements java.io.Serializable {
 
 	// Fields
-
+	private static final long serialVersionUID = 1L;
 	private Long commentId;
 	private Card card;
 	private Account account;

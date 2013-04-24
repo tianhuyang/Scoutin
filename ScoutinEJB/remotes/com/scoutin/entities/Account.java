@@ -27,7 +27,7 @@ import javax.persistence.UniqueConstraint;
 public class Account implements java.io.Serializable {
 
 	// Fields
-
+	private static final long serialVersionUID = 1L;
 	private Integer accountId;
 	private String password;
 	private String email;

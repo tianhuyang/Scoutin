@@ -1,5 +1,7 @@
 package com.scoutin.facades;
 
+import com.scoutin.entities.Cardbody;
+
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Set;
@@ -8,8 +10,6 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-
-import com.scoutin.entities.Cardbody;
 
 /**
  * Facade for entity Cardbody.
@@ -105,9 +105,23 @@ public class CardbodyFacade {
 				null);
 		try {
 			Cardbody instance = entityManager.find(Cardbody.class, id);
+			LogUtil.log("find successful", Level.INFO, null);
 			return instance;
 		} catch (RuntimeException re) {
 			LogUtil.log("find failed", Level.SEVERE, re);
+			throw re;
+		}
+	}
+
+	public Cardbody getReference(Long id) {
+		LogUtil.log("getReferencing Cardbody instance with id: " + id,
+				Level.INFO, null);
+		try {
+			Cardbody instance = entityManager.getReference(Cardbody.class, id);
+			LogUtil.log("getReference successful", Level.INFO, null);
+			return instance;
+		} catch (RuntimeException re) {
+			LogUtil.log("getReference failed", Level.SEVERE, re);
 			throw re;
 		}
 	}
@@ -116,8 +130,20 @@ public class CardbodyFacade {
 		LogUtil.log("detaching Cardbody instance", Level.INFO, null);
 		try {
 			entityManager.detach(entity);
+			LogUtil.log("detach successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("detach failed", Level.SEVERE, re);
+			throw re;
+		}
+	}
+
+	public void flush() {
+		LogUtil.log("flush Cardbody instance", Level.INFO, null);
+		try {
+			entityManager.flush();
+			LogUtil.log("flush successful", Level.INFO, null);
+		} catch (RuntimeException re) {
+			LogUtil.log("flush failed", Level.SEVERE, re);
 			throw re;
 		}
 	}
@@ -197,10 +223,16 @@ public class CardbodyFacade {
 	 *            the name of the Cardbody property to query
 	 * @param value
 	 *            the property value to match
+	 * @param rowStartIdxAndCount
+	 *            Optional int varargs. rowStartIdxAndCount[0] specifies the the
+	 *            row index in the query result-set to begin collecting the
+	 *            results. rowStartIdxAndCount[1] specifies the the maximum
+	 *            number of results to return.
 	 * @return List<Cardbody> found by query
 	 */
 	@SuppressWarnings("unchecked")
-	public List<Cardbody> findByProperty(String propertyName, final Object value) {
+	public List<Cardbody> findByProperty(String propertyName,
+			final Object value, final int... rowStartIdxAndCount) {
 		LogUtil.log("finding Cardbody instance with property: " + propertyName
 				+ ", value: " + value, Level.INFO, null);
 		try {
@@ -208,6 +240,19 @@ public class CardbodyFacade {
 					+ propertyName + "= :propertyValue";
 			Query query = entityManager.createQuery(queryString);
 			query.setParameter("propertyValue", value);
+			if (rowStartIdxAndCount != null && rowStartIdxAndCount.length > 0) {
+				int rowStartIdx = Math.max(0, rowStartIdxAndCount[0]);
+				if (rowStartIdx > 0) {
+					query.setFirstResult(rowStartIdx);
+				}
+
+				if (rowStartIdxAndCount.length > 1) {
+					int rowCount = Math.max(0, rowStartIdxAndCount[1]);
+					if (rowCount > 0) {
+						query.setMaxResults(rowCount);
+					}
+				}
+			}
 			return query.getResultList();
 		} catch (RuntimeException re) {
 			LogUtil.log("find by property name failed", Level.SEVERE, re);
@@ -215,53 +260,80 @@ public class CardbodyFacade {
 		}
 	}
 
-	public List<Cardbody> findByRating(Object rating) {
-		return findByProperty(RATING, rating);
+	public List<Cardbody> findByRating(Object rating,
+			int... rowStartIdxAndCount) {
+		return findByProperty(RATING, rating, rowStartIdxAndCount);
 	}
 
-	public List<Cardbody> findByCommentsCount(Object commentsCount) {
-		return findByProperty(COMMENTS_COUNT, commentsCount);
+	public List<Cardbody> findByCommentsCount(Object commentsCount,
+			int... rowStartIdxAndCount) {
+		return findByProperty(COMMENTS_COUNT, commentsCount,
+				rowStartIdxAndCount);
 	}
 
-	public List<Cardbody> findByRepostsCount(Object repostsCount) {
-		return findByProperty(REPOSTS_COUNT, repostsCount);
+	public List<Cardbody> findByRepostsCount(Object repostsCount,
+			int... rowStartIdxAndCount) {
+		return findByProperty(REPOSTS_COUNT, repostsCount, rowStartIdxAndCount);
 	}
 
-	public List<Cardbody> findByLikesCount(Object likesCount) {
-		return findByProperty(LIKES_COUNT, likesCount);
+	public List<Cardbody> findByLikesCount(Object likesCount,
+			int... rowStartIdxAndCount) {
+		return findByProperty(LIKES_COUNT, likesCount, rowStartIdxAndCount);
 	}
 
-	public List<Cardbody> findByLatitude(Object latitude) {
-		return findByProperty(LATITUDE, latitude);
+	public List<Cardbody> findByLatitude(Object latitude,
+			int... rowStartIdxAndCount) {
+		return findByProperty(LATITUDE, latitude, rowStartIdxAndCount);
 	}
 
-	public List<Cardbody> findByLongitude(Object longitude) {
-		return findByProperty(LONGITUDE, longitude);
+	public List<Cardbody> findByLongitude(Object longitude,
+			int... rowStartIdxAndCount) {
+		return findByProperty(LONGITUDE, longitude, rowStartIdxAndCount);
 	}
 
-	public List<Cardbody> findByAddress(Object address) {
-		return findByProperty(ADDRESS, address);
+	public List<Cardbody> findByAddress(Object address,
+			int... rowStartIdxAndCount) {
+		return findByProperty(ADDRESS, address, rowStartIdxAndCount);
 	}
 
-	public List<Cardbody> findByUrl(Object url) {
-		return findByProperty(URL, url);
+	public List<Cardbody> findByUrl(Object url, int... rowStartIdxAndCount) {
+		return findByProperty(URL, url, rowStartIdxAndCount);
 	}
 
-	public List<Cardbody> findByRatingCount(Object ratingCount) {
-		return findByProperty(RATING_COUNT, ratingCount);
+	public List<Cardbody> findByRatingCount(Object ratingCount,
+			int... rowStartIdxAndCount) {
+		return findByProperty(RATING_COUNT, ratingCount, rowStartIdxAndCount);
 	}
 
 	/**
 	 * Find all Cardbody entities.
 	 * 
+	 * @param rowStartIdxAndCount
+	 *            Optional int varargs. rowStartIdxAndCount[0] specifies the the
+	 *            row index in the query result-set to begin collecting the
+	 *            results. rowStartIdxAndCount[1] specifies the the maximum
+	 *            count of results to return.
 	 * @return List<Cardbody> all Cardbody entities
 	 */
 	@SuppressWarnings("unchecked")
-	public List<Cardbody> findAll() {
+	public List<Cardbody> findAll(final int... rowStartIdxAndCount) {
 		LogUtil.log("finding all Cardbody instances", Level.INFO, null);
 		try {
 			final String queryString = "select model from Cardbody model";
 			Query query = entityManager.createQuery(queryString);
+			if (rowStartIdxAndCount != null && rowStartIdxAndCount.length > 0) {
+				int rowStartIdx = Math.max(0, rowStartIdxAndCount[0]);
+				if (rowStartIdx > 0) {
+					query.setFirstResult(rowStartIdx);
+				}
+
+				if (rowStartIdxAndCount.length > 1) {
+					int rowCount = Math.max(0, rowStartIdxAndCount[1]);
+					if (rowCount > 0) {
+						query.setMaxResults(rowCount);
+					}
+				}
+			}
 			return query.getResultList();
 		} catch (RuntimeException re) {
 			LogUtil.log("find all failed", Level.SEVERE, re);

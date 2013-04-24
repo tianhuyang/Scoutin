@@ -28,12 +28,12 @@ public class TestCard {
 	public void destroy() {
 
 	}
-	@Ignore
+	
 	@Test
 	public void testCreateCard(){
 		Map<String, Object> properties = new TreeMap<String, Object>();
 		properties.put("accountId", 1);
-		properties.put("albumIds", new long[]{1L,3L});
+		properties.put("albumIds", new long[]{1L});
 		properties.put("url", "www.baidu.com");
 		try {
 			Card card = CardService.createCard(properties);
@@ -46,7 +46,7 @@ public class TestCard {
 		}
 	}
 	
-	
+	@Ignore
 	@Test
 	public void testRepostCard(){
 		Map<String, Object> properties = new TreeMap<String, Object>();

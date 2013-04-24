@@ -23,7 +23,7 @@ import javax.persistence.Table;
 public class Follower implements java.io.Serializable {
 
 	// Fields
-
+	private static final long serialVersionUID = 1L;
 	private FollowerId id;
 	private Account accountByFollowedId;
 	private Account accountByFollowingId;

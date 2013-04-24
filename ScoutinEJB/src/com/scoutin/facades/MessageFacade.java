@@ -1,13 +1,13 @@
 package com.scoutin.facades;
 
+import com.scoutin.entities.Message;
+
 import java.util.List;
 import java.util.logging.Level;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-
-import com.scoutin.entities.Message;
 
 /**
  * Facade for entity Message.
@@ -93,9 +93,23 @@ public class MessageFacade {
 		LogUtil.log("finding Message instance with id: " + id, Level.INFO, null);
 		try {
 			Message instance = entityManager.find(Message.class, id);
+			LogUtil.log("find successful", Level.INFO, null);
 			return instance;
 		} catch (RuntimeException re) {
 			LogUtil.log("find failed", Level.SEVERE, re);
+			throw re;
+		}
+	}
+
+	public Message getReference(Long id) {
+		LogUtil.log("getReferencing Message instance with id: " + id,
+				Level.INFO, null);
+		try {
+			Message instance = entityManager.getReference(Message.class, id);
+			LogUtil.log("getReference successful", Level.INFO, null);
+			return instance;
+		} catch (RuntimeException re) {
+			LogUtil.log("getReference failed", Level.SEVERE, re);
 			throw re;
 		}
 	}
@@ -104,8 +118,20 @@ public class MessageFacade {
 		LogUtil.log("detaching Message instance", Level.INFO, null);
 		try {
 			entityManager.detach(entity);
+			LogUtil.log("detach successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("detach failed", Level.SEVERE, re);
+			throw re;
+		}
+	}
+
+	public void flush() {
+		LogUtil.log("flush Message instance", Level.INFO, null);
+		try {
+			entityManager.flush();
+			LogUtil.log("flush successful", Level.INFO, null);
+		} catch (RuntimeException re) {
+			LogUtil.log("flush failed", Level.SEVERE, re);
 			throw re;
 		}
 	}
@@ -117,10 +143,16 @@ public class MessageFacade {
 	 *            the name of the Message property to query
 	 * @param value
 	 *            the property value to match
+	 * @param rowStartIdxAndCount
+	 *            Optional int varargs. rowStartIdxAndCount[0] specifies the the
+	 *            row index in the query result-set to begin collecting the
+	 *            results. rowStartIdxAndCount[1] specifies the the maximum
+	 *            number of results to return.
 	 * @return List<Message> found by query
 	 */
 	@SuppressWarnings("unchecked")
-	public List<Message> findByProperty(String propertyName, final Object value) {
+	public List<Message> findByProperty(String propertyName,
+			final Object value, final int... rowStartIdxAndCount) {
 		LogUtil.log("finding Message instance with property: " + propertyName
 				+ ", value: " + value, Level.INFO, null);
 		try {
@@ -128,6 +160,19 @@ public class MessageFacade {
 					+ propertyName + "= :propertyValue";
 			Query query = entityManager.createQuery(queryString);
 			query.setParameter("propertyValue", value);
+			if (rowStartIdxAndCount != null && rowStartIdxAndCount.length > 0) {
+				int rowStartIdx = Math.max(0, rowStartIdxAndCount[0]);
+				if (rowStartIdx > 0) {
+					query.setFirstResult(rowStartIdx);
+				}
+
+				if (rowStartIdxAndCount.length > 1) {
+					int rowCount = Math.max(0, rowStartIdxAndCount[1]);
+					if (rowCount > 0) {
+						query.setMaxResults(rowCount);
+					}
+				}
+			}
 			return query.getResultList();
 		} catch (RuntimeException re) {
 			LogUtil.log("find by property name failed", Level.SEVERE, re);
@@ -138,14 +183,32 @@ public class MessageFacade {
 	/**
 	 * Find all Message entities.
 	 * 
+	 * @param rowStartIdxAndCount
+	 *            Optional int varargs. rowStartIdxAndCount[0] specifies the the
+	 *            row index in the query result-set to begin collecting the
+	 *            results. rowStartIdxAndCount[1] specifies the the maximum
+	 *            count of results to return.
 	 * @return List<Message> all Message entities
 	 */
 	@SuppressWarnings("unchecked")
-	public List<Message> findAll() {
+	public List<Message> findAll(final int... rowStartIdxAndCount) {
 		LogUtil.log("finding all Message instances", Level.INFO, null);
 		try {
 			final String queryString = "select model from Message model";
 			Query query = entityManager.createQuery(queryString);
+			if (rowStartIdxAndCount != null && rowStartIdxAndCount.length > 0) {
+				int rowStartIdx = Math.max(0, rowStartIdxAndCount[0]);
+				if (rowStartIdx > 0) {
+					query.setFirstResult(rowStartIdx);
+				}
+
+				if (rowStartIdxAndCount.length > 1) {
+					int rowCount = Math.max(0, rowStartIdxAndCount[1]);
+					if (rowCount > 0) {
+						query.setMaxResults(rowCount);
+					}
+				}
+			}
 			return query.getResultList();
 		} catch (RuntimeException re) {
 			LogUtil.log("find all failed", Level.SEVERE, re);

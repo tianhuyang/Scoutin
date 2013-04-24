@@ -32,7 +32,7 @@ public class TestAccount {
 	@Test
 	public void testSignupWithEmail() {
 		Map<String, Object> properties = new TreeMap<String, Object>();
-		properties.put("email", "tianhu@qq.com");
+		properties.put("email", "haocai@usc.edu");
 		properties.put("password", "tiger");
 		properties.put("firstname", "Tianhu");
 		properties.put("lastname", "Yang");
@@ -49,11 +49,11 @@ public class TestAccount {
 
 	}
 
-	
+	@Ignore
 	@Test
 	public void testAuthenticate() {
 		String args[] = new String[2];
-		args[0] = "tianhu@qq.com";
+		args[0] = "haocai@usc.edu";
 		args[1] = "tiger";
 		try {
 			Account account = AccountService.authenticate(args,
@@ -72,9 +72,9 @@ public class TestAccount {
 	@Test
 	public void testConcurrentAuthenticate() {
 		final String args[] = new String[2];
-		args[0] = "haocai@qq.com";
-		args[1] = "password";
-		int size = 10 ;
+		args[0] = "haocai@usc.edu";
+		args[1] = "tiger";
+		int size = 1000 ;
 		Thread[] threads = new Thread[size];
 		for (int i = 0; i < size; ++i) {
 			threads[i] = new Thread() {
@@ -103,6 +103,7 @@ public class TestAccount {
 		}
 		Assert.assertTrue(true);
 	}
+	
 	@Ignore
 	@Test
 	public void testConcurrent()
@@ -143,6 +144,7 @@ public class TestAccount {
 			Album album = AccountService.createAlbum(properties);
 			String info = ReflectionToStringBuilder.toString(album, ToStringStyle.MULTI_LINE_STYLE);
 			System.out.println(info);
+			System.out.println(album.getAccount());
 			Assert.assertTrue(true);
 		} catch (ScoutinException e) {
 			e.printStackTrace();

@@ -22,7 +22,7 @@ import javax.persistence.Table;
 public class Category implements java.io.Serializable {
 
 	// Fields
-
+	private static final long serialVersionUID = 1L;
 	private Short categoryId;
 	private String name;
 	private Set<Card> cards = new HashSet<Card>(0);

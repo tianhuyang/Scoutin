@@ -25,7 +25,7 @@ import javax.persistence.Table;
 public class Card implements java.io.Serializable {
 
 	// Fields
-
+	private static final long serialVersionUID = 1L;
 	private Long cardId;
 	private Cardbody cardbody;
 	private String title;

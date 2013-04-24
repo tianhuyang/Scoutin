@@ -219,6 +219,7 @@ public class $className #if ($daoExporter.getExtends())extends $pojo.importType(
     	#logInfo('"finding ${declarationName} instance with id: " + id')
         try {
             ${declarationName} instance = ${entityManager}.find(${pojo.getDeclarationName()}.class, id);
+            #logInfo('"find successful"')
             return instance;
         } catch (RuntimeException re) {
         	#logError('"find failed"' "re")
@@ -226,15 +227,39 @@ public class $className #if ($daoExporter.getExtends())extends $pojo.importType(
         }
     }    
     
+    public ${declarationName} getReference( $pojo.getJavaTypeName($clazz.identifierProperty, $jdk5) id) {
+    	#logInfo('"getReferencing ${declarationName} instance with id: " + id')
+        try {
+            ${declarationName} instance = ${entityManager}.getReference(${pojo.getDeclarationName()}.class, id);
+            #logInfo('"getReference successful"')
+            return instance;
+        } catch (RuntimeException re) {
+        	#logError('"getReference failed"' "re")
+            throw re;
+        }
+    } 
+    
     public void detach(${declarationName} $instance) {
     	#logInfo('"detaching ${declarationName} instance"')
         try {
             ${entityManager}.detach($instance);
+            #logInfo('"detach successful"')
         } catch (RuntimeException re) {
         	#logError('"detach failed"' "re")
             throw re;
         }
     }
+    
+    public void flush() {
+		#logInfo('"flush ${declarationName} instance"')
+        try {
+            ${entityManager}.flush();
+            #logInfo('"flush successful"')
+        } catch (RuntimeException re) {
+        	#logError('"flush failed"' "re")
+            throw re;
+        }
+	}
     
     
     

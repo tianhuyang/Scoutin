@@ -2,8 +2,6 @@ package com.scoutin.daos;
 
 import java.util.logging.Level;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 
 import javax.ejb.Singleton;
 import javax.persistence.Query;
@@ -17,7 +15,7 @@ import com.scoutin.utilities.DaoUtils;
 @Singleton
 public class AlbumDao extends AlbumFacade {
 
-	private final String verifyCreateCardHql = "select count(album) from Album album where album.account.accountId = :accountId and albumId in :albumIds";
+	private final String verifyCreateCardHql = "select count(album) from Album album where album.account.accountId = :accountId and album.albumId in :albumIds";
 
 	public AlbumDao() {
 		// TODO Auto-generated constructor stub

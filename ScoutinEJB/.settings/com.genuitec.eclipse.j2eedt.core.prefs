@@ -1,8 +1,8 @@
-#Sun Apr 21 21:59:28 PDT 2013
+#Mon Apr 22 22:59:32 PDT 2013
 detect.m2m=true
 detect.o2o=true
 eclipse.preferences.version=1
 generate.version=false
 re.settings=
 re.strategy=
-useAssemblyMapping=false
+useAssemblyMapping=true

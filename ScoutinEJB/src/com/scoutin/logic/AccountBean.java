@@ -36,15 +36,16 @@ public class AccountBean implements AccountBeanRemote {
 		Account account = new Account();
 		try {
 			BeanUtils.populate(account, properties);
-			//insert values
+			//save account						
+			daoUtils.getAccountDao().save(account);
+			//save accountStat
 			Accountstat accountStat = new Accountstat();
 			accountStat.setAccount(account);
 			daoUtils.getAccountStatDao().save(accountStat);
+			//save profile
 			Profile profile = new Profile();
 			profile.setAccount(account);
 			daoUtils.getProfileDao().save(profile);
-			// set return fields
-			daoUtils.getAccountDao().detach(account);
 			account.setProfile(profile);
 			account.setAccountstat(accountStat);
 			
@@ -67,12 +68,13 @@ public class AccountBean implements AccountBeanRemote {
 	public Album createAlbum(Map<String, Object> properties) {
 		// TODO Auto-generated method stub
 		Integer accountId = (Integer)properties.get("accountId");
-		Account account = daoUtils.getAccountDao().findById(accountId);
+		Account account = daoUtils.getAccountDao().getReference(accountId);
 		Album album = new Album();
 		album.setAccount(account);
 		try {
 			BeanUtils.populate(album, properties);
 			daoUtils.getAlbumDao().save(album);
+			daoUtils.getAlbumDao().flush();
 			daoUtils.getAlbumDao().detach(album);
 			album.setAccount(null);
 		} catch (IllegalAccessException e) {

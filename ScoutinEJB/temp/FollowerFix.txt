@@ -1,0 +1,2 @@
+			@JoinColumn(name = "FOLLOWED_ID", referencedColumnName="FOLLOWED_ID", nullable = false, updatable = false),
+			@JoinColumn(name = "FOLLOWING_ID", referencedColumnName="FOLLOWING_ID", nullable = false, updatable = false) }, inverseJoinColumns = { @JoinColumn(name = "ALBUM_ID", nullable = false, updatable = false) })

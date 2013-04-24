@@ -23,7 +23,7 @@ import javax.persistence.Table;
 public class Cardbody implements java.io.Serializable {
 
 	// Fields
-
+	private static final long serialVersionUID = 1L;
 	private Long cardbodyId;
 	private Account account;
 	private Integer rating;

@@ -15,7 +15,7 @@ import javax.persistence.Table;
 public class Notification implements java.io.Serializable {
 
 	// Fields
-
+	private static final long serialVersionUID = 1L;
 	private Long notificationId;
 
 	// Constructors

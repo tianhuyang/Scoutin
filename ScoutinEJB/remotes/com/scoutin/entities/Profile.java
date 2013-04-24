@@ -22,7 +22,7 @@ import javax.persistence.TemporalType;
 public class Profile implements java.io.Serializable {
 
 	// Fields
-
+	private static final long serialVersionUID = 1L;
 	private Integer accountId;
 	private Account account;
 	private String middlename;
