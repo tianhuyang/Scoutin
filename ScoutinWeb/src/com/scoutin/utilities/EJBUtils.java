@@ -8,6 +8,7 @@ import javax.naming.NamingException;
 import com.scoutin.interfaces.AccountBeanRemote;
 import com.scoutin.interfaces.AuthenticateBeanRemote;
 import com.scoutin.interfaces.CardBeanRemote;
+import com.scoutin.interfaces.AlbumBeanRemote;
 
 public class EJBUtils {
 	private final static String module = "ejb:Scoutin/ScoutinEJB/";
@@ -17,6 +18,8 @@ public class EJBUtils {
 			+ AccountBeanRemote.class.getName();
 	private final static String cardPath = module + "CardBean!"
 			+ CardBeanRemote.class.getName();
+	private final static String albumPath= module + "AlbumBean!"
+			+ AlbumBeanRemote.class.getName();
 	
 	static final Properties  jndiProps = new Properties();
 	static {
@@ -48,8 +51,7 @@ public class EJBUtils {
 	public static final AuthenticateBeanRemote authenticateBeanRemote = (AuthenticateBeanRemote) EJBUtils.obtainBean(authenticatePath);
 	public static final AccountBeanRemote accountBeanRemote = (AccountBeanRemote) EJBUtils.obtainBean(accountPath);
 	public static final CardBeanRemote cardBeanRemote = (CardBeanRemote) EJBUtils.obtainBean(cardPath);
-	
-
+	public static final AlbumBeanRemote albumBeanRemote = (AlbumBeanRemote) EJBUtils.obtainBean(albumPath);
 	
 
 }
