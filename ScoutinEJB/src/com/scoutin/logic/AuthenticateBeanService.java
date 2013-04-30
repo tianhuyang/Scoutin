@@ -5,9 +5,9 @@ import java.util.TreeSet;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
+import com.scoutin.application.interfaces.AccountConstants;
 import com.scoutin.daos.AccountDao;
 import com.scoutin.entities.Account;
-import com.scoutin.interfaces.AccountConstants;
 import com.scoutin.utilities.DaoUtils;
 
 @Stateless

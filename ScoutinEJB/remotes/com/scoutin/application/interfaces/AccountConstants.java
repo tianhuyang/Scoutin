@@ -1,4 +1,4 @@
-package com.scoutin.interfaces;
+package com.scoutin.application.interfaces;
 
 public interface AccountConstants {
 	public static final int AuthenticateTypeEmail=0;

@@ -82,13 +82,12 @@ public class CardBeanService {
 	 * @see com.scoutin.logic.CardBeanRemote#repostCard(Long cardbodyId, Integer
 	 * accountId, Long[] albumIds)
 	 */
-	public Card repostCard(Integer accountId, Long[] albumIds, Long cardbodyId) {
+	public Card repostCard(Integer accountId, Long[] albumIds, Card card, Long cardbodyId) {
 		// whether all the albumIds exists
 		if (albumDao.verifyAccountAlbum(accountId, albumIds) == false) {
 			throw new IllegalArgumentException(
 					"accountId doesn't match or not all albumIds exist");
 		}
-		Card card = new Card();
 		// create card
 		Cardbody cardBody = cardBodyDao.getReference(cardbodyId);
 		card.setCardbody(cardBody);

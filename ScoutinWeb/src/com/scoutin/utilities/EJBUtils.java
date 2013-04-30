@@ -5,10 +5,10 @@ import java.util.Properties;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
-import com.scoutin.interfaces.AccountBeanRemote;
-import com.scoutin.interfaces.AuthenticateBeanRemote;
-import com.scoutin.interfaces.CardBeanRemote;
-import com.scoutin.interfaces.AlbumBeanRemote;
+import com.scoutin.application.interfaces.AccountBeanRemote;
+import com.scoutin.application.interfaces.AuthenticateBeanRemote;
+import com.scoutin.application.interfaces.CardBeanRemote;
+import com.scoutin.application.interfaces.AlbumBeanRemote;
 
 public class EJBUtils {
 	private final static String module = "ejb:Scoutin/ScoutinEJB/";

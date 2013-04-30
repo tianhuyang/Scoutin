@@ -1,4 +1,4 @@
-package com.scoutin.interfaces;
+package com.scoutin.application.interfaces;
 
 import javax.ejb.Remote;
 
