@@ -47,7 +47,8 @@ public class CardBean implements CardBeanRemote {
 					cardbody);
 			if (card != null) {
 				card.setAlbums(null);
-			}
+				card.getCardbody().setAccount(null);
+			}			
 			return card;
 		} catch (Throwable t) {
 			throw new ApplicationException(t.getMessage());

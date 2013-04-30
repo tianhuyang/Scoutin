@@ -2,12 +2,15 @@ package com.scoutin.logic;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 
 import com.scoutin.application.exception.ApplicationException;
 import com.scoutin.application.interfaces.AlbumBeanRemote;
 import com.scoutin.entities.Album;
 
 @Stateless
+@TransactionAttribute(TransactionAttributeType.NEVER)
 public class AlbumBean implements AlbumBeanRemote {
 
 	@EJB
@@ -31,4 +34,14 @@ public class AlbumBean implements AlbumBeanRemote {
 		}
 
 	}
+
+	@Override
+	public boolean followAlbum(Integer followingAccountId, Long followedAlbumId) {
+		try {
+			return albumBeanService.followAlbum(followingAccountId, followedAlbumId);
+		} catch (Throwable t) {
+			throw new ApplicationException(t.getMessage());
+		}
+	}
+
 }

@@ -8,8 +8,17 @@ public interface AccountBeanRemote {
 	
 	/*
 	 * @param account:(Account) must be not-null
-	 * @return created Account if successful otherwise null or throws Throwable
+	 * @return created Account if successful
+	 * @throws ApplicationException if failed
 	 */
 	public Account signup(Account account);
+	
+	/*
+	 * @param followingAccountId:(Integer) must be existent
+	 * @param followedAccountId:(Integer) must be existent
+	 * @return whether the card is liked or disliked
+	 * @throws ApplicationException if failed
+	 */
+	public boolean followAccount(Integer followingAccountId, Integer followedAccountId);
 	
 }
