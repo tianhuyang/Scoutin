@@ -40,4 +40,18 @@ public class AccountBean implements AccountBeanRemote {
 		}
 	}
 
+	/*
+	 * @see com.scoutin.logic.AccountBeanRemote#followAccount(Integer followingAccountId,Integer followedAccountId)
+	 */
+	@Override
+	public boolean followAccount(Integer followingAccountId,
+			Integer followedAccountId) {
+		// TODO Auto-generated method stub
+		try {
+			return accountBeanService.followAccount(followingAccountId, followedAccountId);
+		} catch (Throwable t) {
+			throw new ApplicationException(t.getMessage());
+		}
+	}
+
 }

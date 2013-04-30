@@ -18,6 +18,8 @@ public interface ScoutinError {
 	public static final int Account_Signin_Failure_Status = 100101;
 	public static final String Account_Signin_Input_Message = "error.account.signin.input";
 	public static final String Account_Signin_Failure_Message = "error.account.signin.failure";
+	public static final int Account_FollowAccount_Failed_Status = 100102;
+	public static final String Account_FollowAccount_Failed_Message = "error.account.followaccount.failure";
 	/* 
 	 * account ends
 	 */

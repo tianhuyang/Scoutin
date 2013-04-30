@@ -12,8 +12,9 @@ import org.junit.*;
 import com.scoutin.entities.Account;
 import com.scoutin.entities.Album;
 import com.scoutin.exception.ScoutinException;
-import com.scoutin.interfaces.AccountConstants;
+import com.scoutin.application.interfaces.AccountConstants;
 import com.scoutin.logic.AccountService;
+import com.scoutin.logic.AlbumService;
 import com.scoutin.utilities.EJBUtils;
 
 public class TestAccount {
@@ -141,9 +142,39 @@ public class TestAccount {
 		Album album = new Album();
 		album.setName("default");
 		try {
-			album = AccountService.createAlbum(accountId,album);
+			album = AlbumService.createAlbum(accountId,album);
 			String info = ReflectionToStringBuilder.toString(album, ToStringStyle.MULTI_LINE_STYLE);
 			System.out.println(info);
+			Assert.assertTrue(true);
+		} catch (ScoutinException e) {
+			e.printStackTrace();
+			Assert.assertTrue(false);
+		}
+
+	}
+	
+	@Test
+	public void testFollowAlbum() {
+		int followingAccountId = 1;
+		long followedAlbumId = 2L;
+		try {
+			boolean followed = AlbumService.followAlbum(followingAccountId, followedAlbumId);
+			System.out.println("followed: "+followed);
+			Assert.assertTrue(true);
+		} catch (ScoutinException e) {
+			e.printStackTrace();
+			Assert.assertTrue(false);
+		}
+
+	}
+	
+	@Ignore
+	@Test
+	public void testFollowAccount() {
+		int followingAccountId = 1, followedAccountId = 53;
+		try {
+			boolean followed = AccountService.followAccount(followingAccountId, followedAccountId);
+			System.out.println("followed: "+followed);
 			Assert.assertTrue(true);
 		} catch (ScoutinException e) {
 			e.printStackTrace();
