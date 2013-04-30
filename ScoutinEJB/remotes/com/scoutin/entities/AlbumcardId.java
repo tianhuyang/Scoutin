@@ -10,7 +10,7 @@ import javax.persistence.Embeddable;
 public class AlbumcardId implements java.io.Serializable {
 
 	// Fields
-
+	private static final long serialVersionUID = 1L;
 	private Long albumId;
 	private Long cardId;
 

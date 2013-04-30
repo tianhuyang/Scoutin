@@ -1,28 +1,22 @@
 package com.scoutin.logic;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
 
-import javax.annotation.Resource;
 import javax.ejb.*;
 
-import org.apache.commons.beanutils.BeanUtils;
-
 import com.scoutin.entities.Account;
-import com.scoutin.entities.Accountstat;
 import com.scoutin.entities.Album;
-import com.scoutin.entities.Profile;
 import com.scoutin.interfaces.AccountBeanRemote;
-import com.scoutin.utilities.DaoUtils;
 
 /**
  * Session Bean implementation class AccountBean
  */
 @Stateless
 @LocalBean
+@TransactionAttribute(TransactionAttributeType.NEVER)
 public class AccountBean implements AccountBeanRemote {
 
-	@EJB DaoUtils daoUtils;
+	@EJB private AccountBeanService accountBeanService;
     /**
      * Default constructor. 
      */
@@ -30,59 +24,24 @@ public class AccountBean implements AccountBeanRemote {
         // TODO Auto-generated constructor stub
     }
 
+	/*
+	 * @see com.scoutin.logic.AccountBeanRemote#signup(Account account)
+	 */
 	@Override
-	public Account signup(Map<String,Object> properties) {
-		// TODO Auto-generated method stub
-		Account account = new Account();
-		try {
-			BeanUtils.populate(account, properties);
-			//save account						
-			daoUtils.getAccountDao().save(account);
-			//save accountStat
-			Accountstat accountStat = new Accountstat();
-			accountStat.setAccount(account);
-			daoUtils.getAccountStatDao().save(accountStat);
-			//save profile
-			Profile profile = new Profile();
-			profile.setAccount(account);
-			daoUtils.getProfileDao().save(profile);
-			account.setProfile(profile);
-			account.setAccountstat(accountStat);
-			
-		} catch (IllegalAccessException e) {
-			account = null;
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			account = null;
-			e.printStackTrace();
-		}
-		
-		return account;
+	public Account signup(Account account) {
+		account.setAccountId(null);
+		return accountBeanService.signup(account);
 	}
 
 	/*
-	 * must have not-null properties, correct not-null accountId:int
-	 * @see com.scoutin.logic.AccountBeanRemote#createAlbum(java.util.Map)
+	 * @see com.scoutin.logic.AccountBeanRemote#createAlbum(Integer accountId, Album album)
 	 */
 	@Override
-	public Album createAlbum(Map<String, Object> properties) {
-		// TODO Auto-generated method stub
-		Integer accountId = (Integer)properties.get("accountId");
-		Account account = daoUtils.getAccountDao().getReference(accountId);
-		Album album = new Album();
-		album.setAccount(account);
-		try {
-			BeanUtils.populate(album, properties);
-			daoUtils.getAlbumDao().save(album);
-			daoUtils.getAlbumDao().flush();
-			daoUtils.getAlbumDao().detach(album);
+	public Album createAlbum(Integer accountId, Album album) {
+		album.setAlbumId(null);
+		album = accountBeanService.createAlbum(accountId,album);
+		if(album != null){
 			album.setAccount(null);
-		} catch (IllegalAccessException e) {
-			album = null;
-			//e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			album = null;
-			//e.printStackTrace();
 		}
 		return album;
 	}

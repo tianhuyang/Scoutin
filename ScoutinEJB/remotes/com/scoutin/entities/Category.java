@@ -13,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.persistence.Version;
 
 /**
  * Category entity. @author MyEclipse Persistence Tools
@@ -24,6 +25,7 @@ public class Category implements java.io.Serializable {
 	// Fields
 	private static final long serialVersionUID = 1L;
 	private Short categoryId;
+	private Long version;
 	private String name;
 	private Set<Card> cards = new HashSet<Card>(0);
 
@@ -49,6 +51,16 @@ public class Category implements java.io.Serializable {
 
 	public void setCategoryId(Short categoryId) {
 		this.categoryId = categoryId;
+	}
+
+	@Version
+	@Column(name = "VERSION", nullable = false)
+	public Long getVersion() {
+		return this.version;
+	}
+
+	public void setVersion(Long version) {
+		this.version = version;
 	}
 
 	@Column(name = "NAME", length = 35)

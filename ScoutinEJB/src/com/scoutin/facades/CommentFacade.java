@@ -19,6 +19,7 @@ import javax.persistence.Query;
 @Stateless
 public class CommentFacade {
 	// property constants
+	public static final String VERSION = "version";
 	public static final String CONTENT = "content";
 
 	@PersistenceContext
@@ -127,6 +128,34 @@ public class CommentFacade {
 		}
 	}
 
+	public void refresh(Comment entity) {
+		LogUtil.log("refreshing Comment instance", Level.INFO, null);
+		try {
+			entityManager.refresh(entity);
+			LogUtil.log("refresh successful", Level.INFO, null);
+		} catch (RuntimeException re) {
+			LogUtil.log("refresh failed", Level.SEVERE, re);
+			throw re;
+		}
+	}
+
+	/*
+	 * for persistent instance, remove directly
+	 * 
+	 * @see delete
+	 */
+
+	public void remove(Comment entity) {
+		LogUtil.log("removing Comment instance", Level.INFO, null);
+		try {
+			entityManager.remove(entity);
+			LogUtil.log("remove successful", Level.INFO, null);
+		} catch (RuntimeException re) {
+			LogUtil.log("remove failed", Level.SEVERE, re);
+			throw re;
+		}
+	}
+
 	public void flush() {
 		LogUtil.log("flush Comment instance", Level.INFO, null);
 		try {
@@ -134,23 +163,6 @@ public class CommentFacade {
 			LogUtil.log("flush successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("flush failed", Level.SEVERE, re);
-			throw re;
-		}
-	}
-
-	private final String increaseAccountJPQL = "update Comment a set a.account = a.account + :count where a.commentId in (:commentId)";
-
-	public void increaseAccount(java.lang.Long commentId, int count) {
-		LogUtil.log("increaseAccount with commentId:" + commentId, Level.INFO,
-				null);
-		try {
-			Query query = entityManager.createQuery(increaseAccountJPQL);
-			query.setParameter("commentId", commentId);
-			query.setParameter("count", count);
-			query.executeUpdate();
-			LogUtil.log("increaseAccount successful", Level.INFO, null);
-		} catch (RuntimeException re) {
-			LogUtil.log("increaseAccount failed", Level.SEVERE, re);
 			throw re;
 		}
 	}
@@ -197,6 +209,11 @@ public class CommentFacade {
 			LogUtil.log("find by property name failed", Level.SEVERE, re);
 			throw re;
 		}
+	}
+
+	public List<Comment> findByVersion(Object version,
+			int... rowStartIdxAndCount) {
+		return findByProperty(VERSION, version, rowStartIdxAndCount);
 	}
 
 	public List<Comment> findByContent(Object content,

@@ -127,6 +127,34 @@ public class NotificationFacade {
 		}
 	}
 
+	public void refresh(Notification entity) {
+		LogUtil.log("refreshing Notification instance", Level.INFO, null);
+		try {
+			entityManager.refresh(entity);
+			LogUtil.log("refresh successful", Level.INFO, null);
+		} catch (RuntimeException re) {
+			LogUtil.log("refresh failed", Level.SEVERE, re);
+			throw re;
+		}
+	}
+
+	/*
+	 * for persistent instance, remove directly
+	 * 
+	 * @see delete
+	 */
+
+	public void remove(Notification entity) {
+		LogUtil.log("removing Notification instance", Level.INFO, null);
+		try {
+			entityManager.remove(entity);
+			LogUtil.log("remove successful", Level.INFO, null);
+		} catch (RuntimeException re) {
+			LogUtil.log("remove failed", Level.SEVERE, re);
+			throw re;
+		}
+	}
+
 	public void flush() {
 		LogUtil.log("flush Notification instance", Level.INFO, null);
 		try {

@@ -125,6 +125,34 @@ public class MessageFacade {
 		}
 	}
 
+	public void refresh(Message entity) {
+		LogUtil.log("refreshing Message instance", Level.INFO, null);
+		try {
+			entityManager.refresh(entity);
+			LogUtil.log("refresh successful", Level.INFO, null);
+		} catch (RuntimeException re) {
+			LogUtil.log("refresh failed", Level.SEVERE, re);
+			throw re;
+		}
+	}
+
+	/*
+	 * for persistent instance, remove directly
+	 * 
+	 * @see delete
+	 */
+
+	public void remove(Message entity) {
+		LogUtil.log("removing Message instance", Level.INFO, null);
+		try {
+			entityManager.remove(entity);
+			LogUtil.log("remove successful", Level.INFO, null);
+		} catch (RuntimeException re) {
+			LogUtil.log("remove failed", Level.SEVERE, re);
+			throw re;
+		}
+	}
+
 	public void flush() {
 		LogUtil.log("flush Message instance", Level.INFO, null);
 		try {

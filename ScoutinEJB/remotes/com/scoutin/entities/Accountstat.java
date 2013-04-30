@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+import javax.persistence.Version;
 
 /**
  * Accountstat entity. @author MyEclipse Persistence Tools
@@ -21,11 +22,12 @@ public class Accountstat implements java.io.Serializable {
 	// Fields
 	private static final long serialVersionUID = 1L;
 	private Integer accountId;
+	private Long version;
 	private Account account;
-	private Integer followingCount;
-	private Integer followersCount;
+	private Integer followingCount = 0;
+	private Integer followersCount = 0;
 	private Timestamp lastRecmdView;
-	private Integer unviewRecmdCount;
+	private Integer unviewRecmdCount = 0;
 
 	// Constructors
 
@@ -34,8 +36,12 @@ public class Accountstat implements java.io.Serializable {
 	}
 
 	/** minimal constructor */
-	public Accountstat(Account account) {
+	public Accountstat(Account account, Integer followingCount,
+			Integer followersCount, Integer unviewRecmdCount) {
 		this.account = account;
+		this.followingCount = followingCount;
+		this.followersCount = followersCount;
+		this.unviewRecmdCount = unviewRecmdCount;
 	}
 
 	/** full constructor */
@@ -61,6 +67,16 @@ public class Accountstat implements java.io.Serializable {
 		this.accountId = accountId;
 	}
 
+	@Version
+	@Column(name = "VERSION", nullable = false)
+	public Long getVersion() {
+		return this.version;
+	}
+
+	public void setVersion(Long version) {
+		this.version = version;
+	}
+
 	@OneToOne(fetch = FetchType.LAZY)
 	@PrimaryKeyJoinColumn
 	public Account getAccount() {
@@ -71,7 +87,7 @@ public class Accountstat implements java.io.Serializable {
 		this.account = account;
 	}
 
-	@Column(name = "FOLLOWING_COUNT")
+	@Column(name = "FOLLOWING_COUNT", nullable = false, insertable = false, updatable = false)
 	public Integer getFollowingCount() {
 		return this.followingCount;
 	}
@@ -80,7 +96,7 @@ public class Accountstat implements java.io.Serializable {
 		this.followingCount = followingCount;
 	}
 
-	@Column(name = "FOLLOWERS_COUNT")
+	@Column(name = "FOLLOWERS_COUNT", nullable = false, insertable = false, updatable = false)
 	public Integer getFollowersCount() {
 		return this.followersCount;
 	}
@@ -98,7 +114,7 @@ public class Accountstat implements java.io.Serializable {
 		this.lastRecmdView = lastRecmdView;
 	}
 
-	@Column(name = "UNVIEW_RECMD_COUNT")
+	@Column(name = "UNVIEW_RECMD_COUNT", nullable = false, insertable = false, updatable = false)
 	public Integer getUnviewRecmdCount() {
 		return this.unviewRecmdCount;
 	}

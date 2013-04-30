@@ -18,7 +18,7 @@ import javax.persistence.Table;
 public class Albumcard implements java.io.Serializable {
 
 	// Fields
-
+	private static final long serialVersionUID = 1L;
 	private AlbumcardId id;
 	private Card card;
 	private Album album;

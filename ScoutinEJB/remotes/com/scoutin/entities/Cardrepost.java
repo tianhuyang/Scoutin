@@ -22,19 +22,12 @@ public class Cardrepost implements java.io.Serializable {
 	private CardrepostId id;
 	private Account account;
 	private Cardbody cardbody;
-	private Integer count;
+	private Integer count = 0;
 
 	// Constructors
 
 	/** default constructor */
 	public Cardrepost() {
-	}
-
-	/** minimal constructor */
-	public Cardrepost(CardrepostId id, Account account, Cardbody cardbody) {
-		this.id = id;
-		this.account = account;
-		this.cardbody = cardbody;
 	}
 
 	/** full constructor */
@@ -79,7 +72,7 @@ public class Cardrepost implements java.io.Serializable {
 		this.cardbody = cardbody;
 	}
 
-	@Column(name = "COUNT")
+	@Column(name = "COUNT", nullable = false, insertable = false, updatable = false)
 	public Integer getCount() {
 		return this.count;
 	}

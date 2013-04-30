@@ -9,7 +9,10 @@ import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
+import javax.persistence.Version;
 
 /**
  * Comment entity. @author MyEclipse Persistence Tools
@@ -21,6 +24,7 @@ public class Comment implements java.io.Serializable {
 	// Fields
 	private static final long serialVersionUID = 1L;
 	private Long commentId;
+	private Long version;
 	private Card card;
 	private Account account;
 	private String content;
@@ -31,12 +35,6 @@ public class Comment implements java.io.Serializable {
 
 	/** default constructor */
 	public Comment() {
-	}
-
-	/** minimal constructor */
-	public Comment(Card card, Account account) {
-		this.card = card;
-		this.account = account;
 	}
 
 	/** full constructor */
@@ -61,6 +59,16 @@ public class Comment implements java.io.Serializable {
 		this.commentId = commentId;
 	}
 
+	@Version
+	@Column(name = "VERSION", nullable = false)
+	public Long getVersion() {
+		return this.version;
+	}
+
+	public void setVersion(Long version) {
+		this.version = version;
+	}
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "CARD_ID", nullable = false)
 	public Card getCard() {
@@ -81,7 +89,7 @@ public class Comment implements java.io.Serializable {
 		this.account = account;
 	}
 
-	@Column(name = "CONTENT")
+	@Column(name = "CONTENT", nullable = false)
 	public String getContent() {
 		return this.content;
 	}
@@ -90,7 +98,7 @@ public class Comment implements java.io.Serializable {
 		this.content = content;
 	}
 
-	@Column(name = "UPDATED_TIME", length = 19)
+	@Column(name = "UPDATED_TIME", nullable = false, length = 19)
 	public Timestamp getUpdatedTime() {
 		return this.updatedTime;
 	}
@@ -99,13 +107,26 @@ public class Comment implements java.io.Serializable {
 		this.updatedTime = updatedTime;
 	}
 
-	@Column(name = "CREATED_TIME", length = 19)
+	@Column(name = "CREATED_TIME", nullable = false, updatable = false, length = 19)
 	public Timestamp getCreatedTime() {
 		return this.createdTime;
 	}
 
 	public void setCreatedTime(Timestamp createdTime) {
 		this.createdTime = createdTime;
+	}
+
+	@PrePersist
+	protected void onPrePersist() {
+		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+		setCreatedTime(timestamp);
+		setUpdatedTime(timestamp);
+	}
+
+	@PreUpdate
+	protected void onPreUpdate() {
+		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+		setUpdatedTime(timestamp);
 	}
 
 }

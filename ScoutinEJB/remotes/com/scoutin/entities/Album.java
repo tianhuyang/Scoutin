@@ -13,7 +13,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
+import javax.persistence.Version;
 
 /**
  * Album entity. @author MyEclipse Persistence Tools
@@ -25,13 +29,14 @@ public class Album implements java.io.Serializable {
 	// Fields
 	private static final long serialVersionUID = 1L;
 	private Long albumId;
+	private Long version;
 	private Account account;
 	private String name;
 	private String coverPath;
 	private Timestamp createdTime;
 	private Timestamp updatedTime;
-	private Integer followCount;
-	private Set<Follower> followers = new HashSet<Follower>(0);
+	private Integer followCount = 0;
+	private Set<Blockedalbum> blockedalbums = new HashSet<Blockedalbum>(0);
 	private Set<Card> cards = new HashSet<Card>(0);
 
 	// Constructors
@@ -40,17 +45,25 @@ public class Album implements java.io.Serializable {
 	public Album() {
 	}
 
+	/** minimal constructor */
+	public Album(Timestamp createdTime, Timestamp updatedTime,
+			Integer followCount) {
+		this.createdTime = createdTime;
+		this.updatedTime = updatedTime;
+		this.followCount = followCount;
+	}
+
 	/** full constructor */
 	public Album(Account account, String name, String coverPath,
 			Timestamp createdTime, Timestamp updatedTime, Integer followCount,
-			Set<Follower> followers, Set<Card> cards) {
+			Set<Blockedalbum> blockedalbums, Set<Card> cards) {
 		this.account = account;
 		this.name = name;
 		this.coverPath = coverPath;
 		this.createdTime = createdTime;
 		this.updatedTime = updatedTime;
 		this.followCount = followCount;
-		this.followers = followers;
+		this.blockedalbums = blockedalbums;
 		this.cards = cards;
 	}
 
@@ -64,6 +77,16 @@ public class Album implements java.io.Serializable {
 
 	public void setAlbumId(Long albumId) {
 		this.albumId = albumId;
+	}
+
+	@Version
+	@Column(name = "VERSION", nullable = false)
+	public Long getVersion() {
+		return this.version;
+	}
+
+	public void setVersion(Long version) {
+		this.version = version;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -94,7 +117,7 @@ public class Album implements java.io.Serializable {
 		this.coverPath = coverPath;
 	}
 
-	@Column(name = "CREATED_TIME", length = 19)
+	@Column(name = "CREATED_TIME", nullable = false, updatable = false, length = 19)
 	public Timestamp getCreatedTime() {
 		return this.createdTime;
 	}
@@ -103,7 +126,7 @@ public class Album implements java.io.Serializable {
 		this.createdTime = createdTime;
 	}
 
-	@Column(name = "UPDATED_TIME", length = 19)
+	@Column(name = "UPDATED_TIME", nullable = false, length = 19)
 	public Timestamp getUpdatedTime() {
 		return this.updatedTime;
 	}
@@ -112,7 +135,7 @@ public class Album implements java.io.Serializable {
 		this.updatedTime = updatedTime;
 	}
 
-	@Column(name = "FOLLOW_COUNT")
+	@Column(name = "FOLLOW_COUNT", nullable = false, insertable = false, updatable = false)
 	public Integer getFollowCount() {
 		return this.followCount;
 	}
@@ -121,13 +144,13 @@ public class Album implements java.io.Serializable {
 		this.followCount = followCount;
 	}
 
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "albums")
-	public Set<Follower> getFollowers() {
-		return this.followers;
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "album")
+	public Set<Blockedalbum> getBlockedalbums() {
+		return this.blockedalbums;
 	}
 
-	public void setFollowers(Set<Follower> followers) {
-		this.followers = followers;
+	public void setBlockedalbums(Set<Blockedalbum> blockedalbums) {
+		this.blockedalbums = blockedalbums;
 	}
 
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "albums")
@@ -137,6 +160,19 @@ public class Album implements java.io.Serializable {
 
 	public void setCards(Set<Card> cards) {
 		this.cards = cards;
+	}
+
+	@PrePersist
+	protected void onPrePersist() {
+		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+		setCreatedTime(timestamp);
+		setUpdatedTime(timestamp);
+	}
+
+	@PreUpdate
+	protected void onPreUpdate() {
+		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+		setUpdatedTime(timestamp);
 	}
 
 }

@@ -3,6 +3,7 @@ package com.scoutin.facades;
 import com.scoutin.entities.Follower;
 import com.scoutin.entities.FollowerId;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
@@ -20,7 +21,6 @@ import javax.persistence.Query;
 @Stateless
 public class FollowerFacade {
 	// property constants
-	public static final String IS_FOLLOW_PERSON = "isFollowPerson";
 
 	@PersistenceContext
 	protected EntityManager entityManager;
@@ -128,6 +128,34 @@ public class FollowerFacade {
 		}
 	}
 
+	public void refresh(Follower entity) {
+		LogUtil.log("refreshing Follower instance", Level.INFO, null);
+		try {
+			entityManager.refresh(entity);
+			LogUtil.log("refresh successful", Level.INFO, null);
+		} catch (RuntimeException re) {
+			LogUtil.log("refresh failed", Level.SEVERE, re);
+			throw re;
+		}
+	}
+
+	/*
+	 * for persistent instance, remove directly
+	 * 
+	 * @see delete
+	 */
+
+	public void remove(Follower entity) {
+		LogUtil.log("removing Follower instance", Level.INFO, null);
+		try {
+			entityManager.remove(entity);
+			LogUtil.log("remove successful", Level.INFO, null);
+		} catch (RuntimeException re) {
+			LogUtil.log("remove failed", Level.SEVERE, re);
+			throw re;
+		}
+	}
+
 	public void flush() {
 		LogUtil.log("flush Follower instance", Level.INFO, null);
 		try {
@@ -181,12 +209,6 @@ public class FollowerFacade {
 			LogUtil.log("find by property name failed", Level.SEVERE, re);
 			throw re;
 		}
-	}
-
-	public List<Follower> findByIsFollowPerson(Object isFollowPerson,
-			int... rowStartIdxAndCount) {
-		return findByProperty(IS_FOLLOW_PERSON, isFollowPerson,
-				rowStartIdxAndCount);
 	}
 
 	/**

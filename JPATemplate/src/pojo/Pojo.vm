@@ -6,6 +6,8 @@ $templates.PojoTypeDeclaration {
 
 #if(!$pojo.isInterface())
 
+$templates.Prepare
+
 $templates.PojoFields
 
 $templates.PojoConstructors
@@ -15,6 +17,8 @@ $templates.PojoPropertyAccessors
 $templates.PojoToString
 
 $templates.PojoEqualsHashcode
+
+$templates.Methods
 
 #else 
 

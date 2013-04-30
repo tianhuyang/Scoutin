@@ -250,6 +250,33 @@ public class $className #if ($daoExporter.getExtends())extends $pojo.importType(
         }
     }
     
+    public void refresh(${declarationName} $instance) {
+    	#logInfo('"refreshing ${declarationName} instance"')
+        try {
+            ${entityManager}.refresh($instance);
+            #logInfo('"refresh successful"')
+        } catch (RuntimeException re) {
+        	#logError('"refresh failed"' "re")
+            throw re;
+        }
+    }
+    
+    /*
+     * for persistent instance, remove directly
+     * @see delete
+    */
+    
+     public void remove(${declarationName} $instance) {
+    	#logInfo('"removing ${declarationName} instance"')
+        try {
+             ${entityManager}.remove($instance);
+            #logInfo('"remove successful"')
+        } catch (RuntimeException re) {
+        	#logError('"remove failed"' "re")
+            throw re;
+        }
+    }
+    
     public void flush() {
 		#logInfo('"flush ${declarationName} instance"')
         try {
@@ -281,7 +308,7 @@ public class $className #if ($daoExporter.getExtends())extends $pojo.importType(
     #end
 #end
 #if($ok == true)
-    private final String ${rIdName}JPQL = "select a.${field.name}.${rIdName} from ${declarationName} a where a.${idName} = :${idName}";
+    private static final String ${rIdName}JPQL = "select a.${field.name}.${rIdName} from ${declarationName} a where a.${idName} = :${idName}";
 	
 	public ${rIdType} get${rbIdName}(${c2j.getJavaTypeName($clazz.identifierProperty, $jdk5)} ${idName}) {
 		#logInfo('"get${rbIdName}Id with ${idName}" + ${idName}')
@@ -299,12 +326,12 @@ public class $className #if ($daoExporter.getExtends())extends $pojo.importType(
 	}
 #end
 #end
-#if($field.name.endsWith("Count") || $field.name.endsWith("count"))
+#if($field.name.endsWith("Count") || $field.name.equals("count"))
 #set($bName = $field.name.substring(0,1).toUpperCase().concat($field.name.substring(1)))
 #set($idName = $clazz.identifierProperty.name)
 #set($idType = $c2j.getJavaTypeName($clazz.identifierProperty, $jdk5))
 #set($className = $pojo.importType($clazz.getClassName()))
-    private final String increase${bName}JPQL = "update ${className} a set a.${field.name} = a.${field.name} + :count where a.${idName} in (:${idName})";
+    private static  final String increase${bName}JPQL = "update ${className} a set a.${field.name} = a.${field.name} + :count where a.${idName} in (:${idName})";
 
 	public void increase${bName}(${idType} ${idName}, int count) {
 		#logInfo('"increase${bName} with ${idName}:" + ${idName}')

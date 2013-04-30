@@ -1,5 +1,6 @@
 package com.scoutin.entities;
 
+import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.AttributeOverride;
@@ -10,9 +11,9 @@ import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 
 /**
@@ -27,8 +28,8 @@ public class Follower implements java.io.Serializable {
 	private FollowerId id;
 	private Account accountByFollowedId;
 	private Account accountByFollowingId;
-	private Boolean isFollowPerson;
-	private Set<Album> albums = new HashSet<Album>(0);
+	private Timestamp createdTime;
+	private Set<Blockedalbum> blockedalbums = new HashSet<Blockedalbum>(0);
 
 	// Constructors
 
@@ -38,22 +39,22 @@ public class Follower implements java.io.Serializable {
 
 	/** minimal constructor */
 	public Follower(FollowerId id, Account accountByFollowedId,
-			Account accountByFollowingId, Boolean isFollowPerson) {
+			Account accountByFollowingId, Timestamp createdTime) {
 		this.id = id;
 		this.accountByFollowedId = accountByFollowedId;
 		this.accountByFollowingId = accountByFollowingId;
-		this.isFollowPerson = isFollowPerson;
+		this.createdTime = createdTime;
 	}
 
 	/** full constructor */
 	public Follower(FollowerId id, Account accountByFollowedId,
-			Account accountByFollowingId, Boolean isFollowPerson,
-			Set<Album> albums) {
+			Account accountByFollowingId, Timestamp createdTime,
+			Set<Blockedalbum> blockedalbums) {
 		this.id = id;
 		this.accountByFollowedId = accountByFollowedId;
 		this.accountByFollowingId = accountByFollowingId;
-		this.isFollowPerson = isFollowPerson;
-		this.albums = albums;
+		this.createdTime = createdTime;
+		this.blockedalbums = blockedalbums;
 	}
 
 	// Property accessors
@@ -89,25 +90,28 @@ public class Follower implements java.io.Serializable {
 		this.accountByFollowingId = accountByFollowingId;
 	}
 
-	@Column(name = "IS_FOLLOW_PERSON", nullable = false)
-	public Boolean getIsFollowPerson() {
-		return this.isFollowPerson;
+	@Column(name = "CREATED_TIME", nullable = false, updatable = false, length = 19)
+	public Timestamp getCreatedTime() {
+		return this.createdTime;
 	}
 
-	public void setIsFollowPerson(Boolean isFollowPerson) {
-		this.isFollowPerson = isFollowPerson;
+	public void setCreatedTime(Timestamp createdTime) {
+		this.createdTime = createdTime;
 	}
 
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinTable(name = "FOLLOWALBUM", catalog = "Scoutin", joinColumns = {
-			@JoinColumn(name = "FOLLOWED_ID", nullable = false, updatable = false),
-			@JoinColumn(name = "FOLLOWING_ID", nullable = false, updatable = false) }, inverseJoinColumns = { @JoinColumn(name = "ALBUM_ID", nullable = false, updatable = false) })
-	public Set<Album> getAlbums() {
-		return this.albums;
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "follower")
+	public Set<Blockedalbum> getBlockedalbums() {
+		return this.blockedalbums;
 	}
 
-	public void setAlbums(Set<Album> albums) {
-		this.albums = albums;
+	public void setBlockedalbums(Set<Blockedalbum> blockedalbums) {
+		this.blockedalbums = blockedalbums;
+	}
+
+	@PrePersist
+	protected void onPrePersist() {
+		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+		setCreatedTime(timestamp);
 	}
 
 }

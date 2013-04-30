@@ -15,7 +15,10 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
+import javax.persistence.Version;
 
 /**
  * Card entity. @author MyEclipse Persistence Tools
@@ -27,15 +30,16 @@ public class Card implements java.io.Serializable {
 	// Fields
 	private static final long serialVersionUID = 1L;
 	private Long cardId;
+	private Long version;
 	private Cardbody cardbody;
 	private String description;
 	private Integer rating;
-	private Integer commentsCount;
-	private Integer likesCount;
+	private Integer commentsCount = 0;
+	private Integer likesCount = 0;
 	private Timestamp createdTime;
 	private Timestamp updatedTime;
 	private String tag;
-	private Integer ratingCount;
+	private Integer ratingCount = 0;
 	private Set<Album> albums = new HashSet<Album>(0);
 	private Set<Account> accounts = new HashSet<Account>(0);
 	private Set<Category> categories = new HashSet<Category>(0);
@@ -48,8 +52,13 @@ public class Card implements java.io.Serializable {
 	}
 
 	/** minimal constructor */
-	public Card(Cardbody cardbody) {
+	public Card(Cardbody cardbody, Integer commentsCount, Integer likesCount,
+			Timestamp createdTime, Timestamp updatedTime) {
 		this.cardbody = cardbody;
+		this.commentsCount = commentsCount;
+		this.likesCount = likesCount;
+		this.createdTime = createdTime;
+		this.updatedTime = updatedTime;
 	}
 
 	/** full constructor */
@@ -85,6 +94,16 @@ public class Card implements java.io.Serializable {
 		this.cardId = cardId;
 	}
 
+	@Version
+	@Column(name = "VERSION", nullable = false)
+	public Long getVersion() {
+		return this.version;
+	}
+
+	public void setVersion(Long version) {
+		this.version = version;
+	}
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "CARDBODY_ID", nullable = false)
 	public Cardbody getCardbody() {
@@ -113,7 +132,7 @@ public class Card implements java.io.Serializable {
 		this.rating = rating;
 	}
 
-	@Column(name = "COMMENTS_COUNT")
+	@Column(name = "COMMENTS_COUNT", nullable = false, insertable = false, updatable = false)
 	public Integer getCommentsCount() {
 		return this.commentsCount;
 	}
@@ -122,7 +141,7 @@ public class Card implements java.io.Serializable {
 		this.commentsCount = commentsCount;
 	}
 
-	@Column(name = "LIKES_COUNT")
+	@Column(name = "LIKES_COUNT", nullable = false, insertable = false, updatable = false)
 	public Integer getLikesCount() {
 		return this.likesCount;
 	}
@@ -131,7 +150,7 @@ public class Card implements java.io.Serializable {
 		this.likesCount = likesCount;
 	}
 
-	@Column(name = "CREATED_TIME", length = 19)
+	@Column(name = "CREATED_TIME", nullable = false, updatable = false, length = 19)
 	public Timestamp getCreatedTime() {
 		return this.createdTime;
 	}
@@ -140,7 +159,7 @@ public class Card implements java.io.Serializable {
 		this.createdTime = createdTime;
 	}
 
-	@Column(name = "UPDATED_TIME", length = 19)
+	@Column(name = "UPDATED_TIME", nullable = false, length = 19)
 	public Timestamp getUpdatedTime() {
 		return this.updatedTime;
 	}
@@ -158,7 +177,7 @@ public class Card implements java.io.Serializable {
 		this.tag = tag;
 	}
 
-	@Column(name = "RATING_COUNT")
+	@Column(name = "RATING_COUNT", insertable = false, updatable = false)
 	public Integer getRatingCount() {
 		return this.ratingCount;
 	}
@@ -203,6 +222,19 @@ public class Card implements java.io.Serializable {
 
 	public void setComments(Set<Comment> comments) {
 		this.comments = comments;
+	}
+
+	@PrePersist
+	protected void onPrePersist() {
+		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+		setCreatedTime(timestamp);
+		setUpdatedTime(timestamp);
+	}
+
+	@PreUpdate
+	protected void onPreUpdate() {
+		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+		setUpdatedTime(timestamp);
 	}
 
 }

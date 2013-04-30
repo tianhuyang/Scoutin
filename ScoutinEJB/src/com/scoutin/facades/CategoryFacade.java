@@ -19,6 +19,7 @@ import javax.persistence.Query;
 @Stateless
 public class CategoryFacade {
 	// property constants
+	public static final String VERSION = "version";
 	public static final String NAME = "name";
 
 	@PersistenceContext
@@ -128,6 +129,34 @@ public class CategoryFacade {
 		}
 	}
 
+	public void refresh(Category entity) {
+		LogUtil.log("refreshing Category instance", Level.INFO, null);
+		try {
+			entityManager.refresh(entity);
+			LogUtil.log("refresh successful", Level.INFO, null);
+		} catch (RuntimeException re) {
+			LogUtil.log("refresh failed", Level.SEVERE, re);
+			throw re;
+		}
+	}
+
+	/*
+	 * for persistent instance, remove directly
+	 * 
+	 * @see delete
+	 */
+
+	public void remove(Category entity) {
+		LogUtil.log("removing Category instance", Level.INFO, null);
+		try {
+			entityManager.remove(entity);
+			LogUtil.log("remove successful", Level.INFO, null);
+		} catch (RuntimeException re) {
+			LogUtil.log("remove failed", Level.SEVERE, re);
+			throw re;
+		}
+	}
+
 	public void flush() {
 		LogUtil.log("flush Category instance", Level.INFO, null);
 		try {
@@ -181,6 +210,11 @@ public class CategoryFacade {
 			LogUtil.log("find by property name failed", Level.SEVERE, re);
 			throw re;
 		}
+	}
+
+	public List<Category> findByVersion(Object version,
+			int... rowStartIdxAndCount) {
+		return findByProperty(VERSION, version, rowStartIdxAndCount);
 	}
 
 	public List<Category> findByName(Object name, int... rowStartIdxAndCount) {

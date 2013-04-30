@@ -13,7 +13,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
+import javax.persistence.Version;
 
 /**
  * Cardbody entity. @author MyEclipse Persistence Tools
@@ -25,11 +28,12 @@ public class Cardbody implements java.io.Serializable {
 	// Fields
 	private static final long serialVersionUID = 1L;
 	private Long cardbodyId;
+	private Long version;
 	private Account account;
 	private Integer rating;
-	private Integer commentsCount;
-	private Integer repostsCount;
-	private Integer likesCount;
+	private Integer commentsCount = 0;
+	private Integer repostsCount = 0;
+	private Integer likesCount = 0;
 	private Timestamp createdTime;
 	private Timestamp updatedTime;
 	private Double latitude;
@@ -37,7 +41,7 @@ public class Cardbody implements java.io.Serializable {
 	private String address;
 	private String url;
 	private String title;
-	private Integer ratingCount;
+	private Integer ratingCount = 0;
 	private Set<Card> cards = new HashSet<Card>(0);
 	private Set<Cardrepost> cardreposts = new HashSet<Cardrepost>(0);
 
@@ -48,8 +52,15 @@ public class Cardbody implements java.io.Serializable {
 	}
 
 	/** minimal constructor */
-	public Cardbody(Account account) {
+	public Cardbody(Account account, Integer commentsCount,
+			Integer repostsCount, Integer likesCount, Timestamp createdTime,
+			Timestamp updatedTime) {
 		this.account = account;
+		this.commentsCount = commentsCount;
+		this.repostsCount = repostsCount;
+		this.likesCount = likesCount;
+		this.createdTime = createdTime;
+		this.updatedTime = updatedTime;
 	}
 
 	/** full constructor */
@@ -87,6 +98,16 @@ public class Cardbody implements java.io.Serializable {
 		this.cardbodyId = cardbodyId;
 	}
 
+	@Version
+	@Column(name = "VERSION", nullable = false)
+	public Long getVersion() {
+		return this.version;
+	}
+
+	public void setVersion(Long version) {
+		this.version = version;
+	}
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "ACCOUNT_ID", nullable = false)
 	public Account getAccount() {
@@ -106,7 +127,7 @@ public class Cardbody implements java.io.Serializable {
 		this.rating = rating;
 	}
 
-	@Column(name = "COMMENTS_COUNT")
+	@Column(name = "COMMENTS_COUNT", nullable = false, insertable = false, updatable = false)
 	public Integer getCommentsCount() {
 		return this.commentsCount;
 	}
@@ -115,7 +136,7 @@ public class Cardbody implements java.io.Serializable {
 		this.commentsCount = commentsCount;
 	}
 
-	@Column(name = "REPOSTS_COUNT")
+	@Column(name = "REPOSTS_COUNT", nullable = false, insertable = false, updatable = false)
 	public Integer getRepostsCount() {
 		return this.repostsCount;
 	}
@@ -124,7 +145,7 @@ public class Cardbody implements java.io.Serializable {
 		this.repostsCount = repostsCount;
 	}
 
-	@Column(name = "LIKES_COUNT")
+	@Column(name = "LIKES_COUNT", nullable = false, insertable = false, updatable = false)
 	public Integer getLikesCount() {
 		return this.likesCount;
 	}
@@ -133,7 +154,7 @@ public class Cardbody implements java.io.Serializable {
 		this.likesCount = likesCount;
 	}
 
-	@Column(name = "CREATED_TIME", length = 19)
+	@Column(name = "CREATED_TIME", nullable = false, updatable = false, length = 19)
 	public Timestamp getCreatedTime() {
 		return this.createdTime;
 	}
@@ -142,7 +163,7 @@ public class Cardbody implements java.io.Serializable {
 		this.createdTime = createdTime;
 	}
 
-	@Column(name = "UPDATED_TIME", length = 19)
+	@Column(name = "UPDATED_TIME", nullable = false, length = 19)
 	public Timestamp getUpdatedTime() {
 		return this.updatedTime;
 	}
@@ -196,7 +217,7 @@ public class Cardbody implements java.io.Serializable {
 		this.title = title;
 	}
 
-	@Column(name = "RATING_COUNT")
+	@Column(name = "RATING_COUNT", insertable = false, updatable = false)
 	public Integer getRatingCount() {
 		return this.ratingCount;
 	}
@@ -221,6 +242,19 @@ public class Cardbody implements java.io.Serializable {
 
 	public void setCardreposts(Set<Cardrepost> cardreposts) {
 		this.cardreposts = cardreposts;
+	}
+
+	@PrePersist
+	protected void onPrePersist() {
+		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+		setCreatedTime(timestamp);
+		setUpdatedTime(timestamp);
+	}
+
+	@PreUpdate
+	protected void onPreUpdate() {
+		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+		setUpdatedTime(timestamp);
 	}
 
 }

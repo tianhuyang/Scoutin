@@ -13,8 +13,11 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import javax.persistence.Version;
 
 /**
  * Account entity. @author MyEclipse Persistence Tools
@@ -29,6 +32,7 @@ public class Account implements java.io.Serializable {
 	// Fields
 	private static final long serialVersionUID = 1L;
 	private Integer accountId;
+	private Long version;
 	private String password;
 	private String email;
 	private String facebookId;
@@ -55,8 +59,11 @@ public class Account implements java.io.Serializable {
 	}
 
 	/** minimal constructor */
-	public Account(String password, String firstname, String lastname, Short sex) {
+	public Account(String password, Timestamp createdTime,
+			Timestamp updatedTime, String firstname, String lastname, Short sex) {
 		this.password = password;
+		this.createdTime = createdTime;
+		this.updatedTime = updatedTime;
 		this.firstname = firstname;
 		this.lastname = lastname;
 		this.sex = sex;
@@ -103,6 +110,16 @@ public class Account implements java.io.Serializable {
 		this.accountId = accountId;
 	}
 
+	@Version
+	@Column(name = "VERSION", nullable = false)
+	public Long getVersion() {
+		return this.version;
+	}
+
+	public void setVersion(Long version) {
+		this.version = version;
+	}
+
 	@Column(name = "PASSWORD", nullable = false, length = 15)
 	public String getPassword() {
 		return this.password;
@@ -139,7 +156,7 @@ public class Account implements java.io.Serializable {
 		this.twitterId = twitterId;
 	}
 
-	@Column(name = "CREATED_TIME", length = 19)
+	@Column(name = "CREATED_TIME", nullable = false, updatable = false, length = 19)
 	public Timestamp getCreatedTime() {
 		return this.createdTime;
 	}
@@ -148,7 +165,7 @@ public class Account implements java.io.Serializable {
 		this.createdTime = createdTime;
 	}
 
-	@Column(name = "UPDATED_TIME", length = 19)
+	@Column(name = "UPDATED_TIME", nullable = false, length = 19)
 	public Timestamp getUpdatedTime() {
 		return this.updatedTime;
 	}
@@ -263,6 +280,19 @@ public class Account implements java.io.Serializable {
 
 	public void setFollowersForFollowedId(Set<Follower> followersForFollowedId) {
 		this.followersForFollowedId = followersForFollowedId;
+	}
+
+	@PrePersist
+	protected void onPrePersist() {
+		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+		setCreatedTime(timestamp);
+		setUpdatedTime(timestamp);
+	}
+
+	@PreUpdate
+	protected void onPreUpdate() {
+		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+		setUpdatedTime(timestamp);
 	}
 
 }

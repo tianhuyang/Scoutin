@@ -7,6 +7,7 @@
      $pojo.getFieldJavaDoc($field,0)
      */
  #end
-    $pojo.getFieldModifiers($field) $pojo.getJavaTypeName($field, $jdk5) $field.name#if($pojo.hasFieldInitializor($field, $jdk5)) = $pojo.getFieldInitialization($field, $jdk5)#end;
+    $pojo.getFieldModifiers($field) $pojo.getJavaTypeName($field, $jdk5) $field.name#if($pojo.hasFieldInitializor($field, $jdk5)) = $pojo.getFieldInitialization($field, $jdk5)
+    #elseif($field.columnIterator.next().defaultValue) = $field.columnIterator.next().defaultValue#end;
 #end
 #end

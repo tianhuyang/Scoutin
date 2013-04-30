@@ -1,10 +1,10 @@
 package com.scoutin.daos;
 
-import javax.ejb.Singleton;
+import javax.ejb.Stateless;
 
 import com.scoutin.facades.ProfileFacade;
 
-@Singleton
+@Stateless
 public class ProfileDao extends ProfileFacade {
 
 	public ProfileDao() {

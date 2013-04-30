@@ -20,6 +20,7 @@ import javax.persistence.Query;
 @Stateless
 public class CardFacade {
 	// property constants
+	public static final String VERSION = "version";
 	public static final String DESCRIPTION = "description";
 	public static final String RATING = "rating";
 	public static final String COMMENTS_COUNT = "commentsCount";
@@ -131,6 +132,34 @@ public class CardFacade {
 		}
 	}
 
+	public void refresh(Card entity) {
+		LogUtil.log("refreshing Card instance", Level.INFO, null);
+		try {
+			entityManager.refresh(entity);
+			LogUtil.log("refresh successful", Level.INFO, null);
+		} catch (RuntimeException re) {
+			LogUtil.log("refresh failed", Level.SEVERE, re);
+			throw re;
+		}
+	}
+
+	/*
+	 * for persistent instance, remove directly
+	 * 
+	 * @see delete
+	 */
+
+	public void remove(Card entity) {
+		LogUtil.log("removing Card instance", Level.INFO, null);
+		try {
+			entityManager.remove(entity);
+			LogUtil.log("remove successful", Level.INFO, null);
+		} catch (RuntimeException re) {
+			LogUtil.log("remove failed", Level.SEVERE, re);
+			throw re;
+		}
+	}
+
 	public void flush() {
 		LogUtil.log("flush Card instance", Level.INFO, null);
 		try {
@@ -142,7 +171,7 @@ public class CardFacade {
 		}
 	}
 
-	private final String increaseCommentsCountJPQL = "update Card a set a.commentsCount = a.commentsCount + :count where a.cardId in (:cardId)";
+	private static final String increaseCommentsCountJPQL = "update Card a set a.commentsCount = a.commentsCount + :count where a.cardId in (:cardId)";
 
 	public void increaseCommentsCount(java.lang.Long cardId, int count) {
 		LogUtil.log("increaseRatingCount with cardId:" + cardId, Level.INFO,
@@ -159,7 +188,7 @@ public class CardFacade {
 		}
 	}
 
-	private final String increaseLikesCountJPQL = "update Card a set a.likesCount = a.likesCount + :count where a.cardId in (:cardId)";
+	private static final String increaseLikesCountJPQL = "update Card a set a.likesCount = a.likesCount + :count where a.cardId in (:cardId)";
 
 	public void increaseLikesCount(java.lang.Long cardId, int count) {
 		LogUtil.log("increaseRatingCount with cardId:" + cardId, Level.INFO,
@@ -176,7 +205,7 @@ public class CardFacade {
 		}
 	}
 
-	private final String increaseRatingCountJPQL = "update Card a set a.ratingCount = a.ratingCount + :count where a.cardId in (:cardId)";
+	private static final String increaseRatingCountJPQL = "update Card a set a.ratingCount = a.ratingCount + :count where a.cardId in (:cardId)";
 
 	public void increaseRatingCount(java.lang.Long cardId, int count) {
 		LogUtil.log("increaseRatingCount with cardId:" + cardId, Level.INFO,
@@ -235,6 +264,10 @@ public class CardFacade {
 			LogUtil.log("find by property name failed", Level.SEVERE, re);
 			throw re;
 		}
+	}
+
+	public List<Card> findByVersion(Object version, int... rowStartIdxAndCount) {
+		return findByProperty(VERSION, version, rowStartIdxAndCount);
 	}
 
 	public List<Card> findByDescription(Object description,

@@ -19,6 +19,7 @@ import javax.persistence.Query;
 @Stateless
 public class AccountstatFacade {
 	// property constants
+	public static final String VERSION = "version";
 	public static final String FOLLOWING_COUNT = "followingCount";
 	public static final String FOLLOWERS_COUNT = "followersCount";
 	public static final String UNVIEW_RECMD_COUNT = "unviewRecmdCount";
@@ -131,6 +132,34 @@ public class AccountstatFacade {
 		}
 	}
 
+	public void refresh(Accountstat entity) {
+		LogUtil.log("refreshing Accountstat instance", Level.INFO, null);
+		try {
+			entityManager.refresh(entity);
+			LogUtil.log("refresh successful", Level.INFO, null);
+		} catch (RuntimeException re) {
+			LogUtil.log("refresh failed", Level.SEVERE, re);
+			throw re;
+		}
+	}
+
+	/*
+	 * for persistent instance, remove directly
+	 * 
+	 * @see delete
+	 */
+
+	public void remove(Accountstat entity) {
+		LogUtil.log("removing Accountstat instance", Level.INFO, null);
+		try {
+			entityManager.remove(entity);
+			LogUtil.log("remove successful", Level.INFO, null);
+		} catch (RuntimeException re) {
+			LogUtil.log("remove failed", Level.SEVERE, re);
+			throw re;
+		}
+	}
+
 	public void flush() {
 		LogUtil.log("flush Accountstat instance", Level.INFO, null);
 		try {
@@ -142,24 +171,7 @@ public class AccountstatFacade {
 		}
 	}
 
-	private final String increaseAccountJPQL = "update Accountstat a set a.account = a.account + :count where a.accountId in (:accountId)";
-
-	public void increaseAccount(java.lang.Integer accountId, int count) {
-		LogUtil.log("increaseUnviewRecmdCount with accountId:" + accountId,
-				Level.INFO, null);
-		try {
-			Query query = entityManager.createQuery(increaseAccountJPQL);
-			query.setParameter("accountId", accountId);
-			query.setParameter("count", count);
-			query.executeUpdate();
-			LogUtil.log("increaseUnviewRecmdCount successful", Level.INFO, null);
-		} catch (RuntimeException re) {
-			LogUtil.log("increaseUnviewRecmdCount failed", Level.SEVERE, re);
-			throw re;
-		}
-	}
-
-	private final String increaseFollowingCountJPQL = "update Accountstat a set a.followingCount = a.followingCount + :count where a.accountId in (:accountId)";
+	private static final String increaseFollowingCountJPQL = "update Accountstat a set a.followingCount = a.followingCount + :count where a.accountId in (:accountId)";
 
 	public void increaseFollowingCount(java.lang.Integer accountId, int count) {
 		LogUtil.log("increaseUnviewRecmdCount with accountId:" + accountId,
@@ -176,7 +188,7 @@ public class AccountstatFacade {
 		}
 	}
 
-	private final String increaseFollowersCountJPQL = "update Accountstat a set a.followersCount = a.followersCount + :count where a.accountId in (:accountId)";
+	private static final String increaseFollowersCountJPQL = "update Accountstat a set a.followersCount = a.followersCount + :count where a.accountId in (:accountId)";
 
 	public void increaseFollowersCount(java.lang.Integer accountId, int count) {
 		LogUtil.log("increaseUnviewRecmdCount with accountId:" + accountId,
@@ -193,7 +205,7 @@ public class AccountstatFacade {
 		}
 	}
 
-	private final String increaseUnviewRecmdCountJPQL = "update Accountstat a set a.unviewRecmdCount = a.unviewRecmdCount + :count where a.accountId in (:accountId)";
+	private static final String increaseUnviewRecmdCountJPQL = "update Accountstat a set a.unviewRecmdCount = a.unviewRecmdCount + :count where a.accountId in (:accountId)";
 
 	public void increaseUnviewRecmdCount(java.lang.Integer accountId, int count) {
 		LogUtil.log("increaseUnviewRecmdCount with accountId:" + accountId,
@@ -253,6 +265,11 @@ public class AccountstatFacade {
 			LogUtil.log("find by property name failed", Level.SEVERE, re);
 			throw re;
 		}
+	}
+
+	public List<Accountstat> findByVersion(Object version,
+			int... rowStartIdxAndCount) {
+		return findByProperty(VERSION, version, rowStartIdxAndCount);
 	}
 
 	public List<Accountstat> findByFollowingCount(Object followingCount,

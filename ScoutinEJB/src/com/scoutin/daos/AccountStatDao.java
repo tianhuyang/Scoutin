@@ -1,10 +1,10 @@
 package com.scoutin.daos;
 
-import javax.ejb.Singleton;
+import javax.ejb.Stateless;
 
 import com.scoutin.facades.AccountstatFacade;
 
-@Singleton
+@Stateless
 public class AccountStatDao extends AccountstatFacade {
 
 }

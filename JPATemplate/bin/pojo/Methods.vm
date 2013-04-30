@@ -1,0 +1,16 @@
+#if($hasCreatedTime || $hasUpdatedTime)
+    @$pojo.importType("javax.persistence.PrePersist")
+	protected void onPrePersist(){
+		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+		#if($hasCreatedTime)setCreatedTime(timestamp);#end
+		#if($hasUpdatedTime)setUpdatedTime(timestamp);#end		
+	}
+#end
+
+#if($hasUpdatedTime)
+	@$pojo.importType("javax.persistence.PreUpdate")
+	protected void onPreUpdate(){
+		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+		setUpdatedTime(timestamp);
+	}
+#end

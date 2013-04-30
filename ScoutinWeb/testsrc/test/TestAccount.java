@@ -31,19 +31,19 @@ public class TestAccount {
 	@Ignore
 	@Test
 	public void testSignupWithEmail() {
-		Map<String, Object> properties = new TreeMap<String, Object>();
-		properties.put("email", "haocai@usc.edu");
-		properties.put("password", "tiger");
-		properties.put("firstname", "Tianhu");
-		properties.put("lastname", "Yang");
-		properties.put("sex", 1);
+		Account account = new Account();
+		account.setEmail("haocai@usc.edu");
+		account.setPassword("password");
+		account.setFirstname("Tianhu");
+		account.setLastname("Yang");
+		account.setSex((short)AccountConstants.SexType_Male);
 		try {
-			Account account = AccountService.signup((Map) properties);
+			account = AccountService.signup( account);
 			String info = ReflectionToStringBuilder.toString(account, ToStringStyle.MULTI_LINE_STYLE);
 			System.out.println(info);
 			Assert.assertTrue(true);
 		} catch (ScoutinException e) {
-			// e.printStackTrace();
+			e.printStackTrace();
 			Assert.assertTrue(false);
 		}
 
@@ -54,7 +54,7 @@ public class TestAccount {
 	public void testAuthenticate() {
 		String args[] = new String[2];
 		args[0] = "haocai@usc.edu";
-		args[1] = "tiger";
+		args[1] = "password";
 		try {
 			Account account = AccountService.authenticate(args,
 					AccountConstants.AuthenticateTypeEmail);
@@ -73,7 +73,7 @@ public class TestAccount {
 	public void testConcurrentAuthenticate() {
 		final String args[] = new String[2];
 		args[0] = "haocai@usc.edu";
-		args[1] = "tiger";
+		args[1] = "password";
 		int size = 1000 ;
 		Thread[] threads = new Thread[size];
 		for (int i = 0; i < size; ++i) {
@@ -82,7 +82,6 @@ public class TestAccount {
 					try {
 						Account account = AccountService.authenticate(args,
 								AccountConstants.AuthenticateTypeEmail);
-						System.out.println(account);
 						String info = ReflectionToStringBuilder.toString(account, ToStringStyle.MULTI_LINE_STYLE);
 						System.out.println(info);
 					} catch (ScoutinException e) {
@@ -104,7 +103,7 @@ public class TestAccount {
 		Assert.assertTrue(true);
 	}
 	
-	
+	@Ignore
 	@Test
 	public void testConcurrent()
 	{
@@ -138,13 +137,13 @@ public class TestAccount {
 	@Test
 	public void testCreateAlbum() {
 		Map<String, Object> properties = new TreeMap<String, Object>();
-		properties.put("accountId", 1);
-		properties.put("name", "default");
+		int accountId = 1;
+		Album album = new Album();
+		album.setName("default");
 		try {
-			Album album = AccountService.createAlbum(properties);
+			album = AccountService.createAlbum(accountId,album);
 			String info = ReflectionToStringBuilder.toString(album, ToStringStyle.MULTI_LINE_STYLE);
 			System.out.println(info);
-			System.out.println(album.getAccount());
 			Assert.assertTrue(true);
 		} catch (ScoutinException e) {
 			e.printStackTrace();

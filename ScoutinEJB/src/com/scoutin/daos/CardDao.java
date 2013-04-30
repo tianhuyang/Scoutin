@@ -1,14 +1,15 @@
 package com.scoutin.daos;
 
 
-import javax.ejb.Singleton;
+import java.util.logging.Level;
+
+import javax.ejb.Stateless;
 import javax.persistence.Query;
 
-import com.scoutin.entities.Account;
 import com.scoutin.entities.Card;
 import com.scoutin.facades.CardFacade;
-import com.scoutin.utilities.DaoUtils;
-@Singleton
+import com.scoutin.facades.LogUtil;
+@Stateless
 public class CardDao extends CardFacade {
 
 	public Card repostCard(int cardId, long albumId) {
@@ -16,20 +17,20 @@ public class CardDao extends CardFacade {
 		return null;
 	}
 	
-//    private final String cardBodyIdHql = "select cardbodyId from Card where cardId = :cardId";
-//	
-//	public long getCardbodyId(long cardId) {
-//		log.debug("authenticate with email");
-//		long cardbodyId = 0L;
-//		try {
-//			Query query = DaoUtils.sessionFactory.getCurrentSession().createQuery(cardBodyIdHql);
-//			query.setParameter("cardId", cardId); 
-//			cardbodyId = (Long)query.uniqueResult();
-//			log.debug("authenticate successful");
-//		} catch (RuntimeException re) {
-//			log.error("authenticate failed", re);
-//			throw re;
-//		}
-//		return cardbodyId;		
-//	}
+    private static final String cardBelongToAccountHql = "select count(album) from Album album where album.account.accountId = :accountId and album.albumId = any (select ac.id.albumId from Albumcard ac where ac.id.cardId = :cardId)";
+	
+	public boolean cardBelongToAccount(long cardId, int accountId) {
+		LogUtil.log("cardBelongToAccounting", Level.INFO, null);
+		try {
+			Query query = entityManager.createQuery(cardBelongToAccountHql);
+			query.setParameter("accountId", accountId);
+			query.setParameter("cardId", cardId);
+			long count = (Long)query.getSingleResult();
+			LogUtil.log("cardBelongToAccount successful", Level.INFO, null);
+			return count >= 1;
+		} catch (RuntimeException re) {
+			LogUtil.log("cardBelongToAccount failed", Level.SEVERE, re);
+			throw re;
+		}	
+	}
 }

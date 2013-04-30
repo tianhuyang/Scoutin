@@ -20,6 +20,7 @@ import javax.persistence.Query;
 @Stateless
 public class CardbodyFacade {
 	// property constants
+	public static final String VERSION = "version";
 	public static final String RATING = "rating";
 	public static final String COMMENTS_COUNT = "commentsCount";
 	public static final String REPOSTS_COUNT = "repostsCount";
@@ -138,6 +139,34 @@ public class CardbodyFacade {
 		}
 	}
 
+	public void refresh(Cardbody entity) {
+		LogUtil.log("refreshing Cardbody instance", Level.INFO, null);
+		try {
+			entityManager.refresh(entity);
+			LogUtil.log("refresh successful", Level.INFO, null);
+		} catch (RuntimeException re) {
+			LogUtil.log("refresh failed", Level.SEVERE, re);
+			throw re;
+		}
+	}
+
+	/*
+	 * for persistent instance, remove directly
+	 * 
+	 * @see delete
+	 */
+
+	public void remove(Cardbody entity) {
+		LogUtil.log("removing Cardbody instance", Level.INFO, null);
+		try {
+			entityManager.remove(entity);
+			LogUtil.log("remove successful", Level.INFO, null);
+		} catch (RuntimeException re) {
+			LogUtil.log("remove failed", Level.SEVERE, re);
+			throw re;
+		}
+	}
+
 	public void flush() {
 		LogUtil.log("flush Cardbody instance", Level.INFO, null);
 		try {
@@ -149,24 +178,7 @@ public class CardbodyFacade {
 		}
 	}
 
-	private final String increaseAccountJPQL = "update Cardbody a set a.account = a.account + :count where a.cardbodyId in (:cardbodyId)";
-
-	public void increaseAccount(java.lang.Long cardbodyId, int count) {
-		LogUtil.log("increaseRatingCount with cardbodyId:" + cardbodyId,
-				Level.INFO, null);
-		try {
-			Query query = entityManager.createQuery(increaseAccountJPQL);
-			query.setParameter("cardbodyId", cardbodyId);
-			query.setParameter("count", count);
-			query.executeUpdate();
-			LogUtil.log("increaseRatingCount successful", Level.INFO, null);
-		} catch (RuntimeException re) {
-			LogUtil.log("increaseRatingCount failed", Level.SEVERE, re);
-			throw re;
-		}
-	}
-
-	private final String increaseCommentsCountJPQL = "update Cardbody a set a.commentsCount = a.commentsCount + :count where a.cardbodyId in (:cardbodyId)";
+	private static final String increaseCommentsCountJPQL = "update Cardbody a set a.commentsCount = a.commentsCount + :count where a.cardbodyId in (:cardbodyId)";
 
 	public void increaseCommentsCount(java.lang.Long cardbodyId, int count) {
 		LogUtil.log("increaseRatingCount with cardbodyId:" + cardbodyId,
@@ -183,7 +195,7 @@ public class CardbodyFacade {
 		}
 	}
 
-	private final String increaseRepostsCountJPQL = "update Cardbody a set a.repostsCount = a.repostsCount + :count where a.cardbodyId in (:cardbodyId)";
+	private static final String increaseRepostsCountJPQL = "update Cardbody a set a.repostsCount = a.repostsCount + :count where a.cardbodyId in (:cardbodyId)";
 
 	public void increaseRepostsCount(java.lang.Long cardbodyId, int count) {
 		LogUtil.log("increaseRatingCount with cardbodyId:" + cardbodyId,
@@ -200,7 +212,7 @@ public class CardbodyFacade {
 		}
 	}
 
-	private final String increaseLikesCountJPQL = "update Cardbody a set a.likesCount = a.likesCount + :count where a.cardbodyId in (:cardbodyId)";
+	private static final String increaseLikesCountJPQL = "update Cardbody a set a.likesCount = a.likesCount + :count where a.cardbodyId in (:cardbodyId)";
 
 	public void increaseLikesCount(java.lang.Long cardbodyId, int count) {
 		LogUtil.log("increaseRatingCount with cardbodyId:" + cardbodyId,
@@ -217,7 +229,7 @@ public class CardbodyFacade {
 		}
 	}
 
-	private final String increaseRatingCountJPQL = "update Cardbody a set a.ratingCount = a.ratingCount + :count where a.cardbodyId in (:cardbodyId)";
+	private static final String increaseRatingCountJPQL = "update Cardbody a set a.ratingCount = a.ratingCount + :count where a.cardbodyId in (:cardbodyId)";
 
 	public void increaseRatingCount(java.lang.Long cardbodyId, int count) {
 		LogUtil.log("increaseRatingCount with cardbodyId:" + cardbodyId,
@@ -276,6 +288,11 @@ public class CardbodyFacade {
 			LogUtil.log("find by property name failed", Level.SEVERE, re);
 			throw re;
 		}
+	}
+
+	public List<Cardbody> findByVersion(Object version,
+			int... rowStartIdxAndCount) {
+		return findByProperty(VERSION, version, rowStartIdxAndCount);
 	}
 
 	public List<Cardbody> findByRating(Object rating,

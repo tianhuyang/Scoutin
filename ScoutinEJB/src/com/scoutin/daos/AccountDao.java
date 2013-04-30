@@ -3,16 +3,16 @@ package com.scoutin.daos;
 import java.util.logging.Level;
 
 
-import javax.ejb.Singleton;
+import javax.ejb.Stateless;
 import javax.persistence.Query;
 
 import com.scoutin.entities.Account;
 import com.scoutin.facades.AccountFacade;
 import com.scoutin.facades.LogUtil;
-@Singleton
+@Stateless
 public class AccountDao extends AccountFacade {
 
-	private final String emailAuthJPQL = "select account from Account account where account.email = ?1 and account.password = ?2";
+	private static final String emailAuthJPQL = "select account from Account account where account.email = ?1 and account.password = ?2";
 	
 	public Account authenticateWithEmail(String email, String password) {
 		LogUtil.log("authenticate with email", Level.INFO, null);

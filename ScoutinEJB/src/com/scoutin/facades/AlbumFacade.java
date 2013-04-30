@@ -20,6 +20,7 @@ import javax.persistence.Query;
 @Stateless
 public class AlbumFacade {
 	// property constants
+	public static final String VERSION = "version";
 	public static final String NAME = "name";
 	public static final String COVER_PATH = "coverPath";
 	public static final String FOLLOW_COUNT = "followCount";
@@ -129,6 +130,34 @@ public class AlbumFacade {
 		}
 	}
 
+	public void refresh(Album entity) {
+		LogUtil.log("refreshing Album instance", Level.INFO, null);
+		try {
+			entityManager.refresh(entity);
+			LogUtil.log("refresh successful", Level.INFO, null);
+		} catch (RuntimeException re) {
+			LogUtil.log("refresh failed", Level.SEVERE, re);
+			throw re;
+		}
+	}
+
+	/*
+	 * for persistent instance, remove directly
+	 * 
+	 * @see delete
+	 */
+
+	public void remove(Album entity) {
+		LogUtil.log("removing Album instance", Level.INFO, null);
+		try {
+			entityManager.remove(entity);
+			LogUtil.log("remove successful", Level.INFO, null);
+		} catch (RuntimeException re) {
+			LogUtil.log("remove failed", Level.SEVERE, re);
+			throw re;
+		}
+	}
+
 	public void flush() {
 		LogUtil.log("flush Album instance", Level.INFO, null);
 		try {
@@ -140,24 +169,7 @@ public class AlbumFacade {
 		}
 	}
 
-	private final String increaseAccountJPQL = "update Album a set a.account = a.account + :count where a.albumId in (:albumId)";
-
-	public void increaseAccount(java.lang.Long albumId, int count) {
-		LogUtil.log("increaseFollowCount with albumId:" + albumId, Level.INFO,
-				null);
-		try {
-			Query query = entityManager.createQuery(increaseAccountJPQL);
-			query.setParameter("albumId", albumId);
-			query.setParameter("count", count);
-			query.executeUpdate();
-			LogUtil.log("increaseFollowCount successful", Level.INFO, null);
-		} catch (RuntimeException re) {
-			LogUtil.log("increaseFollowCount failed", Level.SEVERE, re);
-			throw re;
-		}
-	}
-
-	private final String increaseFollowCountJPQL = "update Album a set a.followCount = a.followCount + :count where a.albumId in (:albumId)";
+	private static final String increaseFollowCountJPQL = "update Album a set a.followCount = a.followCount + :count where a.albumId in (:albumId)";
 
 	public void increaseFollowCount(java.lang.Long albumId, int count) {
 		LogUtil.log("increaseFollowCount with albumId:" + albumId, Level.INFO,
@@ -216,6 +228,10 @@ public class AlbumFacade {
 			LogUtil.log("find by property name failed", Level.SEVERE, re);
 			throw re;
 		}
+	}
+
+	public List<Album> findByVersion(Object version, int... rowStartIdxAndCount) {
+		return findByProperty(VERSION, version, rowStartIdxAndCount);
 	}
 
 	public List<Album> findByName(Object name, int... rowStartIdxAndCount) {

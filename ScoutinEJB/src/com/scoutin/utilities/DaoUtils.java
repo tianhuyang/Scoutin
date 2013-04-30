@@ -23,9 +23,12 @@ public class DaoUtils {
 	@EJB
 	private AccountStatDao accountStatDao;
 	@EJB
-	private AlbumcardDao albumcardDao;
-	@EJB
 	private CardRepostDao cardRepostDao;
+	@EJB
+	private CardLikeDao cardLikeDao;
+	@EJB
+	private CommentDao commentDao;
+	
 
 	public AccountDao getAccountDao() {
 		return accountDao;
@@ -51,11 +54,15 @@ public class DaoUtils {
 		return accountStatDao;
 	}
 
-	public AlbumcardDao getAlbumcardDao() {
-		return albumcardDao;
-	}
-
 	public CardRepostDao getCardRepostDao() {
 		return cardRepostDao;
+	}
+	
+	public CardLikeDao getCardLikeDao() {
+		return cardLikeDao;
+	}
+	
+	public CommentDao getCommentDao() {
+		return commentDao;
 	}
 }

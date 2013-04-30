@@ -10,28 +10,27 @@ import com.scoutin.utilities.EJBUtils;
 public class AccountService {
 
 	/*
-	 * return Account, Account.Profile, and Account.Accountstat
+	 * @param account:(Account) must be not null, have password and (have email or phone)
+	 * @return Account, Account.Profile, and Account.Accountstat if successful otherwise throws ScoutinException 
 	 */
-	public static Account signup(Map<String, Object> properties)
+	public static Account signup(Account account)
 			throws ScoutinException {	
 		
-		if (properties == null){
-			throw new IllegalArgumentException();
+		if (account == null){
+			throw new IllegalArgumentException("null account");
 		}
-//		String email = (String) properties.get("email");
-//		String phone = (String) properties.get("phone");
-//		String password = (String) properties.get("password");
-//
-//		if ((email == null || email.length() == 0)
-//				&& (phone == null || phone.length() == 0)
-//				|| (password == null || password.length() == 0)) {
-//			throw new IllegalArgumentException();
-//		}
+		String email = account.getEmail();
+		String password = account.getPassword();
 
-		Account account = null;		
+		if ((email == null || email.length() == 0)
+				|| (password == null || password.length() == 0)) {
+			throw new IllegalArgumentException("Illegal arguments in signup");
+		}
+	
 		try {
-			account = EJBUtils.accountBeanRemote.signup(properties);
+			account = EJBUtils.accountBeanRemote.signup(account);
 		} catch (Throwable re) {
+			account = null;
 		}
 
 		if (account == null) {
@@ -43,12 +42,14 @@ public class AccountService {
 	}
 
 	/*
-	 * return Account, Account.Profile, and Account.Accountstat
+	 * @param args:(String[]) must have two valid elements
+	 * @param type:(int) must be a valid AuthenticateType
+	 * @return Account, Account.Profile, and Account.Accountstat if successful otherwise throws ScoutinException 
 	 */
 	public static Account authenticate(String[] args, int type)
 			throws ScoutinException {
 		if (args == null){
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException("null args");
 		}
 		Account account = null;
 		try {
@@ -65,22 +66,19 @@ public class AccountService {
 	}
 
 	/*
-	 * return Album, must have parameters: accountId, name
+	 * @param accountId:(Integer) must be existent and authenticated
+	 * @param album:(Album) must be not null
+	 * @return Album if successful otherwise throws ScoutinException 
 	 */
-	public static Album createAlbum(Map<String, Object> properties)
+	public static Album createAlbum(Integer accountId, Album album)
 			throws ScoutinException {
-		if (properties == null){
-			throw new IllegalArgumentException();
-		}
-		Integer accountId = (Integer)properties.get("accountId");
-		if (accountId == null){
-			throw new IllegalArgumentException();
-		}
-		Album album = null;		
+		if (accountId == null || album == null){
+			throw new IllegalArgumentException("null arguments");
+		}	
 		try {
-			album = EJBUtils.accountBeanRemote.createAlbum(properties);
+			album = EJBUtils.accountBeanRemote.createAlbum(accountId, album);
 		} catch (Throwable re) {
-			
+			album = null;
 		}
 		if (album == null) {
 			throw new ScoutinException(

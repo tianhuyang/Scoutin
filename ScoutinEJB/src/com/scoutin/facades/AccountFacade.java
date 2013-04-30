@@ -20,6 +20,7 @@ import javax.persistence.Query;
 @Stateless
 public class AccountFacade {
 	// property constants
+	public static final String VERSION = "version";
 	public static final String PASSWORD = "password";
 	public static final String EMAIL = "email";
 	public static final String FACEBOOK_ID = "facebookId";
@@ -134,6 +135,34 @@ public class AccountFacade {
 		}
 	}
 
+	public void refresh(Account entity) {
+		LogUtil.log("refreshing Account instance", Level.INFO, null);
+		try {
+			entityManager.refresh(entity);
+			LogUtil.log("refresh successful", Level.INFO, null);
+		} catch (RuntimeException re) {
+			LogUtil.log("refresh failed", Level.SEVERE, re);
+			throw re;
+		}
+	}
+
+	/*
+	 * for persistent instance, remove directly
+	 * 
+	 * @see delete
+	 */
+
+	public void remove(Account entity) {
+		LogUtil.log("removing Account instance", Level.INFO, null);
+		try {
+			entityManager.remove(entity);
+			LogUtil.log("remove successful", Level.INFO, null);
+		} catch (RuntimeException re) {
+			LogUtil.log("remove failed", Level.SEVERE, re);
+			throw re;
+		}
+	}
+
 	public void flush() {
 		LogUtil.log("flush Account instance", Level.INFO, null);
 		try {
@@ -187,6 +216,11 @@ public class AccountFacade {
 			LogUtil.log("find by property name failed", Level.SEVERE, re);
 			throw re;
 		}
+	}
+
+	public List<Account> findByVersion(Object version,
+			int... rowStartIdxAndCount) {
+		return findByProperty(VERSION, version, rowStartIdxAndCount);
 	}
 
 	public List<Account> findByPassword(Object password,

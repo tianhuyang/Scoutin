@@ -129,6 +129,34 @@ public class CardrepostFacade {
 		}
 	}
 
+	public void refresh(Cardrepost entity) {
+		LogUtil.log("refreshing Cardrepost instance", Level.INFO, null);
+		try {
+			entityManager.refresh(entity);
+			LogUtil.log("refresh successful", Level.INFO, null);
+		} catch (RuntimeException re) {
+			LogUtil.log("refresh failed", Level.SEVERE, re);
+			throw re;
+		}
+	}
+
+	/*
+	 * for persistent instance, remove directly
+	 * 
+	 * @see delete
+	 */
+
+	public void remove(Cardrepost entity) {
+		LogUtil.log("removing Cardrepost instance", Level.INFO, null);
+		try {
+			entityManager.remove(entity);
+			LogUtil.log("remove successful", Level.INFO, null);
+		} catch (RuntimeException re) {
+			LogUtil.log("remove failed", Level.SEVERE, re);
+			throw re;
+		}
+	}
+
 	public void flush() {
 		LogUtil.log("flush Cardrepost instance", Level.INFO, null);
 		try {
@@ -140,23 +168,7 @@ public class CardrepostFacade {
 		}
 	}
 
-	private final String increaseAccountJPQL = "update Cardrepost a set a.account = a.account + :count where a.id in (:id)";
-
-	public void increaseAccount(com.scoutin.entities.CardrepostId id, int count) {
-		LogUtil.log("increaseCount with id:" + id, Level.INFO, null);
-		try {
-			Query query = entityManager.createQuery(increaseAccountJPQL);
-			query.setParameter("id", id);
-			query.setParameter("count", count);
-			query.executeUpdate();
-			LogUtil.log("increaseCount successful", Level.INFO, null);
-		} catch (RuntimeException re) {
-			LogUtil.log("increaseCount failed", Level.SEVERE, re);
-			throw re;
-		}
-	}
-
-	private final String increaseCountJPQL = "update Cardrepost a set a.count = a.count + :count where a.id in (:id)";
+	private static final String increaseCountJPQL = "update Cardrepost a set a.count = a.count + :count where a.id in (:id)";
 
 	public void increaseCount(com.scoutin.entities.CardrepostId id, int count) {
 		LogUtil.log("increaseCount with id:" + id, Level.INFO, null);

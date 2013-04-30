@@ -1,9 +1,9 @@
 package com.scoutin.daos;
 
-import javax.ejb.Singleton;
+import javax.ejb.Stateless;
 
 import com.scoutin.facades.CardrepostFacade;
-@Singleton
+@Stateless
 public class CardRepostDao extends CardrepostFacade {
 
 	public CardRepostDao() {

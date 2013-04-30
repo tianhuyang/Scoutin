@@ -15,8 +15,12 @@
 		<class>com.scoutin.entities.Category</class>
 		<class>com.scoutin.entities.CardrepostId</class>
 		<class>com.scoutin.entities.Cardrepost</class>
+		<class>com.scoutin.entities.CardlikeId</class>
+		<class>com.scoutin.entities.Cardlike</class>
 		<class>com.scoutin.entities.Cardbody</class>
 		<class>com.scoutin.entities.Card</class>
+		<class>com.scoutin.entities.BlockedalbumId</class>
+		<class>com.scoutin.entities.Blockedalbum</class>
 		<class>com.scoutin.entities.AlbumcardId</class>
 		<class>com.scoutin.entities.Albumcard</class>
 		<class>com.scoutin.entities.Album</class>
@@ -28,8 +32,11 @@
 			<property name="jboss.as.jpa.providerModule" value="org.apache.openjpa" />
 			<property name="openjpa.DynamicEnhancementAgent" value="false" />
 			<property name="openjpa.RuntimeUnenhancedClasses" value="supported" />
-			<property name="openjpa.show_sql" value="true" />
 			<property name="openjpa.Log" value="DefaultLevel=WARN, Runtime=INFO, Tool=INFO, SQL=TRACE"/>
+			<property name="openjpa.LockManager" value="version"/>
+            <property name="openjpa.Optimistic" value="true"/>
+            <property name="openjpa.jdbc.TransactionIsolation" value="read-committed"/>
+            <property name="openjpa.RuntimeUnenhancedClasses" value="unsupported"/>
 		</properties>
 	</persistence-unit>
 </persistence>
