@@ -1,7 +1,5 @@
 package com.scoutin.logic;
 
-import java.util.Map;
-
 import com.scoutin.entities.Account;
 import com.scoutin.entities.Album;
 import com.scoutin.exception.*;
