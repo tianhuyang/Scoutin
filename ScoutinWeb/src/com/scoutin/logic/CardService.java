@@ -49,21 +49,15 @@ public class CardService {
 	 * @return Card, Card.Cardbody if successful otherwise throws ScoutinException
 	 */
 
-	public static Card repostCard(Integer accountId, Long[] albumIds, Long cardbodyId)
+	public static Card repostCard(Integer accountId, Long[] albumIds, Card card, Long cardbodyId)
 			throws ScoutinException {		
 		if (accountId == null || albumIds == null || albumIds.length == 0 || cardbodyId == null){
 			throw new IllegalArgumentException("Illegal arguments in repostCard");
 		}
 
-		Card card = null;
-		
 		try {
-			card = EJBUtils.cardBeanRemote.repostCard(accountId, albumIds, cardbodyId);
+			card = EJBUtils.cardBeanRemote.repostCard(accountId, albumIds, card, cardbodyId);
 		} catch (Throwable re) {
-			//re.printStackTrace();
-		}
-
-		if (card == null) {
 			throw new ScoutinException(
 					ScoutinException.Card_RepostCard_Failure_Status,
 					ScoutinException.Card_RepostCard_Failure_Message);

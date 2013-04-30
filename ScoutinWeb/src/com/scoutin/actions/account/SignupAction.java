@@ -1,11 +1,12 @@
 package com.scoutin.actions.account;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.TreeMap;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.struts2.interceptor.ServletRequestAware;
 
 import com.opensymphony.xwork2.ActionContext;
@@ -14,9 +15,8 @@ import com.opensymphony.xwork2.ModelDriven;
 import com.scoutin.entities.Account;
 import com.scoutin.exception.ScoutinError;
 import com.scoutin.exception.ScoutinException;
-import com.scoutin.interfaces.AccountConstants;
+import com.scoutin.application.interfaces.AccountConstants;
 import com.scoutin.logic.AccountService;
-import com.scoutin.utilities.CommonUtils;
 import com.scoutin.utilities.JSONUtils;
 import com.scoutin.vos.account.SignupVO;
 
@@ -67,12 +67,20 @@ public class SignupAction extends ActionSupport implements ServletRequestAware, 
 	}
 	
     private void signup(String domain,int type){
-    	Map<String, Object> properties = new TreeMap<String, Object>();
-    	CommonUtils.describe(properties, user);
+    	Account account = new Account();
+    	try {
+			BeanUtils.copyProperties(account, user);
+		} catch (IllegalAccessException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (InvocationTargetException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
     	
     	boolean succeed = true;
 		try {
-			Account account = AccountService.signup(properties);
+			account = AccountService.signup(account);
 			request.getSession(true).setAttribute("user", account);
 			dataMap.put("user", account);
 		} catch (ScoutinException e) {

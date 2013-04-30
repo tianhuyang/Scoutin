@@ -2,33 +2,32 @@ package com.scoutin.vos.card;
 
 public class SaveCardVO {
 	
-	public String title;
+	public Long cardId;
 	public String description;
-	public int rating;
+	public Integer rating;
 	public String tag;
-	public float latitude;
-	public float longitude;
-	public String address;
-	public String url;
-	public short[] categoryIds;
-	public long[] albumIds;
+	public Long version; 
+
+	public Short[] categoryIds;
+	public Long[] albumIds;
 	
-	public String getTitle() {
-		return title;
+	public Long getCardId() {
+		return cardId;
 	}
-	public void setTitle(String title) {
-		this.title = title;
+	public void setCardId(Long cardId) {
+		this.cardId = cardId;
 	}
+
 	public String getDescription() {
 		return description;
 	}
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public int getRating() {
+	public Integer getRating() {
 		return rating;
 	}
-	public void setRating(int rating) {
+	public void setRating(Integer rating) {
 		this.rating = rating;
 	}
 	public String getTag() {
@@ -37,40 +36,22 @@ public class SaveCardVO {
 	public void setTag(String tag) {
 		this.tag = tag;
 	}
-	public float getLatitude() {
-		return latitude;
-	}
-	public void setLatitude(float latitude) {
-		this.latitude = latitude;
-	}
-	public float getLongitude() {
-		return longitude;
-	}
-	public void setLongitude(float longitude) {
-		this.longitude = longitude;
-	}
-	public String getAddress() {
-		return address;
-	}
-	public void setAddress(String address) {
-		this.address = address;
-	}
-	public String getUrl() {
-		return url;
-	}
-	public void setUrl(String url) {
-		this.url = url;
-	}
-	public short[] getCategoryIds() {
+	public Short[] getCategoryIds() {
 		return categoryIds;
 	}
-	public void setCategoryIds(short[] categoryIds) {
+	public void setCategoryIds(Short[] categoryIds) {
 		this.categoryIds = categoryIds;
 	}
-	public long[] getAlbumIds() {
+	public Long[] getAlbumIds() {
 		return albumIds;
 	}
-	public void setAlbumIds(long[] albumIds) {
+	public void setAlbumIds(Long[] albumIds) {
 		this.albumIds = albumIds;
+	}
+	public Long getVersion() {
+		return version;
+	}
+	public void setVersion(Long version) {
+		this.version = version;
 	}
 }

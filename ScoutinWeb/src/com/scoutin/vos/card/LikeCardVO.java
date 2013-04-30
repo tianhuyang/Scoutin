@@ -2,13 +2,13 @@ package com.scoutin.vos.card;
 
 public class LikeCardVO {
 	
-	public long cardId;
+	public Long cardId;
 
-	public long getCardId() {
+	public Long getCardId() {
 		return cardId;
 	}
 
-	public void setCardId(long cardId) {
+	public void setCardId(Long cardId) {
 		this.cardId = cardId;
 	}
 }
