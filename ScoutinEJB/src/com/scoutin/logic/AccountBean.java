@@ -31,19 +31,6 @@ public class AccountBean implements AccountBeanRemote {
 	public Account signup(Account account) {
 		account.setAccountId(null);
 		return accountBeanService.signup(account);
-	}
-
-	/*
-	 * @see com.scoutin.logic.AccountBeanRemote#createAlbum(Integer accountId, Album album)
-	 */
-	@Override
-	public Album createAlbum(Integer accountId, Album album) {
-		album.setAlbumId(null);
-		album = accountBeanService.createAlbum(accountId,album);
-		if(album != null){
-			album.setAccount(null);
-		}
-		return album;
-	}
+	}	
 
 }
