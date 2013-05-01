@@ -25,7 +25,7 @@ public class CardService {
 
 	public static Card createCard(Integer accountId, Long[] albumIds, Card card, Cardbody cardbody)
 			throws ScoutinException {		
-		if (accountId == null || albumIds == null || albumIds.length == 0 || card == null || cardbody == null){
+		if (accountId == null || albumIds == null || albumIds.length == 0 || card == null || cardbody == null || card.getCardId()!= null || cardbody.getCardbodyId()!=null){
 			throw new IllegalArgumentException("Illegal arguments in createCard");
 		}
 		try {

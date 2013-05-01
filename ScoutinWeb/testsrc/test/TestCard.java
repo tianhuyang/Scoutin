@@ -31,7 +31,7 @@ public class TestCard {
 
 	}
 	
-	@Ignore
+	
 	@Test
 	public void testCreateCard(){
 		try {
@@ -54,8 +54,9 @@ public class TestCard {
 		int accountId = 1;
 		Long[] albumIds = new Long[]{3L,1L};
 		Long cardbodyId = 1L;
+		Card card = new Card();
 		try {
-			Card card = CardService.repostCard(accountId,albumIds,cardbodyId);
+			card = CardService.repostCard(accountId,albumIds,card,cardbodyId);
 			String info = ReflectionToStringBuilder.toString(card, ToStringStyle.MULTI_LINE_STYLE);
 			System.out.println(info);
 			Assert.assertTrue(true);
@@ -65,7 +66,7 @@ public class TestCard {
 		}
 	}
 	
-	
+	@Ignore
 	@Test
 	public void testEditCard(){
 		int accountId = 1;
