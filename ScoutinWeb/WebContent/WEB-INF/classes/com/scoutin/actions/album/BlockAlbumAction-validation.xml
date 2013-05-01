@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE validators PUBLIC "-//Apache Struts//XWork Validator 1.0.3//EN" 
+		"http://struts.apache.org/dtds/xwork-validator-1.0.3.dtd">
+<validators>
+	<field name="followedAlbumId">
+		<field-validator type="fieldexpression">
+			<param name="expression">!(followedAlbumId=="" || followedAlbumId==null)</param>
+			<message key="error.album.blockalbum.followedAlbumId.require">Please input followedAlbumId</message>
+		</field-validator>
+	</field>
+</validators>

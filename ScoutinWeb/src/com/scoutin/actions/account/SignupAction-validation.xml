@@ -33,14 +33,22 @@
 			<message key="error.account.signup.password.mismatch">Passwords don't match</message>
 		</field-validator>
 	</field>
+	<field name="sex">
+		<field-validator type="fieldexpression">
+		    <param name="expression">!(sex == "" || sex == null)</param> 
+			<message key="error.account.signup.sex.required">Please input sex</message>
+		</field-validator>
+	</field>
 	<field name="firstname">
-		<field-validator type="requiredstring">
-			<message key="error.account.signup.firstname.requred">Please input your first name</message>
+		<field-validator type="fieldexpression">
+		    <param name="expression">!(firstname == "" || firstname == null)</param> 
+			<message key="error.account.signup.firstname.required">Please input first name</message>
 		</field-validator>
 	</field>
 	<field name="lastname">
-		<field-validator type="requiredstring">
-			<message key="error.account.signup.lastname.requred">Please input your last name</message>
+		<field-validator type="fieldexpression">
+		    <param name="expression">!(lastname == "" || lastname == null)</param> 
+			<message key="error.account.signup.lastname.required">Please input last name</message>
 		</field-validator>
 	</field>
 	

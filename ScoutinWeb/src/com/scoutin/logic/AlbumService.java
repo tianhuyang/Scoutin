@@ -41,8 +41,8 @@ public class AlbumService {
 			return EJBUtils.albumBeanRemote.blockAlbum(followingAccountId, followedAlbumId);
 		} catch (Throwable re) {
 			throw new ScoutinException(
-					ScoutinException.Album_FollowAlbum_Failure_Status,
-					ScoutinException.Album_FollowAlbum_Failure_Message);
+					ScoutinException.Album_BlockAlbum_Failure_Status,
+					ScoutinException.Album_BlockAlbum_Failure_Message);
 		}
 	}
 }

@@ -6,6 +6,7 @@ public class SignupVO {
 	private String phone;
 	private String password;
 	private String repassword;
+	private Short sex;
 	private String firstname;
 	private String lastname;
 	
@@ -44,5 +45,11 @@ public class SignupVO {
 	}
 	public void setLastname(String lastname) {
 		this.lastname = lastname;
+	}
+	public Short getSex() {
+		return sex;
+	}
+	public void setSex(Short sex) {
+		this.sex = sex;
 	}
 }

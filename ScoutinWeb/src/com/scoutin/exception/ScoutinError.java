@@ -18,8 +18,11 @@ public interface ScoutinError {
 	public static final int Account_Signin_Failure_Status = 100101;
 	public static final String Account_Signin_Input_Message = "error.account.signin.input";
 	public static final String Account_Signin_Failure_Message = "error.account.signin.failure";
-	public static final int Account_FollowAccount_Failed_Status = 100102;
-	public static final String Account_FollowAccount_Failed_Message = "error.account.followaccount.failure";
+	
+	public static final int Account_FollowAccount_Input_Status = 100102;
+	public static final int Account_FollowAccount_Failure_Status = 100103;
+	public static final String Account_FollowAccount_Input_Message = "error.account.followaccount.input";
+	public static final String Account_FollowAccount_Failure_Message = "error.account.followaccount.failure";
 	/* 
 	 * account ends
 	 */
@@ -61,10 +64,11 @@ public interface ScoutinError {
 	public static final String Album_CreateAlbum_Input_Message = "error.album.createalbum.input";
 	public static final int Album_CreateAlbum_Failure_Status = 30001;
 	public static final String Album_CreateAlbum_Failure_Message = "error.album.createcard.failure";
-	public static final int Album_FollowAlbum_Input_Status = 30002;
-	public static final String Album_FollowAlbum_Input_Message = "error.album.followalbum.input";
-	public static final int Album_FollowAlbum_Failure_Status = 30003;
-	public static final String Album_FollowAlbum_Failure_Message = "error.album.followalbums.failure";
+	
+	public static final int Album_BlockAlbum_Input_Status = 30002;
+	public static final String Album_BlockAlbum_Input_Message = "error.album.blockalbum.input";
+	public static final int Album_BlockAlbum_Failure_Status = 30003;
+	public static final String Album_BlockAlbum_Failure_Message = "error.album.blockalbums.failure";
 	/* 
 	 * album ends
 	 */

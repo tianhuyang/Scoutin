@@ -98,6 +98,7 @@ public class SaveCardAction extends ActionSupport implements ServletRequestAware
 			succeed = false;
 			String localizedMessage = getText(e.getMessage(),e.getMessage());
 			JSONUtils.putStatus(dataMap, e.getStatus(), localizedMessage);
+			dataMap.putAll(properties[0]);
 		}
 		
 		if(succeed){
