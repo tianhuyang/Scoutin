@@ -72,8 +72,8 @@ public class AccountService {
 			return EJBUtils.accountBeanRemote.followAccount(followingAccountId, followedAccountId);
 		} catch (Throwable re) {
 			throw new ScoutinException(
-					ScoutinException.Account_FollowAccount_Failed_Status,
-					ScoutinException.Account_FollowAccount_Failed_Message);
+					ScoutinException.Account_FollowAccount_Failure_Status,
+					ScoutinException.Account_FollowAccount_Failure_Message);
 		}		
 	}
 

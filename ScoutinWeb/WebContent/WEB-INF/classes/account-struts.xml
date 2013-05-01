@@ -6,7 +6,7 @@
 <struts>
 
 	<!--  <package name="account" namespace="/account" extends="struts-default"> -->
-	<package name="account" namespace="/account" extends="json-default">
+	<package name="account" namespace="/account" extends="json-default,scoutin-interceptor">
 
 	    <action name="emailSignup" class="com.scoutin.actions.account.SignupAction" method="emailSignup"> 
 	        <result type="json" name="input">
@@ -38,8 +38,26 @@
 				<param name="location">/index.htm</param>
 			</result>
 		</action>
-
 		
+		<action name="followAccount" class="com.scoutin.actions.account.FollowAccountAction">
+			<interceptor-ref name="authorizationStack"></interceptor-ref>
+			<result type="json" name="input">
+				<param name="root">dataMap</param>
+			</result>
+			<result type="json" name="success">
+				<param name="root">dataMap</param>
+			</result>
+		</action>
+		
+		<action name="blockAlbum" class="com.scoutin.actions.album.BlockAlbumAction">
+			<interceptor-ref name="authorizationStack"></interceptor-ref>
+			<result type="json" name="input">
+				<param name="root">dataMap</param>
+			</result>
+			<result type="json" name="success">
+				<param name="root">dataMap</param>
+			</result>
+		</action>
 	</package>
 
 </struts>
