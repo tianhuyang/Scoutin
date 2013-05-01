@@ -32,15 +32,15 @@ public class ProfileFacade {
 	 * subsequent persist actions of this entity should use the #update()
 	 * method.
 	 * 
-	 * @param entity
+	 * @param profile
 	 *            Profile entity to persist
 	 * @throws RuntimeException
 	 *             when the operation fails
 	 */
-	public void save(Profile entity) {
+	public void save(Profile profile) {
 		LogUtil.log("saving Profile instance", Level.INFO, null);
 		try {
-			entityManager.persist(entity);
+			entityManager.persist(profile);
 			LogUtil.log("save successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("save failed", Level.SEVERE, re);
@@ -51,17 +51,17 @@ public class ProfileFacade {
 	/**
 	 * Delete a persistent Profile entity.
 	 * 
-	 * @param entity
+	 * @param profile
 	 *            Profile entity to delete
 	 * @throws RuntimeException
 	 *             when the operation fails
 	 */
-	public void delete(Profile entity) {
+	public void delete(Profile profile) {
 		LogUtil.log("deleting Profile instance", Level.INFO, null);
 		try {
-			entity = entityManager.getReference(Profile.class,
-					entity.getAccountId());
-			entityManager.remove(entity);
+			profile = entityManager.getReference(Profile.class,
+					profile.getAccountId());
+			entityManager.remove(profile);
 			LogUtil.log("delete successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("delete failed", Level.SEVERE, re);
@@ -75,17 +75,17 @@ public class ProfileFacade {
 	 * the JPA persistence mechanism has not previously been tracking the
 	 * updated entity.
 	 * 
-	 * @param entity
+	 * @param profile
 	 *            Profile entity to update
 	 * @return Profile the persisted Profile entity instance, may not be the
 	 *         same
 	 * @throws RuntimeException
 	 *             if the operation fails
 	 */
-	public Profile update(Profile entity) {
+	public Profile update(Profile profile) {
 		LogUtil.log("updating Profile instance", Level.INFO, null);
 		try {
-			Profile result = entityManager.merge(entity);
+			Profile result = entityManager.merge(profile);
 			LogUtil.log("update successful", Level.INFO, null);
 			return result;
 		} catch (RuntimeException re) {
@@ -94,10 +94,11 @@ public class ProfileFacade {
 		}
 	}
 
-	public Profile findById(Integer id) {
-		LogUtil.log("finding Profile instance with id: " + id, Level.INFO, null);
+	public Profile findById(Integer accountId) {
+		LogUtil.log("finding Profile instance with id: " + accountId,
+				Level.INFO, null);
 		try {
-			Profile instance = entityManager.find(Profile.class, id);
+			Profile instance = entityManager.find(Profile.class, accountId);
 			LogUtil.log("find successful", Level.INFO, null);
 			return instance;
 		} catch (RuntimeException re) {
@@ -106,11 +107,12 @@ public class ProfileFacade {
 		}
 	}
 
-	public Profile getReference(Integer id) {
-		LogUtil.log("getReferencing Profile instance with id: " + id,
+	public Profile getReference(Integer accountId) {
+		LogUtil.log("getReferencing Profile instance with id: " + accountId,
 				Level.INFO, null);
 		try {
-			Profile instance = entityManager.getReference(Profile.class, id);
+			Profile instance = entityManager.getReference(Profile.class,
+					accountId);
 			LogUtil.log("getReference successful", Level.INFO, null);
 			return instance;
 		} catch (RuntimeException re) {
@@ -119,10 +121,10 @@ public class ProfileFacade {
 		}
 	}
 
-	public void detach(Profile entity) {
+	public void detach(Profile profile) {
 		LogUtil.log("detaching Profile instance", Level.INFO, null);
 		try {
-			entityManager.detach(entity);
+			entityManager.detach(profile);
 			LogUtil.log("detach successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("detach failed", Level.SEVERE, re);
@@ -130,10 +132,10 @@ public class ProfileFacade {
 		}
 	}
 
-	public void refresh(Profile entity) {
+	public void refresh(Profile profile) {
 		LogUtil.log("refreshing Profile instance", Level.INFO, null);
 		try {
-			entityManager.refresh(entity);
+			entityManager.refresh(profile);
 			LogUtil.log("refresh successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("refresh failed", Level.SEVERE, re);
@@ -147,10 +149,10 @@ public class ProfileFacade {
 	 * @see delete
 	 */
 
-	public void remove(Profile entity) {
+	public void remove(Profile profile) {
 		LogUtil.log("removing Profile instance", Level.INFO, null);
 		try {
-			entityManager.remove(entity);
+			entityManager.remove(profile);
 			LogUtil.log("remove successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("remove failed", Level.SEVERE, re);
@@ -165,6 +167,21 @@ public class ProfileFacade {
 			LogUtil.log("flush successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("flush failed", Level.SEVERE, re);
+			throw re;
+		}
+	}
+
+	private static final String removeByAccountIdJPQL = "delete from Profile a where a.accountId in (?1)";
+
+	public void removeByAccountId(Integer accountId) {
+		LogUtil.log("removeByAccountId", Level.INFO, null);
+		try {
+			Query query = entityManager.createQuery(removeByAccountIdJPQL);
+			query.setParameter(1, accountId);
+			query.executeUpdate();
+			LogUtil.log("removeByAccountId successful", Level.INFO, null);
+		} catch (RuntimeException re) {
+			LogUtil.log("removeByAccountId failed", Level.SEVERE, re);
 			throw re;
 		}
 	}

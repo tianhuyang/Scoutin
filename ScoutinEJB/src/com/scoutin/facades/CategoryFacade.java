@@ -30,15 +30,15 @@ public class CategoryFacade {
 	 * subsequent persist actions of this entity should use the #update()
 	 * method.
 	 * 
-	 * @param entity
+	 * @param category
 	 *            Category entity to persist
 	 * @throws RuntimeException
 	 *             when the operation fails
 	 */
-	public void save(Category entity) {
+	public void save(Category category) {
 		LogUtil.log("saving Category instance", Level.INFO, null);
 		try {
-			entityManager.persist(entity);
+			entityManager.persist(category);
 			LogUtil.log("save successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("save failed", Level.SEVERE, re);
@@ -49,17 +49,17 @@ public class CategoryFacade {
 	/**
 	 * Delete a persistent Category entity.
 	 * 
-	 * @param entity
+	 * @param category
 	 *            Category entity to delete
 	 * @throws RuntimeException
 	 *             when the operation fails
 	 */
-	public void delete(Category entity) {
+	public void delete(Category category) {
 		LogUtil.log("deleting Category instance", Level.INFO, null);
 		try {
-			entity = entityManager.getReference(Category.class,
-					entity.getCategoryId());
-			entityManager.remove(entity);
+			category = entityManager.getReference(Category.class,
+					category.getCategoryId());
+			entityManager.remove(category);
 			LogUtil.log("delete successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("delete failed", Level.SEVERE, re);
@@ -73,17 +73,17 @@ public class CategoryFacade {
 	 * the JPA persistence mechanism has not previously been tracking the
 	 * updated entity.
 	 * 
-	 * @param entity
+	 * @param category
 	 *            Category entity to update
 	 * @return Category the persisted Category entity instance, may not be the
 	 *         same
 	 * @throws RuntimeException
 	 *             if the operation fails
 	 */
-	public Category update(Category entity) {
+	public Category update(Category category) {
 		LogUtil.log("updating Category instance", Level.INFO, null);
 		try {
-			Category result = entityManager.merge(entity);
+			Category result = entityManager.merge(category);
 			LogUtil.log("update successful", Level.INFO, null);
 			return result;
 		} catch (RuntimeException re) {
@@ -92,11 +92,11 @@ public class CategoryFacade {
 		}
 	}
 
-	public Category findById(Short id) {
-		LogUtil.log("finding Category instance with id: " + id, Level.INFO,
-				null);
+	public Category findById(Short categoryId) {
+		LogUtil.log("finding Category instance with id: " + categoryId,
+				Level.INFO, null);
 		try {
-			Category instance = entityManager.find(Category.class, id);
+			Category instance = entityManager.find(Category.class, categoryId);
 			LogUtil.log("find successful", Level.INFO, null);
 			return instance;
 		} catch (RuntimeException re) {
@@ -105,11 +105,12 @@ public class CategoryFacade {
 		}
 	}
 
-	public Category getReference(Short id) {
-		LogUtil.log("getReferencing Category instance with id: " + id,
+	public Category getReference(Short categoryId) {
+		LogUtil.log("getReferencing Category instance with id: " + categoryId,
 				Level.INFO, null);
 		try {
-			Category instance = entityManager.getReference(Category.class, id);
+			Category instance = entityManager.getReference(Category.class,
+					categoryId);
 			LogUtil.log("getReference successful", Level.INFO, null);
 			return instance;
 		} catch (RuntimeException re) {
@@ -118,10 +119,10 @@ public class CategoryFacade {
 		}
 	}
 
-	public void detach(Category entity) {
+	public void detach(Category category) {
 		LogUtil.log("detaching Category instance", Level.INFO, null);
 		try {
-			entityManager.detach(entity);
+			entityManager.detach(category);
 			LogUtil.log("detach successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("detach failed", Level.SEVERE, re);
@@ -129,10 +130,10 @@ public class CategoryFacade {
 		}
 	}
 
-	public void refresh(Category entity) {
+	public void refresh(Category category) {
 		LogUtil.log("refreshing Category instance", Level.INFO, null);
 		try {
-			entityManager.refresh(entity);
+			entityManager.refresh(category);
 			LogUtil.log("refresh successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("refresh failed", Level.SEVERE, re);
@@ -146,10 +147,10 @@ public class CategoryFacade {
 	 * @see delete
 	 */
 
-	public void remove(Category entity) {
+	public void remove(Category category) {
 		LogUtil.log("removing Category instance", Level.INFO, null);
 		try {
-			entityManager.remove(entity);
+			entityManager.remove(category);
 			LogUtil.log("remove successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("remove failed", Level.SEVERE, re);
@@ -164,6 +165,21 @@ public class CategoryFacade {
 			LogUtil.log("flush successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("flush failed", Level.SEVERE, re);
+			throw re;
+		}
+	}
+
+	private static final String removeByCategoryIdJPQL = "delete from Category a where a.categoryId in (?1)";
+
+	public void removeByCategoryId(Short categoryId) {
+		LogUtil.log("removeByCategoryId", Level.INFO, null);
+		try {
+			Query query = entityManager.createQuery(removeByCategoryIdJPQL);
+			query.setParameter(1, categoryId);
+			query.executeUpdate();
+			LogUtil.log("removeByCategoryId successful", Level.INFO, null);
+		} catch (RuntimeException re) {
+			LogUtil.log("removeByCategoryId failed", Level.SEVERE, re);
 			throw re;
 		}
 	}

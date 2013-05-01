@@ -30,15 +30,15 @@ public class FollowerFacade {
 	 * subsequent persist actions of this entity should use the #update()
 	 * method.
 	 * 
-	 * @param entity
+	 * @param follower
 	 *            Follower entity to persist
 	 * @throws RuntimeException
 	 *             when the operation fails
 	 */
-	public void save(Follower entity) {
+	public void save(Follower follower) {
 		LogUtil.log("saving Follower instance", Level.INFO, null);
 		try {
-			entityManager.persist(entity);
+			entityManager.persist(follower);
 			LogUtil.log("save successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("save failed", Level.SEVERE, re);
@@ -49,16 +49,17 @@ public class FollowerFacade {
 	/**
 	 * Delete a persistent Follower entity.
 	 * 
-	 * @param entity
+	 * @param follower
 	 *            Follower entity to delete
 	 * @throws RuntimeException
 	 *             when the operation fails
 	 */
-	public void delete(Follower entity) {
+	public void delete(Follower follower) {
 		LogUtil.log("deleting Follower instance", Level.INFO, null);
 		try {
-			entity = entityManager.getReference(Follower.class, entity.getId());
-			entityManager.remove(entity);
+			follower = entityManager.getReference(Follower.class,
+					follower.getId());
+			entityManager.remove(follower);
 			LogUtil.log("delete successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("delete failed", Level.SEVERE, re);
@@ -72,17 +73,17 @@ public class FollowerFacade {
 	 * the JPA persistence mechanism has not previously been tracking the
 	 * updated entity.
 	 * 
-	 * @param entity
+	 * @param follower
 	 *            Follower entity to update
 	 * @return Follower the persisted Follower entity instance, may not be the
 	 *         same
 	 * @throws RuntimeException
 	 *             if the operation fails
 	 */
-	public Follower update(Follower entity) {
+	public Follower update(Follower follower) {
 		LogUtil.log("updating Follower instance", Level.INFO, null);
 		try {
-			Follower result = entityManager.merge(entity);
+			Follower result = entityManager.merge(follower);
 			LogUtil.log("update successful", Level.INFO, null);
 			return result;
 		} catch (RuntimeException re) {
@@ -117,10 +118,10 @@ public class FollowerFacade {
 		}
 	}
 
-	public void detach(Follower entity) {
+	public void detach(Follower follower) {
 		LogUtil.log("detaching Follower instance", Level.INFO, null);
 		try {
-			entityManager.detach(entity);
+			entityManager.detach(follower);
 			LogUtil.log("detach successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("detach failed", Level.SEVERE, re);
@@ -128,10 +129,10 @@ public class FollowerFacade {
 		}
 	}
 
-	public void refresh(Follower entity) {
+	public void refresh(Follower follower) {
 		LogUtil.log("refreshing Follower instance", Level.INFO, null);
 		try {
-			entityManager.refresh(entity);
+			entityManager.refresh(follower);
 			LogUtil.log("refresh successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("refresh failed", Level.SEVERE, re);
@@ -145,10 +146,10 @@ public class FollowerFacade {
 	 * @see delete
 	 */
 
-	public void remove(Follower entity) {
+	public void remove(Follower follower) {
 		LogUtil.log("removing Follower instance", Level.INFO, null);
 		try {
-			entityManager.remove(entity);
+			entityManager.remove(follower);
 			LogUtil.log("remove successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("remove failed", Level.SEVERE, re);
@@ -163,6 +164,21 @@ public class FollowerFacade {
 			LogUtil.log("flush successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("flush failed", Level.SEVERE, re);
+			throw re;
+		}
+	}
+
+	private static final String removeByIdJPQL = "delete from Follower a where a.id in (?1)";
+
+	public void removeById(FollowerId id) {
+		LogUtil.log("removeById", Level.INFO, null);
+		try {
+			Query query = entityManager.createQuery(removeByIdJPQL);
+			query.setParameter(1, id);
+			query.executeUpdate();
+			LogUtil.log("removeById successful", Level.INFO, null);
+		} catch (RuntimeException re) {
+			LogUtil.log("removeById failed", Level.SEVERE, re);
 			throw re;
 		}
 	}

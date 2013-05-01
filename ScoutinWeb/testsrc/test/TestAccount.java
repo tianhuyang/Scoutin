@@ -153,13 +153,14 @@ public class TestAccount {
 
 	}
 	
+	
 	@Test
-	public void testFollowAlbum() {
+	public void testBlockAlbum() {
 		int followingAccountId = 1;
 		long followedAlbumId = 2L;
 		try {
-			boolean followed = AlbumService.followAlbum(followingAccountId, followedAlbumId);
-			System.out.println("followed: "+followed);
+			boolean followed = AlbumService.blockAlbum(followingAccountId, followedAlbumId);
+			System.out.println("BlockAlbum followed: "+followed);
 			Assert.assertTrue(true);
 		} catch (ScoutinException e) {
 			e.printStackTrace();
@@ -174,7 +175,7 @@ public class TestAccount {
 		int followingAccountId = 1, followedAccountId = 53;
 		try {
 			boolean followed = AccountService.followAccount(followingAccountId, followedAccountId);
-			System.out.println("followed: "+followed);
+			System.out.println("FollowAccount followed: "+followed);
 			Assert.assertTrue(true);
 		} catch (ScoutinException e) {
 			e.printStackTrace();

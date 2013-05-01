@@ -1,21 +1,14 @@
 package com.scoutin.logic;
 
-import java.lang.reflect.InvocationTargetException;
-import java.util.Map;
-
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
-import org.apache.commons.beanutils.BeanUtils;
-
 import com.scoutin.daos.AccountDao;
 import com.scoutin.daos.AccountStatDao;
-import com.scoutin.daos.AlbumDao;
 import com.scoutin.daos.FollowerDao;
 import com.scoutin.daos.ProfileDao;
 import com.scoutin.entities.Account;
 import com.scoutin.entities.Accountstat;
-import com.scoutin.entities.Album;
 import com.scoutin.entities.Follower;
 import com.scoutin.entities.FollowerId;
 import com.scoutin.entities.Profile;
@@ -63,7 +56,6 @@ public class AccountBeanService {
 	 * @see com.scoutin.logic.AccountBeanRemote#followAccount(Integer followingAccountId,Integer followedAccountId)
 	 */
 	public boolean followAccount(Integer followingAccountId, Integer followedAccountId) {
-		//Account followingAccount = accountDao.getReference(followingAccountId);
 		FollowerId followerId = new FollowerId(followedAccountId, followingAccountId);
 		Follower follower = followerDao.findById(followerId);
 		if(follower == null){
@@ -75,7 +67,7 @@ public class AccountBeanService {
 			return true;
 		}
 		else{
-			followerDao.delete(follower);
+			followerDao.removeById(followerId);
 			accountStatDao.increaseFollowersCount(followedAccountId, -1);
 			accountStatDao.increaseFollowingCount(followingAccountId, -1);
 			return false;

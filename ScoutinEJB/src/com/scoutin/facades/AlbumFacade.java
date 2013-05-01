@@ -33,15 +33,15 @@ public class AlbumFacade {
 	 * subsequent persist actions of this entity should use the #update()
 	 * method.
 	 * 
-	 * @param entity
+	 * @param album
 	 *            Album entity to persist
 	 * @throws RuntimeException
 	 *             when the operation fails
 	 */
-	public void save(Album entity) {
+	public void save(Album album) {
 		LogUtil.log("saving Album instance", Level.INFO, null);
 		try {
-			entityManager.persist(entity);
+			entityManager.persist(album);
 			LogUtil.log("save successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("save failed", Level.SEVERE, re);
@@ -52,17 +52,16 @@ public class AlbumFacade {
 	/**
 	 * Delete a persistent Album entity.
 	 * 
-	 * @param entity
+	 * @param album
 	 *            Album entity to delete
 	 * @throws RuntimeException
 	 *             when the operation fails
 	 */
-	public void delete(Album entity) {
+	public void delete(Album album) {
 		LogUtil.log("deleting Album instance", Level.INFO, null);
 		try {
-			entity = entityManager.getReference(Album.class,
-					entity.getAlbumId());
-			entityManager.remove(entity);
+			album = entityManager.getReference(Album.class, album.getAlbumId());
+			entityManager.remove(album);
 			LogUtil.log("delete successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("delete failed", Level.SEVERE, re);
@@ -76,16 +75,16 @@ public class AlbumFacade {
 	 * persistence mechanism has not previously been tracking the updated
 	 * entity.
 	 * 
-	 * @param entity
+	 * @param album
 	 *            Album entity to update
 	 * @return Album the persisted Album entity instance, may not be the same
 	 * @throws RuntimeException
 	 *             if the operation fails
 	 */
-	public Album update(Album entity) {
+	public Album update(Album album) {
 		LogUtil.log("updating Album instance", Level.INFO, null);
 		try {
-			Album result = entityManager.merge(entity);
+			Album result = entityManager.merge(album);
 			LogUtil.log("update successful", Level.INFO, null);
 			return result;
 		} catch (RuntimeException re) {
@@ -94,10 +93,11 @@ public class AlbumFacade {
 		}
 	}
 
-	public Album findById(Long id) {
-		LogUtil.log("finding Album instance with id: " + id, Level.INFO, null);
+	public Album findById(Long albumId) {
+		LogUtil.log("finding Album instance with id: " + albumId, Level.INFO,
+				null);
 		try {
-			Album instance = entityManager.find(Album.class, id);
+			Album instance = entityManager.find(Album.class, albumId);
 			LogUtil.log("find successful", Level.INFO, null);
 			return instance;
 		} catch (RuntimeException re) {
@@ -106,11 +106,11 @@ public class AlbumFacade {
 		}
 	}
 
-	public Album getReference(Long id) {
-		LogUtil.log("getReferencing Album instance with id: " + id, Level.INFO,
-				null);
+	public Album getReference(Long albumId) {
+		LogUtil.log("getReferencing Album instance with id: " + albumId,
+				Level.INFO, null);
 		try {
-			Album instance = entityManager.getReference(Album.class, id);
+			Album instance = entityManager.getReference(Album.class, albumId);
 			LogUtil.log("getReference successful", Level.INFO, null);
 			return instance;
 		} catch (RuntimeException re) {
@@ -119,10 +119,10 @@ public class AlbumFacade {
 		}
 	}
 
-	public void detach(Album entity) {
+	public void detach(Album album) {
 		LogUtil.log("detaching Album instance", Level.INFO, null);
 		try {
-			entityManager.detach(entity);
+			entityManager.detach(album);
 			LogUtil.log("detach successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("detach failed", Level.SEVERE, re);
@@ -130,10 +130,10 @@ public class AlbumFacade {
 		}
 	}
 
-	public void refresh(Album entity) {
+	public void refresh(Album album) {
 		LogUtil.log("refreshing Album instance", Level.INFO, null);
 		try {
-			entityManager.refresh(entity);
+			entityManager.refresh(album);
 			LogUtil.log("refresh successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("refresh failed", Level.SEVERE, re);
@@ -147,10 +147,10 @@ public class AlbumFacade {
 	 * @see delete
 	 */
 
-	public void remove(Album entity) {
+	public void remove(Album album) {
 		LogUtil.log("removing Album instance", Level.INFO, null);
 		try {
-			entityManager.remove(entity);
+			entityManager.remove(album);
 			LogUtil.log("remove successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("remove failed", Level.SEVERE, re);
@@ -165,6 +165,38 @@ public class AlbumFacade {
 			LogUtil.log("flush successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("flush failed", Level.SEVERE, re);
+			throw re;
+		}
+	}
+
+	private static final String removeByAlbumIdJPQL = "delete from Album a where a.albumId in (?1)";
+
+	public void removeByAlbumId(Long albumId) {
+		LogUtil.log("removeByAlbumId", Level.INFO, null);
+		try {
+			Query query = entityManager.createQuery(removeByAlbumIdJPQL);
+			query.setParameter(1, albumId);
+			query.executeUpdate();
+			LogUtil.log("removeByAlbumId successful", Level.INFO, null);
+		} catch (RuntimeException re) {
+			LogUtil.log("removeByAlbumId failed", Level.SEVERE, re);
+			throw re;
+		}
+	}
+
+	private static final String accountIdJPQL = "select a.account.accountId from Album a where a.albumId = :albumId";
+
+	public java.lang.Integer getAccountId(java.lang.Long albumId) {
+		LogUtil.log("getAccountIdId with albumId" + albumId, Level.INFO, null);
+		java.lang.Integer accountId;
+		try {
+			Query query = entityManager.createQuery(accountIdJPQL);
+			query.setParameter("albumId", albumId);
+			accountId = (java.lang.Integer) query.getSingleResult();
+			LogUtil.log("getAccountIdId successful", Level.INFO, null);
+			return accountId;
+		} catch (RuntimeException re) {
+			LogUtil.log("getAccountIdId failed", Level.SEVERE, re);
 			throw re;
 		}
 	}

@@ -27,15 +27,15 @@ public class MessageFacade {
 	 * subsequent persist actions of this entity should use the #update()
 	 * method.
 	 * 
-	 * @param entity
+	 * @param message
 	 *            Message entity to persist
 	 * @throws RuntimeException
 	 *             when the operation fails
 	 */
-	public void save(Message entity) {
+	public void save(Message message) {
 		LogUtil.log("saving Message instance", Level.INFO, null);
 		try {
-			entityManager.persist(entity);
+			entityManager.persist(message);
 			LogUtil.log("save successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("save failed", Level.SEVERE, re);
@@ -46,17 +46,17 @@ public class MessageFacade {
 	/**
 	 * Delete a persistent Message entity.
 	 * 
-	 * @param entity
+	 * @param message
 	 *            Message entity to delete
 	 * @throws RuntimeException
 	 *             when the operation fails
 	 */
-	public void delete(Message entity) {
+	public void delete(Message message) {
 		LogUtil.log("deleting Message instance", Level.INFO, null);
 		try {
-			entity = entityManager.getReference(Message.class,
-					entity.getMessageId());
-			entityManager.remove(entity);
+			message = entityManager.getReference(Message.class,
+					message.getMessageId());
+			entityManager.remove(message);
 			LogUtil.log("delete successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("delete failed", Level.SEVERE, re);
@@ -70,17 +70,17 @@ public class MessageFacade {
 	 * the JPA persistence mechanism has not previously been tracking the
 	 * updated entity.
 	 * 
-	 * @param entity
+	 * @param message
 	 *            Message entity to update
 	 * @return Message the persisted Message entity instance, may not be the
 	 *         same
 	 * @throws RuntimeException
 	 *             if the operation fails
 	 */
-	public Message update(Message entity) {
+	public Message update(Message message) {
 		LogUtil.log("updating Message instance", Level.INFO, null);
 		try {
-			Message result = entityManager.merge(entity);
+			Message result = entityManager.merge(message);
 			LogUtil.log("update successful", Level.INFO, null);
 			return result;
 		} catch (RuntimeException re) {
@@ -89,10 +89,11 @@ public class MessageFacade {
 		}
 	}
 
-	public Message findById(Long id) {
-		LogUtil.log("finding Message instance with id: " + id, Level.INFO, null);
+	public Message findById(Long messageId) {
+		LogUtil.log("finding Message instance with id: " + messageId,
+				Level.INFO, null);
 		try {
-			Message instance = entityManager.find(Message.class, id);
+			Message instance = entityManager.find(Message.class, messageId);
 			LogUtil.log("find successful", Level.INFO, null);
 			return instance;
 		} catch (RuntimeException re) {
@@ -101,11 +102,12 @@ public class MessageFacade {
 		}
 	}
 
-	public Message getReference(Long id) {
-		LogUtil.log("getReferencing Message instance with id: " + id,
+	public Message getReference(Long messageId) {
+		LogUtil.log("getReferencing Message instance with id: " + messageId,
 				Level.INFO, null);
 		try {
-			Message instance = entityManager.getReference(Message.class, id);
+			Message instance = entityManager.getReference(Message.class,
+					messageId);
 			LogUtil.log("getReference successful", Level.INFO, null);
 			return instance;
 		} catch (RuntimeException re) {
@@ -114,10 +116,10 @@ public class MessageFacade {
 		}
 	}
 
-	public void detach(Message entity) {
+	public void detach(Message message) {
 		LogUtil.log("detaching Message instance", Level.INFO, null);
 		try {
-			entityManager.detach(entity);
+			entityManager.detach(message);
 			LogUtil.log("detach successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("detach failed", Level.SEVERE, re);
@@ -125,10 +127,10 @@ public class MessageFacade {
 		}
 	}
 
-	public void refresh(Message entity) {
+	public void refresh(Message message) {
 		LogUtil.log("refreshing Message instance", Level.INFO, null);
 		try {
-			entityManager.refresh(entity);
+			entityManager.refresh(message);
 			LogUtil.log("refresh successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("refresh failed", Level.SEVERE, re);
@@ -142,10 +144,10 @@ public class MessageFacade {
 	 * @see delete
 	 */
 
-	public void remove(Message entity) {
+	public void remove(Message message) {
 		LogUtil.log("removing Message instance", Level.INFO, null);
 		try {
-			entityManager.remove(entity);
+			entityManager.remove(message);
 			LogUtil.log("remove successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("remove failed", Level.SEVERE, re);
@@ -160,6 +162,21 @@ public class MessageFacade {
 			LogUtil.log("flush successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("flush failed", Level.SEVERE, re);
+			throw re;
+		}
+	}
+
+	private static final String removeByMessageIdJPQL = "delete from Message a where a.messageId in (?1)";
+
+	public void removeByMessageId(Long messageId) {
+		LogUtil.log("removeByMessageId", Level.INFO, null);
+		try {
+			Query query = entityManager.createQuery(removeByMessageIdJPQL);
+			query.setParameter(1, messageId);
+			query.executeUpdate();
+			LogUtil.log("removeByMessageId successful", Level.INFO, null);
+		} catch (RuntimeException re) {
+			LogUtil.log("removeByMessageId failed", Level.SEVERE, re);
 			throw re;
 		}
 	}

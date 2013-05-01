@@ -29,15 +29,15 @@ public class BlockedalbumFacade {
 	 * subsequent persist actions of this entity should use the #update()
 	 * method.
 	 * 
-	 * @param entity
+	 * @param blockedalbum
 	 *            Blockedalbum entity to persist
 	 * @throws RuntimeException
 	 *             when the operation fails
 	 */
-	public void save(Blockedalbum entity) {
+	public void save(Blockedalbum blockedalbum) {
 		LogUtil.log("saving Blockedalbum instance", Level.INFO, null);
 		try {
-			entityManager.persist(entity);
+			entityManager.persist(blockedalbum);
 			LogUtil.log("save successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("save failed", Level.SEVERE, re);
@@ -48,17 +48,17 @@ public class BlockedalbumFacade {
 	/**
 	 * Delete a persistent Blockedalbum entity.
 	 * 
-	 * @param entity
+	 * @param blockedalbum
 	 *            Blockedalbum entity to delete
 	 * @throws RuntimeException
 	 *             when the operation fails
 	 */
-	public void delete(Blockedalbum entity) {
+	public void delete(Blockedalbum blockedalbum) {
 		LogUtil.log("deleting Blockedalbum instance", Level.INFO, null);
 		try {
-			entity = entityManager.getReference(Blockedalbum.class,
-					entity.getId());
-			entityManager.remove(entity);
+			blockedalbum = entityManager.getReference(Blockedalbum.class,
+					blockedalbum.getId());
+			entityManager.remove(blockedalbum);
 			LogUtil.log("delete successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("delete failed", Level.SEVERE, re);
@@ -72,17 +72,17 @@ public class BlockedalbumFacade {
 	 * when the JPA persistence mechanism has not previously been tracking the
 	 * updated entity.
 	 * 
-	 * @param entity
+	 * @param blockedalbum
 	 *            Blockedalbum entity to update
 	 * @return Blockedalbum the persisted Blockedalbum entity instance, may not
 	 *         be the same
 	 * @throws RuntimeException
 	 *             if the operation fails
 	 */
-	public Blockedalbum update(Blockedalbum entity) {
+	public Blockedalbum update(Blockedalbum blockedalbum) {
 		LogUtil.log("updating Blockedalbum instance", Level.INFO, null);
 		try {
-			Blockedalbum result = entityManager.merge(entity);
+			Blockedalbum result = entityManager.merge(blockedalbum);
 			LogUtil.log("update successful", Level.INFO, null);
 			return result;
 		} catch (RuntimeException re) {
@@ -118,10 +118,10 @@ public class BlockedalbumFacade {
 		}
 	}
 
-	public void detach(Blockedalbum entity) {
+	public void detach(Blockedalbum blockedalbum) {
 		LogUtil.log("detaching Blockedalbum instance", Level.INFO, null);
 		try {
-			entityManager.detach(entity);
+			entityManager.detach(blockedalbum);
 			LogUtil.log("detach successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("detach failed", Level.SEVERE, re);
@@ -129,10 +129,10 @@ public class BlockedalbumFacade {
 		}
 	}
 
-	public void refresh(Blockedalbum entity) {
+	public void refresh(Blockedalbum blockedalbum) {
 		LogUtil.log("refreshing Blockedalbum instance", Level.INFO, null);
 		try {
-			entityManager.refresh(entity);
+			entityManager.refresh(blockedalbum);
 			LogUtil.log("refresh successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("refresh failed", Level.SEVERE, re);
@@ -146,10 +146,10 @@ public class BlockedalbumFacade {
 	 * @see delete
 	 */
 
-	public void remove(Blockedalbum entity) {
+	public void remove(Blockedalbum blockedalbum) {
 		LogUtil.log("removing Blockedalbum instance", Level.INFO, null);
 		try {
-			entityManager.remove(entity);
+			entityManager.remove(blockedalbum);
 			LogUtil.log("remove successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("remove failed", Level.SEVERE, re);
@@ -164,6 +164,21 @@ public class BlockedalbumFacade {
 			LogUtil.log("flush successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("flush failed", Level.SEVERE, re);
+			throw re;
+		}
+	}
+
+	private static final String removeByIdJPQL = "delete from Blockedalbum a where a.id in (?1)";
+
+	public void removeById(BlockedalbumId id) {
+		LogUtil.log("removeById", Level.INFO, null);
+		try {
+			Query query = entityManager.createQuery(removeByIdJPQL);
+			query.setParameter(1, id);
+			query.executeUpdate();
+			LogUtil.log("removeById successful", Level.INFO, null);
+		} catch (RuntimeException re) {
+			LogUtil.log("removeById failed", Level.SEVERE, re);
 			throw re;
 		}
 	}

@@ -29,15 +29,15 @@ public class CardrepostFacade {
 	 * subsequent persist actions of this entity should use the #update()
 	 * method.
 	 * 
-	 * @param entity
+	 * @param cardrepost
 	 *            Cardrepost entity to persist
 	 * @throws RuntimeException
 	 *             when the operation fails
 	 */
-	public void save(Cardrepost entity) {
+	public void save(Cardrepost cardrepost) {
 		LogUtil.log("saving Cardrepost instance", Level.INFO, null);
 		try {
-			entityManager.persist(entity);
+			entityManager.persist(cardrepost);
 			LogUtil.log("save successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("save failed", Level.SEVERE, re);
@@ -48,17 +48,17 @@ public class CardrepostFacade {
 	/**
 	 * Delete a persistent Cardrepost entity.
 	 * 
-	 * @param entity
+	 * @param cardrepost
 	 *            Cardrepost entity to delete
 	 * @throws RuntimeException
 	 *             when the operation fails
 	 */
-	public void delete(Cardrepost entity) {
+	public void delete(Cardrepost cardrepost) {
 		LogUtil.log("deleting Cardrepost instance", Level.INFO, null);
 		try {
-			entity = entityManager.getReference(Cardrepost.class,
-					entity.getId());
-			entityManager.remove(entity);
+			cardrepost = entityManager.getReference(Cardrepost.class,
+					cardrepost.getId());
+			entityManager.remove(cardrepost);
 			LogUtil.log("delete successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("delete failed", Level.SEVERE, re);
@@ -72,17 +72,17 @@ public class CardrepostFacade {
 	 * when the JPA persistence mechanism has not previously been tracking the
 	 * updated entity.
 	 * 
-	 * @param entity
+	 * @param cardrepost
 	 *            Cardrepost entity to update
 	 * @return Cardrepost the persisted Cardrepost entity instance, may not be
 	 *         the same
 	 * @throws RuntimeException
 	 *             if the operation fails
 	 */
-	public Cardrepost update(Cardrepost entity) {
+	public Cardrepost update(Cardrepost cardrepost) {
 		LogUtil.log("updating Cardrepost instance", Level.INFO, null);
 		try {
-			Cardrepost result = entityManager.merge(entity);
+			Cardrepost result = entityManager.merge(cardrepost);
 			LogUtil.log("update successful", Level.INFO, null);
 			return result;
 		} catch (RuntimeException re) {
@@ -118,10 +118,10 @@ public class CardrepostFacade {
 		}
 	}
 
-	public void detach(Cardrepost entity) {
+	public void detach(Cardrepost cardrepost) {
 		LogUtil.log("detaching Cardrepost instance", Level.INFO, null);
 		try {
-			entityManager.detach(entity);
+			entityManager.detach(cardrepost);
 			LogUtil.log("detach successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("detach failed", Level.SEVERE, re);
@@ -129,10 +129,10 @@ public class CardrepostFacade {
 		}
 	}
 
-	public void refresh(Cardrepost entity) {
+	public void refresh(Cardrepost cardrepost) {
 		LogUtil.log("refreshing Cardrepost instance", Level.INFO, null);
 		try {
-			entityManager.refresh(entity);
+			entityManager.refresh(cardrepost);
 			LogUtil.log("refresh successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("refresh failed", Level.SEVERE, re);
@@ -146,10 +146,10 @@ public class CardrepostFacade {
 	 * @see delete
 	 */
 
-	public void remove(Cardrepost entity) {
+	public void remove(Cardrepost cardrepost) {
 		LogUtil.log("removing Cardrepost instance", Level.INFO, null);
 		try {
-			entityManager.remove(entity);
+			entityManager.remove(cardrepost);
 			LogUtil.log("remove successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("remove failed", Level.SEVERE, re);
@@ -164,6 +164,21 @@ public class CardrepostFacade {
 			LogUtil.log("flush successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("flush failed", Level.SEVERE, re);
+			throw re;
+		}
+	}
+
+	private static final String removeByIdJPQL = "delete from Cardrepost a where a.id in (?1)";
+
+	public void removeById(CardrepostId id) {
+		LogUtil.log("removeById", Level.INFO, null);
+		try {
+			Query query = entityManager.createQuery(removeByIdJPQL);
+			query.setParameter(1, id);
+			query.executeUpdate();
+			LogUtil.log("removeById successful", Level.INFO, null);
+		} catch (RuntimeException re) {
+			LogUtil.log("removeById failed", Level.SEVERE, re);
 			throw re;
 		}
 	}

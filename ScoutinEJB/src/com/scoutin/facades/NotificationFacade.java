@@ -27,15 +27,15 @@ public class NotificationFacade {
 	 * subsequent persist actions of this entity should use the #update()
 	 * method.
 	 * 
-	 * @param entity
+	 * @param notification
 	 *            Notification entity to persist
 	 * @throws RuntimeException
 	 *             when the operation fails
 	 */
-	public void save(Notification entity) {
+	public void save(Notification notification) {
 		LogUtil.log("saving Notification instance", Level.INFO, null);
 		try {
-			entityManager.persist(entity);
+			entityManager.persist(notification);
 			LogUtil.log("save successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("save failed", Level.SEVERE, re);
@@ -46,17 +46,17 @@ public class NotificationFacade {
 	/**
 	 * Delete a persistent Notification entity.
 	 * 
-	 * @param entity
+	 * @param notification
 	 *            Notification entity to delete
 	 * @throws RuntimeException
 	 *             when the operation fails
 	 */
-	public void delete(Notification entity) {
+	public void delete(Notification notification) {
 		LogUtil.log("deleting Notification instance", Level.INFO, null);
 		try {
-			entity = entityManager.getReference(Notification.class,
-					entity.getNotificationId());
-			entityManager.remove(entity);
+			notification = entityManager.getReference(Notification.class,
+					notification.getNotificationId());
+			entityManager.remove(notification);
 			LogUtil.log("delete successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("delete failed", Level.SEVERE, re);
@@ -70,17 +70,17 @@ public class NotificationFacade {
 	 * when the JPA persistence mechanism has not previously been tracking the
 	 * updated entity.
 	 * 
-	 * @param entity
+	 * @param notification
 	 *            Notification entity to update
 	 * @return Notification the persisted Notification entity instance, may not
 	 *         be the same
 	 * @throws RuntimeException
 	 *             if the operation fails
 	 */
-	public Notification update(Notification entity) {
+	public Notification update(Notification notification) {
 		LogUtil.log("updating Notification instance", Level.INFO, null);
 		try {
-			Notification result = entityManager.merge(entity);
+			Notification result = entityManager.merge(notification);
 			LogUtil.log("update successful", Level.INFO, null);
 			return result;
 		} catch (RuntimeException re) {
@@ -89,11 +89,12 @@ public class NotificationFacade {
 		}
 	}
 
-	public Notification findById(Long id) {
-		LogUtil.log("finding Notification instance with id: " + id, Level.INFO,
-				null);
+	public Notification findById(Long notificationId) {
+		LogUtil.log("finding Notification instance with id: " + notificationId,
+				Level.INFO, null);
 		try {
-			Notification instance = entityManager.find(Notification.class, id);
+			Notification instance = entityManager.find(Notification.class,
+					notificationId);
 			LogUtil.log("find successful", Level.INFO, null);
 			return instance;
 		} catch (RuntimeException re) {
@@ -102,12 +103,12 @@ public class NotificationFacade {
 		}
 	}
 
-	public Notification getReference(Long id) {
-		LogUtil.log("getReferencing Notification instance with id: " + id,
-				Level.INFO, null);
+	public Notification getReference(Long notificationId) {
+		LogUtil.log("getReferencing Notification instance with id: "
+				+ notificationId, Level.INFO, null);
 		try {
 			Notification instance = entityManager.getReference(
-					Notification.class, id);
+					Notification.class, notificationId);
 			LogUtil.log("getReference successful", Level.INFO, null);
 			return instance;
 		} catch (RuntimeException re) {
@@ -116,10 +117,10 @@ public class NotificationFacade {
 		}
 	}
 
-	public void detach(Notification entity) {
+	public void detach(Notification notification) {
 		LogUtil.log("detaching Notification instance", Level.INFO, null);
 		try {
-			entityManager.detach(entity);
+			entityManager.detach(notification);
 			LogUtil.log("detach successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("detach failed", Level.SEVERE, re);
@@ -127,10 +128,10 @@ public class NotificationFacade {
 		}
 	}
 
-	public void refresh(Notification entity) {
+	public void refresh(Notification notification) {
 		LogUtil.log("refreshing Notification instance", Level.INFO, null);
 		try {
-			entityManager.refresh(entity);
+			entityManager.refresh(notification);
 			LogUtil.log("refresh successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("refresh failed", Level.SEVERE, re);
@@ -144,10 +145,10 @@ public class NotificationFacade {
 	 * @see delete
 	 */
 
-	public void remove(Notification entity) {
+	public void remove(Notification notification) {
 		LogUtil.log("removing Notification instance", Level.INFO, null);
 		try {
-			entityManager.remove(entity);
+			entityManager.remove(notification);
 			LogUtil.log("remove successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("remove failed", Level.SEVERE, re);
@@ -162,6 +163,21 @@ public class NotificationFacade {
 			LogUtil.log("flush successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("flush failed", Level.SEVERE, re);
+			throw re;
+		}
+	}
+
+	private static final String removeByNotificationIdJPQL = "delete from Notification a where a.notificationId in (?1)";
+
+	public void removeByNotificationId(Long notificationId) {
+		LogUtil.log("removeByNotificationId", Level.INFO, null);
+		try {
+			Query query = entityManager.createQuery(removeByNotificationIdJPQL);
+			query.setParameter(1, notificationId);
+			query.executeUpdate();
+			LogUtil.log("removeByNotificationId successful", Level.INFO, null);
+		} catch (RuntimeException re) {
+			LogUtil.log("removeByNotificationId failed", Level.SEVERE, re);
 			throw re;
 		}
 	}

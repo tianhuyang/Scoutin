@@ -30,15 +30,15 @@ public class CommentFacade {
 	 * subsequent persist actions of this entity should use the #update()
 	 * method.
 	 * 
-	 * @param entity
+	 * @param comment
 	 *            Comment entity to persist
 	 * @throws RuntimeException
 	 *             when the operation fails
 	 */
-	public void save(Comment entity) {
+	public void save(Comment comment) {
 		LogUtil.log("saving Comment instance", Level.INFO, null);
 		try {
-			entityManager.persist(entity);
+			entityManager.persist(comment);
 			LogUtil.log("save successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("save failed", Level.SEVERE, re);
@@ -49,17 +49,17 @@ public class CommentFacade {
 	/**
 	 * Delete a persistent Comment entity.
 	 * 
-	 * @param entity
+	 * @param comment
 	 *            Comment entity to delete
 	 * @throws RuntimeException
 	 *             when the operation fails
 	 */
-	public void delete(Comment entity) {
+	public void delete(Comment comment) {
 		LogUtil.log("deleting Comment instance", Level.INFO, null);
 		try {
-			entity = entityManager.getReference(Comment.class,
-					entity.getCommentId());
-			entityManager.remove(entity);
+			comment = entityManager.getReference(Comment.class,
+					comment.getCommentId());
+			entityManager.remove(comment);
 			LogUtil.log("delete successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("delete failed", Level.SEVERE, re);
@@ -73,17 +73,17 @@ public class CommentFacade {
 	 * the JPA persistence mechanism has not previously been tracking the
 	 * updated entity.
 	 * 
-	 * @param entity
+	 * @param comment
 	 *            Comment entity to update
 	 * @return Comment the persisted Comment entity instance, may not be the
 	 *         same
 	 * @throws RuntimeException
 	 *             if the operation fails
 	 */
-	public Comment update(Comment entity) {
+	public Comment update(Comment comment) {
 		LogUtil.log("updating Comment instance", Level.INFO, null);
 		try {
-			Comment result = entityManager.merge(entity);
+			Comment result = entityManager.merge(comment);
 			LogUtil.log("update successful", Level.INFO, null);
 			return result;
 		} catch (RuntimeException re) {
@@ -92,10 +92,11 @@ public class CommentFacade {
 		}
 	}
 
-	public Comment findById(Long id) {
-		LogUtil.log("finding Comment instance with id: " + id, Level.INFO, null);
+	public Comment findById(Long commentId) {
+		LogUtil.log("finding Comment instance with id: " + commentId,
+				Level.INFO, null);
 		try {
-			Comment instance = entityManager.find(Comment.class, id);
+			Comment instance = entityManager.find(Comment.class, commentId);
 			LogUtil.log("find successful", Level.INFO, null);
 			return instance;
 		} catch (RuntimeException re) {
@@ -104,11 +105,12 @@ public class CommentFacade {
 		}
 	}
 
-	public Comment getReference(Long id) {
-		LogUtil.log("getReferencing Comment instance with id: " + id,
+	public Comment getReference(Long commentId) {
+		LogUtil.log("getReferencing Comment instance with id: " + commentId,
 				Level.INFO, null);
 		try {
-			Comment instance = entityManager.getReference(Comment.class, id);
+			Comment instance = entityManager.getReference(Comment.class,
+					commentId);
 			LogUtil.log("getReference successful", Level.INFO, null);
 			return instance;
 		} catch (RuntimeException re) {
@@ -117,10 +119,10 @@ public class CommentFacade {
 		}
 	}
 
-	public void detach(Comment entity) {
+	public void detach(Comment comment) {
 		LogUtil.log("detaching Comment instance", Level.INFO, null);
 		try {
-			entityManager.detach(entity);
+			entityManager.detach(comment);
 			LogUtil.log("detach successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("detach failed", Level.SEVERE, re);
@@ -128,10 +130,10 @@ public class CommentFacade {
 		}
 	}
 
-	public void refresh(Comment entity) {
+	public void refresh(Comment comment) {
 		LogUtil.log("refreshing Comment instance", Level.INFO, null);
 		try {
-			entityManager.refresh(entity);
+			entityManager.refresh(comment);
 			LogUtil.log("refresh successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("refresh failed", Level.SEVERE, re);
@@ -145,10 +147,10 @@ public class CommentFacade {
 	 * @see delete
 	 */
 
-	public void remove(Comment entity) {
+	public void remove(Comment comment) {
 		LogUtil.log("removing Comment instance", Level.INFO, null);
 		try {
-			entityManager.remove(entity);
+			entityManager.remove(comment);
 			LogUtil.log("remove successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("remove failed", Level.SEVERE, re);
@@ -163,6 +165,57 @@ public class CommentFacade {
 			LogUtil.log("flush successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("flush failed", Level.SEVERE, re);
+			throw re;
+		}
+	}
+
+	private static final String removeByCommentIdJPQL = "delete from Comment a where a.commentId in (?1)";
+
+	public void removeByCommentId(Long commentId) {
+		LogUtil.log("removeByCommentId", Level.INFO, null);
+		try {
+			Query query = entityManager.createQuery(removeByCommentIdJPQL);
+			query.setParameter(1, commentId);
+			query.executeUpdate();
+			LogUtil.log("removeByCommentId successful", Level.INFO, null);
+		} catch (RuntimeException re) {
+			LogUtil.log("removeByCommentId failed", Level.SEVERE, re);
+			throw re;
+		}
+	}
+
+	private static final String cardIdJPQL = "select a.card.cardId from Comment a where a.commentId = :commentId";
+
+	public java.lang.Long getCardId(java.lang.Long commentId) {
+		LogUtil.log("getAccountIdId with commentId" + commentId, Level.INFO,
+				null);
+		java.lang.Long cardId;
+		try {
+			Query query = entityManager.createQuery(cardIdJPQL);
+			query.setParameter("commentId", commentId);
+			cardId = (java.lang.Long) query.getSingleResult();
+			LogUtil.log("getAccountIdId successful", Level.INFO, null);
+			return cardId;
+		} catch (RuntimeException re) {
+			LogUtil.log("getAccountIdId failed", Level.SEVERE, re);
+			throw re;
+		}
+	}
+
+	private static final String accountIdJPQL = "select a.account.accountId from Comment a where a.commentId = :commentId";
+
+	public java.lang.Integer getAccountId(java.lang.Long commentId) {
+		LogUtil.log("getAccountIdId with commentId" + commentId, Level.INFO,
+				null);
+		java.lang.Integer accountId;
+		try {
+			Query query = entityManager.createQuery(accountIdJPQL);
+			query.setParameter("commentId", commentId);
+			accountId = (java.lang.Integer) query.getSingleResult();
+			LogUtil.log("getAccountIdId successful", Level.INFO, null);
+			return accountId;
+		} catch (RuntimeException re) {
+			LogUtil.log("getAccountIdId failed", Level.SEVERE, re);
 			throw re;
 		}
 	}

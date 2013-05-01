@@ -6,22 +6,7 @@
 		transaction-type="JTA">
 		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
 		<jta-data-source>java:jboss/datasources/ScoutinDB</jta-data-source>
-		<class>com.scoutin.entities.Profile</class>
-		<class>com.scoutin.entities.Notification</class>
-		<class>com.scoutin.entities.Message</class>
-		<class>com.scoutin.entities.FollowerId</class>
-		<class>com.scoutin.entities.Follower</class>
-		<class>com.scoutin.entities.Comment</class>
-		<class>com.scoutin.entities.Category</class>
-		<class>com.scoutin.entities.CardrepostsId</class>
-		<class>com.scoutin.entities.Cardreposts</class>
-		<class>com.scoutin.entities.Cardbody</class>
-		<class>com.scoutin.entities.Card</class>
-		<class>com.scoutin.entities.AlbumcardId</class>
-		<class>com.scoutin.entities.Albumcard</class>
-		<class>com.scoutin.entities.Album</class>
-		<class>com.scoutin.entities.Accountstat</class>
-		<class>com.scoutin.entities.Account</class>
+		
 
 
 		<properties>

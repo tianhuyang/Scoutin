@@ -27,7 +27,6 @@
 		<class>com.scoutin.entities.Accountstat</class>
 		<class>com.scoutin.entities.Account</class>
 
-
 		<properties>
 			<property name="jboss.as.jpa.providerModule" value="org.apache.openjpa" />
 			<property name="openjpa.DynamicEnhancementAgent" value="false" />

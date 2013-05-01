@@ -32,15 +32,15 @@ public class AccountstatFacade {
 	 * subsequent persist actions of this entity should use the #update()
 	 * method.
 	 * 
-	 * @param entity
+	 * @param accountstat
 	 *            Accountstat entity to persist
 	 * @throws RuntimeException
 	 *             when the operation fails
 	 */
-	public void save(Accountstat entity) {
+	public void save(Accountstat accountstat) {
 		LogUtil.log("saving Accountstat instance", Level.INFO, null);
 		try {
-			entityManager.persist(entity);
+			entityManager.persist(accountstat);
 			LogUtil.log("save successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("save failed", Level.SEVERE, re);
@@ -51,17 +51,17 @@ public class AccountstatFacade {
 	/**
 	 * Delete a persistent Accountstat entity.
 	 * 
-	 * @param entity
+	 * @param accountstat
 	 *            Accountstat entity to delete
 	 * @throws RuntimeException
 	 *             when the operation fails
 	 */
-	public void delete(Accountstat entity) {
+	public void delete(Accountstat accountstat) {
 		LogUtil.log("deleting Accountstat instance", Level.INFO, null);
 		try {
-			entity = entityManager.getReference(Accountstat.class,
-					entity.getAccountId());
-			entityManager.remove(entity);
+			accountstat = entityManager.getReference(Accountstat.class,
+					accountstat.getAccountId());
+			entityManager.remove(accountstat);
 			LogUtil.log("delete successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("delete failed", Level.SEVERE, re);
@@ -75,17 +75,17 @@ public class AccountstatFacade {
 	 * when the JPA persistence mechanism has not previously been tracking the
 	 * updated entity.
 	 * 
-	 * @param entity
+	 * @param accountstat
 	 *            Accountstat entity to update
 	 * @return Accountstat the persisted Accountstat entity instance, may not be
 	 *         the same
 	 * @throws RuntimeException
 	 *             if the operation fails
 	 */
-	public Accountstat update(Accountstat entity) {
+	public Accountstat update(Accountstat accountstat) {
 		LogUtil.log("updating Accountstat instance", Level.INFO, null);
 		try {
-			Accountstat result = entityManager.merge(entity);
+			Accountstat result = entityManager.merge(accountstat);
 			LogUtil.log("update successful", Level.INFO, null);
 			return result;
 		} catch (RuntimeException re) {
@@ -94,11 +94,12 @@ public class AccountstatFacade {
 		}
 	}
 
-	public Accountstat findById(Integer id) {
-		LogUtil.log("finding Accountstat instance with id: " + id, Level.INFO,
-				null);
+	public Accountstat findById(Integer accountId) {
+		LogUtil.log("finding Accountstat instance with id: " + accountId,
+				Level.INFO, null);
 		try {
-			Accountstat instance = entityManager.find(Accountstat.class, id);
+			Accountstat instance = entityManager.find(Accountstat.class,
+					accountId);
 			LogUtil.log("find successful", Level.INFO, null);
 			return instance;
 		} catch (RuntimeException re) {
@@ -107,12 +108,13 @@ public class AccountstatFacade {
 		}
 	}
 
-	public Accountstat getReference(Integer id) {
-		LogUtil.log("getReferencing Accountstat instance with id: " + id,
+	public Accountstat getReference(Integer accountId) {
+		LogUtil.log(
+				"getReferencing Accountstat instance with id: " + accountId,
 				Level.INFO, null);
 		try {
 			Accountstat instance = entityManager.getReference(
-					Accountstat.class, id);
+					Accountstat.class, accountId);
 			LogUtil.log("getReference successful", Level.INFO, null);
 			return instance;
 		} catch (RuntimeException re) {
@@ -121,10 +123,10 @@ public class AccountstatFacade {
 		}
 	}
 
-	public void detach(Accountstat entity) {
+	public void detach(Accountstat accountstat) {
 		LogUtil.log("detaching Accountstat instance", Level.INFO, null);
 		try {
-			entityManager.detach(entity);
+			entityManager.detach(accountstat);
 			LogUtil.log("detach successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("detach failed", Level.SEVERE, re);
@@ -132,10 +134,10 @@ public class AccountstatFacade {
 		}
 	}
 
-	public void refresh(Accountstat entity) {
+	public void refresh(Accountstat accountstat) {
 		LogUtil.log("refreshing Accountstat instance", Level.INFO, null);
 		try {
-			entityManager.refresh(entity);
+			entityManager.refresh(accountstat);
 			LogUtil.log("refresh successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("refresh failed", Level.SEVERE, re);
@@ -149,10 +151,10 @@ public class AccountstatFacade {
 	 * @see delete
 	 */
 
-	public void remove(Accountstat entity) {
+	public void remove(Accountstat accountstat) {
 		LogUtil.log("removing Accountstat instance", Level.INFO, null);
 		try {
-			entityManager.remove(entity);
+			entityManager.remove(accountstat);
 			LogUtil.log("remove successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("remove failed", Level.SEVERE, re);
@@ -167,6 +169,21 @@ public class AccountstatFacade {
 			LogUtil.log("flush successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("flush failed", Level.SEVERE, re);
+			throw re;
+		}
+	}
+
+	private static final String removeByAccountIdJPQL = "delete from Accountstat a where a.accountId in (?1)";
+
+	public void removeByAccountId(Integer accountId) {
+		LogUtil.log("removeByAccountId", Level.INFO, null);
+		try {
+			Query query = entityManager.createQuery(removeByAccountIdJPQL);
+			query.setParameter(1, accountId);
+			query.executeUpdate();
+			LogUtil.log("removeByAccountId successful", Level.INFO, null);
+		} catch (RuntimeException re) {
+			LogUtil.log("removeByAccountId failed", Level.SEVERE, re);
 			throw re;
 		}
 	}

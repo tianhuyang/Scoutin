@@ -41,7 +41,7 @@ public class AlbumBeanService {
 			return true;
 		}
 		else{
-			blockedAlbumDao.remove(blockedalbum);
+			blockedAlbumDao.removeById(blockedalbumId);
 			return false;
 		}
 		

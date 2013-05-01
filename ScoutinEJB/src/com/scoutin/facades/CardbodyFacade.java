@@ -40,15 +40,15 @@ public class CardbodyFacade {
 	 * subsequent persist actions of this entity should use the #update()
 	 * method.
 	 * 
-	 * @param entity
+	 * @param cardbody
 	 *            Cardbody entity to persist
 	 * @throws RuntimeException
 	 *             when the operation fails
 	 */
-	public void save(Cardbody entity) {
+	public void save(Cardbody cardbody) {
 		LogUtil.log("saving Cardbody instance", Level.INFO, null);
 		try {
-			entityManager.persist(entity);
+			entityManager.persist(cardbody);
 			LogUtil.log("save successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("save failed", Level.SEVERE, re);
@@ -59,17 +59,17 @@ public class CardbodyFacade {
 	/**
 	 * Delete a persistent Cardbody entity.
 	 * 
-	 * @param entity
+	 * @param cardbody
 	 *            Cardbody entity to delete
 	 * @throws RuntimeException
 	 *             when the operation fails
 	 */
-	public void delete(Cardbody entity) {
+	public void delete(Cardbody cardbody) {
 		LogUtil.log("deleting Cardbody instance", Level.INFO, null);
 		try {
-			entity = entityManager.getReference(Cardbody.class,
-					entity.getCardbodyId());
-			entityManager.remove(entity);
+			cardbody = entityManager.getReference(Cardbody.class,
+					cardbody.getCardbodyId());
+			entityManager.remove(cardbody);
 			LogUtil.log("delete successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("delete failed", Level.SEVERE, re);
@@ -83,17 +83,17 @@ public class CardbodyFacade {
 	 * the JPA persistence mechanism has not previously been tracking the
 	 * updated entity.
 	 * 
-	 * @param entity
+	 * @param cardbody
 	 *            Cardbody entity to update
 	 * @return Cardbody the persisted Cardbody entity instance, may not be the
 	 *         same
 	 * @throws RuntimeException
 	 *             if the operation fails
 	 */
-	public Cardbody update(Cardbody entity) {
+	public Cardbody update(Cardbody cardbody) {
 		LogUtil.log("updating Cardbody instance", Level.INFO, null);
 		try {
-			Cardbody result = entityManager.merge(entity);
+			Cardbody result = entityManager.merge(cardbody);
 			LogUtil.log("update successful", Level.INFO, null);
 			return result;
 		} catch (RuntimeException re) {
@@ -102,11 +102,11 @@ public class CardbodyFacade {
 		}
 	}
 
-	public Cardbody findById(Long id) {
-		LogUtil.log("finding Cardbody instance with id: " + id, Level.INFO,
-				null);
+	public Cardbody findById(Long cardbodyId) {
+		LogUtil.log("finding Cardbody instance with id: " + cardbodyId,
+				Level.INFO, null);
 		try {
-			Cardbody instance = entityManager.find(Cardbody.class, id);
+			Cardbody instance = entityManager.find(Cardbody.class, cardbodyId);
 			LogUtil.log("find successful", Level.INFO, null);
 			return instance;
 		} catch (RuntimeException re) {
@@ -115,11 +115,12 @@ public class CardbodyFacade {
 		}
 	}
 
-	public Cardbody getReference(Long id) {
-		LogUtil.log("getReferencing Cardbody instance with id: " + id,
+	public Cardbody getReference(Long cardbodyId) {
+		LogUtil.log("getReferencing Cardbody instance with id: " + cardbodyId,
 				Level.INFO, null);
 		try {
-			Cardbody instance = entityManager.getReference(Cardbody.class, id);
+			Cardbody instance = entityManager.getReference(Cardbody.class,
+					cardbodyId);
 			LogUtil.log("getReference successful", Level.INFO, null);
 			return instance;
 		} catch (RuntimeException re) {
@@ -128,10 +129,10 @@ public class CardbodyFacade {
 		}
 	}
 
-	public void detach(Cardbody entity) {
+	public void detach(Cardbody cardbody) {
 		LogUtil.log("detaching Cardbody instance", Level.INFO, null);
 		try {
-			entityManager.detach(entity);
+			entityManager.detach(cardbody);
 			LogUtil.log("detach successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("detach failed", Level.SEVERE, re);
@@ -139,10 +140,10 @@ public class CardbodyFacade {
 		}
 	}
 
-	public void refresh(Cardbody entity) {
+	public void refresh(Cardbody cardbody) {
 		LogUtil.log("refreshing Cardbody instance", Level.INFO, null);
 		try {
-			entityManager.refresh(entity);
+			entityManager.refresh(cardbody);
 			LogUtil.log("refresh successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("refresh failed", Level.SEVERE, re);
@@ -156,10 +157,10 @@ public class CardbodyFacade {
 	 * @see delete
 	 */
 
-	public void remove(Cardbody entity) {
+	public void remove(Cardbody cardbody) {
 		LogUtil.log("removing Cardbody instance", Level.INFO, null);
 		try {
-			entityManager.remove(entity);
+			entityManager.remove(cardbody);
 			LogUtil.log("remove successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("remove failed", Level.SEVERE, re);
@@ -174,6 +175,39 @@ public class CardbodyFacade {
 			LogUtil.log("flush successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("flush failed", Level.SEVERE, re);
+			throw re;
+		}
+	}
+
+	private static final String removeByCardbodyIdJPQL = "delete from Cardbody a where a.cardbodyId in (?1)";
+
+	public void removeByCardbodyId(Long cardbodyId) {
+		LogUtil.log("removeByCardbodyId", Level.INFO, null);
+		try {
+			Query query = entityManager.createQuery(removeByCardbodyIdJPQL);
+			query.setParameter(1, cardbodyId);
+			query.executeUpdate();
+			LogUtil.log("removeByCardbodyId successful", Level.INFO, null);
+		} catch (RuntimeException re) {
+			LogUtil.log("removeByCardbodyId failed", Level.SEVERE, re);
+			throw re;
+		}
+	}
+
+	private static final String accountIdJPQL = "select a.account.accountId from Cardbody a where a.cardbodyId = :cardbodyId";
+
+	public java.lang.Integer getAccountId(java.lang.Long cardbodyId) {
+		LogUtil.log("getAccountIdId with cardbodyId" + cardbodyId, Level.INFO,
+				null);
+		java.lang.Integer accountId;
+		try {
+			Query query = entityManager.createQuery(accountIdJPQL);
+			query.setParameter("cardbodyId", cardbodyId);
+			accountId = (java.lang.Integer) query.getSingleResult();
+			LogUtil.log("getAccountIdId successful", Level.INFO, null);
+			return accountId;
+		} catch (RuntimeException re) {
+			LogUtil.log("getAccountIdId failed", Level.SEVERE, re);
 			throw re;
 		}
 	}

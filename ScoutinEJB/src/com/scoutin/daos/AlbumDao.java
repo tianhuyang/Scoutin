@@ -8,6 +8,7 @@ import javax.ejb.Stateless;
 import javax.persistence.Query;
 
 import com.scoutin.entities.Account;
+import com.scoutin.entities.Album;
 import com.scoutin.entities.Follower;
 import com.scoutin.facades.AlbumFacade;
 import com.scoutin.facades.LogUtil;
@@ -38,7 +39,7 @@ public class AlbumDao extends AlbumFacade {
 		return success;
 	}
 	
-    private static final String followAlbumJPQL = "select follower from Follower follower where follower.id.followingId = ?1 and follower.id.followedId in (select album.account from Album album where album.albumId = ?2)";
+    private static final String followAlbumJPQL = "select follower from Follower follower, Album album where follower.id.followingId = ?1 and follower.id.followedId = album.account.accountId and album.albumId = ?2";
 	
 	public Follower getFollower(Integer followingId, Long albumId) {
 		LogUtil.log("getFollowering", Level.INFO, null);

@@ -36,15 +36,15 @@ public class CardFacade {
 	 * subsequent persist actions of this entity should use the #update()
 	 * method.
 	 * 
-	 * @param entity
+	 * @param card
 	 *            Card entity to persist
 	 * @throws RuntimeException
 	 *             when the operation fails
 	 */
-	public void save(Card entity) {
+	public void save(Card card) {
 		LogUtil.log("saving Card instance", Level.INFO, null);
 		try {
-			entityManager.persist(entity);
+			entityManager.persist(card);
 			LogUtil.log("save successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("save failed", Level.SEVERE, re);
@@ -55,16 +55,16 @@ public class CardFacade {
 	/**
 	 * Delete a persistent Card entity.
 	 * 
-	 * @param entity
+	 * @param card
 	 *            Card entity to delete
 	 * @throws RuntimeException
 	 *             when the operation fails
 	 */
-	public void delete(Card entity) {
+	public void delete(Card card) {
 		LogUtil.log("deleting Card instance", Level.INFO, null);
 		try {
-			entity = entityManager.getReference(Card.class, entity.getCardId());
-			entityManager.remove(entity);
+			card = entityManager.getReference(Card.class, card.getCardId());
+			entityManager.remove(card);
 			LogUtil.log("delete successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("delete failed", Level.SEVERE, re);
@@ -78,16 +78,16 @@ public class CardFacade {
 	 * persistence mechanism has not previously been tracking the updated
 	 * entity.
 	 * 
-	 * @param entity
+	 * @param card
 	 *            Card entity to update
 	 * @return Card the persisted Card entity instance, may not be the same
 	 * @throws RuntimeException
 	 *             if the operation fails
 	 */
-	public Card update(Card entity) {
+	public Card update(Card card) {
 		LogUtil.log("updating Card instance", Level.INFO, null);
 		try {
-			Card result = entityManager.merge(entity);
+			Card result = entityManager.merge(card);
 			LogUtil.log("update successful", Level.INFO, null);
 			return result;
 		} catch (RuntimeException re) {
@@ -96,10 +96,11 @@ public class CardFacade {
 		}
 	}
 
-	public Card findById(Long id) {
-		LogUtil.log("finding Card instance with id: " + id, Level.INFO, null);
+	public Card findById(Long cardId) {
+		LogUtil.log("finding Card instance with id: " + cardId, Level.INFO,
+				null);
 		try {
-			Card instance = entityManager.find(Card.class, id);
+			Card instance = entityManager.find(Card.class, cardId);
 			LogUtil.log("find successful", Level.INFO, null);
 			return instance;
 		} catch (RuntimeException re) {
@@ -108,11 +109,11 @@ public class CardFacade {
 		}
 	}
 
-	public Card getReference(Long id) {
-		LogUtil.log("getReferencing Card instance with id: " + id, Level.INFO,
-				null);
+	public Card getReference(Long cardId) {
+		LogUtil.log("getReferencing Card instance with id: " + cardId,
+				Level.INFO, null);
 		try {
-			Card instance = entityManager.getReference(Card.class, id);
+			Card instance = entityManager.getReference(Card.class, cardId);
 			LogUtil.log("getReference successful", Level.INFO, null);
 			return instance;
 		} catch (RuntimeException re) {
@@ -121,10 +122,10 @@ public class CardFacade {
 		}
 	}
 
-	public void detach(Card entity) {
+	public void detach(Card card) {
 		LogUtil.log("detaching Card instance", Level.INFO, null);
 		try {
-			entityManager.detach(entity);
+			entityManager.detach(card);
 			LogUtil.log("detach successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("detach failed", Level.SEVERE, re);
@@ -132,10 +133,10 @@ public class CardFacade {
 		}
 	}
 
-	public void refresh(Card entity) {
+	public void refresh(Card card) {
 		LogUtil.log("refreshing Card instance", Level.INFO, null);
 		try {
-			entityManager.refresh(entity);
+			entityManager.refresh(card);
 			LogUtil.log("refresh successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("refresh failed", Level.SEVERE, re);
@@ -149,10 +150,10 @@ public class CardFacade {
 	 * @see delete
 	 */
 
-	public void remove(Card entity) {
+	public void remove(Card card) {
 		LogUtil.log("removing Card instance", Level.INFO, null);
 		try {
-			entityManager.remove(entity);
+			entityManager.remove(card);
 			LogUtil.log("remove successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("remove failed", Level.SEVERE, re);
@@ -167,6 +168,38 @@ public class CardFacade {
 			LogUtil.log("flush successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("flush failed", Level.SEVERE, re);
+			throw re;
+		}
+	}
+
+	private static final String removeByCardIdJPQL = "delete from Card a where a.cardId in (?1)";
+
+	public void removeByCardId(Long cardId) {
+		LogUtil.log("removeByCardId", Level.INFO, null);
+		try {
+			Query query = entityManager.createQuery(removeByCardIdJPQL);
+			query.setParameter(1, cardId);
+			query.executeUpdate();
+			LogUtil.log("removeByCardId successful", Level.INFO, null);
+		} catch (RuntimeException re) {
+			LogUtil.log("removeByCardId failed", Level.SEVERE, re);
+			throw re;
+		}
+	}
+
+	private static final String cardbodyIdJPQL = "select a.cardbody.cardbodyId from Card a where a.cardId = :cardId";
+
+	public java.lang.Long getCardbodyId(java.lang.Long cardId) {
+		LogUtil.log("getCardbodyIdId with cardId" + cardId, Level.INFO, null);
+		java.lang.Long cardbodyId;
+		try {
+			Query query = entityManager.createQuery(cardbodyIdJPQL);
+			query.setParameter("cardId", cardId);
+			cardbodyId = (java.lang.Long) query.getSingleResult();
+			LogUtil.log("getCardbodyIdId successful", Level.INFO, null);
+			return cardbodyId;
+		} catch (RuntimeException re) {
+			LogUtil.log("getCardbodyIdId failed", Level.SEVERE, re);
 			throw re;
 		}
 	}

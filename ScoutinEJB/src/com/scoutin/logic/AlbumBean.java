@@ -36,7 +36,7 @@ public class AlbumBean implements AlbumBeanRemote {
 	}
 
 	@Override
-	public boolean followAlbum(Integer followingAccountId, Long followedAlbumId) {
+	public boolean blockAlbum(Integer followingAccountId, Long followedAlbumId) {
 		try {
 			return albumBeanService.followAlbum(followingAccountId, followedAlbumId);
 		} catch (Throwable t) {

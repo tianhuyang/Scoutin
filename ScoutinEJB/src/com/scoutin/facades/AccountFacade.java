@@ -37,15 +37,15 @@ public class AccountFacade {
 	 * subsequent persist actions of this entity should use the #update()
 	 * method.
 	 * 
-	 * @param entity
+	 * @param account
 	 *            Account entity to persist
 	 * @throws RuntimeException
 	 *             when the operation fails
 	 */
-	public void save(Account entity) {
+	public void save(Account account) {
 		LogUtil.log("saving Account instance", Level.INFO, null);
 		try {
-			entityManager.persist(entity);
+			entityManager.persist(account);
 			LogUtil.log("save successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("save failed", Level.SEVERE, re);
@@ -56,17 +56,17 @@ public class AccountFacade {
 	/**
 	 * Delete a persistent Account entity.
 	 * 
-	 * @param entity
+	 * @param account
 	 *            Account entity to delete
 	 * @throws RuntimeException
 	 *             when the operation fails
 	 */
-	public void delete(Account entity) {
+	public void delete(Account account) {
 		LogUtil.log("deleting Account instance", Level.INFO, null);
 		try {
-			entity = entityManager.getReference(Account.class,
-					entity.getAccountId());
-			entityManager.remove(entity);
+			account = entityManager.getReference(Account.class,
+					account.getAccountId());
+			entityManager.remove(account);
 			LogUtil.log("delete successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("delete failed", Level.SEVERE, re);
@@ -80,17 +80,17 @@ public class AccountFacade {
 	 * the JPA persistence mechanism has not previously been tracking the
 	 * updated entity.
 	 * 
-	 * @param entity
+	 * @param account
 	 *            Account entity to update
 	 * @return Account the persisted Account entity instance, may not be the
 	 *         same
 	 * @throws RuntimeException
 	 *             if the operation fails
 	 */
-	public Account update(Account entity) {
+	public Account update(Account account) {
 		LogUtil.log("updating Account instance", Level.INFO, null);
 		try {
-			Account result = entityManager.merge(entity);
+			Account result = entityManager.merge(account);
 			LogUtil.log("update successful", Level.INFO, null);
 			return result;
 		} catch (RuntimeException re) {
@@ -99,10 +99,11 @@ public class AccountFacade {
 		}
 	}
 
-	public Account findById(Integer id) {
-		LogUtil.log("finding Account instance with id: " + id, Level.INFO, null);
+	public Account findById(Integer accountId) {
+		LogUtil.log("finding Account instance with id: " + accountId,
+				Level.INFO, null);
 		try {
-			Account instance = entityManager.find(Account.class, id);
+			Account instance = entityManager.find(Account.class, accountId);
 			LogUtil.log("find successful", Level.INFO, null);
 			return instance;
 		} catch (RuntimeException re) {
@@ -111,11 +112,12 @@ public class AccountFacade {
 		}
 	}
 
-	public Account getReference(Integer id) {
-		LogUtil.log("getReferencing Account instance with id: " + id,
+	public Account getReference(Integer accountId) {
+		LogUtil.log("getReferencing Account instance with id: " + accountId,
 				Level.INFO, null);
 		try {
-			Account instance = entityManager.getReference(Account.class, id);
+			Account instance = entityManager.getReference(Account.class,
+					accountId);
 			LogUtil.log("getReference successful", Level.INFO, null);
 			return instance;
 		} catch (RuntimeException re) {
@@ -124,10 +126,10 @@ public class AccountFacade {
 		}
 	}
 
-	public void detach(Account entity) {
+	public void detach(Account account) {
 		LogUtil.log("detaching Account instance", Level.INFO, null);
 		try {
-			entityManager.detach(entity);
+			entityManager.detach(account);
 			LogUtil.log("detach successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("detach failed", Level.SEVERE, re);
@@ -135,10 +137,10 @@ public class AccountFacade {
 		}
 	}
 
-	public void refresh(Account entity) {
+	public void refresh(Account account) {
 		LogUtil.log("refreshing Account instance", Level.INFO, null);
 		try {
-			entityManager.refresh(entity);
+			entityManager.refresh(account);
 			LogUtil.log("refresh successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("refresh failed", Level.SEVERE, re);
@@ -152,10 +154,10 @@ public class AccountFacade {
 	 * @see delete
 	 */
 
-	public void remove(Account entity) {
+	public void remove(Account account) {
 		LogUtil.log("removing Account instance", Level.INFO, null);
 		try {
-			entityManager.remove(entity);
+			entityManager.remove(account);
 			LogUtil.log("remove successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("remove failed", Level.SEVERE, re);
@@ -170,6 +172,21 @@ public class AccountFacade {
 			LogUtil.log("flush successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("flush failed", Level.SEVERE, re);
+			throw re;
+		}
+	}
+
+	private static final String removeByAccountIdJPQL = "delete from Account a where a.accountId in (?1)";
+
+	public void removeByAccountId(Integer accountId) {
+		LogUtil.log("removeByAccountId", Level.INFO, null);
+		try {
+			Query query = entityManager.createQuery(removeByAccountIdJPQL);
+			query.setParameter(1, accountId);
+			query.executeUpdate();
+			LogUtil.log("removeByAccountId successful", Level.INFO, null);
+		} catch (RuntimeException re) {
+			LogUtil.log("removeByAccountId failed", Level.SEVERE, re);
 			throw re;
 		}
 	}
