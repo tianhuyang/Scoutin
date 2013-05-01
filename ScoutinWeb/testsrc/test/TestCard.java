@@ -54,8 +54,9 @@ public class TestCard {
 		int accountId = 1;
 		Long[] albumIds = new Long[]{3L,1L};
 		Long cardbodyId = 1L;
+		Card card = new Card();
 		try {
-			Card card = CardService.repostCard(accountId,albumIds,cardbodyId);
+			card = CardService.repostCard(accountId,albumIds,card,cardbodyId);
 			String info = ReflectionToStringBuilder.toString(card, ToStringStyle.MULTI_LINE_STYLE);
 			System.out.println(info);
 			Assert.assertTrue(true);
@@ -72,26 +73,17 @@ public class TestCard {
 		Map<String, Object> cardProperties = new TreeMap<String, Object>();
 		Map<String, Object> cardbodyProperties = new TreeMap<String, Object>();
 		Map<String, Object> properties[] = new TreeMap[1];
-//		Card card = new Card();
-//		card.setCardId(3L);
-//		card.setDescription("card description");
-//		card.setVersion(1L);
-//		
-//		Cardbody cardbody = new Cardbody();
-//		cardbody.setCardbodyId(1L);
-//		cardbody.setTitle("this is a test");		
-//		cardbody.setVersion(6L);
 		cardProperties.put("cardId", 3L);
 		cardProperties.put("description", "card sucess2");
-		cardProperties.put("version", 4L);
+		cardProperties.put("version", 5L);
 		
 		cardbodyProperties.put("description", "card description");
 		cardbodyProperties.put("cardbodyId", 1L);
 		cardbodyProperties.put("title", "title2");
-		cardbodyProperties.put("version", 4L);
+		cardbodyProperties.put("version", 9L);
 		try {
 			CardService.editCard(accountId, cardProperties, cardbodyProperties,properties);
-			System.out.println(properties);
+			System.out.println(properties[0]);
 			Assert.assertTrue(true);
 		} catch (ScoutinException e) {
 			e.printStackTrace();
