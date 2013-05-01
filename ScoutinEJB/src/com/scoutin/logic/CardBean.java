@@ -42,7 +42,6 @@ public class CardBean implements CardBeanRemote {
 	public Card createCard(Integer accountId, Long[] albumIds, Card card,
 			Cardbody cardbody) {
 		try {
-			card.setCardId(null);
 			card = cardBeanService.createCard(accountId, albumIds, card,
 					cardbody);
 			if (card != null) {

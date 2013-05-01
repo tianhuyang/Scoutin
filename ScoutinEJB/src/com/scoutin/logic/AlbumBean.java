@@ -23,7 +23,6 @@ public class AlbumBean implements AlbumBeanRemote {
 	@Override
 	public Album createAlbum(Integer accountId, Album album) {
 		try {
-			album.setAlbumId(null);
 			album = albumBeanService.createAlbum(accountId, album);
 			if (album != null) {
 				album.setAccount(null);

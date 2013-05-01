@@ -25,6 +25,9 @@ public class AccountService {
 				|| (password == null || password.length() == 0)) {
 			throw new IllegalArgumentException("Illegal arguments in signup");
 		}
+		
+		account.setAccountId(null);
+		account.setVersion(null);
 	
 		try {
 			account = EJBUtils.accountBeanRemote.signup(account);

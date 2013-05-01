@@ -31,11 +31,12 @@ public class TestCard {
 
 	}
 	
-	@Ignore
+	
 	@Test
 	public void testCreateCard(){
 		try {
 			Card card = new Card();
+			card.setVersion(2L);
 			Cardbody cardbody = new Cardbody();
 			card.setDescription("My new card");
 			card = CardService.createCard(1,new Long[]{1l,3L},card,cardbody);
@@ -66,7 +67,7 @@ public class TestCard {
 		}
 	}
 	
-	
+	@Ignore
 	@Test
 	public void testEditCard(){
 		int accountId = 1;

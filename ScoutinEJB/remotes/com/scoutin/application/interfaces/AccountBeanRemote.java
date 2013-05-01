@@ -7,7 +7,7 @@ import com.scoutin.entities.*;
 public interface AccountBeanRemote {
 	
 	/*
-	 * @param account:(Account) must be not-null
+	 * @param account:(Account) must be not-null, null account.accountId, null account.version
 	 * @return created Account if successful
 	 * @throws ApplicationException if failed
 	 */
