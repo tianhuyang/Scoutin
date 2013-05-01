@@ -159,7 +159,6 @@ public class CardBeanService {
 					throw new OptimisticLockException(
 							"OptimisticLockException while updating card");
 				}
-
 				BeanUtils.populate(card, cardProperties);
 
 			}

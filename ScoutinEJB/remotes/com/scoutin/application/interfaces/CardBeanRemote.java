@@ -33,7 +33,7 @@ public interface CardBeanRemote {
 	 * @param cardProperties:(Map<String,Object>) either null or must have cardId:(Long) and version:(Long)
 	 * @param cardbodyProperties:(Map<String,Object>) either null or must have cardbodyId:(Long) and version:(Long)
 	 * cardProperties and cardbodyProperties can't be both null
-	 * @return ? if successful
+	 * @return card:(Map<String,Object>), cardbody:(Map<String,Object>) if successful
 	 * @throws ApplicationException if failed
 	 */
 	public Map<String,Object> editCard(Integer accountId, Map<String,Object> cardProperties, Map<String,Object> cardbodyProperties);

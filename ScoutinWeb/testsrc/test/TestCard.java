@@ -91,8 +91,7 @@ public class TestCard {
 		cardbodyProperties.put("version", 4L);
 		try {
 			CardService.editCard(accountId, cardProperties, cardbodyProperties,properties);
-			String info = ReflectionToStringBuilder.toString(properties[0], ToStringStyle.MULTI_LINE_STYLE);
-			System.out.println(info);
+			System.out.println(properties);
 			Assert.assertTrue(true);
 		} catch (ScoutinException e) {
 			e.printStackTrace();
