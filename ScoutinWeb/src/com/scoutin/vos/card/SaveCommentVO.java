@@ -2,15 +2,15 @@ package com.scoutin.vos.card;
 
 public class SaveCommentVO {
 	
-	public long cardId;
+	public Long cardId;
 	public String content;
 	
 
-	public long getCardId() {
+	public Long getCardId() {
 		return cardId;
 	}
 
-	public void setCardId(long cardId) {
+	public void setCardId(Long cardId) {
 		this.cardId = cardId;
 	}
 	

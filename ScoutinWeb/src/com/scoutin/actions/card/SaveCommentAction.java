@@ -6,6 +6,7 @@ import java.util.TreeMap;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.struts2.interceptor.ServletRequestAware;
 
 import com.opensymphony.xwork2.ActionSupport;
@@ -47,7 +48,7 @@ public class SaveCommentAction extends ActionSupport implements ServletRequestAw
 	public void validate(){
 		super.validate();
 		if(this.hasFieldErrors()){
-			JSONUtils.putStatus(dataMap, ScoutinError.Account_Signup_Input_Status, ScoutinError.Account_Signup_Input_Message);
+			JSONUtils.putStatus(dataMap, ScoutinError.Card_CreateComment_Input_Status, ScoutinError.Card_CreateComment_Input_Message);
 			dataMap.put("fieldErrors", this.getFieldErrors());
 		}
 	}
@@ -55,12 +56,11 @@ public class SaveCommentAction extends ActionSupport implements ServletRequestAw
 	public String createComment() throws Exception
 	{
 		boolean succeed = true;
-		Map<String,Object> properties = new TreeMap<String,Object>();
-		CommonUtils.describe(properties, saveCommentVO);
+		Comment comment = new Comment();
+		BeanUtils.copyProperties(comment, saveCommentVO);
 		Account account = (Account)request.getSession(true).getAttribute("user");
-		properties.put("accountId", account.getAccountId());
 		try{
-			Comment comment = CardService.commentCard(properties);
+			comment = CardService.commentCard(account.getAccountId(),saveCommentVO.getCardId(),comment);
 			dataMap.put("comment", comment);
 		}catch(ScoutinException e){
 			succeed = false;

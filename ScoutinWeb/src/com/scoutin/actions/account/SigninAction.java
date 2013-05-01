@@ -14,7 +14,7 @@ import com.opensymphony.xwork2.ModelDriven;
 import com.scoutin.entities.Account;
 import com.scoutin.exception.ScoutinError;
 import com.scoutin.exception.ScoutinException;
-import com.scoutin.interfaces.AccountConstants;
+import com.scoutin.application.interfaces.AccountConstants;
 import com.scoutin.logic.AccountService;
 import com.scoutin.utilities.JSONUtils;
 import com.scoutin.vos.account.SigninVO;

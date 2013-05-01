@@ -2,9 +2,9 @@ package com.scoutin.vos.card;
 
 public class RepostCardVO {
 	public String description; 
-	public int rating;
-	public long cardbodyId;
-	public long[] albumIds;
+	public Integer rating;
+	public Long cardbodyId;
+	public Long[] albumIds;
 	
 	public String getDescription() {
 		return description;
@@ -12,22 +12,22 @@ public class RepostCardVO {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public int getRating() {
+	public Integer getRating() {
 		return rating;
 	}
-	public void setRating(int rating) {
+	public void setRating(Integer rating) {
 		this.rating = rating;
 	}
-	public long getCardbodyId() {
+	public Long getCardbodyId() {
 		return cardbodyId;
 	}
-	public void setCardbodyId(long cardBodyId) {
+	public void setCardbodyId(Long cardBodyId) {
 		this.cardbodyId = cardBodyId;
 	}
-	public long[] getAlbumIds() {
+	public Long[] getAlbumIds() {
 		return albumIds;
 	}
-	public void setAlbumIds(long[] albumIds) {
+	public void setAlbumIds(Long[] albumIds) {
 		this.albumIds = albumIds;
 	}
 	

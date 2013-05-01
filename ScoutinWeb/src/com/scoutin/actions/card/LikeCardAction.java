@@ -12,6 +12,8 @@ import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 import com.scoutin.entities.Account;
 import com.scoutin.exception.ScoutinError;
+import com.scoutin.exception.ScoutinException;
+import com.scoutin.logic.CardService;
 import com.scoutin.utilities.CommonUtils;
 import com.scoutin.utilities.JSONUtils;
 import com.scoutin.vos.card.LikeCardVO;
@@ -45,16 +47,25 @@ public class LikeCardAction extends ActionSupport implements ServletRequestAware
 	{
 		super.validate();
 		if(this.hasFieldErrors()){
-			JSONUtils.putStatus(dataMap, ScoutinError.Account_Signup_Input_Status, ScoutinError.Account_Signup_Input_Message);
+			JSONUtils.putStatus(dataMap, ScoutinError.Card_LikeCard_Input_Status, ScoutinError.Card_LikeCard_Input_Message);
 			dataMap.put("fieldErrors", this.getFieldErrors());
 		}
 	}
 	
 	public String execute() throws Exception{
-		Map<String,Object> properties = new TreeMap<String,Object>();
-		CommonUtils.describe(properties, likeCardVO);
-		Account account = (Account)request.getSession(true).getAttribute("user");
-		properties.put("accountId",account.getAccountId());
+		boolean succeed = true;
+		try{
+			Account account = (Account)request.getSession(true).getAttribute("user");
+			boolean isLike = CardService.likeCard(account.getAccountId(), likeCardVO.getCardId());
+			dataMap.put("isLike", isLike);
+		}catch(ScoutinException e){
+			succeed = false;
+			String localizedMessage = getText(e.getMessage(),e.getMessage());
+			JSONUtils.putStatus(dataMap, e.getStatus(), localizedMessage);
+		}
+		
+		if(succeed)
+			JSONUtils.putOKStatus(dataMap);
 		
 		return SUCCESS;
 	}

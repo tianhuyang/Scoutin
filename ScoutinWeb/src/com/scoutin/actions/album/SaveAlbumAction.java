@@ -2,10 +2,10 @@ package com.scoutin.actions.album;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.TreeMap;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.struts2.interceptor.ServletRequestAware;
 
 import com.opensymphony.xwork2.ActionSupport;
@@ -14,8 +14,7 @@ import com.scoutin.entities.Account;
 import com.scoutin.entities.Album;
 import com.scoutin.exception.ScoutinError;
 import com.scoutin.exception.ScoutinException;
-import com.scoutin.logic.AccountService;
-import com.scoutin.utilities.CommonUtils;
+import com.scoutin.logic.AlbumService;
 import com.scoutin.utilities.JSONUtils;
 import com.scoutin.vos.album.SaveAlbumVO;
 
@@ -47,12 +46,11 @@ public class SaveAlbumAction extends ActionSupport implements ServletRequestAwar
 	
 	public String createAlbum() throws Exception{
 		boolean succeed = true;
-		Map<String,Object> properties = new TreeMap<String,Object>();
-		CommonUtils.describe(properties, saveAlbumVO);
-		Account account = (Account) request.getSession(true).getAttribute("user");
-		properties.put("accountId", account.getAccountId());
+		Album album = new Album();
+		BeanUtils.copyProperties(album,saveAlbumVO);
+		Account account = (Account)request.getSession(true).getAttribute("user");
 		try{
-			Album album = AccountService.createAlbum(properties);
+			album = AlbumService.createAlbum(account.getAccountId(),album);
 			dataMap.put("album", album);
 		}catch(ScoutinException e){
 			succeed = false;

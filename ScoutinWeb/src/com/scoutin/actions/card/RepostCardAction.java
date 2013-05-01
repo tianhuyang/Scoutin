@@ -1,11 +1,13 @@
 package com.scoutin.actions.card;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.struts2.interceptor.ServletRequestAware;
 
 import com.opensymphony.xwork2.ActionSupport;
@@ -32,8 +34,8 @@ public class RepostCardAction extends ActionSupport implements ServletRequestAwa
 	}
 	
 	@Override
-	public void setServletRequest(HttpServletRequest arg0) {
-		request = arg0;
+	public void setServletRequest(HttpServletRequest request) {
+		this.request = request;
 	}
 	
 	@Override
@@ -45,7 +47,7 @@ public class RepostCardAction extends ActionSupport implements ServletRequestAwa
 	public void validate(){
 		super.validate();
 		if(this.hasFieldErrors()){
-			JSONUtils.putStatus(dataMap, ScoutinError.Account_Signup_Input_Status, ScoutinError.Account_Signup_Input_Message);
+			JSONUtils.putStatus(dataMap, ScoutinError.Card_RepostCard_Input_Status, ScoutinError.Card_RepostCard_Input_Message);
 			dataMap.put("fieldErrors", this.getFieldErrors());
 		}
 	}
@@ -53,12 +55,17 @@ public class RepostCardAction extends ActionSupport implements ServletRequestAwa
 	public String execute() throws Exception
 	{
 		boolean succeed = true;
-		Map<String, Object> properties = new TreeMap<String, Object>();
-		CommonUtils.describe(properties, repostCardVO);
-		Account account = (Account)request.getSession(true).getAttribute("user");
-		properties.put("accountId", account.getAccountId());
+		Card card = new Card();
 		try{
-			Card card = CardService.repostCard(properties);
+			BeanUtils.copyProperties(card, repostCardVO);
+		}catch(IllegalAccessException e1){
+			e1.printStackTrace();
+		}catch(InvocationTargetException e1){
+			e1.printStackTrace();
+		}
+		Account account = (Account)request.getSession(true).getAttribute("user");
+		try{
+			card = CardService.repostCard(account.getAccountId(),repostCardVO.getAlbumIds(),card,repostCardVO.getCardbodyId());
 			dataMap.put("card", card);
 		}catch(ScoutinException e){
 			succeed = false;
@@ -74,4 +81,5 @@ public class RepostCardAction extends ActionSupport implements ServletRequestAwa
 	public Map<String, Object> getDataMap() {
 		return dataMap;
 	}
+
 }

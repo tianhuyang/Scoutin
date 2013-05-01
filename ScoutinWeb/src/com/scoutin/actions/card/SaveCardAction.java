@@ -1,65 +1,73 @@
 package com.scoutin.actions.card;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.struts2.interceptor.ServletRequestAware;
 
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 import com.scoutin.entities.Account;
 import com.scoutin.entities.Card;
+import com.scoutin.entities.Cardbody;
 import com.scoutin.exception.ScoutinError;
 import com.scoutin.exception.ScoutinException;
 import com.scoutin.logic.CardService;
 import com.scoutin.utilities.CommonUtils;
 import com.scoutin.utilities.JSONUtils;
 import com.scoutin.vos.card.SaveCardVO;
+import com.scoutin.vos.card.SaveCardbodyVO;
 
-public class SaveCardAction extends ActionSupport implements ServletRequestAware, ModelDriven<SaveCardVO>
+public class SaveCardAction extends ActionSupport implements ServletRequestAware
 {
 	private static final long serialVersionUID = -3691178891261906745L;
 	private HttpServletRequest request;
 	private Map<String, Object> dataMap;
-	private SaveCardVO saveCardVO;
-		
+	public SaveCardVO saveCardVO;
+	public SaveCardbodyVO saveCardbodyVO;
+	private String method;
+	
 	public SaveCardAction(){
 		dataMap = new HashMap<String, Object>();
-		saveCardVO = new SaveCardVO();
 	}
 	
 	@Override
-	public void setServletRequest(HttpServletRequest arg0) {
+	public void setServletRequest(HttpServletRequest request) {
 		// TODO Auto-generated method stub
-		request = arg0;
+		this.request = request;
+		this.method = ActionContext.getContext().getName();
 	}
-	
-	@Override
-	public SaveCardVO getModel() {
-		// TODO Auto-generated method stub
-		return saveCardVO;
-	}
-	
+		
 	public void validate()
 	{
 		super.validate();
 		if(this.hasFieldErrors()){
-			JSONUtils.putStatus(dataMap, ScoutinError.Account_Signup_Input_Status, ScoutinError.Account_Signup_Input_Message);
+			JSONUtils.putStatus(dataMap, ScoutinError.Card_CreateCard_Input_Status, ScoutinError.Card_CreateCard_Input_Message);
 			dataMap.put("fieldErrors", this.getFieldErrors());
 		}
 	}
 	
 	public String createCard() throws Exception{
 		boolean succeed = true;
-		Map<String,Object> properties = new TreeMap<String,Object>();
-		CommonUtils.describe(properties, saveCardVO);
-		Account account = (Account)request.getSession(true).getAttribute("user");
-		properties.put("accountId",account.getAccountId());
+		Card card = new Card();
+		Cardbody cardbody = new Cardbody();
 		try{
-			Card card = CardService.createCard(properties);
+			BeanUtils.copyProperties(card, saveCardVO);
+			BeanUtils.copyProperties(cardbody, saveCardbodyVO);
+		}catch(IllegalAccessException e1){
+			e1.printStackTrace();
+		}catch(InvocationTargetException e1){
+			e1.printStackTrace();
+		}
+		Account account = (Account)request.getSession(true).getAttribute("user");
+		try{
+			card = CardService.createCard(account.getAccountId(),saveCardVO.getAlbumIds(),card,cardbody);
 			dataMap.put("card", card);
 		}catch(ScoutinException e){
 			succeed = false;
@@ -74,16 +82,56 @@ public class SaveCardAction extends ActionSupport implements ServletRequestAware
 	}
 	
 	public String editCard() throws Exception{
-		Map<String,Object> properties = new TreeMap<String,Object>();
-		CommonUtils.describe(properties, saveCardVO);
+		boolean succeed = true;
+		Map<String,Object> cardProperties = new TreeMap<String,Object>();
+		Map<String,Object> cardbodyProperties = new TreeMap<String,Object>();
+		Map<String,Object>[] properties = new Map[1];
+		if(saveCardVO!=null)
+			CommonUtils.describe(cardProperties, saveCardVO);
+		if(saveCardbodyVO!=null)
+			CommonUtils.describe(cardbodyProperties, saveCardbodyVO);
 		Account account = (Account)request.getSession(true).getAttribute("user");
-		properties.put("accountId",account.getAccountId());
+		try{
+			CardService.editCard(account.getAccountId(), cardProperties, cardbodyProperties, properties);
+			dataMap.putAll(properties[0]);
+		}catch(ScoutinException e){
+			succeed = false;
+			String localizedMessage = getText(e.getMessage(),e.getMessage());
+			JSONUtils.putStatus(dataMap, e.getStatus(), localizedMessage);
+		}
 		
+		if(succeed){
+			JSONUtils.putOKStatus(dataMap);
+		}
 		return SUCCESS;
 	}
 	
 	public Map<String, Object> getDataMap() {
 		return dataMap;
 	}
+	
+	public String getMethod() {
+		return method;
+	}
+
+	public void setMethod(String method) {
+		this.method = method;
+	}
+	public SaveCardVO getSaveCardVO() {
+		return saveCardVO;
+	}
+
+	public void setSaveCardVO(SaveCardVO saveCardVO) {
+		this.saveCardVO = saveCardVO;
+	}
+
+	public SaveCardbodyVO getSaveCardbodyVO() {
+		return saveCardbodyVO;
+	}
+
+	public void setSaveCardbodyVO(SaveCardbodyVO saveCardbodyVO) {
+		this.saveCardbodyVO = saveCardbodyVO;
+	}
+
 
 }
