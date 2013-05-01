@@ -16,6 +16,8 @@ public class AlbumService {
 		if (accountId == null || album == null){
 			throw new IllegalArgumentException("null arguments");
 		}	
+		album.setAlbumId(null);
+		album.setVersion(null);
 		try {
 			album = EJBUtils.albumBeanRemote.createAlbum(accountId, album);
 		} catch (Throwable re) {

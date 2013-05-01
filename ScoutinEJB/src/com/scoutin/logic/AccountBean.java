@@ -33,7 +33,6 @@ public class AccountBean implements AccountBeanRemote {
 	@Override
 	public Account signup(Account account) {
 		try {
-			account.setAccountId(null);
 			return accountBeanService.signup(account);
 		} catch (Throwable t) {
 			throw new ApplicationException(t.getMessage());

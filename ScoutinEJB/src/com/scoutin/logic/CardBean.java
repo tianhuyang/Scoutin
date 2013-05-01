@@ -42,7 +42,6 @@ public class CardBean implements CardBeanRemote {
 	public Card createCard(Integer accountId, Long[] albumIds, Card card,
 			Cardbody cardbody) {
 		try {
-			card.setCardId(null);
 			card = cardBeanService.createCard(accountId, albumIds, card,
 					cardbody);
 			if (card != null) {
@@ -106,16 +105,37 @@ public class CardBean implements CardBeanRemote {
 			Map<String, Object> cardProperties,
 			Map<String, Object> cardbodyProperties) {
 		Map<String, Object> properties = new TreeMap<String, Object>();
+		boolean success = true;
 		try {
 			cardBeanService.editCard(accountId, cardProperties,
 					cardbodyProperties, properties);
 		} catch (javax.ejb.EJBException ejbe) {
 			if (ejbe.getCause() instanceof OptimisticLockException)
+			{
 				properties.put("ModifiedByOthers", true);
+				success = false;
+			}
 			else
 				throw new ApplicationException(ejbe.getMessage());
 		} catch (Throwable t) {
 			throw new ApplicationException(t.getMessage());
+		}
+		if(success){
+			Card card = (Card)properties.get("card");
+			if(card != null){
+				cardProperties = new TreeMap<String, Object>();
+				cardProperties.put("updatedTime", card.getUpdatedTime());
+				cardProperties.put("version", card.getVersion());
+				properties.put("card", cardProperties);
+			}
+			
+			Cardbody cardbody = (Cardbody)properties.get("cardbody");
+			if(card != null){
+				cardbodyProperties = new TreeMap<String, Object>();
+				cardbodyProperties.put("updatedTime", cardbody.getUpdatedTime());
+				cardbodyProperties.put("version", cardbody.getVersion());
+				properties.put("cardbody", cardbodyProperties);
+			}
 		}
 		return properties;
 	}

@@ -27,18 +27,19 @@ public class CardService {
 			throws ScoutinException {		
 		if (accountId == null || albumIds == null || albumIds.length == 0 || card == null || cardbody == null || card.getCardId()!= null || cardbody.getCardbodyId()!=null){
 			throw new IllegalArgumentException("Illegal arguments in createCard");
-		}
+		}		
+		card.setCardId(null);
+		card.setVersion(null);
+		cardbody.setCardbodyId(null);
+		cardbody.setVersion(null);
 		try {
 			card = EJBUtils.cardBeanRemote.createCard(accountId, albumIds, card, cardbody);
 		} catch (Throwable re) {
-			card = null;
-		}
-
-		if (card == null) {
 			throw new ScoutinException(
 					ScoutinException.Card_CreateCard_Failure_Status,
 					ScoutinException.Card_CreateCard_Failure_Message);
 		}
+
 		return card;
 	}	
 	
@@ -54,7 +55,8 @@ public class CardService {
 		if (accountId == null || albumIds == null || albumIds.length == 0 || cardbodyId == null){
 			throw new IllegalArgumentException("Illegal arguments in repostCard");
 		}
-
+		card.setCardId(null);
+		card.setVersion(null);
 		try {
 			card = EJBUtils.cardBeanRemote.repostCard(accountId, albumIds, card, cardbodyId);
 		} catch (Throwable re) {
@@ -77,6 +79,8 @@ public class CardService {
 		if (accountId == null || cardId == null || comment == null){
 			throw new IllegalArgumentException("Illegal arguments in commentCard");
 		}
+		comment.setCommentId(null);
+		comment.setVersion(null);
 		try {
 			comment = EJBUtils.cardBeanRemote.commentCard(accountId, cardId, comment);
 		} catch (Throwable re) {

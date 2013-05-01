@@ -36,6 +36,7 @@ public class TestCard {
 	public void testCreateCard(){
 		try {
 			Card card = new Card();
+			card.setVersion(2L);
 			Cardbody cardbody = new Cardbody();
 			card.setDescription("My new card");
 			card = CardService.createCard(1,new Long[]{1l,3L},card,cardbody);
@@ -73,27 +74,17 @@ public class TestCard {
 		Map<String, Object> cardProperties = new TreeMap<String, Object>();
 		Map<String, Object> cardbodyProperties = new TreeMap<String, Object>();
 		Map<String, Object> properties[] = new TreeMap[1];
-//		Card card = new Card();
-//		card.setCardId(3L);
-//		card.setDescription("card description");
-//		card.setVersion(1L);
-//		
-//		Cardbody cardbody = new Cardbody();
-//		cardbody.setCardbodyId(1L);
-//		cardbody.setTitle("this is a test");		
-//		cardbody.setVersion(6L);
 		cardProperties.put("cardId", 3L);
 		cardProperties.put("description", "card sucess2");
-		cardProperties.put("version", 4L);
+		cardProperties.put("version", 5L);
 		
 		cardbodyProperties.put("description", "card description");
 		cardbodyProperties.put("cardbodyId", 1L);
 		cardbodyProperties.put("title", "title2");
-		cardbodyProperties.put("version", 4L);
+		cardbodyProperties.put("version", 9L);
 		try {
 			CardService.editCard(accountId, cardProperties, cardbodyProperties,properties);
-			String info = ReflectionToStringBuilder.toString(properties[0], ToStringStyle.MULTI_LINE_STYLE);
-			System.out.println(info);
+			System.out.println(properties[0]);
 			Assert.assertTrue(true);
 		} catch (ScoutinException e) {
 			e.printStackTrace();

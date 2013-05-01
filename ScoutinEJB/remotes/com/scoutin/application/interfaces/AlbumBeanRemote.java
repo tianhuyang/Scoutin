@@ -9,7 +9,7 @@ public interface AlbumBeanRemote {
 
 	/*
 	 * @param accountId:(Integer) must be existent
-	 * @param album:(Album) must be not-null
+	 * @param album:(Album) must be not-null, null album.albumId, null album.version
 	 * @return created Album if successful
 	 * @throws Throwable if failed
 	 */
