@@ -64,11 +64,12 @@ public class AccountService {
 	/*
 	 * @param followingAccountId:(Integer) must be existent
 	 * @param followedAlbumId:(Integer) must be existent
+	 * followingAccountId and followedAccountId shouldn't be the same 
 	 * @return whether the card is followed or not followed
      * @throws ScoutinException if failed 
 	 */
 	public static boolean followAccount(Integer followingAccountId, Integer followedAccountId) throws ScoutinException{
-		if (followingAccountId == null || followedAccountId == null){
+		if (followingAccountId == null || followedAccountId == null || followedAccountId == followingAccountId){
 			throw new IllegalArgumentException("Illegal arguments in followAccount");
 		}
 		try {
