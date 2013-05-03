@@ -3,6 +3,7 @@ package com.scoutin.daos;
 import java.util.logging.Level;
 
 import javax.ejb.Stateless;
+import javax.persistence.FlushModeType;
 import javax.persistence.Query;
 import com.scoutin.facades.CardbodyFacade;
 import com.scoutin.facades.LogUtil;
@@ -38,7 +39,7 @@ public class CardBodyDao extends CardbodyFacade {
 	}
 	
 	//private final String increaseLikesCountByCardIdJPQL = "update Cardbody  a set a.likesCount = a.likesCount + :count where :cardId member of a.cards";
-	private static final String increaseLikesCountByCardIdJPQL = "update Cardbody a set a.likesCount = a.likesCount + :count where exists (select b from Card b where b.cardbody = a and b.cardId = :cardId)";
+	private static final String increaseLikesCountByCardIdJPQL = "update Cardbody a set a.likesCount = a.likesCount + :count where exists (select b.cardId from Card b where b.cardbody.cardbodyId = a.cardbodyId and b.cardId = :cardId)";
 
 	public void increaseLikesCountByCardId(java.lang.Long cardId, int count) {
 		LogUtil.log("increaseLikesCountByCardId with cardId:" + cardId,

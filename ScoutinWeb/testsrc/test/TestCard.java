@@ -31,7 +31,7 @@ public class TestCard {
 
 	}
 	
-	
+	@Ignore
 	@Test
 	public void testCreateCard(){
 		try {
@@ -94,7 +94,7 @@ public class TestCard {
 		
 	}
 	
-	@Ignore
+	
 	@Test
 	public void testLikeCard(){
 		int accountId = 1;
@@ -109,6 +109,7 @@ public class TestCard {
 			Assert.assertTrue(false);
 		}
 	}
+	
 	@Ignore
 	@Test
 	public void testCommentCard(){
