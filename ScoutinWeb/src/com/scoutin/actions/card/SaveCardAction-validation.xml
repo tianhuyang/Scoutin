@@ -45,16 +45,16 @@
 			<message key="error.card.save.maxLength.length">The address should not be more than 100 characters</message>
 		</field-validator>
 	</field>
-	<field name="saveCardbodyVO.url">
-		<field-validator type="fieldexpression">
-			<param name="expression">!(saveCardbodyVO.url=="" || saveCardbodyVO.url==null) or method=="editCard"</param>
-			<message key="error.card.save.url.require">Please input url</message>
-		</field-validator>
-	</field>
 	<field name="saveCardVO.albumIds">
 		<field-validator type="fieldexpression">
 			<param name="expression">!(saveCardVO.albumIds=="" || saveCardVO.albumIds==null) or method=="editCard"</param>
 			<message key="error.card.save.albumIds.require">Please input albumIds</message>
+		</field-validator>
+	</field>
+	<field name="saveCardbodyVO.file">
+		<field-validator type="fieldexpression">
+			<param name="expression">!(saveCardbodyVO.file=="" || saveCardbodyVO.file==null) or method=="editCard"</param>
+			<message key="error.card.save.file.require">Please upload an image</message>
 		</field-validator>
 	</field>
 </validators>

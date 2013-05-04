@@ -5,10 +5,11 @@
 
 <struts>
 
-	<constant name="struts.devMode" value="true" />
-
-	<include file="/interceptor-struts.xml"/>
-	<include file="/account-struts.xml"/>
-	<include file="/card-struts.xml"/>
+	<constant name="struts.devMode" value="true"/>
+	<constant name="struts.multipart.maxSize" value="1000000"/>
+	
+	<include file="interceptor-struts.xml"/>
+	<include file="account-struts.xml"/>
+	<include file="card-struts.xml"/>
 
 </struts>

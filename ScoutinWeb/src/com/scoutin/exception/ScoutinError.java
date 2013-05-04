@@ -72,4 +72,13 @@ public interface ScoutinError {
 	/* 
 	 * album ends
 	 */
+	
+	/* 
+	 * image begins
+	 */
+	public static final int Image_Upload_Failure_Status = 40000;
+	public static final String Image_Upload_Failure_Message = "error.image.upload.failure";
+	/* 
+	 * image ends
+	 */
 }

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>imageUpload.html</title>
+	
+    <meta http-equiv="keywords" content="image,upload">
+    <meta http-equiv="description" content="this is my page">
+    <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+    
+    <!--<link rel="stylesheet" type="text/css" href="./styles.css">-->
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+	<script src="http://malsup.github.com/jquery.form.js"></script> 
+  </head>
+  
+  <body>
+    <form name="image_form" id="image_form" method="post" enctype="multipart/form-data">
+      <table border="0">
+        <tr>
+          <td>Title</td>
+          <td><input type="text" name="title"></td>
+        </tr>
+        <tr>
+          <td>Image</td>
+          <td><input type="file" name="file"></td>
+        </tr> 
+        <tr>
+        	<td colspan="2">
+	        	<input type="text" name="startX">
+	        	<input type="text" name="startY">
+	        	<input type="text" name="width">
+	        	<input type="text" name="height">
+        	</td>
+        </tr>
+        <tr>
+          <td colspan="2" align="center"><input type="submit" value="Submit"></td>
+        </tr>
+      </table>
+    </form>
+  </body>
+  <script src="lib/jquery.form.js"></script>
+  <script type="text/javascript">
+  	$(document).ready(function(){
+  		$("#image_form").ajaxForm({
+  			url: "card/uploadImage.action",
+  			success:showPhoto,
+  			dataType:'json'
+  		});
+  	});
+
+  	function showPhoto(data)
+  	{
+  		alert(data.isUploaded+" "+data.path);
+  	}
+  </script>
+</html>

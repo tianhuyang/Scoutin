@@ -1,5 +1,6 @@
 package com.scoutin.actions.card;
 
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
@@ -21,6 +22,7 @@ import com.scoutin.exception.ScoutinException;
 import com.scoutin.logic.CardService;
 import com.scoutin.utilities.CommonUtils;
 import com.scoutin.utilities.JSONUtils;
+import com.scoutin.utilities.UploadUtils;
 import com.scoutin.vos.card.SaveCardVO;
 import com.scoutin.vos.card.SaveCardbodyVO;
 
@@ -67,12 +69,17 @@ public class SaveCardAction extends ActionSupport implements ServletRequestAware
 		}
 		Account account = (Account)request.getSession(true).getAttribute("user");
 		try{
+			String url = UploadUtils.uploadImage(account.getAccountId(), saveCardbodyVO.getFile(), saveCardbodyVO.getFileFileName(), saveCardbodyVO.getFileContentType());
+			cardbody.setUrl(url);
 			card = CardService.createCard(account.getAccountId(),saveCardVO.getAlbumIds(),card,cardbody);
 			dataMap.put("card", card);
 		}catch(ScoutinException e){
 			succeed = false;
 			String localizedMessage = getText(e.getMessage(),e.getMessage());
 			JSONUtils.putStatus(dataMap, e.getStatus(), localizedMessage);
+		}catch(IOException e){
+			succeed = false;
+			JSONUtils.putStatus(dataMap, ScoutinError.Image_Upload_Failure_Status, ScoutinError.Image_Upload_Failure_Message);
 		}
 		
 		//success
