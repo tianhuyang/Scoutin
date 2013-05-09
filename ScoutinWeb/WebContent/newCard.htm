@@ -1,18 +1,31 @@
 <!DOCTYPE HTML>
 <html>
 	<head>
-		<link rel="stylesheet" type="text/css" href="csses/newCard.css">
+		<link rel="stylesheet" type="text/css" href="/csses/newCard.css">
+		<link rel="stylesheet" type="text/css" href="/csses/lib/imgareaselect-default.css"/>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 	</head>
 	<body>
 	<div class="newCard_container_background">
+	<table id="newCard_container" class="newCard_container" cellspacing="0" cellpadding="0"><tr><td>
 		<div class="newCard_shadow"> 
 			<div class="newCard">
+				<form id="newCard_form" method="post" enctype="multipart/form-data">
+				<div class="newCard_image_inputs">
+					<input id="newCard_image_input" class="newCard_image_input" type="file" name="file" onchange="createImage(this.files)">
+					<input id="newCard_crop_startX" type="text" name="startX">
+		        	<input id="newCard_crop_startY" type="text" name="startY">
+		        	<input id="newCard_crop_width" type="text" name="width">
+		        	<input id="newCard_crop_height" type="text" name="height">
+				</div>
 				<div class="newCard_header">
 					<p class="newCard_enter_name_label">Add a Scout:</p>
-					<div class="newCard_cancel"></div>
+					<div class="newCard_cancel" onclick="newCard_cancel_click(this)"></div>
 				</div>
 				
-				<img class="newCard_edit_image" src="images/lightning_bolt.png" onclick="newCard_edit_image(this)"/>
+				<div class="newCard_edit_image_container">
+					<img id="newCard_cropped_image" class="newCard_cropped_image" src="images/lightning_bolt.png" onclick="newCard_edit_image()"/>
+				</div>
 				
 				<div class="newCard_rating">
 					<p class="newCard_rating_lable">My Rating:</p>
@@ -66,16 +79,26 @@
 							</td>
 						<tr>
 					</table>
-			  
-			  
-			  <div class="newCard_footer">
-			  	<span class="newCard_footer_addlink">add link...</span>
-			  	<div class="newCard_footer_addlink_image"></div>	
-			  </div>
+				  <div class="newCard_footer">
+				  	<span class="newCard_footer_addlink">add link...</span>
+				  	<div class="newCard_footer_addlink_image"></div>	
+				  </div>
+			  </form> 
 			</div>
 		</div>
-  </div>
+		
+		<div id="newCard_cropArea" class="newCard_cropArea">
+			<img id="newCard_uploaded_image" class="newCard_uploaded_image"/>
+			<div class="newCard_crop_buttons">
+				<button class="newCard_crop_button" onclick="completeCrop()">Done</button>
+				<button class="newCard_crop_button" onclick="rotateCrop()">Rotate</button>
+			</div>
+		</div>
+  	</td></tr></table>
+  	</div>
 	</body>
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 	<script src="jses/newCard.js"></script>
+	<script src="http://malsup.github.com/jquery.form.js"></script>
+	<script src="/jses/lib/jquery.imgareaselect.pack.js"></script>
+	<script src="/jses/lib/jquery.rotate.js"></script>
 </html>

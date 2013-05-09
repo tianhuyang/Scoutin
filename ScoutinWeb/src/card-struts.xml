@@ -77,5 +77,14 @@
 				<param name="root">dataMap</param>
 			</result>
 		</action>
+		
+		<action name="uploadImage" class="com.scoutin.actions.card.UploadImageAction">            
+			<result name="input" type="json">
+				<param name="root">dataMap</param>
+			</result>
+			<result name="success" type="json">
+				<param name="root">dataMap</param>
+			</result>
+		</action>
 	</package>
 </struts>

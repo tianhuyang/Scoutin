@@ -8,6 +8,10 @@
 			<interceptor name="authorization" class="com.scoutin.interceptor.AuthorizationInterceptor"/>
 			<interceptor-stack name="authorizationStack">
 				<interceptor-ref name="authorization"/>
+		 		<interceptor-ref name="fileUpload">
+        			<param name="maximumSize">2000000</param>
+        			<param name="allowedTypes">image/png, image/jpeg, image/gif</param>
+    			</interceptor-ref> 
 				<interceptor-ref name="defaultStack"/>
 			</interceptor-stack>
 		</interceptors>

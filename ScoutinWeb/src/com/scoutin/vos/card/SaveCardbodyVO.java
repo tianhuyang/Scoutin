@@ -1,5 +1,7 @@
 package com.scoutin.vos.card;
 
+import java.io.File;
+
 public class SaveCardBodyVO {
 	
 	public Long cardBodyId;
@@ -7,9 +9,11 @@ public class SaveCardBodyVO {
 	public Float latitude;
 	public Float longitude;
 	public String address;
-	public String url;
+	public File file;
+	public String fileContentType;
+	public String fileFileName;
 	public Long version;
-	
+		
 	public String getTitle() {
 		return title;
 	}
@@ -22,10 +26,10 @@ public class SaveCardBodyVO {
 	public void setLatitude(Float latitude) {
 		this.latitude = latitude;
 	}
-	public Float getlongitude() {
+	public Float getLongitude() {
 		return longitude;
 	}
-	public void setlongitude(Float longitude) {
+	public void setLongitude(Float longitude) {
 		this.longitude = longitude;
 	}
 	public String getAddress() {
@@ -33,12 +37,6 @@ public class SaveCardBodyVO {
 	}
 	public void setAddress(String address) {
 		this.address = address;
-	}
-	public String getUrl() {
-		return url;
-	}
-	public void setUrl(String url) {
-		this.url = url;
 	}
 	public Long getVersion() {
 		return version;
@@ -51,5 +49,23 @@ public class SaveCardBodyVO {
 	}
 	public void setCardBodyId(Long cardbodyId) {
 		this.cardBodyId = cardbodyId;
+	}
+	public File getFile() {
+		return file;
+	}
+	public void setFile(File file) {
+		this.file = file;
+	}
+	public String getFileContentType() {
+		return fileContentType;
+	}
+	public void setFileContentType(String fileContentType) {
+		this.fileContentType = fileContentType;
+	}
+	public String getFileFileName() {
+		return fileFileName;
+	}
+	public void setFileFileName(String fileFileName) {
+		this.fileFileName = fileFileName;
 	}
 }

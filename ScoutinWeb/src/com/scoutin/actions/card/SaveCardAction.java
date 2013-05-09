@@ -1,5 +1,6 @@
 package com.scoutin.actions.card;
 
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
@@ -21,6 +22,7 @@ import com.scoutin.exception.ScoutinException;
 import com.scoutin.logic.CardService;
 import com.scoutin.utilities.CommonUtils;
 import com.scoutin.utilities.JSONUtils;
+import com.scoutin.utilities.UploadUtils;
 import com.scoutin.vos.card.SaveCardVO;
 import com.scoutin.vos.card.SaveCardBodyVO;
 
@@ -56,10 +58,10 @@ public class SaveCardAction extends ActionSupport implements ServletRequestAware
 	public String createCard() throws Exception{
 		boolean succeed = true;
 		Card card = new Card();
-		CardBody cardbody = new CardBody();
+		CardBody CardBody = new CardBody();
 		try{
 			BeanUtils.copyProperties(card, saveCardVO);
-			BeanUtils.copyProperties(cardbody, saveCardBodyVO);
+			BeanUtils.copyProperties(CardBody, saveCardBodyVO);
 		}catch(IllegalAccessException e1){
 			e1.printStackTrace();
 		}catch(InvocationTargetException e1){
@@ -67,12 +69,17 @@ public class SaveCardAction extends ActionSupport implements ServletRequestAware
 		}
 		Account account = (Account)request.getSession(true).getAttribute("user");
 		try{
-			card = CardService.createCard(account.getAccountId(),saveCardVO.getAlbumIds(),card,cardbody);
+			String url = UploadUtils.uploadImage(account.getAccountId(), saveCardBodyVO.getFile(), saveCardBodyVO.getFileFileName(), saveCardBodyVO.getFileContentType());
+			CardBody.setUrl(url);
+			card = CardService.createCard(account.getAccountId(),saveCardVO.getAlbumIds(),card,CardBody);
 			dataMap.put("card", card);
 		}catch(ScoutinException e){
 			succeed = false;
 			String localizedMessage = getText(e.getMessage(),e.getMessage());
 			JSONUtils.putStatus(dataMap, e.getStatus(), localizedMessage);
+		}catch(IOException e){
+			succeed = false;
+			JSONUtils.putStatus(dataMap, ScoutinError.Image_Upload_Failure_Status, ScoutinError.Image_Upload_Failure_Message);
 		}
 		
 		//success
@@ -83,15 +90,15 @@ public class SaveCardAction extends ActionSupport implements ServletRequestAware
 	
 	public String editCard() throws Exception{
 		Map<String,Object> cardProperties = new TreeMap<String,Object>();
-		Map<String,Object> cardbodyProperties = new TreeMap<String,Object>();
+		Map<String,Object> CardBodyProperties = new TreeMap<String,Object>();
 		Map<String,Object> properties = null;
 		if(saveCardVO!=null)
 			CommonUtils.describe(cardProperties, saveCardVO);
 		if(saveCardBodyVO!=null)
-			CommonUtils.describe(cardbodyProperties, saveCardBodyVO);
+			CommonUtils.describe(CardBodyProperties, saveCardBodyVO);
 		Account account = (Account)request.getSession(true).getAttribute("user");
 		try{
-			properties = CardService.editCard(account.getAccountId(), cardProperties, cardbodyProperties);
+			properties = CardService.editCard(account.getAccountId(), cardProperties, CardBodyProperties);
 			JSONUtils.putOKStatus(dataMap);
 			dataMap.putAll(properties);
 		}catch(ScoutinException e){
