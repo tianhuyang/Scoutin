@@ -10,14 +10,12 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
-import javax.persistence.Version;
 
 /**
  * Account entity. @author MyEclipse Persistence Tools
@@ -32,7 +30,6 @@ public class Account implements java.io.Serializable {
 	// Fields
 	private static final long serialVersionUID = 1L;
 	private Integer accountId;
-	private Long version;
 	private String password;
 	private String email;
 	private String facebookId;
@@ -44,12 +41,15 @@ public class Account implements java.io.Serializable {
 	private Short sex;
 	private Set<Comment> comments = new HashSet<Comment>(0);
 	private Set<Album> albums = new HashSet<Album>(0);
-	private Set<Cardrepost> cardreposts = new HashSet<Cardrepost>(0);
-	private Accountstat accountstat;
+	private Set<Recommendation> recommendations = new HashSet<Recommendation>(0);
+	private Set<CardRepost> cardReposts = new HashSet<CardRepost>(0);
+	private AccountStat accountStat;
 	private Profile profile;
 	private Set<Follower> followersForFollowingId = new HashSet<Follower>(0);
-	private Set<Card> cards = new HashSet<Card>(0);
-	private Set<Cardbody> cardbodies = new HashSet<Cardbody>(0);
+	private Set<CardEndorse> cardEndorses = new HashSet<CardEndorse>(0);
+	private Set<AccountCluster> accountClusters = new HashSet<AccountCluster>(0);
+	private Set<Cluster> clusters = new HashSet<Cluster>(0);
+	private Set<CardBody> cardBodies = new HashSet<CardBody>(0);
 	private Set<Follower> followersForFollowedId = new HashSet<Follower>(0);
 
 	// Constructors
@@ -74,9 +74,11 @@ public class Account implements java.io.Serializable {
 			String twitterId, Timestamp createdTime, Timestamp updatedTime,
 			String firstname, String lastname, Short sex,
 			Set<Comment> comments, Set<Album> albums,
-			Set<Cardrepost> cardreposts, Accountstat accountstat,
-			Profile profile, Set<Follower> followersForFollowingId,
-			Set<Card> cards, Set<Cardbody> cardbodies,
+			Set<Recommendation> recommendations, Set<CardRepost> cardReposts,
+			AccountStat accountStat, Profile profile,
+			Set<Follower> followersForFollowingId,
+			Set<CardEndorse> cardEndorses, Set<AccountCluster> accountClusters,
+			Set<Cluster> clusters, Set<CardBody> cardBodies,
 			Set<Follower> followersForFollowedId) {
 		this.password = password;
 		this.email = email;
@@ -89,12 +91,15 @@ public class Account implements java.io.Serializable {
 		this.sex = sex;
 		this.comments = comments;
 		this.albums = albums;
-		this.cardreposts = cardreposts;
-		this.accountstat = accountstat;
+		this.recommendations = recommendations;
+		this.cardReposts = cardReposts;
+		this.accountStat = accountStat;
 		this.profile = profile;
 		this.followersForFollowingId = followersForFollowingId;
-		this.cards = cards;
-		this.cardbodies = cardbodies;
+		this.cardEndorses = cardEndorses;
+		this.accountClusters = accountClusters;
+		this.clusters = clusters;
+		this.cardBodies = cardBodies;
 		this.followersForFollowedId = followersForFollowedId;
 	}
 
@@ -108,16 +113,6 @@ public class Account implements java.io.Serializable {
 
 	public void setAccountId(Integer accountId) {
 		this.accountId = accountId;
-	}
-
-	@Version
-	@Column(name = "VERSION", nullable = false)
-	public Long getVersion() {
-		return this.version;
-	}
-
-	public void setVersion(Long version) {
-		this.version = version;
 	}
 
 	@Column(name = "PASSWORD", nullable = false, length = 15)
@@ -220,21 +215,30 @@ public class Account implements java.io.Serializable {
 	}
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "account")
-	public Set<Cardrepost> getCardreposts() {
-		return this.cardreposts;
+	public Set<Recommendation> getRecommendations() {
+		return this.recommendations;
 	}
 
-	public void setCardreposts(Set<Cardrepost> cardreposts) {
-		this.cardreposts = cardreposts;
+	public void setRecommendations(Set<Recommendation> recommendations) {
+		this.recommendations = recommendations;
+	}
+
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "account")
+	public Set<CardRepost> getCardReposts() {
+		return this.cardReposts;
+	}
+
+	public void setCardReposts(Set<CardRepost> cardReposts) {
+		this.cardReposts = cardReposts;
 	}
 
 	@OneToOne(fetch = FetchType.LAZY, mappedBy = "account")
-	public Accountstat getAccountstat() {
-		return this.accountstat;
+	public AccountStat getAccountStat() {
+		return this.accountStat;
 	}
 
-	public void setAccountstat(Accountstat accountstat) {
-		this.accountstat = accountstat;
+	public void setAccountStat(AccountStat accountStat) {
+		this.accountStat = accountStat;
 	}
 
 	@OneToOne(fetch = FetchType.LAZY, mappedBy = "account")
@@ -255,22 +259,40 @@ public class Account implements java.io.Serializable {
 		this.followersForFollowingId = followersForFollowingId;
 	}
 
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "accounts")
-	public Set<Card> getCards() {
-		return this.cards;
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "account")
+	public Set<CardEndorse> getCardEndorses() {
+		return this.cardEndorses;
 	}
 
-	public void setCards(Set<Card> cards) {
-		this.cards = cards;
+	public void setCardEndorses(Set<CardEndorse> cardEndorses) {
+		this.cardEndorses = cardEndorses;
 	}
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "account")
-	public Set<Cardbody> getCardbodies() {
-		return this.cardbodies;
+	public Set<AccountCluster> getAccountClusters() {
+		return this.accountClusters;
 	}
 
-	public void setCardbodies(Set<Cardbody> cardbodies) {
-		this.cardbodies = cardbodies;
+	public void setAccountClusters(Set<AccountCluster> accountClusters) {
+		this.accountClusters = accountClusters;
+	}
+
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "account")
+	public Set<Cluster> getClusters() {
+		return this.clusters;
+	}
+
+	public void setClusters(Set<Cluster> clusters) {
+		this.clusters = clusters;
+	}
+
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "account")
+	public Set<CardBody> getCardBodies() {
+		return this.cardBodies;
+	}
+
+	public void setCardBodies(Set<CardBody> cardBodies) {
+		this.cardBodies = cardBodies;
 	}
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "accountByFollowedId")

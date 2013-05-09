@@ -1,7 +1,7 @@
 package com.scoutin.facades;
 
-import com.scoutin.entities.Blockedalbum;
-import com.scoutin.entities.BlockedalbumId;
+import com.scoutin.entities.BlockedAlbum;
+import com.scoutin.entities.BlockedAlbumId;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -12,32 +12,32 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 /**
- * Facade for entity Blockedalbum.
+ * Facade for entity BlockedAlbum.
  * 
- * @see com.scoutin.entities.Blockedalbum
+ * @see com.scoutin.entities.BlockedAlbum
  * @author MyEclipse Persistence Tools
  */
 @Stateless
-public class BlockedalbumFacade {
+public class BlockedAlbumFacade {
 	// property constants
 
 	@PersistenceContext
 	protected EntityManager entityManager;
 
 	/**
-	 * Perform an initial save of a previously unsaved Blockedalbum entity. All
+	 * Perform an initial save of a previously unsaved BlockedAlbum entity. All
 	 * subsequent persist actions of this entity should use the #update()
 	 * method.
 	 * 
-	 * @param blockedalbum
-	 *            Blockedalbum entity to persist
+	 * @param blockedAlbum
+	 *            BlockedAlbum entity to persist
 	 * @throws RuntimeException
 	 *             when the operation fails
 	 */
-	public void save(Blockedalbum blockedalbum) {
-		LogUtil.log("saving Blockedalbum instance", Level.INFO, null);
+	public void save(BlockedAlbum blockedAlbum) {
+		LogUtil.log("saving BlockedAlbum instance", Level.INFO, null);
 		try {
-			entityManager.persist(blockedalbum);
+			entityManager.persist(blockedAlbum);
 			LogUtil.log("save successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("save failed", Level.SEVERE, re);
@@ -46,19 +46,19 @@ public class BlockedalbumFacade {
 	}
 
 	/**
-	 * Delete a persistent Blockedalbum entity.
+	 * Delete a persistent BlockedAlbum entity.
 	 * 
-	 * @param blockedalbum
-	 *            Blockedalbum entity to delete
+	 * @param blockedAlbum
+	 *            BlockedAlbum entity to delete
 	 * @throws RuntimeException
 	 *             when the operation fails
 	 */
-	public void delete(Blockedalbum blockedalbum) {
-		LogUtil.log("deleting Blockedalbum instance", Level.INFO, null);
+	public void delete(BlockedAlbum blockedAlbum) {
+		LogUtil.log("deleting BlockedAlbum instance", Level.INFO, null);
 		try {
-			blockedalbum = entityManager.getReference(Blockedalbum.class,
-					blockedalbum.getId());
-			entityManager.remove(blockedalbum);
+			blockedAlbum = entityManager.getReference(BlockedAlbum.class,
+					blockedAlbum.getId());
+			entityManager.remove(blockedAlbum);
 			LogUtil.log("delete successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("delete failed", Level.SEVERE, re);
@@ -67,22 +67,22 @@ public class BlockedalbumFacade {
 	}
 
 	/**
-	 * Persist a previously saved Blockedalbum entity and return it or a copy of
-	 * it to the sender. A copy of the Blockedalbum entity parameter is returned
+	 * Persist a previously saved BlockedAlbum entity and return it or a copy of
+	 * it to the sender. A copy of the BlockedAlbum entity parameter is returned
 	 * when the JPA persistence mechanism has not previously been tracking the
 	 * updated entity.
 	 * 
-	 * @param blockedalbum
-	 *            Blockedalbum entity to update
-	 * @return Blockedalbum the persisted Blockedalbum entity instance, may not
+	 * @param blockedAlbum
+	 *            BlockedAlbum entity to update
+	 * @return BlockedAlbum the persisted BlockedAlbum entity instance, may not
 	 *         be the same
 	 * @throws RuntimeException
 	 *             if the operation fails
 	 */
-	public Blockedalbum update(Blockedalbum blockedalbum) {
-		LogUtil.log("updating Blockedalbum instance", Level.INFO, null);
+	public BlockedAlbum update(BlockedAlbum blockedAlbum) {
+		LogUtil.log("updating BlockedAlbum instance", Level.INFO, null);
 		try {
-			Blockedalbum result = entityManager.merge(blockedalbum);
+			BlockedAlbum result = entityManager.merge(blockedAlbum);
 			LogUtil.log("update successful", Level.INFO, null);
 			return result;
 		} catch (RuntimeException re) {
@@ -91,11 +91,11 @@ public class BlockedalbumFacade {
 		}
 	}
 
-	public Blockedalbum findById(BlockedalbumId id) {
-		LogUtil.log("finding Blockedalbum instance with id: " + id, Level.INFO,
+	public BlockedAlbum findById(BlockedAlbumId id) {
+		LogUtil.log("finding BlockedAlbum instance with id: " + id, Level.INFO,
 				null);
 		try {
-			Blockedalbum instance = entityManager.find(Blockedalbum.class, id);
+			BlockedAlbum instance = entityManager.find(BlockedAlbum.class, id);
 			LogUtil.log("find successful", Level.INFO, null);
 			return instance;
 		} catch (RuntimeException re) {
@@ -104,12 +104,12 @@ public class BlockedalbumFacade {
 		}
 	}
 
-	public Blockedalbum getReference(BlockedalbumId id) {
-		LogUtil.log("getReferencing Blockedalbum instance with id: " + id,
+	public BlockedAlbum getReference(BlockedAlbumId id) {
+		LogUtil.log("getReferencing BlockedAlbum instance with id: " + id,
 				Level.INFO, null);
 		try {
-			Blockedalbum instance = entityManager.getReference(
-					Blockedalbum.class, id);
+			BlockedAlbum instance = entityManager.getReference(
+					BlockedAlbum.class, id);
 			LogUtil.log("getReference successful", Level.INFO, null);
 			return instance;
 		} catch (RuntimeException re) {
@@ -118,10 +118,10 @@ public class BlockedalbumFacade {
 		}
 	}
 
-	public void detach(Blockedalbum blockedalbum) {
-		LogUtil.log("detaching Blockedalbum instance", Level.INFO, null);
+	public void detach(BlockedAlbum blockedAlbum) {
+		LogUtil.log("detaching BlockedAlbum instance", Level.INFO, null);
 		try {
-			entityManager.detach(blockedalbum);
+			entityManager.detach(blockedAlbum);
 			LogUtil.log("detach successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("detach failed", Level.SEVERE, re);
@@ -129,10 +129,10 @@ public class BlockedalbumFacade {
 		}
 	}
 
-	public void refresh(Blockedalbum blockedalbum) {
-		LogUtil.log("refreshing Blockedalbum instance", Level.INFO, null);
+	public void refresh(BlockedAlbum blockedAlbum) {
+		LogUtil.log("refreshing BlockedAlbum instance", Level.INFO, null);
 		try {
-			entityManager.refresh(blockedalbum);
+			entityManager.refresh(blockedAlbum);
 			LogUtil.log("refresh successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("refresh failed", Level.SEVERE, re);
@@ -146,10 +146,10 @@ public class BlockedalbumFacade {
 	 * @see delete
 	 */
 
-	public void remove(Blockedalbum blockedalbum) {
-		LogUtil.log("removing Blockedalbum instance", Level.INFO, null);
+	public void remove(BlockedAlbum blockedAlbum) {
+		LogUtil.log("removing BlockedAlbum instance", Level.INFO, null);
 		try {
-			entityManager.remove(blockedalbum);
+			entityManager.remove(blockedAlbum);
 			LogUtil.log("remove successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("remove failed", Level.SEVERE, re);
@@ -158,7 +158,7 @@ public class BlockedalbumFacade {
 	}
 
 	public void flush() {
-		LogUtil.log("flush Blockedalbum instance", Level.INFO, null);
+		LogUtil.log("flush BlockedAlbum instance", Level.INFO, null);
 		try {
 			entityManager.flush();
 			LogUtil.log("flush successful", Level.INFO, null);
@@ -168,9 +168,9 @@ public class BlockedalbumFacade {
 		}
 	}
 
-	private static final String removeByIdJPQL = "delete from Blockedalbum a where a.id in (?1)";
+	private static final String removeByIdJPQL = "delete from BlockedAlbum a where a.id in (?1)";
 
-	public void removeById(BlockedalbumId id) {
+	public void removeById(BlockedAlbumId id) {
 		LogUtil.log("removeById", Level.INFO, null);
 		try {
 			Query query = entityManager.createQuery(removeByIdJPQL);
@@ -184,10 +184,10 @@ public class BlockedalbumFacade {
 	}
 
 	/**
-	 * Find all Blockedalbum entities with a specific property value.
+	 * Find all BlockedAlbum entities with a specific property value.
 	 * 
 	 * @param propertyName
-	 *            the name of the Blockedalbum property to query
+	 *            the name of the BlockedAlbum property to query
 	 * @param value
 	 *            the property value to match
 	 * @param rowStartIdxAndCount
@@ -195,15 +195,15 @@ public class BlockedalbumFacade {
 	 *            row index in the query result-set to begin collecting the
 	 *            results. rowStartIdxAndCount[1] specifies the the maximum
 	 *            number of results to return.
-	 * @return List<Blockedalbum> found by query
+	 * @return List<BlockedAlbum> found by query
 	 */
 	@SuppressWarnings("unchecked")
-	public List<Blockedalbum> findByProperty(String propertyName,
+	public List<BlockedAlbum> findByProperty(String propertyName,
 			final Object value, final int... rowStartIdxAndCount) {
-		LogUtil.log("finding Blockedalbum instance with property: "
+		LogUtil.log("finding BlockedAlbum instance with property: "
 				+ propertyName + ", value: " + value, Level.INFO, null);
 		try {
-			final String queryString = "select model from Blockedalbum model where model."
+			final String queryString = "select model from BlockedAlbum model where model."
 					+ propertyName + "= :propertyValue";
 			Query query = entityManager.createQuery(queryString);
 			query.setParameter("propertyValue", value);
@@ -228,20 +228,20 @@ public class BlockedalbumFacade {
 	}
 
 	/**
-	 * Find all Blockedalbum entities.
+	 * Find all BlockedAlbum entities.
 	 * 
 	 * @param rowStartIdxAndCount
 	 *            Optional int varargs. rowStartIdxAndCount[0] specifies the the
 	 *            row index in the query result-set to begin collecting the
 	 *            results. rowStartIdxAndCount[1] specifies the the maximum
 	 *            count of results to return.
-	 * @return List<Blockedalbum> all Blockedalbum entities
+	 * @return List<BlockedAlbum> all BlockedAlbum entities
 	 */
 	@SuppressWarnings("unchecked")
-	public List<Blockedalbum> findAll(final int... rowStartIdxAndCount) {
-		LogUtil.log("finding all Blockedalbum instances", Level.INFO, null);
+	public List<BlockedAlbum> findAll(final int... rowStartIdxAndCount) {
+		LogUtil.log("finding all BlockedAlbum instances", Level.INFO, null);
 		try {
-			final String queryString = "select model from Blockedalbum model";
+			final String queryString = "select model from BlockedAlbum model";
 			Query query = entityManager.createQuery(queryString);
 			if (rowStartIdxAndCount != null && rowStartIdxAndCount.length > 0) {
 				int rowStartIdx = Math.max(0, rowStartIdxAndCount[0]);

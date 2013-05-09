@@ -1,6 +1,6 @@
 package com.scoutin.facades;
 
-import com.scoutin.entities.Accountstat;
+import com.scoutin.entities.AccountStat;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -11,15 +11,14 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 /**
- * Facade for entity Accountstat.
+ * Facade for entity AccountStat.
  * 
- * @see com.scoutin.entities.Accountstat
+ * @see com.scoutin.entities.AccountStat
  * @author MyEclipse Persistence Tools
  */
 @Stateless
-public class AccountstatFacade {
+public class AccountStatFacade {
 	// property constants
-	public static final String VERSION = "version";
 	public static final String FOLLOWING_COUNT = "followingCount";
 	public static final String FOLLOWERS_COUNT = "followersCount";
 	public static final String UNVIEW_RECMD_COUNT = "unviewRecmdCount";
@@ -28,19 +27,19 @@ public class AccountstatFacade {
 	protected EntityManager entityManager;
 
 	/**
-	 * Perform an initial save of a previously unsaved Accountstat entity. All
+	 * Perform an initial save of a previously unsaved AccountStat entity. All
 	 * subsequent persist actions of this entity should use the #update()
 	 * method.
 	 * 
-	 * @param accountstat
-	 *            Accountstat entity to persist
+	 * @param accountStat
+	 *            AccountStat entity to persist
 	 * @throws RuntimeException
 	 *             when the operation fails
 	 */
-	public void save(Accountstat accountstat) {
-		LogUtil.log("saving Accountstat instance", Level.INFO, null);
+	public void save(AccountStat accountStat) {
+		LogUtil.log("saving AccountStat instance", Level.INFO, null);
 		try {
-			entityManager.persist(accountstat);
+			entityManager.persist(accountStat);
 			LogUtil.log("save successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("save failed", Level.SEVERE, re);
@@ -49,19 +48,19 @@ public class AccountstatFacade {
 	}
 
 	/**
-	 * Delete a persistent Accountstat entity.
+	 * Delete a persistent AccountStat entity.
 	 * 
-	 * @param accountstat
-	 *            Accountstat entity to delete
+	 * @param accountStat
+	 *            AccountStat entity to delete
 	 * @throws RuntimeException
 	 *             when the operation fails
 	 */
-	public void delete(Accountstat accountstat) {
-		LogUtil.log("deleting Accountstat instance", Level.INFO, null);
+	public void delete(AccountStat accountStat) {
+		LogUtil.log("deleting AccountStat instance", Level.INFO, null);
 		try {
-			accountstat = entityManager.getReference(Accountstat.class,
-					accountstat.getAccountId());
-			entityManager.remove(accountstat);
+			accountStat = entityManager.getReference(AccountStat.class,
+					accountStat.getAccountId());
+			entityManager.remove(accountStat);
 			LogUtil.log("delete successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("delete failed", Level.SEVERE, re);
@@ -70,22 +69,22 @@ public class AccountstatFacade {
 	}
 
 	/**
-	 * Persist a previously saved Accountstat entity and return it or a copy of
-	 * it to the sender. A copy of the Accountstat entity parameter is returned
+	 * Persist a previously saved AccountStat entity and return it or a copy of
+	 * it to the sender. A copy of the AccountStat entity parameter is returned
 	 * when the JPA persistence mechanism has not previously been tracking the
 	 * updated entity.
 	 * 
-	 * @param accountstat
-	 *            Accountstat entity to update
-	 * @return Accountstat the persisted Accountstat entity instance, may not be
+	 * @param accountStat
+	 *            AccountStat entity to update
+	 * @return AccountStat the persisted AccountStat entity instance, may not be
 	 *         the same
 	 * @throws RuntimeException
 	 *             if the operation fails
 	 */
-	public Accountstat update(Accountstat accountstat) {
-		LogUtil.log("updating Accountstat instance", Level.INFO, null);
+	public AccountStat update(AccountStat accountStat) {
+		LogUtil.log("updating AccountStat instance", Level.INFO, null);
 		try {
-			Accountstat result = entityManager.merge(accountstat);
+			AccountStat result = entityManager.merge(accountStat);
 			LogUtil.log("update successful", Level.INFO, null);
 			return result;
 		} catch (RuntimeException re) {
@@ -94,11 +93,11 @@ public class AccountstatFacade {
 		}
 	}
 
-	public Accountstat findById(Integer accountId) {
-		LogUtil.log("finding Accountstat instance with id: " + accountId,
+	public AccountStat findById(Integer accountId) {
+		LogUtil.log("finding AccountStat instance with id: " + accountId,
 				Level.INFO, null);
 		try {
-			Accountstat instance = entityManager.find(Accountstat.class,
+			AccountStat instance = entityManager.find(AccountStat.class,
 					accountId);
 			LogUtil.log("find successful", Level.INFO, null);
 			return instance;
@@ -108,13 +107,13 @@ public class AccountstatFacade {
 		}
 	}
 
-	public Accountstat getReference(Integer accountId) {
+	public AccountStat getReference(Integer accountId) {
 		LogUtil.log(
-				"getReferencing Accountstat instance with id: " + accountId,
+				"getReferencing AccountStat instance with id: " + accountId,
 				Level.INFO, null);
 		try {
-			Accountstat instance = entityManager.getReference(
-					Accountstat.class, accountId);
+			AccountStat instance = entityManager.getReference(
+					AccountStat.class, accountId);
 			LogUtil.log("getReference successful", Level.INFO, null);
 			return instance;
 		} catch (RuntimeException re) {
@@ -123,10 +122,10 @@ public class AccountstatFacade {
 		}
 	}
 
-	public void detach(Accountstat accountstat) {
-		LogUtil.log("detaching Accountstat instance", Level.INFO, null);
+	public void detach(AccountStat accountStat) {
+		LogUtil.log("detaching AccountStat instance", Level.INFO, null);
 		try {
-			entityManager.detach(accountstat);
+			entityManager.detach(accountStat);
 			LogUtil.log("detach successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("detach failed", Level.SEVERE, re);
@@ -134,10 +133,10 @@ public class AccountstatFacade {
 		}
 	}
 
-	public void refresh(Accountstat accountstat) {
-		LogUtil.log("refreshing Accountstat instance", Level.INFO, null);
+	public void refresh(AccountStat accountStat) {
+		LogUtil.log("refreshing AccountStat instance", Level.INFO, null);
 		try {
-			entityManager.refresh(accountstat);
+			entityManager.refresh(accountStat);
 			LogUtil.log("refresh successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("refresh failed", Level.SEVERE, re);
@@ -151,10 +150,10 @@ public class AccountstatFacade {
 	 * @see delete
 	 */
 
-	public void remove(Accountstat accountstat) {
-		LogUtil.log("removing Accountstat instance", Level.INFO, null);
+	public void remove(AccountStat accountStat) {
+		LogUtil.log("removing AccountStat instance", Level.INFO, null);
 		try {
-			entityManager.remove(accountstat);
+			entityManager.remove(accountStat);
 			LogUtil.log("remove successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("remove failed", Level.SEVERE, re);
@@ -163,7 +162,7 @@ public class AccountstatFacade {
 	}
 
 	public void flush() {
-		LogUtil.log("flush Accountstat instance", Level.INFO, null);
+		LogUtil.log("flush AccountStat instance", Level.INFO, null);
 		try {
 			entityManager.flush();
 			LogUtil.log("flush successful", Level.INFO, null);
@@ -173,7 +172,7 @@ public class AccountstatFacade {
 		}
 	}
 
-	private static final String removeByAccountIdJPQL = "delete from Accountstat a where a.accountId in (?1)";
+	private static final String removeByAccountIdJPQL = "delete from AccountStat a where a.accountId in (?1)";
 
 	public void removeByAccountId(Integer accountId) {
 		LogUtil.log("removeByAccountId", Level.INFO, null);
@@ -188,7 +187,7 @@ public class AccountstatFacade {
 		}
 	}
 
-	private static final String increaseFollowingCountJPQL = "update Accountstat a set a.followingCount = a.followingCount + :count where a.accountId in (:accountId)";
+	private static final String increaseFollowingCountJPQL = "update ACCOUNT_STAT a set a.followingCount = a.followingCount + :count where a.accountId in (:accountId)";
 
 	public void increaseFollowingCount(java.lang.Integer accountId, int count) {
 		LogUtil.log("increaseUnviewRecmdCount with accountId:" + accountId,
@@ -205,7 +204,7 @@ public class AccountstatFacade {
 		}
 	}
 
-	private static final String increaseFollowersCountJPQL = "update Accountstat a set a.followersCount = a.followersCount + :count where a.accountId in (:accountId)";
+	private static final String increaseFollowersCountJPQL = "update ACCOUNT_STAT a set a.followersCount = a.followersCount + :count where a.accountId in (:accountId)";
 
 	public void increaseFollowersCount(java.lang.Integer accountId, int count) {
 		LogUtil.log("increaseUnviewRecmdCount with accountId:" + accountId,
@@ -222,7 +221,7 @@ public class AccountstatFacade {
 		}
 	}
 
-	private static final String increaseUnviewRecmdCountJPQL = "update Accountstat a set a.unviewRecmdCount = a.unviewRecmdCount + :count where a.accountId in (:accountId)";
+	private static final String increaseUnviewRecmdCountJPQL = "update ACCOUNT_STAT a set a.unviewRecmdCount = a.unviewRecmdCount + :count where a.accountId in (:accountId)";
 
 	public void increaseUnviewRecmdCount(java.lang.Integer accountId, int count) {
 		LogUtil.log("increaseUnviewRecmdCount with accountId:" + accountId,
@@ -241,10 +240,10 @@ public class AccountstatFacade {
 	}
 
 	/**
-	 * Find all Accountstat entities with a specific property value.
+	 * Find all AccountStat entities with a specific property value.
 	 * 
 	 * @param propertyName
-	 *            the name of the Accountstat property to query
+	 *            the name of the AccountStat property to query
 	 * @param value
 	 *            the property value to match
 	 * @param rowStartIdxAndCount
@@ -252,15 +251,15 @@ public class AccountstatFacade {
 	 *            row index in the query result-set to begin collecting the
 	 *            results. rowStartIdxAndCount[1] specifies the the maximum
 	 *            number of results to return.
-	 * @return List<Accountstat> found by query
+	 * @return List<AccountStat> found by query
 	 */
 	@SuppressWarnings("unchecked")
-	public List<Accountstat> findByProperty(String propertyName,
+	public List<AccountStat> findByProperty(String propertyName,
 			final Object value, final int... rowStartIdxAndCount) {
-		LogUtil.log("finding Accountstat instance with property: "
+		LogUtil.log("finding AccountStat instance with property: "
 				+ propertyName + ", value: " + value, Level.INFO, null);
 		try {
-			final String queryString = "select model from Accountstat model where model."
+			final String queryString = "select model from AccountStat model where model."
 					+ propertyName + "= :propertyValue";
 			Query query = entityManager.createQuery(queryString);
 			query.setParameter("propertyValue", value);
@@ -284,44 +283,39 @@ public class AccountstatFacade {
 		}
 	}
 
-	public List<Accountstat> findByVersion(Object version,
-			int... rowStartIdxAndCount) {
-		return findByProperty(VERSION, version, rowStartIdxAndCount);
-	}
-
-	public List<Accountstat> findByFollowingCount(Object followingCount,
+	public List<AccountStat> findByFollowingCount(Object followingCount,
 			int... rowStartIdxAndCount) {
 		return findByProperty(FOLLOWING_COUNT, followingCount,
 				rowStartIdxAndCount);
 	}
 
-	public List<Accountstat> findByFollowersCount(Object followersCount,
+	public List<AccountStat> findByFollowersCount(Object followersCount,
 			int... rowStartIdxAndCount) {
 		return findByProperty(FOLLOWERS_COUNT, followersCount,
 				rowStartIdxAndCount);
 	}
 
-	public List<Accountstat> findByUnviewRecmdCount(Object unviewRecmdCount,
+	public List<AccountStat> findByUnviewRecmdCount(Object unviewRecmdCount,
 			int... rowStartIdxAndCount) {
 		return findByProperty(UNVIEW_RECMD_COUNT, unviewRecmdCount,
 				rowStartIdxAndCount);
 	}
 
 	/**
-	 * Find all Accountstat entities.
+	 * Find all AccountStat entities.
 	 * 
 	 * @param rowStartIdxAndCount
 	 *            Optional int varargs. rowStartIdxAndCount[0] specifies the the
 	 *            row index in the query result-set to begin collecting the
 	 *            results. rowStartIdxAndCount[1] specifies the the maximum
 	 *            count of results to return.
-	 * @return List<Accountstat> all Accountstat entities
+	 * @return List<AccountStat> all AccountStat entities
 	 */
 	@SuppressWarnings("unchecked")
-	public List<Accountstat> findAll(final int... rowStartIdxAndCount) {
-		LogUtil.log("finding all Accountstat instances", Level.INFO, null);
+	public List<AccountStat> findAll(final int... rowStartIdxAndCount) {
+		LogUtil.log("finding all AccountStat instances", Level.INFO, null);
 		try {
-			final String queryString = "select model from Accountstat model";
+			final String queryString = "select model from AccountStat model";
 			Query query = entityManager.createQuery(queryString);
 			if (rowStartIdxAndCount != null && rowStartIdxAndCount.length > 0) {
 				int rowStartIdx = Math.max(0, rowStartIdxAndCount[0]);

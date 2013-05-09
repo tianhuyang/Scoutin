@@ -18,7 +18,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
-import javax.persistence.Version;
 
 /**
  * Card entity. @author MyEclipse Persistence Tools
@@ -30,18 +29,17 @@ public class Card implements java.io.Serializable {
 	// Fields
 	private static final long serialVersionUID = 1L;
 	private Long cardId;
-	private Long version;
-	private Cardbody cardbody;
+	private CardBody cardBody;
 	private String description;
 	private Integer rating;
 	private Integer commentsCount = 0;
-	private Integer likesCount = 0;
+	private Integer endorsesCount = 0;
 	private Timestamp createdTime;
 	private Timestamp updatedTime;
 	private String tag;
-	private Integer ratingCount = 0;
 	private Set<Album> albums = new HashSet<Album>(0);
-	private Set<Account> accounts = new HashSet<Account>(0);
+	private Set<Recommendation> recommendations = new HashSet<Recommendation>(0);
+	private Set<CardEndorse> cardEndorses = new HashSet<CardEndorse>(0);
 	private Set<Category> categories = new HashSet<Category>(0);
 	private Set<Comment> comments = new HashSet<Comment>(0);
 
@@ -52,32 +50,34 @@ public class Card implements java.io.Serializable {
 	}
 
 	/** minimal constructor */
-	public Card(Cardbody cardbody, Integer commentsCount, Integer likesCount,
-			Timestamp createdTime, Timestamp updatedTime) {
-		this.cardbody = cardbody;
+	public Card(CardBody cardBody, Integer rating, Integer commentsCount,
+			Integer endorsesCount, Timestamp createdTime, Timestamp updatedTime) {
+		this.cardBody = cardBody;
+		this.rating = rating;
 		this.commentsCount = commentsCount;
-		this.likesCount = likesCount;
+		this.endorsesCount = endorsesCount;
 		this.createdTime = createdTime;
 		this.updatedTime = updatedTime;
 	}
 
 	/** full constructor */
-	public Card(Cardbody cardbody, String description, Integer rating,
-			Integer commentsCount, Integer likesCount, Timestamp createdTime,
-			Timestamp updatedTime, String tag, Integer ratingCount,
-			Set<Album> albums, Set<Account> accounts, Set<Category> categories,
+	public Card(CardBody cardBody, String description, Integer rating,
+			Integer commentsCount, Integer endorsesCount,
+			Timestamp createdTime, Timestamp updatedTime, String tag,
+			Set<Album> albums, Set<Recommendation> recommendations,
+			Set<CardEndorse> cardEndorses, Set<Category> categories,
 			Set<Comment> comments) {
-		this.cardbody = cardbody;
+		this.cardBody = cardBody;
 		this.description = description;
 		this.rating = rating;
 		this.commentsCount = commentsCount;
-		this.likesCount = likesCount;
+		this.endorsesCount = endorsesCount;
 		this.createdTime = createdTime;
 		this.updatedTime = updatedTime;
 		this.tag = tag;
-		this.ratingCount = ratingCount;
 		this.albums = albums;
-		this.accounts = accounts;
+		this.recommendations = recommendations;
+		this.cardEndorses = cardEndorses;
 		this.categories = categories;
 		this.comments = comments;
 	}
@@ -94,24 +94,14 @@ public class Card implements java.io.Serializable {
 		this.cardId = cardId;
 	}
 
-	@Version
-	@Column(name = "VERSION", nullable = false)
-	public Long getVersion() {
-		return this.version;
-	}
-
-	public void setVersion(Long version) {
-		this.version = version;
-	}
-
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "CARDBODY_ID", nullable = false)
-	public Cardbody getCardbody() {
-		return this.cardbody;
+	@JoinColumn(name = "CARD_BODY_ID", nullable = false)
+	public CardBody getCardBody() {
+		return this.cardBody;
 	}
 
-	public void setCardbody(Cardbody cardbody) {
-		this.cardbody = cardbody;
+	public void setCardBody(CardBody cardBody) {
+		this.cardBody = cardBody;
 	}
 
 	@Column(name = "DESCRIPTION")
@@ -123,7 +113,7 @@ public class Card implements java.io.Serializable {
 		this.description = description;
 	}
 
-	@Column(name = "RATING")
+	@Column(name = "RATING", nullable = false)
 	public Integer getRating() {
 		return this.rating;
 	}
@@ -141,13 +131,13 @@ public class Card implements java.io.Serializable {
 		this.commentsCount = commentsCount;
 	}
 
-	@Column(name = "LIKES_COUNT", nullable = false, insertable = false, updatable = false)
-	public Integer getLikesCount() {
-		return this.likesCount;
+	@Column(name = "ENDORSES_COUNT", nullable = false, insertable = false, updatable = false)
+	public Integer getEndorsesCount() {
+		return this.endorsesCount;
 	}
 
-	public void setLikesCount(Integer likesCount) {
-		this.likesCount = likesCount;
+	public void setEndorsesCount(Integer endorsesCount) {
+		this.endorsesCount = endorsesCount;
 	}
 
 	@Column(name = "CREATED_TIME", nullable = false, updatable = false, length = 19)
@@ -177,17 +167,8 @@ public class Card implements java.io.Serializable {
 		this.tag = tag;
 	}
 
-	@Column(name = "RATING_COUNT", insertable = false, updatable = false)
-	public Integer getRatingCount() {
-		return this.ratingCount;
-	}
-
-	public void setRatingCount(Integer ratingCount) {
-		this.ratingCount = ratingCount;
-	}
-
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinTable(name = "ALBUMCARD", catalog = "Scoutin", joinColumns = { @JoinColumn(name = "CARD_ID", nullable = false, updatable = false) }, inverseJoinColumns = { @JoinColumn(name = "ALBUM_ID", nullable = false, updatable = false) })
+	@JoinTable(name = "ALBUM_CARD", catalog = "Scoutin", joinColumns = { @JoinColumn(name = "CARD_ID", nullable = false, updatable = false) }, inverseJoinColumns = { @JoinColumn(name = "ALBUM_ID", nullable = false, updatable = false) })
 	public Set<Album> getAlbums() {
 		return this.albums;
 	}
@@ -196,14 +177,22 @@ public class Card implements java.io.Serializable {
 		this.albums = albums;
 	}
 
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinTable(name = "CARDLIKE", catalog = "Scoutin", joinColumns = { @JoinColumn(name = "CARD_ID", nullable = false, updatable = false) }, inverseJoinColumns = { @JoinColumn(name = "ACCOUNT_ID", nullable = false, updatable = false) })
-	public Set<Account> getAccounts() {
-		return this.accounts;
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "card")
+	public Set<Recommendation> getRecommendations() {
+		return this.recommendations;
 	}
 
-	public void setAccounts(Set<Account> accounts) {
-		this.accounts = accounts;
+	public void setRecommendations(Set<Recommendation> recommendations) {
+		this.recommendations = recommendations;
+	}
+
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "card")
+	public Set<CardEndorse> getCardEndorses() {
+		return this.cardEndorses;
+	}
+
+	public void setCardEndorses(Set<CardEndorse> cardEndorses) {
+		this.cardEndorses = cardEndorses;
 	}
 
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "cards")

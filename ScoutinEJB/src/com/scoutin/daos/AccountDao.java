@@ -1,5 +1,6 @@
 package com.scoutin.daos;
 
+import java.util.Arrays;
 import java.util.logging.Level;
 
 
@@ -28,6 +29,23 @@ public class AccountDao extends AccountFacade {
 			throw re;
 		}
 		return account;
+	}
+	
+    private static final String clustersBelongToAccountHql = "select count(cluster.clusterId) from Cluster cluster where cluster.account.accountId = :accountId and cluster.clusterId in (:clusterIds)";
+	
+	public boolean clustersBelongToAccount(Long[] clusterIds, int accountId) {
+		LogUtil.log("clustersBelongToAccounting", Level.INFO, null);
+		try {
+			Query query = entityManager.createQuery(clustersBelongToAccountHql);
+			query.setParameter("accountId", accountId);
+			query.setParameter("clusterIds", Arrays.asList(clusterIds));
+			long count = (Long)query.getSingleResult();
+			LogUtil.log("clustersBelongToAccount successful", Level.INFO, null);
+			return count == clusterIds.length;
+		} catch (RuntimeException re) {
+			LogUtil.log("clustersBelongToAccount failed", Level.SEVERE, re);
+			throw re;
+		}	
 	}
 	
 	

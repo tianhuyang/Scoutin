@@ -65,7 +65,7 @@ public class RepostCardAction extends ActionSupport implements ServletRequestAwa
 		}
 		Account account = (Account)request.getSession(true).getAttribute("user");
 		try{
-			card = CardService.repostCard(account.getAccountId(),repostCardVO.getAlbumIds(),card,repostCardVO.getCardbodyId());
+			card = CardService.repostCard(account.getAccountId(),repostCardVO.getAlbumIds(),card,repostCardVO.getCardBodyId());
 			dataMap.put("card", card);
 		}catch(ScoutinException e){
 			succeed = false;

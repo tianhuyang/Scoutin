@@ -19,7 +19,6 @@ import javax.persistence.Query;
 @Stateless
 public class CommentFacade {
 	// property constants
-	public static final String VERSION = "version";
 	public static final String CONTENT = "content";
 
 	@PersistenceContext
@@ -262,11 +261,6 @@ public class CommentFacade {
 			LogUtil.log("find by property name failed", Level.SEVERE, re);
 			throw re;
 		}
-	}
-
-	public List<Comment> findByVersion(Object version,
-			int... rowStartIdxAndCount) {
-		return findByProperty(VERSION, version, rowStartIdxAndCount);
 	}
 
 	public List<Comment> findByContent(Object content,

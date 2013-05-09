@@ -4,37 +4,37 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 /**
- * CardRepostId entity. @author MyEclipse Persistence Tools
+ * AccountClusterId entity. @author MyEclipse Persistence Tools
  */
 @Embeddable
-public class CardRepostId implements java.io.Serializable {
+public class AccountClusterId implements java.io.Serializable {
 
 	// Fields
 	private static final long serialVersionUID = 1L;
-	private Long cardBodyId;
+	private Long clusterId;
 	private Integer accountId;
 
 	// Constructors
 
 	/** default constructor */
-	public CardRepostId() {
+	public AccountClusterId() {
 	}
 
 	/** full constructor */
-	public CardRepostId(Long cardBodyId, Integer accountId) {
-		this.cardBodyId = cardBodyId;
+	public AccountClusterId(Long clusterId, Integer accountId) {
+		this.clusterId = clusterId;
 		this.accountId = accountId;
 	}
 
 	// Property accessors
 
-	@Column(name = "CARD_BODY_ID", nullable = false)
-	public Long getCardBodyId() {
-		return this.cardBodyId;
+	@Column(name = "CLUSTER_ID", nullable = false)
+	public Long getClusterId() {
+		return this.clusterId;
 	}
 
-	public void setCardBodyId(Long cardBodyId) {
-		this.cardBodyId = cardBodyId;
+	public void setClusterId(Long clusterId) {
+		this.clusterId = clusterId;
 	}
 
 	@Column(name = "ACCOUNT_ID", nullable = false)
@@ -51,13 +51,13 @@ public class CardRepostId implements java.io.Serializable {
 			return true;
 		if ((other == null))
 			return false;
-		if (!(other instanceof CardRepostId))
+		if (!(other instanceof AccountClusterId))
 			return false;
-		CardRepostId castOther = (CardRepostId) other;
+		AccountClusterId castOther = (AccountClusterId) other;
 
-		return ((this.getCardBodyId() == castOther.getCardBodyId()) || (this
-				.getCardBodyId() != null && castOther.getCardBodyId() != null && this
-				.getCardBodyId().equals(castOther.getCardBodyId())))
+		return ((this.getClusterId() == castOther.getClusterId()) || (this
+				.getClusterId() != null && castOther.getClusterId() != null && this
+				.getClusterId().equals(castOther.getClusterId())))
 				&& ((this.getAccountId() == castOther.getAccountId()) || (this
 						.getAccountId() != null
 						&& castOther.getAccountId() != null && this
@@ -67,10 +67,8 @@ public class CardRepostId implements java.io.Serializable {
 	public int hashCode() {
 		int result = 17;
 
-		result = 37
-				* result
-				+ (getCardBodyId() == null ? 0 : this.getCardBodyId()
-						.hashCode());
+		result = 37 * result
+				+ (getClusterId() == null ? 0 : this.getClusterId().hashCode());
 		result = 37 * result
 				+ (getAccountId() == null ? 0 : this.getAccountId().hashCode());
 		return result;

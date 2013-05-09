@@ -8,12 +8,10 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
-import javax.persistence.OptimisticLockException;
-
 import com.scoutin.application.exception.ApplicationException;
 import com.scoutin.application.interfaces.CardBeanRemote;
 import com.scoutin.entities.Card;
-import com.scoutin.entities.Cardbody;
+import com.scoutin.entities.CardBody;
 import com.scoutin.entities.Comment;
 
 /**
@@ -40,14 +38,14 @@ public class CardBean implements CardBeanRemote {
 	 */
 	@Override
 	public Card createCard(Integer accountId, Long[] albumIds, Card card,
-			Cardbody cardbody) {
+			CardBody cardBody) {
 		try {
 			card = cardBeanService.createCard(accountId, albumIds, card,
-					cardbody);
+					cardBody);
 			if (card != null) {
 				card.setAlbums(null);
-				card.getCardbody().setAccount(null);
-			}			
+				card.getCardBody().setAccount(null);
+			}
 			return card;
 		} catch (Throwable t) {
 			throw new ApplicationException(t.getMessage());
@@ -56,13 +54,14 @@ public class CardBean implements CardBeanRemote {
 
 	/*
 	 * @see com.scoutin.logic.CardBeanRemote#repostCard(Integer accountId,
-	 * Long[] albumIds, Long cardbodyId)
+	 * Long[] albumIds, Long cardBodyId)
 	 */
 	@Override
-	public Card repostCard(Integer accountId, Long[] albumIds, Card card, Long cardbodyId) {
+	public Card repostCard(Integer accountId, Long[] albumIds, Card card,
+			Long cardBodyId) {
 		try {
-			card = cardBeanService.repostCard(accountId, albumIds,card,
-					cardbodyId);
+			card = cardBeanService.repostCard(accountId, albumIds, card,
+					cardBodyId);
 			if (card != null) {
 				card.setAlbums(null);
 			}
@@ -98,59 +97,58 @@ public class CardBean implements CardBeanRemote {
 
 	/*
 	 * @see com.scoutin.logic.CardBeanRemote#editCard(Integer accountId,
-	 * Map<String,Object> cardProperties, Map<String,Object> cardbodyProperties)
+	 * Map<String,Object> cardProperties, Map<String,Object> cardBodyProperties)
 	 */
 	@Override
 	public Map<String, Object> editCard(Integer accountId,
 			Map<String, Object> cardProperties,
-			Map<String, Object> cardbodyProperties) {
-		Map<String, Object> properties = new TreeMap<String, Object>();
-		boolean success = true;
+			Map<String, Object> cardBodyProperties) {
+		Map<String, Object> properties = null;
 		try {
-			cardBeanService.editCard(accountId, cardProperties,
-					cardbodyProperties, properties);
-		} catch (javax.ejb.EJBException ejbe) {
-			if (ejbe.getCause() instanceof OptimisticLockException)
-			{
-				properties.put("ModifiedByOthers", true);
-				success = false;
-			}
-			else
-				throw new ApplicationException(ejbe.getMessage());
+			properties = cardBeanService.editCard(accountId, cardProperties,
+					cardBodyProperties);
 		} catch (Throwable t) {
 			throw new ApplicationException(t.getMessage());
 		}
-		if(success){
-			Card card = (Card)properties.get("card");
-			if(card != null){
-				cardProperties = new TreeMap<String, Object>();
-				cardProperties.put("updatedTime", card.getUpdatedTime());
-				cardProperties.put("version", card.getVersion());
-				properties.put("card", cardProperties);
-			}
-			
-			Cardbody cardbody = (Cardbody)properties.get("cardbody");
-			if(card != null){
-				cardbodyProperties = new TreeMap<String, Object>();
-				cardbodyProperties.put("updatedTime", cardbody.getUpdatedTime());
-				cardbodyProperties.put("version", cardbody.getVersion());
-				properties.put("cardbody", cardbodyProperties);
-			}
+		Card card = (Card) properties.get("card");
+		if (card != null) {
+			cardProperties = new TreeMap<String, Object>();
+			cardProperties.put("updatedTime", card.getUpdatedTime());
+			properties.put("card", cardProperties);
+		}
+
+		CardBody cardBody = (CardBody) properties.get("cardBody");
+		if (cardBody != null) {
+			cardBodyProperties = new TreeMap<String, Object>();
+			cardBodyProperties.put("updatedTime", cardBody.getUpdatedTime());
+			properties.put("cardBody", cardBodyProperties);
 		}
 		return properties;
 	}
 
 	/*
-	 * @see com.scoutin.logic.CardBeanRemote#likeCard(Integer accountId, Long
+	 * @see com.scoutin.logic.CardBeanRemote#endorseCard(Integer accountId, Long
 	 * cardId)
 	 */
 	@Override
-	public boolean likeCard(Integer accountId, Long cardId) {
+	public boolean endorseCard(Integer accountId, Long cardId) {
 		try {
-			return cardBeanService.likeCard(accountId, cardId);
+			return cardBeanService.endorseCard(accountId, cardId);
 		} catch (Throwable t) {
 			throw new ApplicationException(t.getMessage());
 		}
+	}
+
+	/*
+	 * @see com.scoutin.logic.CardBeanRemote#recommendCard(Integer accountId, Long cardId, Integer[] accountIds, Long[] clusterIds)
+	 */
+	@Override
+	public void recommendCard(Integer accountId, Long cardId, Integer[] accountIds, Long[] clusterIds) {
+		try {
+			cardBeanService.recommendCard(accountId, cardId, accountIds, clusterIds);
+		} catch (Throwable t) {
+			throw new ApplicationException(t.getMessage());
+		}		
 	}
 
 }

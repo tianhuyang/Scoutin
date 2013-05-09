@@ -14,17 +14,18 @@ import com.scoutin.daos.AccountDao;
 import com.scoutin.daos.AlbumDao;
 import com.scoutin.daos.CardBodyDao;
 import com.scoutin.daos.CardDao;
-import com.scoutin.daos.CardLikeDao;
+import com.scoutin.daos.CardEndorseDao;
 import com.scoutin.daos.CardRepostDao;
 import com.scoutin.daos.CommentDao;
+import com.scoutin.daos.RecommendationDao;
 import com.scoutin.entities.Account;
 import com.scoutin.entities.Album;
 import com.scoutin.entities.Card;
-import com.scoutin.entities.Cardbody;
-import com.scoutin.entities.Cardlike;
-import com.scoutin.entities.CardlikeId;
-import com.scoutin.entities.Cardrepost;
-import com.scoutin.entities.CardrepostId;
+import com.scoutin.entities.CardBody;
+import com.scoutin.entities.CardEndorse;
+import com.scoutin.entities.CardEndorseId;
+import com.scoutin.entities.CardRepost;
+import com.scoutin.entities.CardRepostId;
 import com.scoutin.entities.Comment;
 
 @Stateless
@@ -41,9 +42,11 @@ public class CardBeanService {
 	@EJB
 	private CardBodyDao cardBodyDao;
 	@EJB
-	private CardLikeDao cardLikeDao;
+	private CardEndorseDao cardEndorseDao;
 	@EJB
 	private CommentDao commentDao;
+	@EJB
+	private RecommendationDao recommendationDao;
 
 	/**
 	 * Default constructor.
@@ -54,20 +57,20 @@ public class CardBeanService {
 
 	/*
 	 * @see com.scoutin.logic.CardBeanRemote#createCard(Integer accountId,
-	 * Long[] albumIds, Card card, Cardbody cardbody)
+	 * Long[] albumIds, Card card, CardBody cardBody)
 	 */
 	public Card createCard(Integer accountId, Long[] albumIds, Card card,
-			Cardbody cardbody) {
+			CardBody cardBody) {
 		// whether all the albumIds exists
 		if (albumDao.verifyAccountAlbum(accountId, albumIds) == false) {
 			throw new IllegalArgumentException(
-					"accountId doesn't match or not all albumIds exist");
+					"accountId don't match or not all albumIds exist");
 		}
 		// insert values
 		Account account = accountDao.getReference(accountId);
-		cardbody.setAccount(account);
-		cardBodyDao.save(cardbody);
-		card.setCardbody(cardbody);
+		cardBody.setAccount(account);
+		cardBodyDao.save(cardBody);
+		card.setCardBody(cardBody);
 
 		for (long albumId : albumIds) {
 			Album album = albumDao.getReference(albumId);
@@ -79,34 +82,34 @@ public class CardBeanService {
 	}
 
 	/*
-	 * @see com.scoutin.logic.CardBeanRemote#repostCard(Long cardbodyId, Integer
+	 * @see com.scoutin.logic.CardBeanRemote#repostCard(Long cardBodyId, Integer
 	 * accountId, Long[] albumIds)
 	 */
-	public Card repostCard(Integer accountId, Long[] albumIds, Card card, Long cardbodyId) {
+	public Card repostCard(Integer accountId, Long[] albumIds, Card card, Long cardBodyId) {
 		// whether all the albumIds exists
 		if (albumDao.verifyAccountAlbum(accountId, albumIds) == false) {
 			throw new IllegalArgumentException(
-					"accountId doesn't match or not all albumIds exist");
+					"accountId don't match or not all albumIds exist");
 		}
 		// create card
-		Cardbody cardBody = cardBodyDao.getReference(cardbodyId);
-		card.setCardbody(cardBody);
+		CardBody cardBody = cardBodyDao.getReference(cardBodyId);
+		card.setCardBody(cardBody);
 		for (long albumId : albumIds) {
 			Album album = albumDao.getReference(albumId);
 			card.getAlbums().add(album);
 		}
 		cardDao.save(card);
 		// create cardReposts
-		CardrepostId cardRepostId = new CardrepostId(cardbodyId, accountId);
-		Cardrepost cardRepost = cardRepostDao.findById(cardRepostId);
+		CardRepostId cardRepostId = new CardRepostId(cardBodyId, accountId);
+		CardRepost cardRepost = cardRepostDao.findById(cardRepostId);
 		if (cardRepost == null) {
-			cardRepost = new Cardrepost();
+			cardRepost = new CardRepost();
 			cardRepost.setId(cardRepostId);
 			cardRepostDao.save(cardRepost);
 		} else {
 			cardRepostDao.increaseCount(cardRepostId, 1);
 		}
-		cardBodyDao.increaseRepostsCount(cardbodyId, 1);
+		cardBodyDao.increaseRepostsCount(cardBodyId, 1);
 		return card;
 	}
 
@@ -128,78 +131,86 @@ public class CardBeanService {
 
 	/*
 	 * @see com.scoutin.logic.CardBeanRemote#editCard(Integer accountId,
-	 * Map<String,Object> cardProperties, Map<String,Object> cardbodyProperties)
+	 * Map<String,Object> cardProperties, Map<String,Object> cardBodyProperties)
 	 */
-	public void editCard(Integer accountId,
+	public Map<String, Object> editCard(Integer accountId,
 			Map<String, Object> cardProperties,
-			Map<String, Object> cardbodyProperties, Map<String, Object> properties) {
+			Map<String, Object> cardBodyProperties) {
 		Long cardId = null;
-		Long cardbodyId = null;
-		Long version = null;
+		Long cardBodyId = null;
 		if (cardProperties != null) {
 			cardId = (Long) cardProperties.get("cardId");
 			if (cardDao.cardBelongToAccount(cardId, accountId) == false) {
 				throw new IllegalArgumentException(
-						"accountId and cardId doesn't match or not all exist");
+						"accountId and cardId don't match or not all exist");
 			}
 		}
-		if (cardbodyProperties != null) {
-			cardbodyId = (Long) cardbodyProperties.get("cardbodyId");
-			if (cardBodyDao.cardbodyBelongToAccount(cardbodyId, accountId) == false) {
+		if (cardBodyProperties != null) {
+			cardBodyId = (Long) cardBodyProperties.get("cardBodyId");
+			if (cardBodyDao.cardBodyBelongToAccount(cardBodyId, accountId) == false) {
 				throw new IllegalArgumentException(
-						"accountId and cardbodyId doesn't match or not all exist");
+						"accountId and cardBodyId don't match or not all exist");
 			}
-		}		
+		}	
+		Map<String, Object> properties = new TreeMap<String, Object>();
 		try {
 			if (cardId != null) {
-				version = (Long) cardProperties.remove("version");
 				Card card = cardDao.findById(cardId);
 				properties.put("card", card);
-				if (version.equals(card.getVersion()) == false) {
-					throw new OptimisticLockException(
-							"OptimisticLockException while updating card");
-				}
 				BeanUtils.populate(card, cardProperties);
-
 			}
-			if (cardbodyId != null) {
-				version = (Long) cardbodyProperties.remove("version");
-				Cardbody cardbody = cardBodyDao.findById(cardbodyId);
-				properties.put("cardbody", cardbody);
-				if (version.equals(cardbody.getVersion()) == false) {
-					throw new OptimisticLockException(
-							"OptimisticLockException while updating cardbody");
-				}
-				BeanUtils.populate(cardbody, cardbodyProperties);
+			if (cardBodyId != null) {
+				CardBody cardBody = cardBodyDao.findById(cardBodyId);
+				properties.put("cardBody", cardBody);
+				BeanUtils.populate(cardBody, cardBodyProperties);
 			}
 		} catch (IllegalAccessException e) {
 			throw new RuntimeException("Unexpeted exception");
 		} catch (InvocationTargetException e) {
 			throw new RuntimeException("Unexpeted exception");
 		}
+		return properties;
 	}
 
 	/*
-	 * @see com.scoutin.logic.CardBeanRemote#likeCard(Integer accountId, Long
+	 * @see com.scoutin.logic.CardBeanRemote#endorseCard(Integer accountId, Long
 	 * cardId)
 	 */
-	public boolean likeCard(Integer accountId, Long cardId) {
-		boolean liked;
-		CardlikeId cardlikeId = new CardlikeId(accountId, cardId);
-		Cardlike cardlike = cardLikeDao.findById(cardlikeId);
-		if (cardlike == null) {
-			cardlike = new Cardlike();
-			cardlike.setId(cardlikeId);
-			cardLikeDao.save(cardlike);
-			cardDao.increaseLikesCount(cardId, 1);
-			cardBodyDao.increaseLikesCountByCardId(cardId, 1);
-			liked = true;
+	public boolean endorseCard(Integer accountId, Long cardId) {
+		boolean endorsed;
+		CardEndorseId cardendorseId = new CardEndorseId(accountId, cardId);
+		CardEndorse cardendorse = cardEndorseDao.findById(cardendorseId);
+		if (cardendorse == null) {
+			cardendorse = new CardEndorse();
+			cardendorse.setId(cardendorseId);
+			cardEndorseDao.save(cardendorse);
+			cardDao.increaseEndorsesCount(cardId, 1);
+			cardBodyDao.increaseEndorsesCountByCardId(cardId, 1);
+			endorsed = true;
 		} else {
-			cardLikeDao.remove(cardlike);
-			cardDao.increaseLikesCount(cardId, -1);
-			cardBodyDao.increaseLikesCountByCardId(cardId, -1);
-			liked = false;
+			cardEndorseDao.remove(cardendorse);
+			cardDao.increaseEndorsesCount(cardId, -1);
+			cardBodyDao.increaseEndorsesCountByCardId(cardId, -1);
+			endorsed = false;
 		}
-		return liked;
+		return endorsed;
+	}
+	
+	/*
+	 * @see com.scoutin.logic.CardBeanRemote#recommendCard(Integer accountId, Long cardId, Integer[] accountIds, Long[] clusterIds)
+	 */
+	public void recommendCard(Integer accountId, Long cardId, Integer[] accountIds, Long[] clusterIds) {		
+		if(clusterIds.length > 0 && accountDao.clustersBelongToAccount(clusterIds, accountId) == false){
+			throw new IllegalArgumentException(
+					"accountId and clusterIds don't match or not all exist");
+		}
+		
+		if (cardDao.cardBelongToAccount(cardId, accountId) == false) {
+			throw new IllegalArgumentException(
+					"accountId and cardId don't match or not all exist");
+		}
+		
+		recommendationDao.recommendCard(cardId, accountIds, clusterIds);
+		
 	}
 }

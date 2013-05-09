@@ -13,7 +13,7 @@ import org.junit.Test;
 
 import com.scoutin.entities.Album;
 import com.scoutin.entities.Card;
-import com.scoutin.entities.Cardbody;
+import com.scoutin.entities.CardBody;
 import com.scoutin.entities.Comment;
 import com.scoutin.exception.ScoutinException;
 import com.scoutin.logic.AccountService;
@@ -36,10 +36,9 @@ public class TestCard {
 	public void testCreateCard(){
 		try {
 			Card card = new Card();
-			card.setVersion(2L);
-			Cardbody cardbody = new Cardbody();
+			CardBody cardBody = new CardBody();
 			card.setDescription("My new card");
-			card = CardService.createCard(1,new Long[]{1l,3L},card,cardbody);
+			card = CardService.createCard(1,new Long[]{1l,3L},card,cardBody);
 			String info = ReflectionToStringBuilder.toString(card, ToStringStyle.MULTI_LINE_STYLE);
 			System.out.println(info);
 			Assert.assertTrue(true);
@@ -54,10 +53,10 @@ public class TestCard {
 	public void testRepostCard(){
 		int accountId = 1;
 		Long[] albumIds = new Long[]{3L,1L};
-		Long cardbodyId = 1L;
+		Long cardBodyId = 1L;
 		Card card = new Card();
 		try {
-			card = CardService.repostCard(accountId,albumIds,card,cardbodyId);
+			card = CardService.repostCard(accountId,albumIds,card,cardBodyId);
 			String info = ReflectionToStringBuilder.toString(card, ToStringStyle.MULTI_LINE_STYLE);
 			System.out.println(info);
 			Assert.assertTrue(true);
@@ -72,36 +71,33 @@ public class TestCard {
 	public void testEditCard(){
 		int accountId = 1;
 		Map<String, Object> cardProperties = new TreeMap<String, Object>();
-		Map<String, Object> cardbodyProperties = new TreeMap<String, Object>();
-		Map<String, Object> properties[] = new TreeMap[1];
+		Map<String, Object> cardBodyProperties = new TreeMap<String, Object>();
+		Map<String, Object> properties = null;
 		cardProperties.put("cardId", 3L);
 		cardProperties.put("description", "card sucess2");
-		cardProperties.put("version", 5L);
 		
-		cardbodyProperties.put("description", "card description");
-		cardbodyProperties.put("cardbodyId", 1L);
-		cardbodyProperties.put("title", "title2");
-		cardbodyProperties.put("version", 9L);
+		cardBodyProperties.put("description", "card description");
+		cardBodyProperties.put("cardBodyId", 1L);
+		cardBodyProperties.put("title", "title2");
 		try {
-			CardService.editCard(accountId, cardProperties, cardbodyProperties,properties);
-			System.out.println(properties[0]);
+			properties = CardService.editCard(accountId, cardProperties, cardBodyProperties);
+			System.out.println(properties);
 			Assert.assertTrue(true);
 		} catch (ScoutinException e) {
 			e.printStackTrace();
-			System.out.println(properties[0]);
 			Assert.assertTrue(false);
 		}
 		
 	}
 	
-	
+	@Ignore
 	@Test
 	public void testLikeCard(){
 		int accountId = 1;
 		Long cardId = 1L;
 
 		try {
-			boolean liked = CardService.likeCard(accountId, cardId);
+			boolean liked = CardService.endorseCard(accountId, cardId);
 			System.out.println("liked = "+liked);
 			Assert.assertTrue(true);
 		} catch (ScoutinException e) {
@@ -122,6 +118,21 @@ public class TestCard {
 			comment = CardService.commentCard(accountId,cardId,comment);
 			String info = ReflectionToStringBuilder.toString(comment, ToStringStyle.MULTI_LINE_STYLE);
 			System.out.println(info);
+			Assert.assertTrue(true);
+		} catch (ScoutinException e) {
+			e.printStackTrace();
+			Assert.assertTrue(false);
+		}
+	}
+	
+	@Test
+	public void testRecommendCard(){
+		Integer accountId = 1;
+		Long cardId = 1L;
+		Integer[] accountIds = {1, 2};
+		Long[] clusterIds = {2L, 1L, 3L};
+		try {
+			CardService.recommendCard(accountId, cardId, accountIds, clusterIds);
 			Assert.assertTrue(true);
 		} catch (ScoutinException e) {
 			e.printStackTrace();

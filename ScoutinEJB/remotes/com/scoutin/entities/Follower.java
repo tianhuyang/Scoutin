@@ -29,7 +29,7 @@ public class Follower implements java.io.Serializable {
 	private Account accountByFollowedId;
 	private Account accountByFollowingId;
 	private Timestamp createdTime;
-	private Set<Blockedalbum> blockedalbums = new HashSet<Blockedalbum>(0);
+	private Set<BlockedAlbum> blockedAlbums = new HashSet<BlockedAlbum>(0);
 
 	// Constructors
 
@@ -49,12 +49,12 @@ public class Follower implements java.io.Serializable {
 	/** full constructor */
 	public Follower(FollowerId id, Account accountByFollowedId,
 			Account accountByFollowingId, Timestamp createdTime,
-			Set<Blockedalbum> blockedalbums) {
+			Set<BlockedAlbum> blockedAlbums) {
 		this.id = id;
 		this.accountByFollowedId = accountByFollowedId;
 		this.accountByFollowingId = accountByFollowingId;
 		this.createdTime = createdTime;
-		this.blockedalbums = blockedalbums;
+		this.blockedAlbums = blockedAlbums;
 	}
 
 	// Property accessors
@@ -100,12 +100,12 @@ public class Follower implements java.io.Serializable {
 	}
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "follower")
-	public Set<Blockedalbum> getBlockedalbums() {
-		return this.blockedalbums;
+	public Set<BlockedAlbum> getBlockedAlbums() {
+		return this.blockedAlbums;
 	}
 
-	public void setBlockedalbums(Set<Blockedalbum> blockedalbums) {
-		this.blockedalbums = blockedalbums;
+	public void setBlockedAlbums(Set<BlockedAlbum> blockedAlbums) {
+		this.blockedAlbums = blockedAlbums;
 	}
 
 	@PrePersist

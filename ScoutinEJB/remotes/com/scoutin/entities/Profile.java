@@ -15,7 +15,6 @@ import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Version;
 
 /**
  * Profile entity. @author MyEclipse Persistence Tools
@@ -27,7 +26,6 @@ public class Profile implements java.io.Serializable {
 	// Fields
 	private static final long serialVersionUID = 1L;
 	private Integer accountId;
-	private Long version;
 	private Account account;
 	private String middlename;
 	private Date birthday;
@@ -69,16 +67,6 @@ public class Profile implements java.io.Serializable {
 
 	public void setAccountId(Integer accountId) {
 		this.accountId = accountId;
-	}
-
-	@Version
-	@Column(name = "VERSION", nullable = false)
-	public Long getVersion() {
-		return this.version;
-	}
-
-	public void setVersion(Long version) {
-		this.version = version;
 	}
 
 	@OneToOne(fetch = FetchType.LAZY)

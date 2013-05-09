@@ -27,7 +27,7 @@ public class AccountService {
 		}
 		
 		account.setAccountId(null);
-		account.setVersion(null);
+		
 	
 		try {
 			account = EJBUtils.accountBeanRemote.signup(account);

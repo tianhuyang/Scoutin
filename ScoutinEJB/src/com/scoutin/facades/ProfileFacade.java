@@ -20,7 +20,6 @@ import javax.persistence.Query;
 @Stateless
 public class ProfileFacade {
 	// property constants
-	public static final String VERSION = "version";
 	public static final String MIDDLENAME = "middlename";
 	public static final String MOBILE = "mobile";
 
@@ -228,11 +227,6 @@ public class ProfileFacade {
 			LogUtil.log("find by property name failed", Level.SEVERE, re);
 			throw re;
 		}
-	}
-
-	public List<Profile> findByVersion(Object version,
-			int... rowStartIdxAndCount) {
-		return findByProperty(VERSION, version, rowStartIdxAndCount);
 	}
 
 	public List<Profile> findByMiddlename(Object middlename,

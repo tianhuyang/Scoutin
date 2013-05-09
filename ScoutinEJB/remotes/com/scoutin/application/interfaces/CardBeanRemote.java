@@ -5,7 +5,7 @@ import java.util.Map;
 import javax.ejb.Remote;
 
 import com.scoutin.entities.Card;
-import com.scoutin.entities.Cardbody;
+import com.scoutin.entities.CardBody;
 import com.scoutin.entities.Comment;
 
 @Remote
@@ -19,10 +19,10 @@ public interface CardBeanRemote {
 	 * @return Card, Card.cardbody if successful
 	 * @throws ApplicationException if failed
 	 */
-	public Card createCard(Integer accountId, Long[] albumIds, Card card, Cardbody cardbody);
+	public Card createCard(Integer accountId, Long[] albumIds, Card card, CardBody cardbody);
 	/*
 	 * @param accountId:(Integer) must be existent
-	 * @param cardbodyId:(Long) must be existent
+	 * @param cardBodyId:(Long) must be existent
 	 * @param albumIds:(Long[]) must be existent and belongs to the accountId
 	 * @return Card, Card.Cardbody if successful, null card.cardId, null card.version
 	 * @throws ApplicationException if failed
@@ -30,8 +30,8 @@ public interface CardBeanRemote {
 	public Card repostCard(Integer accountId, Long[] albumIds, Card card, Long cardbodyId);
 	/*
 	 * @param accountId:(Integer) must be existent
-	 * @param cardProperties:(Map<String,Object>) either null or must have cardId:(Long) and version:(Long)
-	 * @param cardbodyProperties:(Map<String,Object>) either null or must have cardbodyId:(Long) and version:(Long)
+	 * @param cardProperties:(Map<String,Object>) either null or must have cardId:(Long)
+	 * @param cardbodyProperties:(Map<String,Object>) either null or must have cardBodyId:(Long)
 	 * cardProperties and cardbodyProperties can't be both null
 	 * @return card:(Map<String,Object>), cardbody:(Map<String,Object>) if successful
 	 * @throws ApplicationException if failed
@@ -48,8 +48,17 @@ public interface CardBeanRemote {
 	/*
 	 * @param accountId:(Integer) must be existent
 	 * @param cardId:(Long) must be existent
-	 * @return whether the card is liked or disliked
+	 * @return whether the card is endorsed or unendorsed
 	 * @throws ApplicationException if failed
 	 */
-	public boolean likeCard(Integer accountId, Long cardId);
+	public boolean endorseCard(Integer accountId, Long cardId);
+	/*
+	 * @param accountId:(Integer) must be existent
+	 * @param cardId:(Long) must be existent and belongs to accountId
+	 * @param accountIds:(Integer[]) must be existent or zero-length
+	 * @param clusterIds:(Long[]) must be existent or zero-length
+	 * accountIds and clusterIds can't be both zero-long
+	 * @throws ApplicationException if failed
+	 */
+	public void recommendCard(Integer accountId, Long cardId, Integer[] accountIds, Long[] clusterIds);
 }

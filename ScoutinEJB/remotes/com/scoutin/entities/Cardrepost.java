@@ -11,45 +11,55 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
- * Cardrepost entity. @author MyEclipse Persistence Tools
+ * CardRepost entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "CARDREPOST", catalog = "Scoutin")
-public class Cardrepost implements java.io.Serializable {
+@Table(name = "CARD_REPOST", catalog = "Scoutin")
+public class CardRepost implements java.io.Serializable {
 
 	// Fields
 	private static final long serialVersionUID = 1L;
-	private CardrepostId id;
+	private CardRepostId id;
+	private CardBody cardBody;
 	private Account account;
-	private Cardbody cardbody;
 	private Integer count = 0;
 
 	// Constructors
 
 	/** default constructor */
-	public Cardrepost() {
+	public CardRepost() {
 	}
 
 	/** full constructor */
-	public Cardrepost(CardrepostId id, Account account, Cardbody cardbody,
+	public CardRepost(CardRepostId id, CardBody cardBody, Account account,
 			Integer count) {
 		this.id = id;
+		this.cardBody = cardBody;
 		this.account = account;
-		this.cardbody = cardbody;
 		this.count = count;
 	}
 
 	// Property accessors
 	@EmbeddedId
 	@AttributeOverrides({
-			@AttributeOverride(name = "cardbodyId", column = @Column(name = "CARDBODY_ID", nullable = false)),
+			@AttributeOverride(name = "cardBodyId", column = @Column(name = "CARD_BODY_ID", nullable = false)),
 			@AttributeOverride(name = "accountId", column = @Column(name = "ACCOUNT_ID", nullable = false)) })
-	public CardrepostId getId() {
+	public CardRepostId getId() {
 		return this.id;
 	}
 
-	public void setId(CardrepostId id) {
+	public void setId(CardRepostId id) {
 		this.id = id;
+	}
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "CARD_BODY_ID", nullable = false, insertable = false, updatable = false)
+	public CardBody getCardBody() {
+		return this.cardBody;
+	}
+
+	public void setCardBody(CardBody cardBody) {
+		this.cardBody = cardBody;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -60,16 +70,6 @@ public class Cardrepost implements java.io.Serializable {
 
 	public void setAccount(Account account) {
 		this.account = account;
-	}
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "CARDBODY_ID", nullable = false, insertable = false, updatable = false)
-	public Cardbody getCardbody() {
-		return this.cardbody;
-	}
-
-	public void setCardbody(Cardbody cardbody) {
-		this.cardbody = cardbody;
 	}
 
 	@Column(name = "COUNT", nullable = false, insertable = false, updatable = false)

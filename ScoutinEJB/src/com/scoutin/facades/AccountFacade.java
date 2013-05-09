@@ -20,7 +20,6 @@ import javax.persistence.Query;
 @Stateless
 public class AccountFacade {
 	// property constants
-	public static final String VERSION = "version";
 	public static final String PASSWORD = "password";
 	public static final String EMAIL = "email";
 	public static final String FACEBOOK_ID = "facebookId";
@@ -233,11 +232,6 @@ public class AccountFacade {
 			LogUtil.log("find by property name failed", Level.SEVERE, re);
 			throw re;
 		}
-	}
-
-	public List<Account> findByVersion(Object version,
-			int... rowStartIdxAndCount) {
-		return findByProperty(VERSION, version, rowStartIdxAndCount);
 	}
 
 	public List<Account> findByPassword(Object password,

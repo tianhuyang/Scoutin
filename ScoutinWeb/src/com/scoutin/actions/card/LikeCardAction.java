@@ -56,7 +56,7 @@ public class LikeCardAction extends ActionSupport implements ServletRequestAware
 		boolean succeed = true;
 		try{
 			Account account = (Account)request.getSession(true).getAttribute("user");
-			boolean isLike = CardService.likeCard(account.getAccountId(), likeCardVO.getCardId());
+			boolean isLike = CardService.endorseCard(account.getAccountId(), likeCardVO.getCardId());
 			dataMap.put("isLike", isLike);
 		}catch(ScoutinException e){
 			succeed = false;

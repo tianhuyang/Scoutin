@@ -25,7 +25,7 @@ public class DaoUtils {
 	@EJB
 	private CardRepostDao cardRepostDao;
 	@EJB
-	private CardLikeDao cardLikeDao;
+	private CardEndorseDao cardEndorseDao;
 	@EJB
 	private CommentDao commentDao;
 	
@@ -58,8 +58,8 @@ public class DaoUtils {
 		return cardRepostDao;
 	}
 	
-	public CardLikeDao getCardLikeDao() {
-		return cardLikeDao;
+	public CardEndorseDao getCardLikeDao() {
+		return cardEndorseDao;
 	}
 	
 	public CommentDao getCommentDao() {

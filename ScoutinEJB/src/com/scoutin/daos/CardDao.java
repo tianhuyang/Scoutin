@@ -17,7 +17,7 @@ public class CardDao extends CardFacade {
 		return null;
 	}
 	
-    private static final String cardBelongToAccountHql = "select count(album) from Album album where album.account.accountId = :accountId and album.albumId = any (select ac.id.albumId from Albumcard ac where ac.id.cardId = :cardId)";
+    private static final String cardBelongToAccountHql = "select count(album) from Album album where album.account.accountId = :accountId and album.albumId = any (select ac.id.albumId from AlbumCard ac where ac.id.cardId = :cardId)";
 	
 	public boolean cardBelongToAccount(long cardId, int accountId) {
 		LogUtil.log("cardBelongToAccounting", Level.INFO, null);

@@ -1,6 +1,6 @@
 package com.scoutin.facades;
 
-import com.scoutin.entities.Cardbody;
+import com.scoutin.entities.CardBody;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -12,43 +12,40 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 /**
- * Facade for entity Cardbody.
+ * Facade for entity CardBody.
  * 
- * @see com.scoutin.entities.Cardbody
+ * @see com.scoutin.entities.CardBody
  * @author MyEclipse Persistence Tools
  */
 @Stateless
-public class CardbodyFacade {
+public class CardBodyFacade {
 	// property constants
-	public static final String VERSION = "version";
-	public static final String RATING = "rating";
 	public static final String COMMENTS_COUNT = "commentsCount";
 	public static final String REPOSTS_COUNT = "repostsCount";
-	public static final String LIKES_COUNT = "likesCount";
+	public static final String ENDORSES_COUNT = "endorsesCount";
 	public static final String LATITUDE = "latitude";
 	public static final String LONGITUDE = "longitude";
 	public static final String ADDRESS = "address";
 	public static final String URL = "url";
 	public static final String TITLE = "title";
-	public static final String RATING_COUNT = "ratingCount";
 
 	@PersistenceContext
 	protected EntityManager entityManager;
 
 	/**
-	 * Perform an initial save of a previously unsaved Cardbody entity. All
+	 * Perform an initial save of a previously unsaved CardBody entity. All
 	 * subsequent persist actions of this entity should use the #update()
 	 * method.
 	 * 
-	 * @param cardbody
-	 *            Cardbody entity to persist
+	 * @param cardBody
+	 *            CardBody entity to persist
 	 * @throws RuntimeException
 	 *             when the operation fails
 	 */
-	public void save(Cardbody cardbody) {
-		LogUtil.log("saving Cardbody instance", Level.INFO, null);
+	public void save(CardBody cardBody) {
+		LogUtil.log("saving CardBody instance", Level.INFO, null);
 		try {
-			entityManager.persist(cardbody);
+			entityManager.persist(cardBody);
 			LogUtil.log("save successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("save failed", Level.SEVERE, re);
@@ -57,19 +54,19 @@ public class CardbodyFacade {
 	}
 
 	/**
-	 * Delete a persistent Cardbody entity.
+	 * Delete a persistent CardBody entity.
 	 * 
-	 * @param cardbody
-	 *            Cardbody entity to delete
+	 * @param cardBody
+	 *            CardBody entity to delete
 	 * @throws RuntimeException
 	 *             when the operation fails
 	 */
-	public void delete(Cardbody cardbody) {
-		LogUtil.log("deleting Cardbody instance", Level.INFO, null);
+	public void delete(CardBody cardBody) {
+		LogUtil.log("deleting CardBody instance", Level.INFO, null);
 		try {
-			cardbody = entityManager.getReference(Cardbody.class,
-					cardbody.getCardbodyId());
-			entityManager.remove(cardbody);
+			cardBody = entityManager.getReference(CardBody.class,
+					cardBody.getCardBodyId());
+			entityManager.remove(cardBody);
 			LogUtil.log("delete successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("delete failed", Level.SEVERE, re);
@@ -78,22 +75,22 @@ public class CardbodyFacade {
 	}
 
 	/**
-	 * Persist a previously saved Cardbody entity and return it or a copy of it
-	 * to the sender. A copy of the Cardbody entity parameter is returned when
+	 * Persist a previously saved CardBody entity and return it or a copy of it
+	 * to the sender. A copy of the CardBody entity parameter is returned when
 	 * the JPA persistence mechanism has not previously been tracking the
 	 * updated entity.
 	 * 
-	 * @param cardbody
-	 *            Cardbody entity to update
-	 * @return Cardbody the persisted Cardbody entity instance, may not be the
+	 * @param cardBody
+	 *            CardBody entity to update
+	 * @return CardBody the persisted CardBody entity instance, may not be the
 	 *         same
 	 * @throws RuntimeException
 	 *             if the operation fails
 	 */
-	public Cardbody update(Cardbody cardbody) {
-		LogUtil.log("updating Cardbody instance", Level.INFO, null);
+	public CardBody update(CardBody cardBody) {
+		LogUtil.log("updating CardBody instance", Level.INFO, null);
 		try {
-			Cardbody result = entityManager.merge(cardbody);
+			CardBody result = entityManager.merge(cardBody);
 			LogUtil.log("update successful", Level.INFO, null);
 			return result;
 		} catch (RuntimeException re) {
@@ -102,11 +99,11 @@ public class CardbodyFacade {
 		}
 	}
 
-	public Cardbody findById(Long cardbodyId) {
-		LogUtil.log("finding Cardbody instance with id: " + cardbodyId,
+	public CardBody findById(Long cardBodyId) {
+		LogUtil.log("finding CardBody instance with id: " + cardBodyId,
 				Level.INFO, null);
 		try {
-			Cardbody instance = entityManager.find(Cardbody.class, cardbodyId);
+			CardBody instance = entityManager.find(CardBody.class, cardBodyId);
 			LogUtil.log("find successful", Level.INFO, null);
 			return instance;
 		} catch (RuntimeException re) {
@@ -115,12 +112,12 @@ public class CardbodyFacade {
 		}
 	}
 
-	public Cardbody getReference(Long cardbodyId) {
-		LogUtil.log("getReferencing Cardbody instance with id: " + cardbodyId,
+	public CardBody getReference(Long cardBodyId) {
+		LogUtil.log("getReferencing CardBody instance with id: " + cardBodyId,
 				Level.INFO, null);
 		try {
-			Cardbody instance = entityManager.getReference(Cardbody.class,
-					cardbodyId);
+			CardBody instance = entityManager.getReference(CardBody.class,
+					cardBodyId);
 			LogUtil.log("getReference successful", Level.INFO, null);
 			return instance;
 		} catch (RuntimeException re) {
@@ -129,10 +126,10 @@ public class CardbodyFacade {
 		}
 	}
 
-	public void detach(Cardbody cardbody) {
-		LogUtil.log("detaching Cardbody instance", Level.INFO, null);
+	public void detach(CardBody cardBody) {
+		LogUtil.log("detaching CardBody instance", Level.INFO, null);
 		try {
-			entityManager.detach(cardbody);
+			entityManager.detach(cardBody);
 			LogUtil.log("detach successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("detach failed", Level.SEVERE, re);
@@ -140,10 +137,10 @@ public class CardbodyFacade {
 		}
 	}
 
-	public void refresh(Cardbody cardbody) {
-		LogUtil.log("refreshing Cardbody instance", Level.INFO, null);
+	public void refresh(CardBody cardBody) {
+		LogUtil.log("refreshing CardBody instance", Level.INFO, null);
 		try {
-			entityManager.refresh(cardbody);
+			entityManager.refresh(cardBody);
 			LogUtil.log("refresh successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("refresh failed", Level.SEVERE, re);
@@ -157,10 +154,10 @@ public class CardbodyFacade {
 	 * @see delete
 	 */
 
-	public void remove(Cardbody cardbody) {
-		LogUtil.log("removing Cardbody instance", Level.INFO, null);
+	public void remove(CardBody cardBody) {
+		LogUtil.log("removing CardBody instance", Level.INFO, null);
 		try {
-			entityManager.remove(cardbody);
+			entityManager.remove(cardBody);
 			LogUtil.log("remove successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("remove failed", Level.SEVERE, re);
@@ -169,7 +166,7 @@ public class CardbodyFacade {
 	}
 
 	public void flush() {
-		LogUtil.log("flush Cardbody instance", Level.INFO, null);
+		LogUtil.log("flush CardBody instance", Level.INFO, null);
 		try {
 			entityManager.flush();
 			LogUtil.log("flush successful", Level.INFO, null);
@@ -179,30 +176,30 @@ public class CardbodyFacade {
 		}
 	}
 
-	private static final String removeByCardbodyIdJPQL = "delete from Cardbody a where a.cardbodyId in (?1)";
+	private static final String removeByCardBodyIdJPQL = "delete from CardBody a where a.cardBodyId in (?1)";
 
-	public void removeByCardbodyId(Long cardbodyId) {
-		LogUtil.log("removeByCardbodyId", Level.INFO, null);
+	public void removeByCardBodyId(Long cardBodyId) {
+		LogUtil.log("removeByCardBodyId", Level.INFO, null);
 		try {
-			Query query = entityManager.createQuery(removeByCardbodyIdJPQL);
-			query.setParameter(1, cardbodyId);
+			Query query = entityManager.createQuery(removeByCardBodyIdJPQL);
+			query.setParameter(1, cardBodyId);
 			query.executeUpdate();
-			LogUtil.log("removeByCardbodyId successful", Level.INFO, null);
+			LogUtil.log("removeByCardBodyId successful", Level.INFO, null);
 		} catch (RuntimeException re) {
-			LogUtil.log("removeByCardbodyId failed", Level.SEVERE, re);
+			LogUtil.log("removeByCardBodyId failed", Level.SEVERE, re);
 			throw re;
 		}
 	}
 
-	private static final String accountIdJPQL = "select a.account.accountId from Cardbody a where a.cardbodyId = :cardbodyId";
+	private static final String accountIdJPQL = "select a.account.accountId from CardBody a where a.cardBodyId = :cardBodyId";
 
-	public java.lang.Integer getAccountId(java.lang.Long cardbodyId) {
-		LogUtil.log("getAccountIdId with cardbodyId" + cardbodyId, Level.INFO,
+	public java.lang.Integer getAccountId(java.lang.Long cardBodyId) {
+		LogUtil.log("getAccountIdId with cardBodyId" + cardBodyId, Level.INFO,
 				null);
 		java.lang.Integer accountId;
 		try {
 			Query query = entityManager.createQuery(accountIdJPQL);
-			query.setParameter("cardbodyId", cardbodyId);
+			query.setParameter("cardBodyId", cardBodyId);
 			accountId = (java.lang.Integer) query.getSingleResult();
 			LogUtil.log("getAccountIdId successful", Level.INFO, null);
 			return accountId;
@@ -212,79 +209,62 @@ public class CardbodyFacade {
 		}
 	}
 
-	private static final String increaseCommentsCountJPQL = "update Cardbody a set a.commentsCount = a.commentsCount + :count where a.cardbodyId in (:cardbodyId)";
+	private static final String increaseCommentsCountJPQL = "update CARD_BODY a set a.commentsCount = a.commentsCount + :count where a.cardBodyId in (:cardBodyId)";
 
-	public void increaseCommentsCount(java.lang.Long cardbodyId, int count) {
-		LogUtil.log("increaseRatingCount with cardbodyId:" + cardbodyId,
+	public void increaseCommentsCount(java.lang.Long cardBodyId, int count) {
+		LogUtil.log("increaseEndorsesCount with cardBodyId:" + cardBodyId,
 				Level.INFO, null);
 		try {
 			Query query = entityManager.createQuery(increaseCommentsCountJPQL);
-			query.setParameter("cardbodyId", cardbodyId);
+			query.setParameter("cardBodyId", cardBodyId);
 			query.setParameter("count", count);
 			query.executeUpdate();
-			LogUtil.log("increaseRatingCount successful", Level.INFO, null);
+			LogUtil.log("increaseEndorsesCount successful", Level.INFO, null);
 		} catch (RuntimeException re) {
-			LogUtil.log("increaseRatingCount failed", Level.SEVERE, re);
+			LogUtil.log("increaseEndorsesCount failed", Level.SEVERE, re);
 			throw re;
 		}
 	}
 
-	private static final String increaseRepostsCountJPQL = "update Cardbody a set a.repostsCount = a.repostsCount + :count where a.cardbodyId in (:cardbodyId)";
+	private static final String increaseRepostsCountJPQL = "update CARD_BODY a set a.repostsCount = a.repostsCount + :count where a.cardBodyId in (:cardBodyId)";
 
-	public void increaseRepostsCount(java.lang.Long cardbodyId, int count) {
-		LogUtil.log("increaseRatingCount with cardbodyId:" + cardbodyId,
+	public void increaseRepostsCount(java.lang.Long cardBodyId, int count) {
+		LogUtil.log("increaseEndorsesCount with cardBodyId:" + cardBodyId,
 				Level.INFO, null);
 		try {
 			Query query = entityManager.createQuery(increaseRepostsCountJPQL);
-			query.setParameter("cardbodyId", cardbodyId);
+			query.setParameter("cardBodyId", cardBodyId);
 			query.setParameter("count", count);
 			query.executeUpdate();
-			LogUtil.log("increaseRatingCount successful", Level.INFO, null);
+			LogUtil.log("increaseEndorsesCount successful", Level.INFO, null);
 		} catch (RuntimeException re) {
-			LogUtil.log("increaseRatingCount failed", Level.SEVERE, re);
+			LogUtil.log("increaseEndorsesCount failed", Level.SEVERE, re);
 			throw re;
 		}
 	}
 
-	private static final String increaseLikesCountJPQL = "update Cardbody a set a.likesCount = a.likesCount + :count where a.cardbodyId in (:cardbodyId)";
+	private static final String increaseEndorsesCountJPQL = "update CARD_BODY a set a.endorsesCount = a.endorsesCount + :count where a.cardBodyId in (:cardBodyId)";
 
-	public void increaseLikesCount(java.lang.Long cardbodyId, int count) {
-		LogUtil.log("increaseRatingCount with cardbodyId:" + cardbodyId,
+	public void increaseEndorsesCount(java.lang.Long cardBodyId, int count) {
+		LogUtil.log("increaseEndorsesCount with cardBodyId:" + cardBodyId,
 				Level.INFO, null);
 		try {
-			Query query = entityManager.createQuery(increaseLikesCountJPQL);
-			query.setParameter("cardbodyId", cardbodyId);
+			Query query = entityManager.createQuery(increaseEndorsesCountJPQL);
+			query.setParameter("cardBodyId", cardBodyId);
 			query.setParameter("count", count);
 			query.executeUpdate();
-			LogUtil.log("increaseRatingCount successful", Level.INFO, null);
+			LogUtil.log("increaseEndorsesCount successful", Level.INFO, null);
 		} catch (RuntimeException re) {
-			LogUtil.log("increaseRatingCount failed", Level.SEVERE, re);
-			throw re;
-		}
-	}
-
-	private static final String increaseRatingCountJPQL = "update Cardbody a set a.ratingCount = a.ratingCount + :count where a.cardbodyId in (:cardbodyId)";
-
-	public void increaseRatingCount(java.lang.Long cardbodyId, int count) {
-		LogUtil.log("increaseRatingCount with cardbodyId:" + cardbodyId,
-				Level.INFO, null);
-		try {
-			Query query = entityManager.createQuery(increaseRatingCountJPQL);
-			query.setParameter("cardbodyId", cardbodyId);
-			query.setParameter("count", count);
-			query.executeUpdate();
-			LogUtil.log("increaseRatingCount successful", Level.INFO, null);
-		} catch (RuntimeException re) {
-			LogUtil.log("increaseRatingCount failed", Level.SEVERE, re);
+			LogUtil.log("increaseEndorsesCount failed", Level.SEVERE, re);
 			throw re;
 		}
 	}
 
 	/**
-	 * Find all Cardbody entities with a specific property value.
+	 * Find all CardBody entities with a specific property value.
 	 * 
 	 * @param propertyName
-	 *            the name of the Cardbody property to query
+	 *            the name of the CardBody property to query
 	 * @param value
 	 *            the property value to match
 	 * @param rowStartIdxAndCount
@@ -292,15 +272,15 @@ public class CardbodyFacade {
 	 *            row index in the query result-set to begin collecting the
 	 *            results. rowStartIdxAndCount[1] specifies the the maximum
 	 *            number of results to return.
-	 * @return List<Cardbody> found by query
+	 * @return List<CardBody> found by query
 	 */
 	@SuppressWarnings("unchecked")
-	public List<Cardbody> findByProperty(String propertyName,
+	public List<CardBody> findByProperty(String propertyName,
 			final Object value, final int... rowStartIdxAndCount) {
-		LogUtil.log("finding Cardbody instance with property: " + propertyName
+		LogUtil.log("finding CardBody instance with property: " + propertyName
 				+ ", value: " + value, Level.INFO, null);
 		try {
-			final String queryString = "select model from Cardbody model where model."
+			final String queryString = "select model from CardBody model where model."
 					+ propertyName + "= :propertyValue";
 			Query query = entityManager.createQuery(queryString);
 			query.setParameter("propertyValue", value);
@@ -324,75 +304,61 @@ public class CardbodyFacade {
 		}
 	}
 
-	public List<Cardbody> findByVersion(Object version,
-			int... rowStartIdxAndCount) {
-		return findByProperty(VERSION, version, rowStartIdxAndCount);
-	}
-
-	public List<Cardbody> findByRating(Object rating,
-			int... rowStartIdxAndCount) {
-		return findByProperty(RATING, rating, rowStartIdxAndCount);
-	}
-
-	public List<Cardbody> findByCommentsCount(Object commentsCount,
+	public List<CardBody> findByCommentsCount(Object commentsCount,
 			int... rowStartIdxAndCount) {
 		return findByProperty(COMMENTS_COUNT, commentsCount,
 				rowStartIdxAndCount);
 	}
 
-	public List<Cardbody> findByRepostsCount(Object repostsCount,
+	public List<CardBody> findByRepostsCount(Object repostsCount,
 			int... rowStartIdxAndCount) {
 		return findByProperty(REPOSTS_COUNT, repostsCount, rowStartIdxAndCount);
 	}
 
-	public List<Cardbody> findByLikesCount(Object likesCount,
+	public List<CardBody> findByEndorsesCount(Object endorsesCount,
 			int... rowStartIdxAndCount) {
-		return findByProperty(LIKES_COUNT, likesCount, rowStartIdxAndCount);
+		return findByProperty(ENDORSES_COUNT, endorsesCount,
+				rowStartIdxAndCount);
 	}
 
-	public List<Cardbody> findByLatitude(Object latitude,
+	public List<CardBody> findByLatitude(Object latitude,
 			int... rowStartIdxAndCount) {
 		return findByProperty(LATITUDE, latitude, rowStartIdxAndCount);
 	}
 
-	public List<Cardbody> findByLongitude(Object longitude,
+	public List<CardBody> findByLongitude(Object longitude,
 			int... rowStartIdxAndCount) {
 		return findByProperty(LONGITUDE, longitude, rowStartIdxAndCount);
 	}
 
-	public List<Cardbody> findByAddress(Object address,
+	public List<CardBody> findByAddress(Object address,
 			int... rowStartIdxAndCount) {
 		return findByProperty(ADDRESS, address, rowStartIdxAndCount);
 	}
 
-	public List<Cardbody> findByUrl(Object url, int... rowStartIdxAndCount) {
+	public List<CardBody> findByUrl(Object url, int... rowStartIdxAndCount) {
 		return findByProperty(URL, url, rowStartIdxAndCount);
 	}
 
-	public List<Cardbody> findByTitle(Object title, int... rowStartIdxAndCount) {
+	public List<CardBody> findByTitle(Object title, int... rowStartIdxAndCount) {
 		return findByProperty(TITLE, title, rowStartIdxAndCount);
 	}
 
-	public List<Cardbody> findByRatingCount(Object ratingCount,
-			int... rowStartIdxAndCount) {
-		return findByProperty(RATING_COUNT, ratingCount, rowStartIdxAndCount);
-	}
-
 	/**
-	 * Find all Cardbody entities.
+	 * Find all CardBody entities.
 	 * 
 	 * @param rowStartIdxAndCount
 	 *            Optional int varargs. rowStartIdxAndCount[0] specifies the the
 	 *            row index in the query result-set to begin collecting the
 	 *            results. rowStartIdxAndCount[1] specifies the the maximum
 	 *            count of results to return.
-	 * @return List<Cardbody> all Cardbody entities
+	 * @return List<CardBody> all CardBody entities
 	 */
 	@SuppressWarnings("unchecked")
-	public List<Cardbody> findAll(final int... rowStartIdxAndCount) {
-		LogUtil.log("finding all Cardbody instances", Level.INFO, null);
+	public List<CardBody> findAll(final int... rowStartIdxAndCount) {
+		LogUtil.log("finding all CardBody instances", Level.INFO, null);
 		try {
-			final String queryString = "select model from Cardbody model";
+			final String queryString = "select model from CardBody model";
 			Query query = entityManager.createQuery(queryString);
 			if (rowStartIdxAndCount != null && rowStartIdxAndCount.length > 0) {
 				int rowStartIdx = Math.max(0, rowStartIdxAndCount[0]);

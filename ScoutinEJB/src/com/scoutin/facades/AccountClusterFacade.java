@@ -1,8 +1,9 @@
 package com.scoutin.facades;
 
-import com.scoutin.entities.Cardlike;
-import com.scoutin.entities.CardlikeId;
+import com.scoutin.entities.AccountCluster;
+import com.scoutin.entities.AccountClusterId;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.logging.Level;
 import javax.ejb.Stateless;
@@ -11,32 +12,32 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 /**
- * Facade for entity Cardlike.
+ * Facade for entity AccountCluster.
  * 
- * @see com.scoutin.entities.Cardlike
+ * @see com.scoutin.entities.AccountCluster
  * @author MyEclipse Persistence Tools
  */
 @Stateless
-public class CardlikeFacade {
+public class AccountClusterFacade {
 	// property constants
 
 	@PersistenceContext
 	protected EntityManager entityManager;
 
 	/**
-	 * Perform an initial save of a previously unsaved Cardlike entity. All
-	 * subsequent persist actions of this entity should use the #update()
+	 * Perform an initial save of a previously unsaved AccountCluster entity.
+	 * All subsequent persist actions of this entity should use the #update()
 	 * method.
 	 * 
-	 * @param entity
-	 *            Cardlike entity to persist
+	 * @param accountCluster
+	 *            AccountCluster entity to persist
 	 * @throws RuntimeException
 	 *             when the operation fails
 	 */
-	public void save(Cardlike entity) {
-		LogUtil.log("saving Cardlike instance", Level.INFO, null);
+	public void save(AccountCluster accountCluster) {
+		LogUtil.log("saving AccountCluster instance", Level.INFO, null);
 		try {
-			entityManager.persist(entity);
+			entityManager.persist(accountCluster);
 			LogUtil.log("save successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("save failed", Level.SEVERE, re);
@@ -45,18 +46,19 @@ public class CardlikeFacade {
 	}
 
 	/**
-	 * Delete a persistent Cardlike entity.
+	 * Delete a persistent AccountCluster entity.
 	 * 
-	 * @param entity
-	 *            Cardlike entity to delete
+	 * @param accountCluster
+	 *            AccountCluster entity to delete
 	 * @throws RuntimeException
 	 *             when the operation fails
 	 */
-	public void delete(Cardlike entity) {
-		LogUtil.log("deleting Cardlike instance", Level.INFO, null);
+	public void delete(AccountCluster accountCluster) {
+		LogUtil.log("deleting AccountCluster instance", Level.INFO, null);
 		try {
-			entity = entityManager.getReference(Cardlike.class, entity.getId());
-			entityManager.remove(entity);
+			accountCluster = entityManager.getReference(AccountCluster.class,
+					accountCluster.getId());
+			entityManager.remove(accountCluster);
 			LogUtil.log("delete successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("delete failed", Level.SEVERE, re);
@@ -65,22 +67,22 @@ public class CardlikeFacade {
 	}
 
 	/**
-	 * Persist a previously saved Cardlike entity and return it or a copy of it
-	 * to the sender. A copy of the Cardlike entity parameter is returned when
-	 * the JPA persistence mechanism has not previously been tracking the
-	 * updated entity.
+	 * Persist a previously saved AccountCluster entity and return it or a copy
+	 * of it to the sender. A copy of the AccountCluster entity parameter is
+	 * returned when the JPA persistence mechanism has not previously been
+	 * tracking the updated entity.
 	 * 
-	 * @param entity
-	 *            Cardlike entity to update
-	 * @return Cardlike the persisted Cardlike entity instance, may not be the
-	 *         same
+	 * @param accountCluster
+	 *            AccountCluster entity to update
+	 * @return AccountCluster the persisted AccountCluster entity instance, may
+	 *         not be the same
 	 * @throws RuntimeException
 	 *             if the operation fails
 	 */
-	public Cardlike update(Cardlike entity) {
-		LogUtil.log("updating Cardlike instance", Level.INFO, null);
+	public AccountCluster update(AccountCluster accountCluster) {
+		LogUtil.log("updating AccountCluster instance", Level.INFO, null);
 		try {
-			Cardlike result = entityManager.merge(entity);
+			AccountCluster result = entityManager.merge(accountCluster);
 			LogUtil.log("update successful", Level.INFO, null);
 			return result;
 		} catch (RuntimeException re) {
@@ -89,11 +91,12 @@ public class CardlikeFacade {
 		}
 	}
 
-	public Cardlike findById(CardlikeId id) {
-		LogUtil.log("finding Cardlike instance with id: " + id, Level.INFO,
-				null);
+	public AccountCluster findById(AccountClusterId id) {
+		LogUtil.log("finding AccountCluster instance with id: " + id,
+				Level.INFO, null);
 		try {
-			Cardlike instance = entityManager.find(Cardlike.class, id);
+			AccountCluster instance = entityManager.find(AccountCluster.class,
+					id);
 			LogUtil.log("find successful", Level.INFO, null);
 			return instance;
 		} catch (RuntimeException re) {
@@ -102,11 +105,12 @@ public class CardlikeFacade {
 		}
 	}
 
-	public Cardlike getReference(CardlikeId id) {
-		LogUtil.log("getReferencing Cardlike instance with id: " + id,
+	public AccountCluster getReference(AccountClusterId id) {
+		LogUtil.log("getReferencing AccountCluster instance with id: " + id,
 				Level.INFO, null);
 		try {
-			Cardlike instance = entityManager.getReference(Cardlike.class, id);
+			AccountCluster instance = entityManager.getReference(
+					AccountCluster.class, id);
 			LogUtil.log("getReference successful", Level.INFO, null);
 			return instance;
 		} catch (RuntimeException re) {
@@ -115,10 +119,10 @@ public class CardlikeFacade {
 		}
 	}
 
-	public void detach(Cardlike entity) {
-		LogUtil.log("detaching Cardlike instance", Level.INFO, null);
+	public void detach(AccountCluster accountCluster) {
+		LogUtil.log("detaching AccountCluster instance", Level.INFO, null);
 		try {
-			entityManager.detach(entity);
+			entityManager.detach(accountCluster);
 			LogUtil.log("detach successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("detach failed", Level.SEVERE, re);
@@ -126,16 +130,27 @@ public class CardlikeFacade {
 		}
 	}
 
+	public void refresh(AccountCluster accountCluster) {
+		LogUtil.log("refreshing AccountCluster instance", Level.INFO, null);
+		try {
+			entityManager.refresh(accountCluster);
+			LogUtil.log("refresh successful", Level.INFO, null);
+		} catch (RuntimeException re) {
+			LogUtil.log("refresh failed", Level.SEVERE, re);
+			throw re;
+		}
+	}
+
 	/*
-	 * for persitent instance, remove directly
+	 * for persistent instance, remove directly
 	 * 
 	 * @see delete
 	 */
 
-	public void remove(Cardlike entity) {
-		LogUtil.log("removing Cardlike instance", Level.INFO, null);
+	public void remove(AccountCluster accountCluster) {
+		LogUtil.log("removing AccountCluster instance", Level.INFO, null);
 		try {
-			entityManager.remove(entity);
+			entityManager.remove(accountCluster);
 			LogUtil.log("remove successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("remove failed", Level.SEVERE, re);
@@ -144,7 +159,7 @@ public class CardlikeFacade {
 	}
 
 	public void flush() {
-		LogUtil.log("flush Cardlike instance", Level.INFO, null);
+		LogUtil.log("flush AccountCluster instance", Level.INFO, null);
 		try {
 			entityManager.flush();
 			LogUtil.log("flush successful", Level.INFO, null);
@@ -154,11 +169,26 @@ public class CardlikeFacade {
 		}
 	}
 
+	private static final String removeByIdJPQL = "delete from AccountCluster a where a.id in (?1)";
+
+	public void removeById(AccountClusterId id) {
+		LogUtil.log("removeById", Level.INFO, null);
+		try {
+			Query query = entityManager.createQuery(removeByIdJPQL);
+			query.setParameter(1, id);
+			query.executeUpdate();
+			LogUtil.log("removeById successful", Level.INFO, null);
+		} catch (RuntimeException re) {
+			LogUtil.log("removeById failed", Level.SEVERE, re);
+			throw re;
+		}
+	}
+
 	/**
-	 * Find all Cardlike entities with a specific property value.
+	 * Find all AccountCluster entities with a specific property value.
 	 * 
 	 * @param propertyName
-	 *            the name of the Cardlike property to query
+	 *            the name of the AccountCluster property to query
 	 * @param value
 	 *            the property value to match
 	 * @param rowStartIdxAndCount
@@ -166,15 +196,15 @@ public class CardlikeFacade {
 	 *            row index in the query result-set to begin collecting the
 	 *            results. rowStartIdxAndCount[1] specifies the the maximum
 	 *            number of results to return.
-	 * @return List<Cardlike> found by query
+	 * @return List<AccountCluster> found by query
 	 */
 	@SuppressWarnings("unchecked")
-	public List<Cardlike> findByProperty(String propertyName,
+	public List<AccountCluster> findByProperty(String propertyName,
 			final Object value, final int... rowStartIdxAndCount) {
-		LogUtil.log("finding Cardlike instance with property: " + propertyName
-				+ ", value: " + value, Level.INFO, null);
+		LogUtil.log("finding AccountCluster instance with property: "
+				+ propertyName + ", value: " + value, Level.INFO, null);
 		try {
-			final String queryString = "select model from Cardlike model where model."
+			final String queryString = "select model from AccountCluster model where model."
 					+ propertyName + "= :propertyValue";
 			Query query = entityManager.createQuery(queryString);
 			query.setParameter("propertyValue", value);
@@ -199,20 +229,20 @@ public class CardlikeFacade {
 	}
 
 	/**
-	 * Find all Cardlike entities.
+	 * Find all AccountCluster entities.
 	 * 
 	 * @param rowStartIdxAndCount
 	 *            Optional int varargs. rowStartIdxAndCount[0] specifies the the
 	 *            row index in the query result-set to begin collecting the
 	 *            results. rowStartIdxAndCount[1] specifies the the maximum
 	 *            count of results to return.
-	 * @return List<Cardlike> all Cardlike entities
+	 * @return List<AccountCluster> all AccountCluster entities
 	 */
 	@SuppressWarnings("unchecked")
-	public List<Cardlike> findAll(final int... rowStartIdxAndCount) {
-		LogUtil.log("finding all Cardlike instances", Level.INFO, null);
+	public List<AccountCluster> findAll(final int... rowStartIdxAndCount) {
+		LogUtil.log("finding all AccountCluster instances", Level.INFO, null);
 		try {
-			final String queryString = "select model from Cardlike model";
+			final String queryString = "select model from AccountCluster model";
 			Query query = entityManager.createQuery(queryString);
 			if (rowStartIdxAndCount != null && rowStartIdxAndCount.length > 0) {
 				int rowStartIdx = Math.max(0, rowStartIdxAndCount[0]);

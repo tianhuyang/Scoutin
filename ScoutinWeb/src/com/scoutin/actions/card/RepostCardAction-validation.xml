@@ -19,13 +19,13 @@
 			<message key="error.card.repost.rating.value">The rating should be an integer</message>
 		</field-validator>
 	</field>
-	<field name="cardbodyId">
+	<field name="cardBodyId">
 		<field-validator type="fieldexpression">
-			<param name="expression">!(cardbodyId=="" || cardbodyId==null)</param>
-			<message key="error.card.repost.cardbodyId.require">Please select a card to repost</message>
+			<param name="expression">!(cardBodyId=="" || cardBodyId==null)</param>
+			<message key="error.card.repost.cardBodyId.require">Please select a card to repost</message>
 		</field-validator>
 		<field-validator type="long">
-			<message key="error.card.repost.cardbodyId.value">Invalid card ID</message>
+			<message key="error.card.repost.cardBodyId.value">Invalid card ID</message>
 		</field-validator>
 	</field>
 	<field name="albumIds">

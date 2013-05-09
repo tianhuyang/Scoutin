@@ -1,9 +1,10 @@
 package com.scoutin.facades;
 
-import com.scoutin.entities.CardRepost;
-import com.scoutin.entities.CardRepostId;
+import com.scoutin.entities.Cluster;
 
+import java.sql.Timestamp;
 import java.util.List;
+import java.util.Set;
 import java.util.logging.Level;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -11,33 +12,33 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 /**
- * Facade for entity CardRepost.
+ * Facade for entity Cluster.
  * 
- * @see com.scoutin.entities.CardRepost
+ * @see com.scoutin.entities.Cluster
  * @author MyEclipse Persistence Tools
  */
 @Stateless
-public class CardRepostFacade {
+public class ClusterFacade {
 	// property constants
-	public static final String COUNT = "count";
+	public static final String NAME = "name";
 
 	@PersistenceContext
 	protected EntityManager entityManager;
 
 	/**
-	 * Perform an initial save of a previously unsaved CardRepost entity. All
+	 * Perform an initial save of a previously unsaved Cluster entity. All
 	 * subsequent persist actions of this entity should use the #update()
 	 * method.
 	 * 
-	 * @param cardRepost
-	 *            CardRepost entity to persist
+	 * @param cluster
+	 *            Cluster entity to persist
 	 * @throws RuntimeException
 	 *             when the operation fails
 	 */
-	public void save(CardRepost cardRepost) {
-		LogUtil.log("saving CardRepost instance", Level.INFO, null);
+	public void save(Cluster cluster) {
+		LogUtil.log("saving Cluster instance", Level.INFO, null);
 		try {
-			entityManager.persist(cardRepost);
+			entityManager.persist(cluster);
 			LogUtil.log("save successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("save failed", Level.SEVERE, re);
@@ -46,19 +47,19 @@ public class CardRepostFacade {
 	}
 
 	/**
-	 * Delete a persistent CardRepost entity.
+	 * Delete a persistent Cluster entity.
 	 * 
-	 * @param cardRepost
-	 *            CardRepost entity to delete
+	 * @param cluster
+	 *            Cluster entity to delete
 	 * @throws RuntimeException
 	 *             when the operation fails
 	 */
-	public void delete(CardRepost cardRepost) {
-		LogUtil.log("deleting CardRepost instance", Level.INFO, null);
+	public void delete(Cluster cluster) {
+		LogUtil.log("deleting Cluster instance", Level.INFO, null);
 		try {
-			cardRepost = entityManager.getReference(CardRepost.class,
-					cardRepost.getId());
-			entityManager.remove(cardRepost);
+			cluster = entityManager.getReference(Cluster.class,
+					cluster.getClusterId());
+			entityManager.remove(cluster);
 			LogUtil.log("delete successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("delete failed", Level.SEVERE, re);
@@ -67,22 +68,22 @@ public class CardRepostFacade {
 	}
 
 	/**
-	 * Persist a previously saved CardRepost entity and return it or a copy of
-	 * it to the sender. A copy of the CardRepost entity parameter is returned
-	 * when the JPA persistence mechanism has not previously been tracking the
+	 * Persist a previously saved Cluster entity and return it or a copy of it
+	 * to the sender. A copy of the Cluster entity parameter is returned when
+	 * the JPA persistence mechanism has not previously been tracking the
 	 * updated entity.
 	 * 
-	 * @param cardRepost
-	 *            CardRepost entity to update
-	 * @return CardRepost the persisted CardRepost entity instance, may not be
-	 *         the same
+	 * @param cluster
+	 *            Cluster entity to update
+	 * @return Cluster the persisted Cluster entity instance, may not be the
+	 *         same
 	 * @throws RuntimeException
 	 *             if the operation fails
 	 */
-	public CardRepost update(CardRepost cardRepost) {
-		LogUtil.log("updating CardRepost instance", Level.INFO, null);
+	public Cluster update(Cluster cluster) {
+		LogUtil.log("updating Cluster instance", Level.INFO, null);
 		try {
-			CardRepost result = entityManager.merge(cardRepost);
+			Cluster result = entityManager.merge(cluster);
 			LogUtil.log("update successful", Level.INFO, null);
 			return result;
 		} catch (RuntimeException re) {
@@ -91,11 +92,11 @@ public class CardRepostFacade {
 		}
 	}
 
-	public CardRepost findById(CardRepostId id) {
-		LogUtil.log("finding CardRepost instance with id: " + id, Level.INFO,
-				null);
+	public Cluster findById(Long clusterId) {
+		LogUtil.log("finding Cluster instance with id: " + clusterId,
+				Level.INFO, null);
 		try {
-			CardRepost instance = entityManager.find(CardRepost.class, id);
+			Cluster instance = entityManager.find(Cluster.class, clusterId);
 			LogUtil.log("find successful", Level.INFO, null);
 			return instance;
 		} catch (RuntimeException re) {
@@ -104,12 +105,12 @@ public class CardRepostFacade {
 		}
 	}
 
-	public CardRepost getReference(CardRepostId id) {
-		LogUtil.log("getReferencing CardRepost instance with id: " + id,
+	public Cluster getReference(Long clusterId) {
+		LogUtil.log("getReferencing Cluster instance with id: " + clusterId,
 				Level.INFO, null);
 		try {
-			CardRepost instance = entityManager.getReference(CardRepost.class,
-					id);
+			Cluster instance = entityManager.getReference(Cluster.class,
+					clusterId);
 			LogUtil.log("getReference successful", Level.INFO, null);
 			return instance;
 		} catch (RuntimeException re) {
@@ -118,10 +119,10 @@ public class CardRepostFacade {
 		}
 	}
 
-	public void detach(CardRepost cardRepost) {
-		LogUtil.log("detaching CardRepost instance", Level.INFO, null);
+	public void detach(Cluster cluster) {
+		LogUtil.log("detaching Cluster instance", Level.INFO, null);
 		try {
-			entityManager.detach(cardRepost);
+			entityManager.detach(cluster);
 			LogUtil.log("detach successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("detach failed", Level.SEVERE, re);
@@ -129,10 +130,10 @@ public class CardRepostFacade {
 		}
 	}
 
-	public void refresh(CardRepost cardRepost) {
-		LogUtil.log("refreshing CardRepost instance", Level.INFO, null);
+	public void refresh(Cluster cluster) {
+		LogUtil.log("refreshing Cluster instance", Level.INFO, null);
 		try {
-			entityManager.refresh(cardRepost);
+			entityManager.refresh(cluster);
 			LogUtil.log("refresh successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("refresh failed", Level.SEVERE, re);
@@ -146,10 +147,10 @@ public class CardRepostFacade {
 	 * @see delete
 	 */
 
-	public void remove(CardRepost cardRepost) {
-		LogUtil.log("removing CardRepost instance", Level.INFO, null);
+	public void remove(Cluster cluster) {
+		LogUtil.log("removing Cluster instance", Level.INFO, null);
 		try {
-			entityManager.remove(cardRepost);
+			entityManager.remove(cluster);
 			LogUtil.log("remove successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			LogUtil.log("remove failed", Level.SEVERE, re);
@@ -158,7 +159,7 @@ public class CardRepostFacade {
 	}
 
 	public void flush() {
-		LogUtil.log("flush CardRepost instance", Level.INFO, null);
+		LogUtil.log("flush Cluster instance", Level.INFO, null);
 		try {
 			entityManager.flush();
 			LogUtil.log("flush successful", Level.INFO, null);
@@ -168,42 +169,44 @@ public class CardRepostFacade {
 		}
 	}
 
-	private static final String removeByIdJPQL = "delete from CardRepost a where a.id in (?1)";
+	private static final String removeByClusterIdJPQL = "delete from Cluster a where a.clusterId in (?1)";
 
-	public void removeById(CardRepostId id) {
-		LogUtil.log("removeById", Level.INFO, null);
+	public void removeByClusterId(Long clusterId) {
+		LogUtil.log("removeByClusterId", Level.INFO, null);
 		try {
-			Query query = entityManager.createQuery(removeByIdJPQL);
-			query.setParameter(1, id);
+			Query query = entityManager.createQuery(removeByClusterIdJPQL);
+			query.setParameter(1, clusterId);
 			query.executeUpdate();
-			LogUtil.log("removeById successful", Level.INFO, null);
+			LogUtil.log("removeByClusterId successful", Level.INFO, null);
 		} catch (RuntimeException re) {
-			LogUtil.log("removeById failed", Level.SEVERE, re);
+			LogUtil.log("removeByClusterId failed", Level.SEVERE, re);
 			throw re;
 		}
 	}
 
-	private static final String increaseCountJPQL = "update CARD_REPOST a set a.count = a.count + :count where a.id in (:id)";
+	private static final String accountIdJPQL = "select a.account.accountId from Cluster a where a.clusterId = :clusterId";
 
-	public void increaseCount(com.scoutin.entities.CardRepostId id, int count) {
-		LogUtil.log("increaseCount with id:" + id, Level.INFO, null);
+	public java.lang.Integer getAccountId(java.lang.Long clusterId) {
+		LogUtil.log("getAccountIdId with clusterId" + clusterId, Level.INFO,
+				null);
+		java.lang.Integer accountId;
 		try {
-			Query query = entityManager.createQuery(increaseCountJPQL);
-			query.setParameter("id", id);
-			query.setParameter("count", count);
-			query.executeUpdate();
-			LogUtil.log("increaseCount successful", Level.INFO, null);
+			Query query = entityManager.createQuery(accountIdJPQL);
+			query.setParameter("clusterId", clusterId);
+			accountId = (java.lang.Integer) query.getSingleResult();
+			LogUtil.log("getAccountIdId successful", Level.INFO, null);
+			return accountId;
 		} catch (RuntimeException re) {
-			LogUtil.log("increaseCount failed", Level.SEVERE, re);
+			LogUtil.log("getAccountIdId failed", Level.SEVERE, re);
 			throw re;
 		}
 	}
 
 	/**
-	 * Find all CardRepost entities with a specific property value.
+	 * Find all Cluster entities with a specific property value.
 	 * 
 	 * @param propertyName
-	 *            the name of the CardRepost property to query
+	 *            the name of the Cluster property to query
 	 * @param value
 	 *            the property value to match
 	 * @param rowStartIdxAndCount
@@ -211,15 +214,15 @@ public class CardRepostFacade {
 	 *            row index in the query result-set to begin collecting the
 	 *            results. rowStartIdxAndCount[1] specifies the the maximum
 	 *            number of results to return.
-	 * @return List<CardRepost> found by query
+	 * @return List<Cluster> found by query
 	 */
 	@SuppressWarnings("unchecked")
-	public List<CardRepost> findByProperty(String propertyName,
+	public List<Cluster> findByProperty(String propertyName,
 			final Object value, final int... rowStartIdxAndCount) {
-		LogUtil.log("finding CardRepost instance with property: "
-				+ propertyName + ", value: " + value, Level.INFO, null);
+		LogUtil.log("finding Cluster instance with property: " + propertyName
+				+ ", value: " + value, Level.INFO, null);
 		try {
-			final String queryString = "select model from CardRepost model where model."
+			final String queryString = "select model from Cluster model where model."
 					+ propertyName + "= :propertyValue";
 			Query query = entityManager.createQuery(queryString);
 			query.setParameter("propertyValue", value);
@@ -243,26 +246,25 @@ public class CardRepostFacade {
 		}
 	}
 
-	public List<CardRepost> findByCount(Object count,
-			int... rowStartIdxAndCount) {
-		return findByProperty(COUNT, count, rowStartIdxAndCount);
+	public List<Cluster> findByName(Object name, int... rowStartIdxAndCount) {
+		return findByProperty(NAME, name, rowStartIdxAndCount);
 	}
 
 	/**
-	 * Find all CardRepost entities.
+	 * Find all Cluster entities.
 	 * 
 	 * @param rowStartIdxAndCount
 	 *            Optional int varargs. rowStartIdxAndCount[0] specifies the the
 	 *            row index in the query result-set to begin collecting the
 	 *            results. rowStartIdxAndCount[1] specifies the the maximum
 	 *            count of results to return.
-	 * @return List<CardRepost> all CardRepost entities
+	 * @return List<Cluster> all Cluster entities
 	 */
 	@SuppressWarnings("unchecked")
-	public List<CardRepost> findAll(final int... rowStartIdxAndCount) {
-		LogUtil.log("finding all CardRepost instances", Level.INFO, null);
+	public List<Cluster> findAll(final int... rowStartIdxAndCount) {
+		LogUtil.log("finding all Cluster instances", Level.INFO, null);
 		try {
-			final String queryString = "select model from CardRepost model";
+			final String queryString = "select model from Cluster model";
 			Query query = entityManager.createQuery(queryString);
 			if (rowStartIdxAndCount != null && rowStartIdxAndCount.length > 0) {
 				int rowStartIdx = Math.max(0, rowStartIdxAndCount[0]);

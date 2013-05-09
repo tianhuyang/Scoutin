@@ -10,19 +10,17 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
-import javax.persistence.Version;
 
 /**
- * Accountstat entity. @author MyEclipse Persistence Tools
+ * AccountStat entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "ACCOUNTSTAT", catalog = "Scoutin")
-public class Accountstat implements java.io.Serializable {
+@Table(name = "ACCOUNT_STAT", catalog = "Scoutin")
+public class AccountStat implements java.io.Serializable {
 
 	// Fields
 	private static final long serialVersionUID = 1L;
 	private Integer accountId;
-	private Long version;
 	private Account account;
 	private Integer followingCount = 0;
 	private Integer followersCount = 0;
@@ -32,11 +30,11 @@ public class Accountstat implements java.io.Serializable {
 	// Constructors
 
 	/** default constructor */
-	public Accountstat() {
+	public AccountStat() {
 	}
 
 	/** minimal constructor */
-	public Accountstat(Account account, Integer followingCount,
+	public AccountStat(Account account, Integer followingCount,
 			Integer followersCount, Integer unviewRecmdCount) {
 		this.account = account;
 		this.followingCount = followingCount;
@@ -45,7 +43,7 @@ public class Accountstat implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public Accountstat(Account account, Integer followingCount,
+	public AccountStat(Account account, Integer followingCount,
 			Integer followersCount, Timestamp lastRecmdView,
 			Integer unviewRecmdCount) {
 		this.account = account;
@@ -65,16 +63,6 @@ public class Accountstat implements java.io.Serializable {
 
 	public void setAccountId(Integer accountId) {
 		this.accountId = accountId;
-	}
-
-	@Version
-	@Column(name = "VERSION", nullable = false)
-	public Long getVersion() {
-		return this.version;
-	}
-
-	public void setVersion(Long version) {
-		this.version = version;
 	}
 
 	@OneToOne(fetch = FetchType.LAZY)

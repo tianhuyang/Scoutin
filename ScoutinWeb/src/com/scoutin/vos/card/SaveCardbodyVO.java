@@ -1,8 +1,8 @@
 package com.scoutin.vos.card;
 
-public class SaveCardbodyVO {
+public class SaveCardBodyVO {
 	
-	public Long cardbodyId;
+	public Long cardBodyId;
 	public String title;
 	public Float latitude;
 	public Float longitude;
@@ -46,10 +46,10 @@ public class SaveCardbodyVO {
 	public void setVersion(Long version) {
 		this.version = version;
 	}
-	public Long getCardbodyId() {
-		return cardbodyId;
+	public Long getCardBodyId() {
+		return cardBodyId;
 	}
-	public void setCardbodyId(Long cardbodyId) {
-		this.cardbodyId = cardbodyId;
+	public void setCardBodyId(Long cardbodyId) {
+		this.cardBodyId = cardbodyId;
 	}
 }

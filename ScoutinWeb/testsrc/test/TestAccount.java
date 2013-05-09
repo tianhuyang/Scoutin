@@ -29,11 +29,11 @@ public class TestAccount {
 
 	}
 
-	@Ignore
+	
 	@Test
 	public void testSignupWithEmail() {
 		Account account = new Account();
-		account.setEmail("haocai@usc.edu");
+		account.setEmail("haocai2@usc.edu");
 		account.setPassword("password");
 		account.setFirstname("Tianhu");
 		account.setLastname("Yang");
@@ -153,7 +153,7 @@ public class TestAccount {
 
 	}
 	
-	
+	@Ignore
 	@Test
 	public void testBlockAlbum() {
 		int followingAccountId = 1;

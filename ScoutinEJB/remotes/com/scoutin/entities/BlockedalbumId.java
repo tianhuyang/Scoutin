@@ -4,10 +4,10 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 /**
- * BlockedalbumId entity. @author MyEclipse Persistence Tools
+ * BlockedAlbumId entity. @author MyEclipse Persistence Tools
  */
 @Embeddable
-public class BlockedalbumId implements java.io.Serializable {
+public class BlockedAlbumId implements java.io.Serializable {
 
 	// Fields
 	private static final long serialVersionUID = 1L;
@@ -18,11 +18,11 @@ public class BlockedalbumId implements java.io.Serializable {
 	// Constructors
 
 	/** default constructor */
-	public BlockedalbumId() {
+	public BlockedAlbumId() {
 	}
 
 	/** full constructor */
-	public BlockedalbumId(Long albumId, Integer followedId, Integer followingId) {
+	public BlockedAlbumId(Long albumId, Integer followedId, Integer followingId) {
 		this.albumId = albumId;
 		this.followedId = followedId;
 		this.followingId = followingId;
@@ -62,9 +62,9 @@ public class BlockedalbumId implements java.io.Serializable {
 			return true;
 		if ((other == null))
 			return false;
-		if (!(other instanceof BlockedalbumId))
+		if (!(other instanceof BlockedAlbumId))
 			return false;
-		BlockedalbumId castOther = (BlockedalbumId) other;
+		BlockedAlbumId castOther = (BlockedAlbumId) other;
 
 		return ((this.getAlbumId() == castOther.getAlbumId()) || (this
 				.getAlbumId() != null && castOther.getAlbumId() != null && this

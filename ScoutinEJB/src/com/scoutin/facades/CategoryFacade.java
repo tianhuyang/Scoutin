@@ -19,7 +19,6 @@ import javax.persistence.Query;
 @Stateless
 public class CategoryFacade {
 	// property constants
-	public static final String VERSION = "version";
 	public static final String NAME = "name";
 
 	@PersistenceContext
@@ -226,11 +225,6 @@ public class CategoryFacade {
 			LogUtil.log("find by property name failed", Level.SEVERE, re);
 			throw re;
 		}
-	}
-
-	public List<Category> findByVersion(Object version,
-			int... rowStartIdxAndCount) {
-		return findByProperty(VERSION, version, rowStartIdxAndCount);
 	}
 
 	public List<Category> findByName(Object name, int... rowStartIdxAndCount) {

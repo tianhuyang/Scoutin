@@ -2,9 +2,9 @@
 <!DOCTYPE validators PUBLIC "-//Apache Struts//XWork Validator 1.0.3//EN" 
 		"http://struts.apache.org/dtds/xwork-validator-1.0.3.dtd">
 <validators>
-	<field name="saveCardbodyVO.title">
+	<field name="saveCardBodyVO.title">
 		<field-validator type="fieldexpression">
-			<param name="expression">!(saveCardbodyVO.title=="" || saveCardbodyVO.title==null) or method=="editCard"</param>
+			<param name="expression">!(saveCardBodyVO.title=="" || saveCardBodyVO.title==null) or method=="editCard"</param>
 			<message key="error.card.save.title.require">Please input a title</message>
 		</field-validator>
 		<field-validator type="stringlength">
@@ -29,25 +29,25 @@
 			<message key="error.card.save.rating.value">The rating must be an integer between ${min} and ${max}</message>
 		</field-validator>
 	</field>
-	<field name="saveCardbodyVO.latitude">
+	<field name="saveCardBodyVO.latitude">
 		<field-validator type="double">
 			<message key="error.card.save.latitude.value">The latitude must be a valid number</message>
 		</field-validator>
 	</field>
-	<field name="saveCardbodyVO.longitude">
+	<field name="saveCardBodyVO.longitude">
 		<field-validator type="double">
 			<message key="error.card.save.longitude.value">The longitude must be a valid number</message>
 		</field-validator>
 	</field>
-	<field name="saveCardbodyVO.address">
+	<field name="saveCardBodyVO.address">
 		<field-validator type="stringlength">
 			<param name="maxLength">100</param>
 			<message key="error.card.save.maxLength.length">The address should not be more than 100 characters</message>
 		</field-validator>
 	</field>
-	<field name="saveCardbodyVO.url">
+	<field name="saveCardBodyVO.url">
 		<field-validator type="fieldexpression">
-			<param name="expression">!(saveCardbodyVO.url=="" || saveCardbodyVO.url==null) or method=="editCard"</param>
+			<param name="expression">!(saveCardBodyVO.url=="" || saveCardBodyVO.url==null) or method=="editCard"</param>
 			<message key="error.card.save.url.require">Please input url</message>
 		</field-validator>
 	</field>

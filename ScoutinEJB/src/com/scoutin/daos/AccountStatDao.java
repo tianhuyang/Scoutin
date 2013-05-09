@@ -2,9 +2,9 @@ package com.scoutin.daos;
 
 import javax.ejb.Stateless;
 
-import com.scoutin.facades.AccountstatFacade;
+import com.scoutin.facades.AccountStatFacade;
 
 @Stateless
-public class AccountStatDao extends AccountstatFacade {
+public class AccountStatDao extends AccountStatFacade {
 
 }

@@ -4,10 +4,10 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 /**
- * CardlikeId entity. @author MyEclipse Persistence Tools
+ * CardEndorseId entity. @author MyEclipse Persistence Tools
  */
 @Embeddable
-public class CardlikeId implements java.io.Serializable {
+public class CardEndorseId implements java.io.Serializable {
 
 	// Fields
 	private static final long serialVersionUID = 1L;
@@ -17,11 +17,11 @@ public class CardlikeId implements java.io.Serializable {
 	// Constructors
 
 	/** default constructor */
-	public CardlikeId() {
+	public CardEndorseId() {
 	}
 
 	/** full constructor */
-	public CardlikeId(Integer accountId, Long cardId) {
+	public CardEndorseId(Integer accountId, Long cardId) {
 		this.accountId = accountId;
 		this.cardId = cardId;
 	}
@@ -51,9 +51,9 @@ public class CardlikeId implements java.io.Serializable {
 			return true;
 		if ((other == null))
 			return false;
-		if (!(other instanceof CardlikeId))
+		if (!(other instanceof CardEndorseId))
 			return false;
-		CardlikeId castOther = (CardlikeId) other;
+		CardEndorseId castOther = (CardEndorseId) other;
 
 		return ((this.getAccountId() == castOther.getAccountId()) || (this
 				.getAccountId() != null && castOther.getAccountId() != null && this

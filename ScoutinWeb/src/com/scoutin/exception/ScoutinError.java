@@ -50,8 +50,10 @@ public interface ScoutinError {
 	public static final String Card_EditCard_Input_Message = "error.card.editcard.input";
 	public static final int Card_EditCard_Failure_Status = 20009;
 	public static final String Card_EditCard_Failure_Message = "error.card.editcard.failure";
-	public static final int Card_EditCard_Modified_Status = 20010;
-	public static final String Card_EditCard_Modified_Message = "error.card.modified.failure";
+	public static final int Card_RecommendCard_Failure_Status = 20010;
+	public static final String Card_RecommendCard_Failure_Message = "error.card.recommendcard.failure";
+	//public static final int Card_EditCard_Modified_Status = 20010;
+	//public static final String Card_EditCard_Modified_Message = "error.card.modified.failure";
 
 	/* 
 	 * card ends

@@ -8,7 +8,7 @@ import com.scoutin.daos.AccountStatDao;
 import com.scoutin.daos.FollowerDao;
 import com.scoutin.daos.ProfileDao;
 import com.scoutin.entities.Account;
-import com.scoutin.entities.Accountstat;
+import com.scoutin.entities.AccountStat;
 import com.scoutin.entities.Follower;
 import com.scoutin.entities.FollowerId;
 import com.scoutin.entities.Profile;
@@ -39,7 +39,7 @@ public class AccountBeanService {
 		// save account		
 		accountDao.save(account);
 		// save accountStat
-		Accountstat accountStat = new Accountstat();
+		AccountStat accountStat = new AccountStat();
 		accountStat.setAccount(account);
 		accountStatDao.save(accountStat);
 		// save profile
@@ -47,7 +47,7 @@ public class AccountBeanService {
 		profile.setAccount(account);
 		profileDao.save(profile);
 		account.setProfile(profile);
-		account.setAccountstat(accountStat);
+		account.setAccountStat(accountStat);
 
 		return account;
 	}

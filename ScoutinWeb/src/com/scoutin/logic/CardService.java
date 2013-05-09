@@ -4,36 +4,43 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import com.scoutin.entities.Card;
-import com.scoutin.entities.Cardbody;
+import com.scoutin.entities.CardBody;
 import com.scoutin.entities.Comment;
 import com.scoutin.exception.ScoutinException;
 import com.scoutin.utilities.EJBUtils;
 
 public class CardService {
-	
+
 	public CardService() {
 		// TODO Auto-generated constructor stub
 	}
-	
+
 	/*
 	 * @param accountId:(Integer) must be existent and authenticated
+	 * 
 	 * @albumIds:(Long[]) must be existent and belong to the accountId
+	 * 
 	 * @card:(Card) must be not-null
-	 * @cardbody:(Cardbody) must be not-null
-	 * @return Card, Card.cardbody if successful otherwise throws ScoutinException
+	 * 
+	 * @cardBody:(CardBody) must be not-null
+	 * 
+	 * @return Card, Card.cardBody if successful otherwise throws
+	 * ScoutinException
 	 */
 
-	public static Card createCard(Integer accountId, Long[] albumIds, Card card, Cardbody cardbody)
-			throws ScoutinException {		
-		if (accountId == null || albumIds == null || albumIds.length == 0 || card == null || cardbody == null){
-			throw new IllegalArgumentException("Illegal arguments in createCard");
-		}		
+	public static Card createCard(Integer accountId, Long[] albumIds,
+			Card card, CardBody cardBody) throws ScoutinException {
+		if (accountId == null || albumIds == null || albumIds.length == 0
+				|| card == null || cardBody == null) {
+			throw new IllegalArgumentException(
+					"Illegal arguments in createCard");
+		}
 		card.setCardId(null);
-		card.setVersion(null);
-		cardbody.setCardbodyId(null);
-		cardbody.setVersion(null);
+
+		cardBody.setCardBodyId(null);
 		try {
-			card = EJBUtils.cardBeanRemote.createCard(accountId, albumIds, card, cardbody);
+			card = EJBUtils.cardBeanRemote.createCard(accountId, albumIds,
+					card, cardBody);
 		} catch (Throwable re) {
 			throw new ScoutinException(
 					ScoutinException.Card_CreateCard_Failure_Status,
@@ -41,24 +48,31 @@ public class CardService {
 		}
 
 		return card;
-	}	
-	
+	}
+
 	/*
 	 * @param accountId:(Integer) must be existent and authenticated
+	 * 
 	 * @param albumIds:(Long[]) must be existent and belongs to the accountId
-	 * @param cardbodyId:(Long) must be existent
-	 * @return Card, Card.Cardbody if successful otherwise throws ScoutinException
+	 * 
+	 * @param cardBodyId:(Long) must be existent
+	 * 
+	 * @return Card, Card.CardBody if successful otherwise throws
+	 * ScoutinException
 	 */
 
-	public static Card repostCard(Integer accountId, Long[] albumIds, Card card, Long cardbodyId)
-			throws ScoutinException {		
-		if (accountId == null || albumIds == null || albumIds.length == 0 || cardbodyId == null){
-			throw new IllegalArgumentException("Illegal arguments in repostCard");
+	public static Card repostCard(Integer accountId, Long[] albumIds,
+			Card card, Long cardBodyId) throws ScoutinException {
+		if (accountId == null || albumIds == null || albumIds.length == 0
+				|| cardBodyId == null) {
+			throw new IllegalArgumentException(
+					"Illegal arguments in repostCard");
 		}
 		card.setCardId(null);
-		card.setVersion(null);
+
 		try {
-			card = EJBUtils.cardBeanRemote.repostCard(accountId, albumIds, card, cardbodyId);
+			card = EJBUtils.cardBeanRemote.repostCard(accountId, albumIds,
+					card, cardBodyId);
 		} catch (Throwable re) {
 			throw new ScoutinException(
 					ScoutinException.Card_RepostCard_Failure_Status,
@@ -66,23 +80,28 @@ public class CardService {
 		}
 		return card;
 	}
-	
+
 	/*
 	 * @param accountId:(Integer) must be existent and authenticated
+	 * 
 	 * @param cardId:(Long) must be existent
+	 * 
 	 * @param comment:(Comment) must be not null and has content
+	 * 
 	 * @return Comment if successful otherwise throws ScoutinException
 	 */
 
-	public static Comment commentCard(Integer accountId, Long cardId, Comment comment)
-			throws ScoutinException {		
-		if (accountId == null || cardId == null || comment == null){
-			throw new IllegalArgumentException("Illegal arguments in commentCard");
+	public static Comment commentCard(Integer accountId, Long cardId,
+			Comment comment) throws ScoutinException {
+		if (accountId == null || cardId == null || comment == null) {
+			throw new IllegalArgumentException(
+					"Illegal arguments in commentCard");
 		}
 		comment.setCommentId(null);
-		comment.setVersion(null);
+
 		try {
-			comment = EJBUtils.cardBeanRemote.commentCard(accountId, cardId, comment);
+			comment = EJBUtils.cardBeanRemote.commentCard(accountId, cardId,
+					comment);
 		} catch (Throwable re) {
 			comment = null;
 		}
@@ -94,76 +113,114 @@ public class CardService {
 		}
 		return comment;
 	}
-	
+
 	/*
 	 * @param accountId:(Integer) must be existent and authenticated
-	 * @param cardProperties:(Map<String,Object>) either null or must have cardId:(Long) and version:(Long)
-	 * @param cardbodyProperties:(Map<String,Object>) either null or must have cardbodyId:(Long) and version:(Long)
-	 * cardProperties and cardbodyProperties can't be both null
-	 * @param properties:(Map<String,Object>[], size=1) may have card:(Card) and cardbody:(Cardbody) if successful or "ModifiedByOthers"
+	 * 
+	 * @param cardProperties:(Map<String,Object>) either null or must have
+	 * cardId:(Long)
+	 * 
+	 * @param cardBodyProperties:(Map<String,Object>) either null or must have
+	 * cardBodyId:(Long) cardProperties and cardBodyProperties can't be both
+	 * null
+	 * 
+	 * @param properties:(Map<String,Object>[], size=1) may have card:(Card) and
+	 * cardBody:(CardBody)
+	 * 
 	 * @throws ScoutinException if failed
 	 */
-	public static void editCard(Integer accountId, Map<String,Object> cardProperties, Map<String,Object> cardbodyProperties,
-			Map<String,Object> properties[])
-			throws ScoutinException {		
-		if (accountId == null || (cardProperties == null && cardbodyProperties == null)){
+	public static Map<String, Object> editCard(Integer accountId,
+			Map<String, Object> cardProperties,
+			Map<String, Object> cardBodyProperties) throws ScoutinException {
+		if (accountId == null
+				|| (cardProperties == null && cardBodyProperties == null)) {
 			throw new IllegalArgumentException("Illegal arguments in editCard");
 		}
 		boolean legal = true;
-		if(cardProperties != null){
+		if (cardProperties != null) {
 			Long cardId = (Long) cardProperties.get("cardId");
 			Long version = (Long) cardProperties.get("version");
 			if (cardId == null || version == null) {
 				legal = false;
 			}
 		}
-		if(cardbodyProperties != null){	
-			Long cardbodyId = (Long) cardbodyProperties.get("cardbodyId");
-			Long version = (Long) cardbodyProperties.get("version");
-			if (cardbodyId == null || version == null) {
+		if (cardBodyProperties != null) {
+			Long cardBodyId = (Long) cardBodyProperties.get("cardBodyId");
+			Long version = (Long) cardBodyProperties.get("version");
+			if (cardBodyId == null || version == null) {
 				legal = false;
 			}
 		}
 		if (legal == false) {
 			throw new IllegalArgumentException("Illegal argument in editCard");
-		}		
-		
+		}
+		Map<String, Object> properties = new TreeMap<String, Object>();
 		try {
-			properties[0] = EJBUtils.cardBeanRemote.editCard(accountId, cardProperties, cardbodyProperties);
+			properties = EJBUtils.cardBeanRemote.editCard(accountId,
+					cardProperties, cardBodyProperties);
 		} catch (Throwable re) {
-			//re.printStackTrace();
-			properties[0] = new TreeMap<String, Object>();
+			// re.printStackTrace();
+			properties = new TreeMap<String, Object>();
 			throw new ScoutinException(
 					ScoutinException.Card_EditCard_Failure_Status,
 					ScoutinException.Card_EditCard_Failure_Message);
 		}
-		if(properties[0].containsKey("ModifiedByOthers")){
-			throw new ScoutinException(
-					ScoutinException.Card_EditCard_Modified_Status,
-					ScoutinException.Card_EditCard_Modified_Message);
-		}
+		return properties;
 	}
-	
+
 	/*
 	 * @param accountId:(Integer) must be existent and authenticated
+	 * 
 	 * @param cardId:(Long) must be existent
-	 * @return whether the card is liked or disliked otherwise throws ScoutinException
+	 * 
+	 * @return whether the card is endorsed or unendorsed
+	 * 
+	 * @throws ScoutinException if failed
 	 */
-	public static boolean likeCard(Integer accountId, Long cardId)
-			throws ScoutinException {		
+	public static boolean endorseCard(Integer accountId, Long cardId)
+			throws ScoutinException {
 		if (cardId == null || accountId == null) {
 			throw new IllegalArgumentException("Illegal arguments in editCard");
 		}
-		
-		boolean liked = false;
+
+		boolean endorsed = false;
 		try {
-			liked = EJBUtils.cardBeanRemote.likeCard(accountId, cardId);
+			endorsed = EJBUtils.cardBeanRemote.endorseCard(accountId, cardId);
 		} catch (Throwable re) {
 			throw new ScoutinException(
 					ScoutinException.Card_LikeCard_Failure_Status,
 					ScoutinException.Card_LikeCard_Failure_Message);
 		}
-		return liked;
+		return endorsed;
+	}
+
+	/*
+	 * @param accountId:(Integer) must be existent and authenticated
+	 * 
+	 * @param cardId:(Long) must belong to accountId
+	 * 
+	 * @param accountIds:(Integer[]) must be existent or zero-length
+	 * 
+	 * @param clusterIds:(Long[]) must be existent or zero-length accountIds and
+	 * clusterIds can't be both zero-length
+	 * 
+	 * @throws ScoutinException if failed
+	 */
+	public static void recommendCard(Integer accountId, Long cardId,
+			Integer[] accountIds, Long[] clusterIds) throws ScoutinException {
+		if (cardId == null || accountId == null || accountIds == null
+				|| clusterIds == null
+				|| (accountIds.length == 0 && clusterIds.length == 0)) {
+			throw new IllegalArgumentException("Illegal arguments in recommendCard");
+		}
+
+		try {
+			EJBUtils.cardBeanRemote.recommendCard(accountId, cardId, accountIds, clusterIds);
+		} catch (Throwable re) {
+			throw new ScoutinException(
+					ScoutinException.Card_RecommendCard_Failure_Status,
+					ScoutinException.Card_RecommendCard_Failure_Message);
+		}
 	}
 
 }

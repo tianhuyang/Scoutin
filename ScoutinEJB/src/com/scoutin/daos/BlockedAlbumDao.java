@@ -2,9 +2,9 @@ package com.scoutin.daos;
 
 import javax.ejb.Stateless;
 
-import com.scoutin.facades.BlockedalbumFacade;
+import com.scoutin.facades.BlockedAlbumFacade;
 
 @Stateless
-public class BlockedAlbumDao extends BlockedalbumFacade {
+public class BlockedAlbumDao extends BlockedAlbumFacade {
 
 }

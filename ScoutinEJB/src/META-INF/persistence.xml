@@ -6,26 +6,31 @@
 		transaction-type="JTA">
 		<provider>org.apache.openjpa.persistence.PersistenceProviderImpl</provider>
 		<jta-data-source>java:jboss/datasources/ScoutinDB</jta-data-source>
+		<class>com.scoutin.entities.RecommendationId</class>
+		<class>com.scoutin.entities.Recommendation</class>
 		<class>com.scoutin.entities.Profile</class>
 		<class>com.scoutin.entities.Notification</class>
 		<class>com.scoutin.entities.Message</class>
 		<class>com.scoutin.entities.FollowerId</class>
 		<class>com.scoutin.entities.Follower</class>
 		<class>com.scoutin.entities.Comment</class>
+		<class>com.scoutin.entities.Cluster</class>
 		<class>com.scoutin.entities.Category</class>
-		<class>com.scoutin.entities.CardrepostId</class>
-		<class>com.scoutin.entities.Cardrepost</class>
-		<class>com.scoutin.entities.CardlikeId</class>
-		<class>com.scoutin.entities.Cardlike</class>
-		<class>com.scoutin.entities.Cardbody</class>
+		<class>com.scoutin.entities.CardRepostId</class>
+		<class>com.scoutin.entities.CardRepost</class>
+		<class>com.scoutin.entities.CardEndorseId</class>
+		<class>com.scoutin.entities.CardEndorse</class>
+		<class>com.scoutin.entities.CardBody</class>
 		<class>com.scoutin.entities.Card</class>
-		<class>com.scoutin.entities.BlockedalbumId</class>
-		<class>com.scoutin.entities.Blockedalbum</class>
-		<class>com.scoutin.entities.AlbumcardId</class>
-		<class>com.scoutin.entities.Albumcard</class>
+		<class>com.scoutin.entities.BlockedAlbumId</class>
+		<class>com.scoutin.entities.BlockedAlbum</class>
 		<class>com.scoutin.entities.Album</class>
-		<class>com.scoutin.entities.Accountstat</class>
+		<class>com.scoutin.entities.AccountStat</class>
+		<class>com.scoutin.entities.AccountClusterId</class>
+		<class>com.scoutin.entities.AccountCluster</class>
 		<class>com.scoutin.entities.Account</class>
+		<class>com.scoutin.entities.AlbumCard</class>
+		<class>com.scoutin.entities.AlbumCardId</class>
 
 		<properties>
 			<property name="jboss.as.jpa.providerModule" value="org.apache.openjpa" />

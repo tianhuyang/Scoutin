@@ -12,7 +12,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
-import javax.persistence.Version;
 
 /**
  * Comment entity. @author MyEclipse Persistence Tools
@@ -24,7 +23,6 @@ public class Comment implements java.io.Serializable {
 	// Fields
 	private static final long serialVersionUID = 1L;
 	private Long commentId;
-	private Long version;
 	private Card card;
 	private Account account;
 	private String content;
@@ -57,16 +55,6 @@ public class Comment implements java.io.Serializable {
 
 	public void setCommentId(Long commentId) {
 		this.commentId = commentId;
-	}
-
-	@Version
-	@Column(name = "VERSION", nullable = false)
-	public Long getVersion() {
-		return this.version;
-	}
-
-	public void setVersion(Long version) {
-		this.version = version;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)

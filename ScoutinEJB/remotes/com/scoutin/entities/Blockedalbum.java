@@ -14,15 +14,15 @@ import javax.persistence.PrePersist;
 import javax.persistence.Table;
 
 /**
- * Blockedalbum entity. @author MyEclipse Persistence Tools
+ * BlockedAlbum entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "BLOCKEDALBUM", catalog = "Scoutin")
-public class Blockedalbum implements java.io.Serializable {
+@Table(name = "BLOCKED_ALBUM", catalog = "Scoutin")
+public class BlockedAlbum implements java.io.Serializable {
 
 	// Fields
 	private static final long serialVersionUID = 1L;
-	private BlockedalbumId id;
+	private BlockedAlbumId id;
 	private Album album;
 	private Follower follower;
 	private Timestamp createdTime;
@@ -30,11 +30,11 @@ public class Blockedalbum implements java.io.Serializable {
 	// Constructors
 
 	/** default constructor */
-	public Blockedalbum() {
+	public BlockedAlbum() {
 	}
 
 	/** full constructor */
-	public Blockedalbum(BlockedalbumId id, Album album, Follower follower,
+	public BlockedAlbum(BlockedAlbumId id, Album album, Follower follower,
 			Timestamp createdTime) {
 		this.id = id;
 		this.album = album;
@@ -48,11 +48,11 @@ public class Blockedalbum implements java.io.Serializable {
 			@AttributeOverride(name = "albumId", column = @Column(name = "ALBUM_ID", nullable = false)),
 			@AttributeOverride(name = "followedId", column = @Column(name = "FOLLOWED_ID", nullable = false)),
 			@AttributeOverride(name = "followingId", column = @Column(name = "FOLLOWING_ID", nullable = false)) })
-	public BlockedalbumId getId() {
+	public BlockedAlbumId getId() {
 		return this.id;
 	}
 
-	public void setId(BlockedalbumId id) {
+	public void setId(BlockedAlbumId id) {
 		this.id = id;
 	}
 

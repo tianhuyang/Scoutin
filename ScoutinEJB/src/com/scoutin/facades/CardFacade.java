@@ -20,13 +20,11 @@ import javax.persistence.Query;
 @Stateless
 public class CardFacade {
 	// property constants
-	public static final String VERSION = "version";
 	public static final String DESCRIPTION = "description";
 	public static final String RATING = "rating";
 	public static final String COMMENTS_COUNT = "commentsCount";
-	public static final String LIKES_COUNT = "likesCount";
+	public static final String ENDORSES_COUNT = "endorsesCount";
 	public static final String TAG = "tag";
-	public static final String RATING_COUNT = "ratingCount";
 
 	@PersistenceContext
 	protected EntityManager entityManager;
@@ -187,70 +185,53 @@ public class CardFacade {
 		}
 	}
 
-	private static final String cardbodyIdJPQL = "select a.cardbody.cardbodyId from Card a where a.cardId = :cardId";
+	private static final String cardBodyIdJPQL = "select a.cardBody.cardBodyId from Card a where a.cardId = :cardId";
 
-	public java.lang.Long getCardbodyId(java.lang.Long cardId) {
-		LogUtil.log("getCardbodyIdId with cardId" + cardId, Level.INFO, null);
-		java.lang.Long cardbodyId;
+	public java.lang.Long getCardBodyId(java.lang.Long cardId) {
+		LogUtil.log("getCardBodyIdId with cardId" + cardId, Level.INFO, null);
+		java.lang.Long cardBodyId;
 		try {
-			Query query = entityManager.createQuery(cardbodyIdJPQL);
+			Query query = entityManager.createQuery(cardBodyIdJPQL);
 			query.setParameter("cardId", cardId);
-			cardbodyId = (java.lang.Long) query.getSingleResult();
-			LogUtil.log("getCardbodyIdId successful", Level.INFO, null);
-			return cardbodyId;
+			cardBodyId = (java.lang.Long) query.getSingleResult();
+			LogUtil.log("getCardBodyIdId successful", Level.INFO, null);
+			return cardBodyId;
 		} catch (RuntimeException re) {
-			LogUtil.log("getCardbodyIdId failed", Level.SEVERE, re);
+			LogUtil.log("getCardBodyIdId failed", Level.SEVERE, re);
 			throw re;
 		}
 	}
 
-	private static final String increaseCommentsCountJPQL = "update Card a set a.commentsCount = a.commentsCount + :count where a.cardId in (:cardId)";
+	private static final String increaseCommentsCountJPQL = "update CARD a set a.commentsCount = a.commentsCount + :count where a.cardId in (:cardId)";
 
 	public void increaseCommentsCount(java.lang.Long cardId, int count) {
-		LogUtil.log("increaseRatingCount with cardId:" + cardId, Level.INFO,
+		LogUtil.log("increaseEndorsesCount with cardId:" + cardId, Level.INFO,
 				null);
 		try {
 			Query query = entityManager.createQuery(increaseCommentsCountJPQL);
 			query.setParameter("cardId", cardId);
 			query.setParameter("count", count);
 			query.executeUpdate();
-			LogUtil.log("increaseRatingCount successful", Level.INFO, null);
+			LogUtil.log("increaseEndorsesCount successful", Level.INFO, null);
 		} catch (RuntimeException re) {
-			LogUtil.log("increaseRatingCount failed", Level.SEVERE, re);
+			LogUtil.log("increaseEndorsesCount failed", Level.SEVERE, re);
 			throw re;
 		}
 	}
 
-	private static final String increaseLikesCountJPQL = "update Card a set a.likesCount = a.likesCount + :count where a.cardId in (:cardId)";
+	private static final String increaseEndorsesCountJPQL = "update CARD a set a.endorsesCount = a.endorsesCount + :count where a.cardId in (:cardId)";
 
-	public void increaseLikesCount(java.lang.Long cardId, int count) {
-		LogUtil.log("increaseRatingCount with cardId:" + cardId, Level.INFO,
+	public void increaseEndorsesCount(java.lang.Long cardId, int count) {
+		LogUtil.log("increaseEndorsesCount with cardId:" + cardId, Level.INFO,
 				null);
 		try {
-			Query query = entityManager.createQuery(increaseLikesCountJPQL);
+			Query query = entityManager.createQuery(increaseEndorsesCountJPQL);
 			query.setParameter("cardId", cardId);
 			query.setParameter("count", count);
 			query.executeUpdate();
-			LogUtil.log("increaseRatingCount successful", Level.INFO, null);
+			LogUtil.log("increaseEndorsesCount successful", Level.INFO, null);
 		} catch (RuntimeException re) {
-			LogUtil.log("increaseRatingCount failed", Level.SEVERE, re);
-			throw re;
-		}
-	}
-
-	private static final String increaseRatingCountJPQL = "update Card a set a.ratingCount = a.ratingCount + :count where a.cardId in (:cardId)";
-
-	public void increaseRatingCount(java.lang.Long cardId, int count) {
-		LogUtil.log("increaseRatingCount with cardId:" + cardId, Level.INFO,
-				null);
-		try {
-			Query query = entityManager.createQuery(increaseRatingCountJPQL);
-			query.setParameter("cardId", cardId);
-			query.setParameter("count", count);
-			query.executeUpdate();
-			LogUtil.log("increaseRatingCount successful", Level.INFO, null);
-		} catch (RuntimeException re) {
-			LogUtil.log("increaseRatingCount failed", Level.SEVERE, re);
+			LogUtil.log("increaseEndorsesCount failed", Level.SEVERE, re);
 			throw re;
 		}
 	}
@@ -299,10 +280,6 @@ public class CardFacade {
 		}
 	}
 
-	public List<Card> findByVersion(Object version, int... rowStartIdxAndCount) {
-		return findByProperty(VERSION, version, rowStartIdxAndCount);
-	}
-
 	public List<Card> findByDescription(Object description,
 			int... rowStartIdxAndCount) {
 		return findByProperty(DESCRIPTION, description, rowStartIdxAndCount);
@@ -318,18 +295,14 @@ public class CardFacade {
 				rowStartIdxAndCount);
 	}
 
-	public List<Card> findByLikesCount(Object likesCount,
+	public List<Card> findByEndorsesCount(Object endorsesCount,
 			int... rowStartIdxAndCount) {
-		return findByProperty(LIKES_COUNT, likesCount, rowStartIdxAndCount);
+		return findByProperty(ENDORSES_COUNT, endorsesCount,
+				rowStartIdxAndCount);
 	}
 
 	public List<Card> findByTag(Object tag, int... rowStartIdxAndCount) {
 		return findByProperty(TAG, tag, rowStartIdxAndCount);
-	}
-
-	public List<Card> findByRatingCount(Object ratingCount,
-			int... rowStartIdxAndCount) {
-		return findByProperty(RATING_COUNT, ratingCount, rowStartIdxAndCount);
 	}
 
 	/**

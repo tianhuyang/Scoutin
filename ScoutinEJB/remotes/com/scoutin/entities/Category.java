@@ -13,7 +13,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import javax.persistence.Version;
 
 /**
  * Category entity. @author MyEclipse Persistence Tools
@@ -25,7 +24,6 @@ public class Category implements java.io.Serializable {
 	// Fields
 	private static final long serialVersionUID = 1L;
 	private Short categoryId;
-	private Long version;
 	private String name;
 	private Set<Card> cards = new HashSet<Card>(0);
 
@@ -53,16 +51,6 @@ public class Category implements java.io.Serializable {
 		this.categoryId = categoryId;
 	}
 
-	@Version
-	@Column(name = "VERSION", nullable = false)
-	public Long getVersion() {
-		return this.version;
-	}
-
-	public void setVersion(Long version) {
-		this.version = version;
-	}
-
 	@Column(name = "NAME", length = 35)
 	public String getName() {
 		return this.name;
@@ -73,7 +61,7 @@ public class Category implements java.io.Serializable {
 	}
 
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinTable(name = "CARDCATEGORY", catalog = "Scoutin", joinColumns = { @JoinColumn(name = "CATEGORY_ID", nullable = false, updatable = false) }, inverseJoinColumns = { @JoinColumn(name = "CARD_ID", nullable = false, updatable = false) })
+	@JoinTable(name = "CARD_CATEGORY", catalog = "Scoutin", joinColumns = { @JoinColumn(name = "CATEGORY_ID", nullable = false, updatable = false) }, inverseJoinColumns = { @JoinColumn(name = "CARD_ID", nullable = false, updatable = false) })
 	public Set<Card> getCards() {
 		return this.cards;
 	}

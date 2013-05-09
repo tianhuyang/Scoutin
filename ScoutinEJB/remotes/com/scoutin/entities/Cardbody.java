@@ -16,24 +16,21 @@ import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
-import javax.persistence.Version;
 
 /**
- * Cardbody entity. @author MyEclipse Persistence Tools
+ * CardBody entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "CARDBODY", catalog = "Scoutin")
-public class Cardbody implements java.io.Serializable {
+@Table(name = "CARD_BODY", catalog = "Scoutin")
+public class CardBody implements java.io.Serializable {
 
 	// Fields
 	private static final long serialVersionUID = 1L;
-	private Long cardbodyId;
-	private Long version;
+	private Long cardBodyId;
 	private Account account;
-	private Integer rating;
 	private Integer commentsCount = 0;
 	private Integer repostsCount = 0;
-	private Integer likesCount = 0;
+	private Integer endorsesCount = 0;
 	private Timestamp createdTime;
 	private Timestamp updatedTime;
 	private Double latitude;
@@ -41,39 +38,39 @@ public class Cardbody implements java.io.Serializable {
 	private String address;
 	private String url;
 	private String title;
-	private Integer ratingCount = 0;
 	private Set<Card> cards = new HashSet<Card>(0);
-	private Set<Cardrepost> cardreposts = new HashSet<Cardrepost>(0);
+	private Set<CardRepost> cardReposts = new HashSet<CardRepost>(0);
 
 	// Constructors
 
 	/** default constructor */
-	public Cardbody() {
+	public CardBody() {
 	}
 
 	/** minimal constructor */
-	public Cardbody(Account account, Integer commentsCount,
-			Integer repostsCount, Integer likesCount, Timestamp createdTime,
-			Timestamp updatedTime) {
+	public CardBody(Account account, Integer commentsCount,
+			Integer repostsCount, Integer endorsesCount, Timestamp createdTime,
+			Timestamp updatedTime, String url, String title) {
 		this.account = account;
 		this.commentsCount = commentsCount;
 		this.repostsCount = repostsCount;
-		this.likesCount = likesCount;
+		this.endorsesCount = endorsesCount;
 		this.createdTime = createdTime;
 		this.updatedTime = updatedTime;
+		this.url = url;
+		this.title = title;
 	}
 
 	/** full constructor */
-	public Cardbody(Account account, Integer rating, Integer commentsCount,
-			Integer repostsCount, Integer likesCount, Timestamp createdTime,
+	public CardBody(Account account, Integer commentsCount,
+			Integer repostsCount, Integer endorsesCount, Timestamp createdTime,
 			Timestamp updatedTime, Double latitude, Double longitude,
-			String address, String url, String title, Integer ratingCount,
-			Set<Card> cards, Set<Cardrepost> cardreposts) {
+			String address, String url, String title, Set<Card> cards,
+			Set<CardRepost> cardReposts) {
 		this.account = account;
-		this.rating = rating;
 		this.commentsCount = commentsCount;
 		this.repostsCount = repostsCount;
-		this.likesCount = likesCount;
+		this.endorsesCount = endorsesCount;
 		this.createdTime = createdTime;
 		this.updatedTime = updatedTime;
 		this.latitude = latitude;
@@ -81,31 +78,20 @@ public class Cardbody implements java.io.Serializable {
 		this.address = address;
 		this.url = url;
 		this.title = title;
-		this.ratingCount = ratingCount;
 		this.cards = cards;
-		this.cardreposts = cardreposts;
+		this.cardReposts = cardReposts;
 	}
 
 	// Property accessors
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
-	@Column(name = "CARDBODY_ID", unique = true, nullable = false)
-	public Long getCardbodyId() {
-		return this.cardbodyId;
+	@Column(name = "CARD_BODY_ID", unique = true, nullable = false)
+	public Long getCardBodyId() {
+		return this.cardBodyId;
 	}
 
-	public void setCardbodyId(Long cardbodyId) {
-		this.cardbodyId = cardbodyId;
-	}
-
-	@Version
-	@Column(name = "VERSION", nullable = false)
-	public Long getVersion() {
-		return this.version;
-	}
-
-	public void setVersion(Long version) {
-		this.version = version;
+	public void setCardBodyId(Long cardBodyId) {
+		this.cardBodyId = cardBodyId;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -116,15 +102,6 @@ public class Cardbody implements java.io.Serializable {
 
 	public void setAccount(Account account) {
 		this.account = account;
-	}
-
-	@Column(name = "RATING")
-	public Integer getRating() {
-		return this.rating;
-	}
-
-	public void setRating(Integer rating) {
-		this.rating = rating;
 	}
 
 	@Column(name = "COMMENTS_COUNT", nullable = false, insertable = false, updatable = false)
@@ -145,13 +122,13 @@ public class Cardbody implements java.io.Serializable {
 		this.repostsCount = repostsCount;
 	}
 
-	@Column(name = "LIKES_COUNT", nullable = false, insertable = false, updatable = false)
-	public Integer getLikesCount() {
-		return this.likesCount;
+	@Column(name = "ENDORSES_COUNT", nullable = false, insertable = false, updatable = false)
+	public Integer getEndorsesCount() {
+		return this.endorsesCount;
 	}
 
-	public void setLikesCount(Integer likesCount) {
-		this.likesCount = likesCount;
+	public void setEndorsesCount(Integer endorsesCount) {
+		this.endorsesCount = endorsesCount;
 	}
 
 	@Column(name = "CREATED_TIME", nullable = false, updatable = false, length = 19)
@@ -199,7 +176,7 @@ public class Cardbody implements java.io.Serializable {
 		this.address = address;
 	}
 
-	@Column(name = "URL", length = 65535)
+	@Column(name = "URL", nullable = false, length = 65535)
 	public String getUrl() {
 		return this.url;
 	}
@@ -208,7 +185,7 @@ public class Cardbody implements java.io.Serializable {
 		this.url = url;
 	}
 
-	@Column(name = "TITLE", length = 35)
+	@Column(name = "TITLE", nullable = false, length = 35)
 	public String getTitle() {
 		return this.title;
 	}
@@ -217,16 +194,7 @@ public class Cardbody implements java.io.Serializable {
 		this.title = title;
 	}
 
-	@Column(name = "RATING_COUNT", insertable = false, updatable = false)
-	public Integer getRatingCount() {
-		return this.ratingCount;
-	}
-
-	public void setRatingCount(Integer ratingCount) {
-		this.ratingCount = ratingCount;
-	}
-
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "cardbody")
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "cardBody")
 	public Set<Card> getCards() {
 		return this.cards;
 	}
@@ -235,13 +203,13 @@ public class Cardbody implements java.io.Serializable {
 		this.cards = cards;
 	}
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "cardbody")
-	public Set<Cardrepost> getCardreposts() {
-		return this.cardreposts;
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "cardBody")
+	public Set<CardRepost> getCardReposts() {
+		return this.cardReposts;
 	}
 
-	public void setCardreposts(Set<Cardrepost> cardreposts) {
-		this.cardreposts = cardreposts;
+	public void setCardReposts(Set<CardRepost> cardReposts) {
+		this.cardReposts = cardReposts;
 	}
 
 	@PrePersist

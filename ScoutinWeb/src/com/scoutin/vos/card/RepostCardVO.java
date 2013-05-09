@@ -3,7 +3,7 @@ package com.scoutin.vos.card;
 public class RepostCardVO {
 	public String description; 
 	public Integer rating;
-	public Long cardbodyId;
+	public Long cardBodyId;
 	public Long[] albumIds;
 	
 	public String getDescription() {
@@ -18,11 +18,11 @@ public class RepostCardVO {
 	public void setRating(Integer rating) {
 		this.rating = rating;
 	}
-	public Long getCardbodyId() {
-		return cardbodyId;
+	public Long getCardBodyId() {
+		return cardBodyId;
 	}
-	public void setCardbodyId(Long cardBodyId) {
-		this.cardbodyId = cardBodyId;
+	public void setCardBodyId(Long cardBodyId) {
+		this.cardBodyId = cardBodyId;
 	}
 	public Long[] getAlbumIds() {
 		return albumIds;
