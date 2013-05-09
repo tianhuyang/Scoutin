@@ -8,27 +8,49 @@
     <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
     
     <!--<link rel="stylesheet" type="text/css" href="./styles.css">-->
+    <link rel="stylesheet" type="text/css" href="/csses/lib/imgareaselect-default.css"/>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-	<script src="http://malsup.github.com/jquery.form.js"></script> 
+	<script src="http://malsup.github.com/jquery.form.js"></script>
+	<script src="/jses/lib/jquery.imgareaselect.pack.js"></script>
+  	<style>
+		.input_f{
+			display:none;
+		}
+		.uploadedImage{
+			cursor:pointer;
+		}
+		.preview{
+			display: inline-block;
+			width: 150px;
+			height: 165px;
+			overflow: hidden;
+		}
+  	</style>
   </head>
   
   <body>
     <form name="image_form" id="image_form" method="post" enctype="multipart/form-data">
-      <table border="0">
+      <input id="file_input" class="input_f" type="file" name="file" onchange="createImage(this.files)">
+      <table>
         <tr>
           <td>Title</td>
           <td><input type="text" name="title"></td>
         </tr>
         <tr>
-          <td>Image</td>
-          <td><input type="file" name="file"></td>
-        </tr> 
+        	<td colspan="2">
+        		<img id="uploadedImage" class="uploadedImage" src="/images/lightning_bolt.png" width=300 onclick="openBrowse()"/>
+        		&nbsp;&nbsp;
+        		<div id="preview" class="preview">
+        			<img src="/images/lightning_bolt.png" width=150 height=165/>
+        		</div>
+        	</td>
+        </tr>
         <tr>
         	<td colspan="2">
-	        	<input type="text" name="startX">
-	        	<input type="text" name="startY">
-	        	<input type="text" name="width">
-	        	<input type="text" name="height">
+	        	<input id="crop_startX" type="text" name="startX">
+	        	<input id="crop_startY" type="text" name="startY">
+	        	<input id="crop_width" type="text" name="width">
+	        	<input id="crop_height" type="text" name="height">
         	</td>
         </tr>
         <tr>
@@ -37,7 +59,6 @@
       </table>
     </form>
   </body>
-  <script src="lib/jquery.form.js"></script>
   <script type="text/javascript">
   	$(document).ready(function(){
   		$("#image_form").ajaxForm({
@@ -45,11 +66,81 @@
   			success:showPhoto,
   			dataType:'json'
   		});
-  	});
-
-  	function showPhoto(data)
-  	{
+  		
+		var $uploadedImage = $("#uploadedImage").get(0);
+		$uploadedImage.addEventListener("dragenter", dragenter, false);
+		$uploadedImage.addEventListener("dragover", dragover, false);
+		$uploadedImage.addEventListener("drop", drop, false);
+	});
+	
+	function openBrowse(){
+		document.getElementById("file_input").click();
+	}
+  	function showPhoto(data){
   		alert(data.isUploaded+" "+data.path);
   	}
+  	
+  	function createImage(files){
+  		var reader = new FileReader();
+		reader.onload = function(e){
+			$("#uploadedImage").attr('src',e.target.result);
+			$("#preview img").attr('src',e.target.result);
+			cropImage();
+		};
+		reader.readAsDataURL(files[0]);
+		document.getElementById("file_input").files = files;
+  	}
+  	
+  	function cropImage(){
+  		var width = $("#uploadedImage").width();
+		var height = $("#uploadedImage").height();
+		var init_crop_width = Math.round((width<height*1.1)?width:height/1.1);
+		var init_crop_height = Math.round((width<height*1.1)?width*1.1:height);
+		preview(0,0,init_crop_width,init_crop_height);
+		$("#uploadedImage").imgAreaSelect({x1:0, y1:0, x2:init_crop_width, y2:init_crop_height, aspectRatio:'1:1.1', minWidth:50, handles:true, onSelectChange:updateCropArea});
+  	}
+  	
+  	function updateCropArea(img, selection)
+	{
+		preview(selection.x1,selection.y1,selection.width,selection.height);
+		var scaleX = $("#uploadedImage").get(0).naturalWidth/$("#uploadedImage").width();
+		var scaleY = $("#uploadedImage").get(0).naturalHeight/$("#uploadedImage").height();
+		$("#crop_startX").val(Math.round(selection.x1*scaleX));
+		$("#crop_startY").val(Math.round(selection.y1*scaleY));
+		$("#crop_width").val(Math.round(selection.width*scaleX));
+		$("#crop_height").val(Math.round(selection.height*scaleY));
+	}
+	
+	function preview(x1,y1,width,height){
+		var scaleX = 150 / width;
+    	var scaleY = 165 / height;
+
+	    $("#preview img").css({
+	        width: Math.round(scaleX * $("#uploadedImage").width()),
+	        height: Math.round(scaleY * $("#uploadedImage").height()),
+	        marginLeft: -Math.round(scaleX * x1),
+	        marginTop: -Math.round(scaleY * y1)
+	    });
+	}
+
+	function dragenter(e) {
+	  e.stopPropagation();
+	  e.preventDefault();
+	}
+	 
+	function dragover(e) {
+	  e.stopPropagation();
+	  e.preventDefault();
+	} 
+	
+	function drop(e){
+	 e.stopPropagation();
+	 e.preventDefault();
+	
+	 var dt = e.dataTransfer;
+	 var files = dt.files;
+	
+	 createImage(files);
+	}
   </script>
 </html>

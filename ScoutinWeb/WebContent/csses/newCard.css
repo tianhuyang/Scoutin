@@ -1,4 +1,4 @@
-﻿* {font-family:"Myriad Pro";}
+* {font-family:"Myriad Pro";}
 *{margin:0px;padding:0px;}
 .newCard_container_background
 {
@@ -9,10 +9,14 @@
 	background-color:black;
 	background-color:rgba(0,0,0,0.7);	
 	z-index:1;
+	overflow: scroll;
+}
+.newCard_container{
+	margin: auto;
+	width: 334px;
 }
 .newCard_shadow {
-  width:334px;
-	margin: auto;
+  	display:inline-block; width:334px; margin-right:20px; 
 	
 	-moz-box-shadow: 7px 7px 5px rgba(51,51,51,0.75);
 	-webkit-box-shadow: 7px 7px 5px rgba(51,51,51,0.75);
@@ -23,7 +27,7 @@
 
 .newCard 
 {
-  display:block; position:relative;width:334px;background-color:rgb(255,255,255);
+  position:relative;width:334px;background-color:rgb(255,255,255);
 }
 
 .newCard_header
@@ -54,9 +58,13 @@
 	background:url(../images/card/card_icons.png) -144px -72px no-repeat;
 	pointer:cursor;
 }
-.newCard_edit_image
+.newCard_edit_image_container
 {
-	width:300px;display:block;margin:14px auto 0px auto;cursor:pointer;
+	width:300px;height:330px;overflow:hidden;cursor:pointer;margin:14px auto 0px auto;
+}
+.newCard_cropped_image
+{
+	width:300px;height:330px;
 }
 .newCard_rating
 {
@@ -221,4 +229,23 @@
 	color:rgb(241,95,97);
 	cursor:pointer;
 	margin-top:10px;margin-right:5px;
+}
+.newCard_image_inputs
+{
+	display: none;
+}
+.newCard_cropArea
+{
+	position:fixed;
+	top:50px;
+	width: 350px;
+	display: none;
+}
+.newCard_uploaded_image
+{
+	width: 350px;
+}
+.newCard_crop_button
+{
+	float:right;
 }
