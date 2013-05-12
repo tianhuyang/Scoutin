@@ -1,7 +1,6 @@
 package com.scoutin.facades;
 
 import com.scoutin.entities.Recommendation;
-import com.scoutin.entities.RecommendationId;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -20,6 +19,7 @@ import javax.persistence.Query;
 @Stateless
 public class RecommendationFacade {
 	// property constants
+	public static final String IS_VIEWED = "isViewed";
 
 	@PersistenceContext
 	protected EntityManager entityManager;
@@ -57,7 +57,7 @@ public class RecommendationFacade {
 		LogUtil.log("deleting Recommendation instance", Level.INFO, null);
 		try {
 			recommendation = entityManager.getReference(Recommendation.class,
-					recommendation.getId());
+					recommendation.getRecommendationId());
 			entityManager.remove(recommendation);
 			LogUtil.log("delete successful", Level.INFO, null);
 		} catch (RuntimeException re) {
@@ -91,12 +91,12 @@ public class RecommendationFacade {
 		}
 	}
 
-	public Recommendation findById(RecommendationId id) {
-		LogUtil.log("finding Recommendation instance with id: " + id,
-				Level.INFO, null);
+	public Recommendation findById(Long recommendationId) {
+		LogUtil.log("finding Recommendation instance with id: "
+				+ recommendationId, Level.INFO, null);
 		try {
 			Recommendation instance = entityManager.find(Recommendation.class,
-					id);
+					recommendationId);
 			LogUtil.log("find successful", Level.INFO, null);
 			return instance;
 		} catch (RuntimeException re) {
@@ -105,12 +105,12 @@ public class RecommendationFacade {
 		}
 	}
 
-	public Recommendation getReference(RecommendationId id) {
-		LogUtil.log("getReferencing Recommendation instance with id: " + id,
-				Level.INFO, null);
+	public Recommendation getReference(Long recommendationId) {
+		LogUtil.log("getReferencing Recommendation instance with id: "
+				+ recommendationId, Level.INFO, null);
 		try {
 			Recommendation instance = entityManager.getReference(
-					Recommendation.class, id);
+					Recommendation.class, recommendationId);
 			LogUtil.log("getReference successful", Level.INFO, null);
 			return instance;
 		} catch (RuntimeException re) {
@@ -159,7 +159,7 @@ public class RecommendationFacade {
 	}
 
 	public void flush() {
-		LogUtil.log("flush Recommendation instance", Level.INFO, null);
+		LogUtil.log("flushing Recommendation instance", Level.INFO, null);
 		try {
 			entityManager.flush();
 			LogUtil.log("flush successful", Level.INFO, null);
@@ -169,17 +169,67 @@ public class RecommendationFacade {
 		}
 	}
 
-	private static final String removeByIdJPQL = "delete from Recommendation a where a.id in (?1)";
-
-	public void removeById(RecommendationId id) {
-		LogUtil.log("removeById", Level.INFO, null);
+	public void clear() {
+		LogUtil.log("clearing Recommendation instance", Level.INFO, null);
 		try {
-			Query query = entityManager.createQuery(removeByIdJPQL);
-			query.setParameter(1, id);
-			query.executeUpdate();
-			LogUtil.log("removeById successful", Level.INFO, null);
+			entityManager.clear();
+			LogUtil.log("clear successful", Level.INFO, null);
 		} catch (RuntimeException re) {
-			LogUtil.log("removeById failed", Level.SEVERE, re);
+			LogUtil.log("clear failed", Level.SEVERE, re);
+			throw re;
+		}
+	}
+
+	private static final String removeByRecommendationIdJPQL = "delete from Recommendation a where a.recommendationId in (?1)";
+
+	public int removeByRecommendationId(Long recommendationId) {
+		LogUtil.log("removeByRecommendationId", Level.INFO, null);
+		int ret = 0;
+		try {
+			Query query = entityManager
+					.createQuery(removeByRecommendationIdJPQL);
+			query.setParameter(1, recommendationId);
+			ret = query.executeUpdate();
+			LogUtil.log("removeByRecommendationId successful", Level.INFO, null);
+			return ret;
+		} catch (RuntimeException re) {
+			LogUtil.log("removeByRecommendationId failed", Level.SEVERE, re);
+			throw re;
+		}
+	}
+
+	private static final String cardIdJPQL = "select a.card.cardId from Recommendation a where a.recommendationId = :recommendationId";
+
+	public java.lang.Long getCardId(java.lang.Long recommendationId) {
+		LogUtil.log("getAccountIdId with recommendationId" + recommendationId,
+				Level.INFO, null);
+		java.lang.Long cardId;
+		try {
+			Query query = entityManager.createQuery(cardIdJPQL);
+			query.setParameter("recommendationId", recommendationId);
+			cardId = (java.lang.Long) query.getSingleResult();
+			LogUtil.log("getAccountIdId successful", Level.INFO, null);
+			return cardId;
+		} catch (RuntimeException re) {
+			LogUtil.log("getAccountIdId failed", Level.SEVERE, re);
+			throw re;
+		}
+	}
+
+	private static final String accountIdJPQL = "select a.account.accountId from Recommendation a where a.recommendationId = :recommendationId";
+
+	public java.lang.Integer getAccountId(java.lang.Long recommendationId) {
+		LogUtil.log("getAccountIdId with recommendationId" + recommendationId,
+				Level.INFO, null);
+		java.lang.Integer accountId;
+		try {
+			Query query = entityManager.createQuery(accountIdJPQL);
+			query.setParameter("recommendationId", recommendationId);
+			accountId = (java.lang.Integer) query.getSingleResult();
+			LogUtil.log("getAccountIdId successful", Level.INFO, null);
+			return accountId;
+		} catch (RuntimeException re) {
+			LogUtil.log("getAccountIdId failed", Level.SEVERE, re);
 			throw re;
 		}
 	}
@@ -226,6 +276,11 @@ public class RecommendationFacade {
 			LogUtil.log("find by property name failed", Level.SEVERE, re);
 			throw re;
 		}
+	}
+
+	public List<Recommendation> findByIsViewed(Object isViewed,
+			int... rowStartIdxAndCount) {
+		return findByProperty(IS_VIEWED, isViewed, rowStartIdxAndCount);
 	}
 
 	/**

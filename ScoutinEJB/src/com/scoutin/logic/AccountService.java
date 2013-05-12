@@ -9,12 +9,13 @@ import com.scoutin.daos.FollowerDao;
 import com.scoutin.daos.ProfileDao;
 import com.scoutin.entities.Account;
 import com.scoutin.entities.AccountStat;
+import com.scoutin.entities.CardEndorse;
 import com.scoutin.entities.Follower;
 import com.scoutin.entities.FollowerId;
 import com.scoutin.entities.Profile;
 
 @Stateless
-public class AccountBeanService {
+public class AccountService {
 	// @EJB DaoUtils daoUtils;
 	@EJB
 	private AccountDao accountDao;
@@ -28,7 +29,7 @@ public class AccountBeanService {
 	/**
 	 * Default constructor.
 	 */
-	public AccountBeanService() {
+	public AccountService() {
 		// TODO Auto-generated constructor stub
 	}
 
@@ -55,23 +56,21 @@ public class AccountBeanService {
 	/*
 	 * @see com.scoutin.logic.AccountBeanRemote#followAccount(Integer followingAccountId,Integer followedAccountId)
 	 */
-	public boolean followAccount(Integer followingAccountId, Integer followedAccountId) {
-		FollowerId followerId = new FollowerId(followedAccountId, followingAccountId);
-		Follower follower = followerDao.findById(followerId);
-		if(follower == null){
-			follower = new Follower();
+	public void followAccount(Integer followingAccountId, Integer followedAccountId, boolean followed) {
+		FollowerId followerId = new FollowerId(followedAccountId, followingAccountId);		
+		if (followed) {
+			Follower follower = new Follower();
 			follower.setId(followerId);
 			followerDao.save(follower);
+			followerDao.flush();
 			accountStatDao.increaseFollowersCount(followedAccountId, 1);
 			accountStatDao.increaseFollowingCount(followingAccountId, 1);
-			return true;
+		} else {
+			if (followerDao.removeById(followerId) == 1) {
+				accountStatDao.increaseFollowersCount(followedAccountId, -1);
+				accountStatDao.increaseFollowingCount(followingAccountId, -1);
+			}
 		}
-		else{
-			followerDao.removeById(followerId);
-			accountStatDao.increaseFollowersCount(followedAccountId, -1);
-			accountStatDao.increaseFollowingCount(followingAccountId, -1);
-			return false;
-		}	
 		
 	}
 

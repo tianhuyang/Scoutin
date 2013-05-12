@@ -25,6 +25,7 @@ public class CardFacade {
 	public static final String COMMENTS_COUNT = "commentsCount";
 	public static final String ENDORSES_COUNT = "endorsesCount";
 	public static final String TAG = "tag";
+	public static final String STATUS = "status";
 
 	@PersistenceContext
 	protected EntityManager entityManager;
@@ -160,7 +161,7 @@ public class CardFacade {
 	}
 
 	public void flush() {
-		LogUtil.log("flush Card instance", Level.INFO, null);
+		LogUtil.log("flushing Card instance", Level.INFO, null);
 		try {
 			entityManager.flush();
 			LogUtil.log("flush successful", Level.INFO, null);
@@ -170,15 +171,28 @@ public class CardFacade {
 		}
 	}
 
+	public void clear() {
+		LogUtil.log("clearing Card instance", Level.INFO, null);
+		try {
+			entityManager.clear();
+			LogUtil.log("clear successful", Level.INFO, null);
+		} catch (RuntimeException re) {
+			LogUtil.log("clear failed", Level.SEVERE, re);
+			throw re;
+		}
+	}
+
 	private static final String removeByCardIdJPQL = "delete from Card a where a.cardId in (?1)";
 
-	public void removeByCardId(Long cardId) {
+	public int removeByCardId(Long cardId) {
 		LogUtil.log("removeByCardId", Level.INFO, null);
+		int ret = 0;
 		try {
 			Query query = entityManager.createQuery(removeByCardIdJPQL);
 			query.setParameter(1, cardId);
-			query.executeUpdate();
+			ret = query.executeUpdate();
 			LogUtil.log("removeByCardId successful", Level.INFO, null);
+			return ret;
 		} catch (RuntimeException re) {
 			LogUtil.log("removeByCardId failed", Level.SEVERE, re);
 			throw re;
@@ -202,7 +216,7 @@ public class CardFacade {
 		}
 	}
 
-	private static final String increaseCommentsCountJPQL = "update CARD a set a.commentsCount = a.commentsCount + :count where a.cardId in (:cardId)";
+	private static final String increaseCommentsCountJPQL = "update Card a set a.commentsCount = a.commentsCount + :count where a.cardId in (:cardId)";
 
 	public void increaseCommentsCount(java.lang.Long cardId, int count) {
 		LogUtil.log("increaseEndorsesCount with cardId:" + cardId, Level.INFO,
@@ -219,7 +233,7 @@ public class CardFacade {
 		}
 	}
 
-	private static final String increaseEndorsesCountJPQL = "update CARD a set a.endorsesCount = a.endorsesCount + :count where a.cardId in (:cardId)";
+	private static final String increaseEndorsesCountJPQL = "update Card a set a.endorsesCount = a.endorsesCount + :count where a.cardId in (:cardId)";
 
 	public void increaseEndorsesCount(java.lang.Long cardId, int count) {
 		LogUtil.log("increaseEndorsesCount with cardId:" + cardId, Level.INFO,
@@ -303,6 +317,10 @@ public class CardFacade {
 
 	public List<Card> findByTag(Object tag, int... rowStartIdxAndCount) {
 		return findByProperty(TAG, tag, rowStartIdxAndCount);
+	}
+
+	public List<Card> findByStatus(Object status, int... rowStartIdxAndCount) {
+		return findByProperty(STATUS, status, rowStartIdxAndCount);
 	}
 
 	/**

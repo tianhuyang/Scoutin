@@ -37,6 +37,7 @@ public class Card implements java.io.Serializable {
 	private Timestamp createdTime;
 	private Timestamp updatedTime;
 	private String tag;
+	private Short status = 0;
 	private Set<Album> albums = new HashSet<Album>(0);
 	private Set<Recommendation> recommendations = new HashSet<Recommendation>(0);
 	private Set<CardEndorse> cardEndorses = new HashSet<CardEndorse>(0);
@@ -51,22 +52,24 @@ public class Card implements java.io.Serializable {
 
 	/** minimal constructor */
 	public Card(CardBody cardBody, Integer rating, Integer commentsCount,
-			Integer endorsesCount, Timestamp createdTime, Timestamp updatedTime) {
+			Integer endorsesCount, Timestamp createdTime,
+			Timestamp updatedTime, Short status) {
 		this.cardBody = cardBody;
 		this.rating = rating;
 		this.commentsCount = commentsCount;
 		this.endorsesCount = endorsesCount;
 		this.createdTime = createdTime;
 		this.updatedTime = updatedTime;
+		this.status = status;
 	}
 
 	/** full constructor */
 	public Card(CardBody cardBody, String description, Integer rating,
 			Integer commentsCount, Integer endorsesCount,
 			Timestamp createdTime, Timestamp updatedTime, String tag,
-			Set<Album> albums, Set<Recommendation> recommendations,
-			Set<CardEndorse> cardEndorses, Set<Category> categories,
-			Set<Comment> comments) {
+			Short status, Set<Album> albums,
+			Set<Recommendation> recommendations, Set<CardEndorse> cardEndorses,
+			Set<Category> categories, Set<Comment> comments) {
 		this.cardBody = cardBody;
 		this.description = description;
 		this.rating = rating;
@@ -75,6 +78,7 @@ public class Card implements java.io.Serializable {
 		this.createdTime = createdTime;
 		this.updatedTime = updatedTime;
 		this.tag = tag;
+		this.status = status;
 		this.albums = albums;
 		this.recommendations = recommendations;
 		this.cardEndorses = cardEndorses;
@@ -165,6 +169,15 @@ public class Card implements java.io.Serializable {
 
 	public void setTag(String tag) {
 		this.tag = tag;
+	}
+
+	@Column(name = "STATUS", nullable = false)
+	public Short getStatus() {
+		return this.status;
+	}
+
+	public void setStatus(Short status) {
+		this.status = status;
 	}
 
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)

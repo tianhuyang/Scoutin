@@ -166,7 +166,7 @@ public class CardBodyFacade {
 	}
 
 	public void flush() {
-		LogUtil.log("flush CardBody instance", Level.INFO, null);
+		LogUtil.log("flushing CardBody instance", Level.INFO, null);
 		try {
 			entityManager.flush();
 			LogUtil.log("flush successful", Level.INFO, null);
@@ -176,15 +176,28 @@ public class CardBodyFacade {
 		}
 	}
 
+	public void clear() {
+		LogUtil.log("clearing CardBody instance", Level.INFO, null);
+		try {
+			entityManager.clear();
+			LogUtil.log("clear successful", Level.INFO, null);
+		} catch (RuntimeException re) {
+			LogUtil.log("clear failed", Level.SEVERE, re);
+			throw re;
+		}
+	}
+
 	private static final String removeByCardBodyIdJPQL = "delete from CardBody a where a.cardBodyId in (?1)";
 
-	public void removeByCardBodyId(Long cardBodyId) {
+	public int removeByCardBodyId(Long cardBodyId) {
 		LogUtil.log("removeByCardBodyId", Level.INFO, null);
+		int ret = 0;
 		try {
 			Query query = entityManager.createQuery(removeByCardBodyIdJPQL);
 			query.setParameter(1, cardBodyId);
-			query.executeUpdate();
+			ret = query.executeUpdate();
 			LogUtil.log("removeByCardBodyId successful", Level.INFO, null);
+			return ret;
 		} catch (RuntimeException re) {
 			LogUtil.log("removeByCardBodyId failed", Level.SEVERE, re);
 			throw re;
@@ -209,7 +222,7 @@ public class CardBodyFacade {
 		}
 	}
 
-	private static final String increaseCommentsCountJPQL = "update CARD_BODY a set a.commentsCount = a.commentsCount + :count where a.cardBodyId in (:cardBodyId)";
+	private static final String increaseCommentsCountJPQL = "update CardBody a set a.commentsCount = a.commentsCount + :count where a.cardBodyId in (:cardBodyId)";
 
 	public void increaseCommentsCount(java.lang.Long cardBodyId, int count) {
 		LogUtil.log("increaseEndorsesCount with cardBodyId:" + cardBodyId,
@@ -226,7 +239,7 @@ public class CardBodyFacade {
 		}
 	}
 
-	private static final String increaseRepostsCountJPQL = "update CARD_BODY a set a.repostsCount = a.repostsCount + :count where a.cardBodyId in (:cardBodyId)";
+	private static final String increaseRepostsCountJPQL = "update CardBody a set a.repostsCount = a.repostsCount + :count where a.cardBodyId in (:cardBodyId)";
 
 	public void increaseRepostsCount(java.lang.Long cardBodyId, int count) {
 		LogUtil.log("increaseEndorsesCount with cardBodyId:" + cardBodyId,
@@ -243,7 +256,7 @@ public class CardBodyFacade {
 		}
 	}
 
-	private static final String increaseEndorsesCountJPQL = "update CARD_BODY a set a.endorsesCount = a.endorsesCount + :count where a.cardBodyId in (:cardBodyId)";
+	private static final String increaseEndorsesCountJPQL = "update CardBody a set a.endorsesCount = a.endorsesCount + :count where a.cardBodyId in (:cardBodyId)";
 
 	public void increaseEndorsesCount(java.lang.Long cardBodyId, int count) {
 		LogUtil.log("increaseEndorsesCount with cardBodyId:" + cardBodyId,

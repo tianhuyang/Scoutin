@@ -162,7 +162,7 @@ public class AccountStatFacade {
 	}
 
 	public void flush() {
-		LogUtil.log("flush AccountStat instance", Level.INFO, null);
+		LogUtil.log("flushing AccountStat instance", Level.INFO, null);
 		try {
 			entityManager.flush();
 			LogUtil.log("flush successful", Level.INFO, null);
@@ -172,22 +172,35 @@ public class AccountStatFacade {
 		}
 	}
 
+	public void clear() {
+		LogUtil.log("clearing AccountStat instance", Level.INFO, null);
+		try {
+			entityManager.clear();
+			LogUtil.log("clear successful", Level.INFO, null);
+		} catch (RuntimeException re) {
+			LogUtil.log("clear failed", Level.SEVERE, re);
+			throw re;
+		}
+	}
+
 	private static final String removeByAccountIdJPQL = "delete from AccountStat a where a.accountId in (?1)";
 
-	public void removeByAccountId(Integer accountId) {
+	public int removeByAccountId(Integer accountId) {
 		LogUtil.log("removeByAccountId", Level.INFO, null);
+		int ret = 0;
 		try {
 			Query query = entityManager.createQuery(removeByAccountIdJPQL);
 			query.setParameter(1, accountId);
-			query.executeUpdate();
+			ret = query.executeUpdate();
 			LogUtil.log("removeByAccountId successful", Level.INFO, null);
+			return ret;
 		} catch (RuntimeException re) {
 			LogUtil.log("removeByAccountId failed", Level.SEVERE, re);
 			throw re;
 		}
 	}
 
-	private static final String increaseFollowingCountJPQL = "update ACCOUNT_STAT a set a.followingCount = a.followingCount + :count where a.accountId in (:accountId)";
+	private static final String increaseFollowingCountJPQL = "update AccountStat a set a.followingCount = a.followingCount + :count where a.accountId in (:accountId)";
 
 	public void increaseFollowingCount(java.lang.Integer accountId, int count) {
 		LogUtil.log("increaseUnviewRecmdCount with accountId:" + accountId,
@@ -204,7 +217,7 @@ public class AccountStatFacade {
 		}
 	}
 
-	private static final String increaseFollowersCountJPQL = "update ACCOUNT_STAT a set a.followersCount = a.followersCount + :count where a.accountId in (:accountId)";
+	private static final String increaseFollowersCountJPQL = "update AccountStat a set a.followersCount = a.followersCount + :count where a.accountId in (:accountId)";
 
 	public void increaseFollowersCount(java.lang.Integer accountId, int count) {
 		LogUtil.log("increaseUnviewRecmdCount with accountId:" + accountId,
@@ -221,7 +234,7 @@ public class AccountStatFacade {
 		}
 	}
 
-	private static final String increaseUnviewRecmdCountJPQL = "update ACCOUNT_STAT a set a.unviewRecmdCount = a.unviewRecmdCount + :count where a.accountId in (:accountId)";
+	private static final String increaseUnviewRecmdCountJPQL = "update AccountStat a set a.unviewRecmdCount = a.unviewRecmdCount + :count where a.accountId in (:accountId)";
 
 	public void increaseUnviewRecmdCount(java.lang.Integer accountId, int count) {
 		LogUtil.log("increaseUnviewRecmdCount with accountId:" + accountId,

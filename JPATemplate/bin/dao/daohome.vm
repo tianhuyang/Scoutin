@@ -281,7 +281,7 @@ public class $className #if ($daoExporter.getExtends())extends $pojo.importType(
     }
     
     public void flush() {
-		#logInfo('"flush ${declarationName} instance"')
+		#logInfo('"flushing ${declarationName} instance"')
         try {
             ${entityManager}.flush();
             #logInfo('"flush successful"')
@@ -290,16 +290,29 @@ public class $className #if ($daoExporter.getExtends())extends $pojo.importType(
             throw re;
         }
 	}
+	    
+    public void clear() {
+		#logInfo('"clearing ${declarationName} instance"')
+        try {
+            ${entityManager}.clear();
+            #logInfo('"clear successful"')
+        } catch (RuntimeException re) {
+        	#logError('"clear failed"' "re")
+            throw re;
+        }
+	}
 	
     private static final String removeBy${bid}JPQL = "delete from ${declarationName} a where a.$identity in (?1)";
 	
-	public void removeBy${bid}($pojo.getJavaTypeName($clazz.identifierProperty, $jdk5) $identity) {
+	public int removeBy${bid}($pojo.getJavaTypeName($clazz.identifierProperty, $jdk5) $identity) {
 		#logInfo('"removeBy${bid}"')
+		int ret = 0;
 		try {
 			Query query = entityManager.createQuery(removeBy${bid}JPQL);
 			query.setParameter(1, $identity);
-			query.executeUpdate();
+			ret = query.executeUpdate();
 			#logInfo('"removeBy${bid} successful"')
+			return ret;
 		} catch (RuntimeException re) {
 		    #logError('"removeBy${bid} failed"' "re")
 			throw re;
@@ -350,7 +363,7 @@ public class $className #if ($daoExporter.getExtends())extends $pojo.importType(
 #set($idName = $clazz.identifierProperty.name)
 #set($idType = $c2j.getJavaTypeName($clazz.identifierProperty, $jdk5))
 #set($className = $pojo.importType($clazz.getClassName()))
-    private static  final String ${bbName}JPQL = "update ${clazz.table.name} a set a.${field.name} = a.${field.name} + :count where a.${idName} in (:${idName})";
+    private static  final String ${bbName}JPQL = "update ${className} a set a.${field.name} = a.${field.name} + :count where a.${idName} in (:${idName})";
 
 	public void ${bbName}(${idType} ${idName}, int count) {
 		#logInfo('"${bbName} with ${idName}:" + ${idName}')

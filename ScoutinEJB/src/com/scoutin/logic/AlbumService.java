@@ -13,7 +13,7 @@ import com.scoutin.entities.BlockedAlbumId;
 import com.scoutin.entities.Follower;
 
 @Stateless
-public class AlbumBeanService {
+public class AlbumService {
 
 	@EJB private AccountDao accountDao;
 	@EJB private AlbumDao albumDao;

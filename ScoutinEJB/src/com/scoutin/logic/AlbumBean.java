@@ -14,7 +14,7 @@ import com.scoutin.entities.Album;
 public class AlbumBean implements AlbumBeanRemote {
 
 	@EJB
-	private AlbumBeanService albumBeanService;
+	private AlbumService albumService;
 
 	/*
 	 * @see com.scoutin.logic.AccountBeanRemote#createAlbum(Integer accountId,
@@ -23,7 +23,7 @@ public class AlbumBean implements AlbumBeanRemote {
 	@Override
 	public Album createAlbum(Integer accountId, Album album) {
 		try {
-			album = albumBeanService.createAlbum(accountId, album);
+			album = albumService.createAlbum(accountId, album);
 			if (album != null) {
 				album.setAccount(null);
 			}
@@ -37,7 +37,7 @@ public class AlbumBean implements AlbumBeanRemote {
 	@Override
 	public boolean blockAlbum(Integer followingAccountId, Long followedAlbumId) {
 		try {
-			return albumBeanService.followAlbum(followingAccountId, followedAlbumId);
+			return albumService.followAlbum(followingAccountId, followedAlbumId);
 		} catch (Throwable t) {
 			throw new ApplicationException(t.getMessage());
 		}

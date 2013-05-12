@@ -11,14 +11,14 @@ import com.scoutin.entities.Account;
 import com.scoutin.utilities.DaoUtils;
 
 @Stateless
-public class AuthenticateBeanService {
+public class AuthenticateService {
 	
 	private @EJB AccountDao accountDao;
 	
 	/**
 	 * Default constructor.
 	 */
-	public AuthenticateBeanService() {
+	public AuthenticateService() {
 		// TODO Auto-generated constructor stub
 	}	
 

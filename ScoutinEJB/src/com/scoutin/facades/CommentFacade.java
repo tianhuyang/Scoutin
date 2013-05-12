@@ -158,7 +158,7 @@ public class CommentFacade {
 	}
 
 	public void flush() {
-		LogUtil.log("flush Comment instance", Level.INFO, null);
+		LogUtil.log("flushing Comment instance", Level.INFO, null);
 		try {
 			entityManager.flush();
 			LogUtil.log("flush successful", Level.INFO, null);
@@ -168,15 +168,28 @@ public class CommentFacade {
 		}
 	}
 
+	public void clear() {
+		LogUtil.log("clearing Comment instance", Level.INFO, null);
+		try {
+			entityManager.clear();
+			LogUtil.log("clear successful", Level.INFO, null);
+		} catch (RuntimeException re) {
+			LogUtil.log("clear failed", Level.SEVERE, re);
+			throw re;
+		}
+	}
+
 	private static final String removeByCommentIdJPQL = "delete from Comment a where a.commentId in (?1)";
 
-	public void removeByCommentId(Long commentId) {
+	public int removeByCommentId(Long commentId) {
 		LogUtil.log("removeByCommentId", Level.INFO, null);
+		int ret = 0;
 		try {
 			Query query = entityManager.createQuery(removeByCommentIdJPQL);
 			query.setParameter(1, commentId);
-			query.executeUpdate();
+			ret = query.executeUpdate();
 			LogUtil.log("removeByCommentId successful", Level.INFO, null);
+			return ret;
 		} catch (RuntimeException re) {
 			LogUtil.log("removeByCommentId failed", Level.SEVERE, re);
 			throw re;

@@ -6,7 +6,7 @@
 	<Local Expanded="Yes">
 		<Model Expanded="Yes" ID="{C982B851-4553-479F-B73B-B047FA87CAED}" Loaded="No" Name="Scoutin" Type="{FF4B6538-9856-42CF-B9B9-304ED370CEAA}" URL="Scoutin.prj"/>
 		<Model Expanded="Yes" ID="{E08D0D65-9EFC-4102-BBF5-B392D1D06C8F}" Name="LogicDataModel" Selected="Yes" Type="{5F45F978-C4F3-4E35-A3FC-AF3318663A0F}" URL="LogicDataModel.ldm"/>
-		<Model Expanded="Yes" ID="{98F2A7D8-BBDA-4D6E-830D-7AB3C45552DC}" Name="PhysicalDataModel" Type="{CDE44E21-9669-11D1-9914-006097355D9B}" URL="PhysicalDataModel.pdm"/>
+		<Model Expanded="Yes" ID="{98F2A7D8-BBDA-4D6E-830D-7AB3C45552DC}" Loaded="No" Name="PhysicalDataModel" Type="{CDE44E21-9669-11D1-9914-006097355D9B}" URL="PhysicalDataModel.pdm"/>
 	</Local>
 	<BrowserModule Name="Repository"/>
 </Workspace>

@@ -19,7 +19,7 @@ public class CardBodyDao extends CardBodyFacade {
 		LogUtil.log("cardBodyBelongToAccounting", Level.INFO, null);
 		try {
 			/*CriteriaQuery<Tuple> cq = entityManager.getCriteriaBuilder().createTupleQuery();
-			Root<Cardbody> root = cq.from(Cardbody.class);
+			Root<CardBody> root = cq.from(CardBody.class);
 			cq.
 			cq.multiselect(root.get("cardBodyId"), root.get("accountId"));
 			List<Tuple> tupleResult = entityManager.createQuery(cq).getResultList();
@@ -37,8 +37,8 @@ public class CardBodyDao extends CardBodyFacade {
 		}	
 	}
 	
-	//private final String increaseEndorsesCountByCardIdJPQL = "update Cardbody  a set a.endorsesCount = a.endorsesCount + :count where :cardId member of a.cards";
-	private static final String increaseEndorsesCountByCardIdJPQL = "update Cardbody a set a.endorsesCount = a.endorsesCount + :count where exists (select b.cardId from Card b where b.cardBody.cardBodyId = a.cardBodyId and b.cardId = :cardId)";
+	//private final String increaseEndorsesCountByCardIdJPQL = "update CardBody  a set a.endorsesCount = a.endorsesCount + :count where :cardId member of a.cards";
+	private static final String increaseEndorsesCountByCardIdJPQL = "update CardBody a set a.endorsesCount = a.endorsesCount + :count where exists (select b.cardId from Card b where b.cardBody.cardBodyId = a.cardBodyId and b.cardId = :cardId)";
 
 	public void increaseEndorsesCountByCardId(java.lang.Long cardId, int count) {
 		LogUtil.log("increaseEndorsesCountByCardId with cardId:" + cardId,
@@ -55,7 +55,7 @@ public class CardBodyDao extends CardBodyFacade {
 		}
 	}
 	
-	private static final String increaseCommentsCountByCardIdJPQL = "update Cardbody a set a.commentsCount = a.commentsCount + :count where exists (select b from Card b where b.cardBody = a and b.cardId = :cardId)";
+	private static final String increaseCommentsCountByCardIdJPQL = "update CardBody a set a.commentsCount = a.commentsCount + :count where exists (select b from Card b where b.cardBody = a and b.cardId = :cardId)";
 
 	public void increaseCommentsCountByCardId(java.lang.Long cardId, int count) {
 		LogUtil.log("increaseCommentsCountByCardId with cardId:" + cardId,

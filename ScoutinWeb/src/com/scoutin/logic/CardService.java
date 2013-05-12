@@ -173,53 +173,22 @@ public class CardService {
 	 * 
 	 * @param cardId:(Long) must be existent
 	 * 
-	 * @return whether the card is endorsed or unendorsed
+	 * @param endorsed:(boolean) whether the card is endorsed or unendorsed
 	 * 
 	 * @throws ScoutinException if failed
 	 */
-	public static boolean endorseCard(Integer accountId, Long cardId)
+	public static void endorseCard(Integer accountId, Long cardId, boolean endorsed)
 			throws ScoutinException {
 		if (cardId == null || accountId == null) {
 			throw new IllegalArgumentException("Illegal arguments in editCard");
 		}
 
-		boolean endorsed = false;
 		try {
-			endorsed = EJBUtils.cardBeanRemote.endorseCard(accountId, cardId);
+			EJBUtils.cardBeanRemote.endorseCard(accountId, cardId, endorsed);
 		} catch (Throwable re) {
 			throw new ScoutinException(
 					ScoutinException.Card_LikeCard_Failure_Status,
 					ScoutinException.Card_LikeCard_Failure_Message);
-		}
-		return endorsed;
-	}
-
-	/*
-	 * @param accountId:(Integer) must be existent and authenticated
-	 * 
-	 * @param cardId:(Long) must belong to accountId
-	 * 
-	 * @param accountIds:(Integer[]) must be existent or zero-length
-	 * 
-	 * @param clusterIds:(Long[]) must be existent or zero-length accountIds and
-	 * clusterIds can't be both zero-length
-	 * 
-	 * @throws ScoutinException if failed
-	 */
-	public static void recommendCard(Integer accountId, Long cardId,
-			Integer[] accountIds, Long[] clusterIds) throws ScoutinException {
-		if (cardId == null || accountId == null || accountIds == null
-				|| clusterIds == null
-				|| (accountIds.length == 0 && clusterIds.length == 0)) {
-			throw new IllegalArgumentException("Illegal arguments in recommendCard");
-		}
-
-		try {
-			EJBUtils.cardBeanRemote.recommendCard(accountId, cardId, accountIds, clusterIds);
-		} catch (Throwable re) {
-			throw new ScoutinException(
-					ScoutinException.Card_RecommendCard_Failure_Status,
-					ScoutinException.Card_RecommendCard_Failure_Message);
 		}
 	}
 

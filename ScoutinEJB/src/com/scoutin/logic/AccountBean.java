@@ -1,13 +1,11 @@
 package com.scoutin.logic;
 
-import java.util.Map;
-
 import javax.ejb.*;
+import javax.persistence.EntityExistsException;
 
 import com.scoutin.application.interfaces.AccountBeanRemote;
 import com.scoutin.application.exception.ApplicationException;
 import com.scoutin.entities.Account;
-import com.scoutin.entities.Album;
 
 /**
  * Session Bean implementation class AccountBean
@@ -18,7 +16,7 @@ import com.scoutin.entities.Album;
 public class AccountBean implements AccountBeanRemote {
 
 	@EJB
-	private AccountBeanService accountBeanService;
+	private AccountService accountService;
 
 	/**
 	 * Default constructor.
@@ -33,7 +31,7 @@ public class AccountBean implements AccountBeanRemote {
 	@Override
 	public Account signup(Account account) {
 		try {
-			return accountBeanService.signup(account);
+			return accountService.signup(account);
 		} catch (Throwable t) {
 			throw new ApplicationException(t.getMessage());
 		}
@@ -43,13 +41,14 @@ public class AccountBean implements AccountBeanRemote {
 	 * @see com.scoutin.logic.AccountBeanRemote#followAccount(Integer followingAccountId,Integer followedAccountId)
 	 */
 	@Override
-	public boolean followAccount(Integer followingAccountId,
-			Integer followedAccountId) {
+	public void followAccount(Integer followingAccountId,
+			Integer followedAccountId, boolean followed) {
 		// TODO Auto-generated method stub
 		try {
-			return accountBeanService.followAccount(followingAccountId, followedAccountId);
+			accountService.followAccount(followingAccountId, followedAccountId,followed);
 		} catch (Throwable t) {
-			throw new ApplicationException(t.getMessage());
+			if (t.getCause() instanceof EntityExistsException == false)
+				throw new ApplicationException(t.getMessage());
 		}
 	}
 

@@ -24,9 +24,9 @@ public class AccountFacade {
 	public static final String EMAIL = "email";
 	public static final String FACEBOOK_ID = "facebookId";
 	public static final String TWITTER_ID = "twitterId";
-	public static final String FIRSTNAME = "firstname";
-	public static final String LASTNAME = "lastname";
+	public static final String FULL_NAME = "fullName";
 	public static final String SEX = "sex";
+	public static final String STATUS = "status";
 
 	@PersistenceContext
 	protected EntityManager entityManager;
@@ -165,7 +165,7 @@ public class AccountFacade {
 	}
 
 	public void flush() {
-		LogUtil.log("flush Account instance", Level.INFO, null);
+		LogUtil.log("flushing Account instance", Level.INFO, null);
 		try {
 			entityManager.flush();
 			LogUtil.log("flush successful", Level.INFO, null);
@@ -175,15 +175,28 @@ public class AccountFacade {
 		}
 	}
 
+	public void clear() {
+		LogUtil.log("clearing Account instance", Level.INFO, null);
+		try {
+			entityManager.clear();
+			LogUtil.log("clear successful", Level.INFO, null);
+		} catch (RuntimeException re) {
+			LogUtil.log("clear failed", Level.SEVERE, re);
+			throw re;
+		}
+	}
+
 	private static final String removeByAccountIdJPQL = "delete from Account a where a.accountId in (?1)";
 
-	public void removeByAccountId(Integer accountId) {
+	public int removeByAccountId(Integer accountId) {
 		LogUtil.log("removeByAccountId", Level.INFO, null);
+		int ret = 0;
 		try {
 			Query query = entityManager.createQuery(removeByAccountIdJPQL);
 			query.setParameter(1, accountId);
-			query.executeUpdate();
+			ret = query.executeUpdate();
 			LogUtil.log("removeByAccountId successful", Level.INFO, null);
+			return ret;
 		} catch (RuntimeException re) {
 			LogUtil.log("removeByAccountId failed", Level.SEVERE, re);
 			throw re;
@@ -253,18 +266,17 @@ public class AccountFacade {
 		return findByProperty(TWITTER_ID, twitterId, rowStartIdxAndCount);
 	}
 
-	public List<Account> findByFirstname(Object firstname,
+	public List<Account> findByFullName(Object fullName,
 			int... rowStartIdxAndCount) {
-		return findByProperty(FIRSTNAME, firstname, rowStartIdxAndCount);
-	}
-
-	public List<Account> findByLastname(Object lastname,
-			int... rowStartIdxAndCount) {
-		return findByProperty(LASTNAME, lastname, rowStartIdxAndCount);
+		return findByProperty(FULL_NAME, fullName, rowStartIdxAndCount);
 	}
 
 	public List<Account> findBySex(Object sex, int... rowStartIdxAndCount) {
 		return findByProperty(SEX, sex, rowStartIdxAndCount);
+	}
+
+	public List<Account> findByStatus(Object status, int... rowStartIdxAndCount) {
+		return findByProperty(STATUS, status, rowStartIdxAndCount);
 	}
 
 	/**

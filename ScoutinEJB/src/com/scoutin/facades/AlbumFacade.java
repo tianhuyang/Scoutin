@@ -158,7 +158,7 @@ public class AlbumFacade {
 	}
 
 	public void flush() {
-		LogUtil.log("flush Album instance", Level.INFO, null);
+		LogUtil.log("flushing Album instance", Level.INFO, null);
 		try {
 			entityManager.flush();
 			LogUtil.log("flush successful", Level.INFO, null);
@@ -168,15 +168,28 @@ public class AlbumFacade {
 		}
 	}
 
+	public void clear() {
+		LogUtil.log("clearing Album instance", Level.INFO, null);
+		try {
+			entityManager.clear();
+			LogUtil.log("clear successful", Level.INFO, null);
+		} catch (RuntimeException re) {
+			LogUtil.log("clear failed", Level.SEVERE, re);
+			throw re;
+		}
+	}
+
 	private static final String removeByAlbumIdJPQL = "delete from Album a where a.albumId in (?1)";
 
-	public void removeByAlbumId(Long albumId) {
+	public int removeByAlbumId(Long albumId) {
 		LogUtil.log("removeByAlbumId", Level.INFO, null);
+		int ret = 0;
 		try {
 			Query query = entityManager.createQuery(removeByAlbumIdJPQL);
 			query.setParameter(1, albumId);
-			query.executeUpdate();
+			ret = query.executeUpdate();
 			LogUtil.log("removeByAlbumId successful", Level.INFO, null);
+			return ret;
 		} catch (RuntimeException re) {
 			LogUtil.log("removeByAlbumId failed", Level.SEVERE, re);
 			throw re;
@@ -200,7 +213,7 @@ public class AlbumFacade {
 		}
 	}
 
-	private static final String increaseFollowCountJPQL = "update ALBUM a set a.followCount = a.followCount + :count where a.albumId in (:albumId)";
+	private static final String increaseFollowCountJPQL = "update Album a set a.followCount = a.followCount + :count where a.albumId in (:albumId)";
 
 	public void increaseFollowCount(java.lang.Long albumId, int count) {
 		LogUtil.log("increaseFollowCount with albumId:" + albumId, Level.INFO,

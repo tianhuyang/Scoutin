@@ -157,7 +157,7 @@ public class NotificationFacade {
 	}
 
 	public void flush() {
-		LogUtil.log("flush Notification instance", Level.INFO, null);
+		LogUtil.log("flushing Notification instance", Level.INFO, null);
 		try {
 			entityManager.flush();
 			LogUtil.log("flush successful", Level.INFO, null);
@@ -167,15 +167,28 @@ public class NotificationFacade {
 		}
 	}
 
+	public void clear() {
+		LogUtil.log("clearing Notification instance", Level.INFO, null);
+		try {
+			entityManager.clear();
+			LogUtil.log("clear successful", Level.INFO, null);
+		} catch (RuntimeException re) {
+			LogUtil.log("clear failed", Level.SEVERE, re);
+			throw re;
+		}
+	}
+
 	private static final String removeByNotificationIdJPQL = "delete from Notification a where a.notificationId in (?1)";
 
-	public void removeByNotificationId(Long notificationId) {
+	public int removeByNotificationId(Long notificationId) {
 		LogUtil.log("removeByNotificationId", Level.INFO, null);
+		int ret = 0;
 		try {
 			Query query = entityManager.createQuery(removeByNotificationIdJPQL);
 			query.setParameter(1, notificationId);
-			query.executeUpdate();
+			ret = query.executeUpdate();
 			LogUtil.log("removeByNotificationId successful", Level.INFO, null);
+			return ret;
 		} catch (RuntimeException re) {
 			LogUtil.log("removeByNotificationId failed", Level.SEVERE, re);
 			throw re;

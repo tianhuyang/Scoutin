@@ -156,7 +156,7 @@ public class MessageFacade {
 	}
 
 	public void flush() {
-		LogUtil.log("flush Message instance", Level.INFO, null);
+		LogUtil.log("flushing Message instance", Level.INFO, null);
 		try {
 			entityManager.flush();
 			LogUtil.log("flush successful", Level.INFO, null);
@@ -166,15 +166,28 @@ public class MessageFacade {
 		}
 	}
 
+	public void clear() {
+		LogUtil.log("clearing Message instance", Level.INFO, null);
+		try {
+			entityManager.clear();
+			LogUtil.log("clear successful", Level.INFO, null);
+		} catch (RuntimeException re) {
+			LogUtil.log("clear failed", Level.SEVERE, re);
+			throw re;
+		}
+	}
+
 	private static final String removeByMessageIdJPQL = "delete from Message a where a.messageId in (?1)";
 
-	public void removeByMessageId(Long messageId) {
+	public int removeByMessageId(Long messageId) {
 		LogUtil.log("removeByMessageId", Level.INFO, null);
+		int ret = 0;
 		try {
 			Query query = entityManager.createQuery(removeByMessageIdJPQL);
 			query.setParameter(1, messageId);
-			query.executeUpdate();
+			ret = query.executeUpdate();
 			LogUtil.log("removeByMessageId successful", Level.INFO, null);
+			return ret;
 		} catch (RuntimeException re) {
 			LogUtil.log("removeByMessageId failed", Level.SEVERE, re);
 			throw re;

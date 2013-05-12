@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     5/9/2013 4:20:29 AM                          */
+/* Created on:     5/11/2013 11:45:24 PM                        */
 /*==============================================================*/
 
 
@@ -62,9 +62,9 @@ create table ACCOUNT
    TWITTER_ID           varchar(20),
    CREATED_TIME         datetime not null,
    UPDATED_TIME         datetime not null,
-   FIRSTNAME            varchar(35) not null,
-   LASTNAME             varchar(35) not null,
-   SEX                  tinyint not null,
+   FULL_NAME            varchar(70) not null,
+   SEX                  tinyint not null default 0,
+   STATUS               tinyint not null default 0,
    primary key (ACCOUNT_ID)
 );
 
@@ -111,7 +111,7 @@ create table ACCOUNT_STAT
    ACCOUNT_ID           int not null auto_increment,
    FOLLOWING_COUNT      int not null default 0,
    FOLLOWERS_COUNT      int not null default 0,
-   LAST_RECMD_VIEW      datetime,
+   LAST_NEWS_VISITED    datetime,
    UNVIEW_RECMD_COUNT   int not null default 0,
    primary key (ACCOUNT_ID)
 );
@@ -167,6 +167,7 @@ create table CARD
    CREATED_TIME         datetime not null,
    UPDATED_TIME         datetime not null,
    TAG                  text,
+   STATUS               tinyint not null default 0,
    primary key (CARD_ID)
 );
 
@@ -315,10 +316,12 @@ create table PROFILE
 /*==============================================================*/
 create table RECOMMENDATION
 (
+   RECOMMENDATION_ID    bigint not null auto_increment,
+   IS_VIEWED            tinyint not null default 0,
    ACCOUNT_ID           int not null,
    CARD_ID              bigint not null,
    CREATED_TIME         datetime not null,
-   primary key (ACCOUNT_ID, CARD_ID)
+   primary key (RECOMMENDATION_ID)
 );
 
 alter table ACCOUNT_CLUSTER add constraint FK_ACCOUNTBELONGTOCLUSTER foreign key (ACCOUNT_ID)

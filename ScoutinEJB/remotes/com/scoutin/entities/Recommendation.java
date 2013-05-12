@@ -1,12 +1,12 @@
 package com.scoutin.entities;
 
 import java.sql.Timestamp;
-import javax.persistence.AttributeOverride;
-import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import static javax.persistence.GenerationType.IDENTITY;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
@@ -21,9 +21,10 @@ public class Recommendation implements java.io.Serializable {
 
 	// Fields
 	private static final long serialVersionUID = 1L;
-	private RecommendationId id;
+	private Long recommendationId;
 	private Card card;
 	private Account account;
+	private Short isViewed = 0;
 	private Timestamp createdTime;
 
 	// Constructors
@@ -33,29 +34,28 @@ public class Recommendation implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public Recommendation(RecommendationId id, Card card, Account account,
+	public Recommendation(Card card, Account account, Short isViewed,
 			Timestamp createdTime) {
-		this.id = id;
 		this.card = card;
 		this.account = account;
+		this.isViewed = isViewed;
 		this.createdTime = createdTime;
 	}
 
 	// Property accessors
-	@EmbeddedId
-	@AttributeOverrides({
-			@AttributeOverride(name = "accountId", column = @Column(name = "ACCOUNT_ID", nullable = false)),
-			@AttributeOverride(name = "cardId", column = @Column(name = "CARD_ID", nullable = false)) })
-	public RecommendationId getId() {
-		return this.id;
+	@Id
+	@GeneratedValue(strategy = IDENTITY)
+	@Column(name = "RECOMMENDATION_ID", unique = true, nullable = false)
+	public Long getRecommendationId() {
+		return this.recommendationId;
 	}
 
-	public void setId(RecommendationId id) {
-		this.id = id;
+	public void setRecommendationId(Long recommendationId) {
+		this.recommendationId = recommendationId;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "CARD_ID", nullable = false, insertable = false, updatable = false)
+	@JoinColumn(name = "CARD_ID", nullable = false)
 	public Card getCard() {
 		return this.card;
 	}
@@ -65,13 +65,22 @@ public class Recommendation implements java.io.Serializable {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "ACCOUNT_ID", nullable = false, insertable = false, updatable = false)
+	@JoinColumn(name = "ACCOUNT_ID", nullable = false)
 	public Account getAccount() {
 		return this.account;
 	}
 
 	public void setAccount(Account account) {
 		this.account = account;
+	}
+
+	@Column(name = "IS_VIEWED", nullable = false)
+	public Short getIsViewed() {
+		return this.isViewed;
+	}
+
+	public void setIsViewed(Short isViewed) {
+		this.isViewed = isViewed;
 	}
 
 	@Column(name = "CREATED_TIME", nullable = false, updatable = false, length = 19)

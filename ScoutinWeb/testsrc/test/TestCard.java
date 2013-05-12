@@ -11,13 +11,12 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import com.scoutin.entities.Album;
 import com.scoutin.entities.Card;
 import com.scoutin.entities.CardBody;
 import com.scoutin.entities.Comment;
 import com.scoutin.exception.ScoutinException;
-import com.scoutin.logic.AccountService;
 import com.scoutin.logic.CardService;
+import com.scoutin.logic.RecommendService;
 
 public class TestCard {
 
@@ -95,10 +94,9 @@ public class TestCard {
 	public void testLikeCard(){
 		int accountId = 1;
 		Long cardId = 1L;
-
+		boolean liked = false;
 		try {
-			boolean liked = CardService.endorseCard(accountId, cardId);
-			System.out.println("liked = "+liked);
+			 CardService.endorseCard(accountId, cardId, liked);
 			Assert.assertTrue(true);
 		} catch (ScoutinException e) {
 			 e.printStackTrace();
@@ -124,19 +122,5 @@ public class TestCard {
 			Assert.assertTrue(false);
 		}
 	}
-	
-	@Test
-	public void testRecommendCard(){
-		Integer accountId = 1;
-		Long cardId = 1L;
-		Integer[] accountIds = {1, 2};
-		Long[] clusterIds = {2L, 1L, 3L};
-		try {
-			CardService.recommendCard(accountId, cardId, accountIds, clusterIds);
-			Assert.assertTrue(true);
-		} catch (ScoutinException e) {
-			e.printStackTrace();
-			Assert.assertTrue(false);
-		}
-	}
+
 }

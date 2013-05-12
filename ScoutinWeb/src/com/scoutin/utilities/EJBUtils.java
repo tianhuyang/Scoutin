@@ -9,6 +9,7 @@ import com.scoutin.application.interfaces.AccountBeanRemote;
 import com.scoutin.application.interfaces.AuthenticateBeanRemote;
 import com.scoutin.application.interfaces.CardBeanRemote;
 import com.scoutin.application.interfaces.AlbumBeanRemote;
+import com.scoutin.application.interfaces.RecommendBeanRemote;
 
 public class EJBUtils {
 	private final static String module = "ejb:Scoutin/ScoutinEJB/";
@@ -20,6 +21,8 @@ public class EJBUtils {
 			+ CardBeanRemote.class.getName();
 	private final static String albumPath= module + "AlbumBean!"
 			+ AlbumBeanRemote.class.getName();
+	private final static String recommendPath= module + "RecommendBean!"
+			+ RecommendBeanRemote.class.getName();
 	
 	static final Properties  jndiProps = new Properties();
 	static {
@@ -52,6 +55,7 @@ public class EJBUtils {
 	public static final AccountBeanRemote accountBeanRemote = (AccountBeanRemote) EJBUtils.obtainBean(accountPath);
 	public static final CardBeanRemote cardBeanRemote = (CardBeanRemote) EJBUtils.obtainBean(cardPath);
 	public static final AlbumBeanRemote albumBeanRemote = (AlbumBeanRemote) EJBUtils.obtainBean(albumPath);
+	public static final RecommendBeanRemote recommendBeanRemote = (RecommendBeanRemote) EJBUtils.obtainBean(recommendPath);
 	
 
 }

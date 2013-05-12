@@ -16,9 +16,9 @@ public interface AccountBeanRemote {
 	/*
 	 * @param followingAccountId:(Integer) must be existent
 	 * @param followedAccountId:(Integer) must be existent
-	 * @return whether the card is liked or disliked
+	 * @param followed:(boolean)
 	 * @throws ApplicationException if failed
 	 */
-	public boolean followAccount(Integer followingAccountId, Integer followedAccountId);
+	public void followAccount(Integer followingAccountId, Integer followedAccountId, boolean followed);
 	
 }

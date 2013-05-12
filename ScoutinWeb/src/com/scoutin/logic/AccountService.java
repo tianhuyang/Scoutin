@@ -64,16 +64,16 @@ public class AccountService {
 	/*
 	 * @param followingAccountId:(Integer) must be existent
 	 * @param followedAlbumId:(Integer) must be existent
+	 * @param followed:(boolean)
 	 * followingAccountId and followedAccountId shouldn't be the same 
-	 * @return whether the card is followed or not followed
      * @throws ScoutinException if failed 
 	 */
-	public static boolean followAccount(Integer followingAccountId, Integer followedAccountId) throws ScoutinException{
+	public static void followAccount(Integer followingAccountId, Integer followedAccountId, boolean followed) throws ScoutinException{
 		if (followingAccountId == null || followedAccountId == null || followedAccountId == followingAccountId){
 			throw new IllegalArgumentException("Illegal arguments in followAccount");
 		}
 		try {
-			return EJBUtils.accountBeanRemote.followAccount(followingAccountId, followedAccountId);
+			EJBUtils.accountBeanRemote.followAccount(followingAccountId, followedAccountId, followed);
 		} catch (Throwable re) {
 			throw new ScoutinException(
 					ScoutinException.Account_FollowAccount_Failure_Status,

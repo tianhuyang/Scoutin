@@ -23,14 +23,14 @@ public class AuthenticateBean implements AuthenticateBeanRemote {
 	public AuthenticateBean() {
 		// TODO Auto-generated constructor stub
 	}
-	@EJB private AuthenticateBeanService authenticateBeanService;
+	@EJB private AuthenticateService authenticateService;
 
 	/*
 	 * @see com.scoutin.logic.AuthenticateBeanRemote#authenticate(String[] args, int type)
 	 */
 	@Override
 	public Account authenticate(String[] args, int type) {
-		return authenticateBeanService.authenticate(args, type);
+		return authenticateService.authenticate(args, type);
 	}
 
 }

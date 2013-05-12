@@ -4,9 +4,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
-import org.apache.struts2.ServletActionContext;
 import org.junit.*;
 
 import com.scoutin.entities.Account;
@@ -15,7 +13,6 @@ import com.scoutin.exception.ScoutinException;
 import com.scoutin.application.interfaces.AccountConstants;
 import com.scoutin.logic.AccountService;
 import com.scoutin.logic.AlbumService;
-import com.scoutin.utilities.EJBUtils;
 
 public class TestAccount {
 
@@ -29,14 +26,13 @@ public class TestAccount {
 
 	}
 
-	
+	@Ignore
 	@Test
 	public void testSignupWithEmail() {
 		Account account = new Account();
 		account.setEmail("haocai2@usc.edu");
 		account.setPassword("password");
-		account.setFirstname("Tianhu");
-		account.setLastname("Yang");
+		account.setFullName("Tianhu Yang");
 		account.setSex((short)AccountConstants.SexType_Male);
 		try {
 			account = AccountService.signup( account);
@@ -169,13 +165,13 @@ public class TestAccount {
 
 	}
 	
-	@Ignore
+	
 	@Test
 	public void testFollowAccount() {
-		int followingAccountId = 1, followedAccountId = 53;
+		int followingAccountId = 1, followedAccountId = 2;
+		boolean followed = false;
 		try {
-			boolean followed = AccountService.followAccount(followingAccountId, followedAccountId);
-			System.out.println("FollowAccount followed: "+followed);
+			AccountService.followAccount(followingAccountId, followedAccountId, followed);
 			Assert.assertTrue(true);
 		} catch (ScoutinException e) {
 			e.printStackTrace();

@@ -24,7 +24,7 @@ public class AccountStat implements java.io.Serializable {
 	private Account account;
 	private Integer followingCount = 0;
 	private Integer followersCount = 0;
-	private Timestamp lastRecmdView;
+	private Timestamp lastNewsVisited;
 	private Integer unviewRecmdCount = 0;
 
 	// Constructors
@@ -44,12 +44,12 @@ public class AccountStat implements java.io.Serializable {
 
 	/** full constructor */
 	public AccountStat(Account account, Integer followingCount,
-			Integer followersCount, Timestamp lastRecmdView,
+			Integer followersCount, Timestamp lastNewsVisited,
 			Integer unviewRecmdCount) {
 		this.account = account;
 		this.followingCount = followingCount;
 		this.followersCount = followersCount;
-		this.lastRecmdView = lastRecmdView;
+		this.lastNewsVisited = lastNewsVisited;
 		this.unviewRecmdCount = unviewRecmdCount;
 	}
 
@@ -93,13 +93,13 @@ public class AccountStat implements java.io.Serializable {
 		this.followersCount = followersCount;
 	}
 
-	@Column(name = "LAST_RECMD_VIEW", length = 19)
-	public Timestamp getLastRecmdView() {
-		return this.lastRecmdView;
+	@Column(name = "LAST_NEWS_VISITED", length = 19)
+	public Timestamp getLastNewsVisited() {
+		return this.lastNewsVisited;
 	}
 
-	public void setLastRecmdView(Timestamp lastRecmdView) {
-		this.lastRecmdView = lastRecmdView;
+	public void setLastNewsVisited(Timestamp lastNewsVisited) {
+		this.lastNewsVisited = lastNewsVisited;
 	}
 
 	@Column(name = "UNVIEW_RECMD_COUNT", nullable = false, insertable = false, updatable = false)

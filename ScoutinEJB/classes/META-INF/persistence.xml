@@ -6,7 +6,6 @@
 		transaction-type="JTA">
 		<provider>org.apache.openjpa.persistence.PersistenceProviderImpl</provider>
 		<jta-data-source>java:jboss/datasources/ScoutinDB</jta-data-source>
-		<class>com.scoutin.entities.RecommendationId</class>
 		<class>com.scoutin.entities.Recommendation</class>
 		<class>com.scoutin.entities.Profile</class>
 		<class>com.scoutin.entities.Notification</class>

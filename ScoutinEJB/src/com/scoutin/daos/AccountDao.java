@@ -1,6 +1,7 @@
 package com.scoutin.daos;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.logging.Level;
 
 
@@ -31,19 +32,19 @@ public class AccountDao extends AccountFacade {
 		return account;
 	}
 	
-    private static final String clustersBelongToAccountHql = "select count(cluster.clusterId) from Cluster cluster where cluster.account.accountId = :accountId and cluster.clusterId in (:clusterIds)";
+    private static final String getAccountIdsInClusterJPQL = "select ac.id.accountId from AccountCluster ac where ac.cluster.account.accountId = :accountId and ac.id.clusterId in (:clusterIds)";
 	
-	public boolean clustersBelongToAccount(Long[] clusterIds, int accountId) {
-		LogUtil.log("clustersBelongToAccounting", Level.INFO, null);
+	public List<Integer> getAccountIdsInCluster(Long[] clusterIds, int accountId) {
+		LogUtil.log("getAccountIdsInClustering", Level.INFO, null);
 		try {
-			Query query = entityManager.createQuery(clustersBelongToAccountHql);
+			Query query = entityManager.createQuery(getAccountIdsInClusterJPQL);
 			query.setParameter("accountId", accountId);
 			query.setParameter("clusterIds", Arrays.asList(clusterIds));
-			long count = (Long)query.getSingleResult();
-			LogUtil.log("clustersBelongToAccount successful", Level.INFO, null);
-			return count == clusterIds.length;
+			List<Integer> results = (List<Integer>)query.getResultList();
+			LogUtil.log("getAccountIdsInCluster successful", Level.INFO, null);
+			return results;
 		} catch (RuntimeException re) {
-			LogUtil.log("clustersBelongToAccount failed", Level.SEVERE, re);
+			LogUtil.log("getAccountIdsInCluster failed", Level.SEVERE, re);
 			throw re;
 		}	
 	}

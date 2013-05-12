@@ -8,6 +8,8 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
+import javax.persistence.EntityExistsException;
+
 import com.scoutin.application.exception.ApplicationException;
 import com.scoutin.application.interfaces.CardBeanRemote;
 import com.scoutin.entities.Card;
@@ -23,7 +25,7 @@ import com.scoutin.entities.Comment;
 public class CardBean implements CardBeanRemote {
 
 	@EJB
-	private CardBeanService cardBeanService;
+	private CardService cardService;
 
 	/**
 	 * Default constructor.
@@ -40,8 +42,7 @@ public class CardBean implements CardBeanRemote {
 	public Card createCard(Integer accountId, Long[] albumIds, Card card,
 			CardBody cardBody) {
 		try {
-			card = cardBeanService.createCard(accountId, albumIds, card,
-					cardBody);
+			card = cardService.createCard(accountId, albumIds, card, cardBody);
 			if (card != null) {
 				card.setAlbums(null);
 				card.getCardBody().setAccount(null);
@@ -60,8 +61,8 @@ public class CardBean implements CardBeanRemote {
 	public Card repostCard(Integer accountId, Long[] albumIds, Card card,
 			Long cardBodyId) {
 		try {
-			card = cardBeanService.repostCard(accountId, albumIds, card,
-					cardBodyId);
+			card = cardService
+					.repostCard(accountId, albumIds, card, cardBodyId);
 			if (card != null) {
 				card.setAlbums(null);
 			}
@@ -84,7 +85,7 @@ public class CardBean implements CardBeanRemote {
 	public Comment commentCard(Integer accountId, Long cardId, Comment comment) {
 		try {
 			comment.setCommentId(null);
-			cardBeanService.commentCard(accountId, cardId, comment);
+			cardService.commentCard(accountId, cardId, comment);
 			if (comment != null) {
 				comment.setCard(null);
 				comment.setAccount(null);
@@ -105,7 +106,7 @@ public class CardBean implements CardBeanRemote {
 			Map<String, Object> cardBodyProperties) {
 		Map<String, Object> properties = null;
 		try {
-			properties = cardBeanService.editCard(accountId, cardProperties,
+			properties = cardService.editCard(accountId, cardProperties,
 					cardBodyProperties);
 		} catch (Throwable t) {
 			throw new ApplicationException(t.getMessage());
@@ -128,27 +129,16 @@ public class CardBean implements CardBeanRemote {
 
 	/*
 	 * @see com.scoutin.logic.CardBeanRemote#endorseCard(Integer accountId, Long
-	 * cardId)
+	 * cardId, boolean endorsed)
 	 */
 	@Override
-	public boolean endorseCard(Integer accountId, Long cardId) {
+	public void endorseCard(Integer accountId, Long cardId, boolean endorsed) {
 		try {
-			return cardBeanService.endorseCard(accountId, cardId);
+			cardService.endorseCard(accountId, cardId, endorsed);
 		} catch (Throwable t) {
-			throw new ApplicationException(t.getMessage());
+			if (t.getCause() instanceof EntityExistsException == false)
+				throw new ApplicationException(t.getMessage());
 		}
-	}
-
-	/*
-	 * @see com.scoutin.logic.CardBeanRemote#recommendCard(Integer accountId, Long cardId, Integer[] accountIds, Long[] clusterIds)
-	 */
-	@Override
-	public void recommendCard(Integer accountId, Long cardId, Integer[] accountIds, Long[] clusterIds) {
-		try {
-			cardBeanService.recommendCard(accountId, cardId, accountIds, clusterIds);
-		} catch (Throwable t) {
-			throw new ApplicationException(t.getMessage());
-		}		
 	}
 
 }

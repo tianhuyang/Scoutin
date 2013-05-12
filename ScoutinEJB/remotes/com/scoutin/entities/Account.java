@@ -36,9 +36,9 @@ public class Account implements java.io.Serializable {
 	private String twitterId;
 	private Timestamp createdTime;
 	private Timestamp updatedTime;
-	private String firstname;
-	private String lastname;
+	private String fullName;
 	private Short sex;
+	private Short status = 0;
 	private Set<Comment> comments = new HashSet<Comment>(0);
 	private Set<Album> albums = new HashSet<Album>(0);
 	private Set<Recommendation> recommendations = new HashSet<Recommendation>(0);
@@ -60,23 +60,22 @@ public class Account implements java.io.Serializable {
 
 	/** minimal constructor */
 	public Account(String password, Timestamp createdTime,
-			Timestamp updatedTime, String firstname, String lastname, Short sex) {
+			Timestamp updatedTime, String fullName, Short sex, Short status) {
 		this.password = password;
 		this.createdTime = createdTime;
 		this.updatedTime = updatedTime;
-		this.firstname = firstname;
-		this.lastname = lastname;
+		this.fullName = fullName;
 		this.sex = sex;
+		this.status = status;
 	}
 
 	/** full constructor */
 	public Account(String password, String email, String facebookId,
 			String twitterId, Timestamp createdTime, Timestamp updatedTime,
-			String firstname, String lastname, Short sex,
-			Set<Comment> comments, Set<Album> albums,
-			Set<Recommendation> recommendations, Set<CardRepost> cardReposts,
-			AccountStat accountStat, Profile profile,
-			Set<Follower> followersForFollowingId,
+			String fullName, Short sex, Short status, Set<Comment> comments,
+			Set<Album> albums, Set<Recommendation> recommendations,
+			Set<CardRepost> cardReposts, AccountStat accountStat,
+			Profile profile, Set<Follower> followersForFollowingId,
 			Set<CardEndorse> cardEndorses, Set<AccountCluster> accountClusters,
 			Set<Cluster> clusters, Set<CardBody> cardBodies,
 			Set<Follower> followersForFollowedId) {
@@ -86,9 +85,9 @@ public class Account implements java.io.Serializable {
 		this.twitterId = twitterId;
 		this.createdTime = createdTime;
 		this.updatedTime = updatedTime;
-		this.firstname = firstname;
-		this.lastname = lastname;
+		this.fullName = fullName;
 		this.sex = sex;
+		this.status = status;
 		this.comments = comments;
 		this.albums = albums;
 		this.recommendations = recommendations;
@@ -169,22 +168,13 @@ public class Account implements java.io.Serializable {
 		this.updatedTime = updatedTime;
 	}
 
-	@Column(name = "FIRSTNAME", nullable = false, length = 35)
-	public String getFirstname() {
-		return this.firstname;
+	@Column(name = "FULL_NAME", nullable = false, length = 70)
+	public String getFullName() {
+		return this.fullName;
 	}
 
-	public void setFirstname(String firstname) {
-		this.firstname = firstname;
-	}
-
-	@Column(name = "LASTNAME", nullable = false, length = 35)
-	public String getLastname() {
-		return this.lastname;
-	}
-
-	public void setLastname(String lastname) {
-		this.lastname = lastname;
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
 	}
 
 	@Column(name = "SEX", nullable = false)
@@ -194,6 +184,15 @@ public class Account implements java.io.Serializable {
 
 	public void setSex(Short sex) {
 		this.sex = sex;
+	}
+
+	@Column(name = "STATUS", nullable = false)
+	public Short getStatus() {
+		return this.status;
+	}
+
+	public void setStatus(Short status) {
+		this.status = status;
 	}
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "account")

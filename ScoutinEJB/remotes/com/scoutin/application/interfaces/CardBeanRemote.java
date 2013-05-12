@@ -48,17 +48,9 @@ public interface CardBeanRemote {
 	/*
 	 * @param accountId:(Integer) must be existent
 	 * @param cardId:(Long) must be existent
-	 * @return whether the card is endorsed or unendorsed
+	 * @param endorsed:(boolean)
 	 * @throws ApplicationException if failed
 	 */
-	public boolean endorseCard(Integer accountId, Long cardId);
-	/*
-	 * @param accountId:(Integer) must be existent
-	 * @param cardId:(Long) must be existent and belongs to accountId
-	 * @param accountIds:(Integer[]) must be existent or zero-length
-	 * @param clusterIds:(Long[]) must be existent or zero-length
-	 * accountIds and clusterIds can't be both zero-long
-	 * @throws ApplicationException if failed
-	 */
-	public void recommendCard(Integer accountId, Long cardId, Integer[] accountIds, Long[] clusterIds);
+	public void endorseCard(Integer accountId, Long cardId, boolean endorsed);
+	
 }
