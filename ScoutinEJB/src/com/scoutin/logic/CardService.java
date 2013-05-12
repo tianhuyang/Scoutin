@@ -6,9 +6,6 @@ import java.util.TreeMap;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.persistence.EntityExistsException;
-import javax.persistence.PersistenceException;
-
 import org.apache.commons.beanutils.BeanUtils;
 
 import com.scoutin.daos.AccountDao;
