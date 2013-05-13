@@ -31,16 +31,16 @@ public class AlbumService {
 	/*
 	 * @param followingAccountId:(Integer) must be existent
 	 * @param followedAlbumId:(Long) must be existent
-	 * @return whether the card is followed or not followed
+	 * @return blocked:(boolean)
 	 * @throws ApplicationException if failed
 	 * followingAccountId must follow the account which followedAlbumId belongs to
 	 */
-	public static boolean blockAlbum(Integer followingAccountId, Long followedAlbumId)throws ScoutinException{
+	public static void blockAlbum(Integer followingAccountId, Long followedAlbumId, boolean blocked)throws ScoutinException{
 		if (followingAccountId == null || followedAlbumId == null){
 			throw new IllegalArgumentException("null arguments");
 		}
 		try {
-			return EJBUtils.albumBeanRemote.blockAlbum(followingAccountId, followedAlbumId);
+			EJBUtils.albumBeanRemote.blockAlbum(followingAccountId, followedAlbumId, blocked);
 		} catch (Throwable re) {
 			throw new ScoutinException(
 					ScoutinException.Album_BlockAlbum_Failure_Status,

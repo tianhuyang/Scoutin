@@ -28,20 +28,16 @@ public class AlbumService {
 		return album;
 	}
 	
-	public boolean followAlbum(Integer followingAccountId, Long followedAlbumId) {
-		// TODO Auto-generated method stub
+	public void blockAlbum(Integer followingAccountId, Long followedAlbumId, boolean blocked) {
 		Follower follower = albumDao.getFollower(followingAccountId, followedAlbumId);
 		BlockedAlbumId blockedalbumId = new BlockedAlbumId(followedAlbumId,follower.getId().getFollowedId(),follower.getId().getFollowingId());
-		BlockedAlbum blockedalbum = blockedAlbumDao.findById(blockedalbumId);
-		if(blockedalbum == null){
-			blockedalbum = new BlockedAlbum();
+		
+		if (blocked) {
+			BlockedAlbum blockedalbum = new BlockedAlbum();
 			blockedalbum.setId(blockedalbumId);
 			blockedAlbumDao.save(blockedalbum);
-			return true;
-		}
-		else{
+		} else {
 			blockedAlbumDao.removeById(blockedalbumId);
-			return false;
 		}
 		
 	}

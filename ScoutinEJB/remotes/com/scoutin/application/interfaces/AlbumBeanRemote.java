@@ -18,9 +18,9 @@ public interface AlbumBeanRemote {
 	/*
 	 * @param followingAccountId:(Integer) must be existent
 	 * @param followedAlbumId:(Long) must be existent
-	 * @return whether the card is followed or not followed
+	 * @param blocked:(boolean)
 	 * @throws ApplicationException if failed
 	 * followingAccountId must follow the account which followedAlbumId belongs to
 	 */
-	public boolean blockAlbum(Integer followingAccountId, Long followedAlbumId);
+	public void blockAlbum(Integer followingAccountId, Long followedAlbumId, boolean blocked);
 }

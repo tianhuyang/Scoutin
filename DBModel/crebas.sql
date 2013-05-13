@@ -1,8 +1,12 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     5/11/2013 11:45:24 PM                        */
+/* Created on:     5/12/2013 6:43:39 PM                         */
 /*==============================================================*/
 
+
+drop index CREATED_TIME_INDEX on ACCOUNT;
+
+drop index UPDATED_TIME_INDEX on ACCOUNT;
 
 drop index TWITTER_ID_UNIQUE on ACCOUNT;
 
@@ -12,17 +16,33 @@ drop index EMAIL_UNIQUE on ACCOUNT;
 
 drop table if exists ACCOUNT;
 
+drop index CREATED_TIME_INDEX on ACCOUNT_CLUSTER;
+
 drop table if exists ACCOUNT_CLUSTER;
 
 drop table if exists ACCOUNT_STAT;
+
+drop index CREATED_TIME_INDEX on ALBUM;
+
+drop index UPDATED_TIME_INDEX on ALBUM;
 
 drop table if exists ALBUM;
 
 drop table if exists ALBUM_CARD;
 
+drop index CREATED_TIME_INDEX on BLOCKED_ALBUM;
+
 drop table if exists BLOCKED_ALBUM;
 
+drop index CREATED_TIME_INDEX on CARD;
+
+drop index UPDATED_TIME_INDEX on CARD;
+
 drop table if exists CARD;
+
+drop index CREATED_TIME_INDEX on CARD_BODY;
+
+drop index UPDATED_TIME_INDEX on CARD_BODY;
 
 drop index CARDBODYCREATEDBYACCOUNT_FK on CARD_BODY;
 
@@ -30,15 +50,27 @@ drop table if exists CARD_BODY;
 
 drop table if exists CARD_CATEGORY;
 
+drop index CREATED_TIME_INDEX on CARD_ENDORSE;
+
 drop table if exists CARD_ENDORSE;
 
 drop table if exists CARD_REPOST;
 
 drop table if exists CATEGORY;
 
+drop index CREATED_TIME_INDEX on CLUSTER;
+
+drop index UPDATED_TIME_INDEX on CLUSTER;
+
 drop table if exists CLUSTER;
 
+drop index CREATED_TIME_INDEX on COMMENT;
+
+drop index UPDATED_TIME_INDEX on COMMENT;
+
 drop table if exists COMMENT;
+
+drop index CREATED_TIME_INDEX on FOLLOWER;
 
 drop table if exists FOLLOWER;
 
@@ -46,7 +78,13 @@ drop table if exists MESSAGE;
 
 drop table if exists NOTIFICATION;
 
+drop index CREATED_TIME_INDEX on PROFILE;
+
+drop index UPDATED_TIME_INDEX on PROFILE;
+
 drop table if exists PROFILE;
+
+drop index CREATED_TIME_INDEX on RECOMMENDATION;
 
 drop table if exists RECOMMENDATION;
 
@@ -93,6 +131,22 @@ create unique index TWITTER_ID_UNIQUE on ACCOUNT
 );
 
 /*==============================================================*/
+/* Index: UPDATED_TIME_INDEX                                    */
+/*==============================================================*/
+create index UPDATED_TIME_INDEX on ACCOUNT
+(
+   UPDATED_TIME
+);
+
+/*==============================================================*/
+/* Index: CREATED_TIME_INDEX                                    */
+/*==============================================================*/
+create index CREATED_TIME_INDEX on ACCOUNT
+(
+   CREATED_TIME
+);
+
+/*==============================================================*/
 /* Table: ACCOUNT_CLUSTER                                       */
 /*==============================================================*/
 create table ACCOUNT_CLUSTER
@@ -101,6 +155,14 @@ create table ACCOUNT_CLUSTER
    ACCOUNT_ID           int not null,
    CREATED_TIME         datetime not null,
    primary key (CLUSTER_ID, ACCOUNT_ID)
+);
+
+/*==============================================================*/
+/* Index: CREATED_TIME_INDEX                                    */
+/*==============================================================*/
+create index CREATED_TIME_INDEX on ACCOUNT_CLUSTER
+(
+   CREATED_TIME
 );
 
 /*==============================================================*/
@@ -132,6 +194,22 @@ create table ALBUM
 );
 
 /*==============================================================*/
+/* Index: UPDATED_TIME_INDEX                                    */
+/*==============================================================*/
+create index UPDATED_TIME_INDEX on ALBUM
+(
+   UPDATED_TIME
+);
+
+/*==============================================================*/
+/* Index: CREATED_TIME_INDEX                                    */
+/*==============================================================*/
+create index CREATED_TIME_INDEX on ALBUM
+(
+   CREATED_TIME
+);
+
+/*==============================================================*/
 /* Table: ALBUM_CARD                                            */
 /*==============================================================*/
 create table ALBUM_CARD
@@ -154,6 +232,14 @@ create table BLOCKED_ALBUM
 );
 
 /*==============================================================*/
+/* Index: CREATED_TIME_INDEX                                    */
+/*==============================================================*/
+create index CREATED_TIME_INDEX on BLOCKED_ALBUM
+(
+   CREATED_TIME
+);
+
+/*==============================================================*/
 /* Table: CARD                                                  */
 /*==============================================================*/
 create table CARD
@@ -169,6 +255,22 @@ create table CARD
    TAG                  text,
    STATUS               tinyint not null default 0,
    primary key (CARD_ID)
+);
+
+/*==============================================================*/
+/* Index: UPDATED_TIME_INDEX                                    */
+/*==============================================================*/
+create index UPDATED_TIME_INDEX on CARD
+(
+   UPDATED_TIME
+);
+
+/*==============================================================*/
+/* Index: CREATED_TIME_INDEX                                    */
+/*==============================================================*/
+create index CREATED_TIME_INDEX on CARD
+(
+   CREATED_TIME
 );
 
 /*==============================================================*/
@@ -200,6 +302,22 @@ create index CARDBODYCREATEDBYACCOUNT_FK on CARD_BODY
 );
 
 /*==============================================================*/
+/* Index: UPDATED_TIME_INDEX                                    */
+/*==============================================================*/
+create index UPDATED_TIME_INDEX on CARD_BODY
+(
+   UPDATED_TIME
+);
+
+/*==============================================================*/
+/* Index: CREATED_TIME_INDEX                                    */
+/*==============================================================*/
+create index CREATED_TIME_INDEX on CARD_BODY
+(
+   CREATED_TIME
+);
+
+/*==============================================================*/
 /* Table: CARD_CATEGORY                                         */
 /*==============================================================*/
 create table CARD_CATEGORY
@@ -218,6 +336,14 @@ create table CARD_ENDORSE
    CARD_ID              bigint not null,
    CREATED_TIME         datetime not null,
    primary key (ACCOUNT_ID, CARD_ID)
+);
+
+/*==============================================================*/
+/* Index: CREATED_TIME_INDEX                                    */
+/*==============================================================*/
+create index CREATED_TIME_INDEX on CARD_ENDORSE
+(
+   CREATED_TIME
 );
 
 /*==============================================================*/
@@ -255,6 +381,22 @@ create table CLUSTER
 );
 
 /*==============================================================*/
+/* Index: UPDATED_TIME_INDEX                                    */
+/*==============================================================*/
+create index UPDATED_TIME_INDEX on CLUSTER
+(
+   UPDATED_TIME
+);
+
+/*==============================================================*/
+/* Index: CREATED_TIME_INDEX                                    */
+/*==============================================================*/
+create index CREATED_TIME_INDEX on CLUSTER
+(
+   CREATED_TIME
+);
+
+/*==============================================================*/
 /* Table: COMMENT                                               */
 /*==============================================================*/
 create table COMMENT
@@ -269,6 +411,22 @@ create table COMMENT
 );
 
 /*==============================================================*/
+/* Index: UPDATED_TIME_INDEX                                    */
+/*==============================================================*/
+create index UPDATED_TIME_INDEX on COMMENT
+(
+   UPDATED_TIME
+);
+
+/*==============================================================*/
+/* Index: CREATED_TIME_INDEX                                    */
+/*==============================================================*/
+create index CREATED_TIME_INDEX on COMMENT
+(
+   CREATED_TIME
+);
+
+/*==============================================================*/
 /* Table: FOLLOWER                                              */
 /*==============================================================*/
 create table FOLLOWER
@@ -277,6 +435,14 @@ create table FOLLOWER
    FOLLOWING_ID         int not null,
    CREATED_TIME         datetime not null,
    primary key (FOLLOWED_ID, FOLLOWING_ID)
+);
+
+/*==============================================================*/
+/* Index: CREATED_TIME_INDEX                                    */
+/*==============================================================*/
+create index CREATED_TIME_INDEX on FOLLOWER
+(
+   CREATED_TIME
 );
 
 /*==============================================================*/
@@ -312,6 +478,22 @@ create table PROFILE
 );
 
 /*==============================================================*/
+/* Index: UPDATED_TIME_INDEX                                    */
+/*==============================================================*/
+create index UPDATED_TIME_INDEX on PROFILE
+(
+   UPDATED_TIME
+);
+
+/*==============================================================*/
+/* Index: CREATED_TIME_INDEX                                    */
+/*==============================================================*/
+create index CREATED_TIME_INDEX on PROFILE
+(
+   CREATED_TIME
+);
+
+/*==============================================================*/
 /* Table: RECOMMENDATION                                        */
 /*==============================================================*/
 create table RECOMMENDATION
@@ -322,6 +504,14 @@ create table RECOMMENDATION
    CARD_ID              bigint not null,
    CREATED_TIME         datetime not null,
    primary key (RECOMMENDATION_ID)
+);
+
+/*==============================================================*/
+/* Index: CREATED_TIME_INDEX                                    */
+/*==============================================================*/
+create index CREATED_TIME_INDEX on RECOMMENDATION
+(
+   CREATED_TIME
 );
 
 alter table ACCOUNT_CLUSTER add constraint FK_ACCOUNTBELONGTOCLUSTER foreign key (ACCOUNT_ID)

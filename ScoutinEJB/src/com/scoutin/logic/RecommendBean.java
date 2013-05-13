@@ -1,5 +1,7 @@
 package com.scoutin.logic;
 
+import java.util.List;
+
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
@@ -15,7 +17,7 @@ public class RecommendBean implements RecommendBeanRemote {
 	private RecommendService recommendService;
 	
 	/*
-	 * @see com.scoutin.logic.RecommendationBeanRemote#recommendCard(Integer accountId, Long cardId, Integer[] accountIds, Long[] clusterIds)
+	 * @see com.scoutin.logic.RecommendBeanRemote#recommendCard(Integer accountId, Long cardId, Integer[] accountIds, Long[] clusterIds)
 	 */
 	@Override
 	public void recommendCard(Integer accountId, Long cardId, Integer[] accountIds, Long[] clusterIds) {
@@ -26,17 +28,23 @@ public class RecommendBean implements RecommendBeanRemote {
 		}		
 	}
 
+	/*
+	 * @see com.scoutin.logic.RecommendBeanRemote#getNewsCount(Integer accountId)
+	 */
 	@Override
-	public int getNewsCount(Integer accountId) {
-		// TODO Auto-generated method stub
-		return 0;
+	public long getNewsCount(Integer accountId) {
+		return recommendService.getNewsCount(accountId);
 	}
 
+	/*
+	 * @see com.scoutin.logic.RecommendBeanRemote#getNews(Integer accountId, long date, boolean forward,int limit)
+	 */
 	@Override
-	public Card[] getNews(Integer accountId, String date, boolean forward,
+	public List<Card> getNews(Integer accountId, long date, boolean forward,
 			int limit) {
-		// TODO Auto-generated method stub
-		return null;
+		if(limit > MaxNewsLimit)
+			limit = MaxNewsLimit;
+		return recommendService.getNews(accountId, date, forward, limit);
 	}
 
 	@Override
@@ -46,13 +54,13 @@ public class RecommendBean implements RecommendBeanRemote {
 	}
 
 	@Override
-	public int getRecommendationsCount(Integer accountId) {
+	public long getRecommendationsCount(Integer accountId) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public Recommendation[] getRecommendations(Integer accountId, String date,
+	public List<Recommendation> getRecommendations(Integer accountId, long date,
 			boolean forward, Boolean viewed, int limit) {
 		// TODO Auto-generated method stub
 		return null;

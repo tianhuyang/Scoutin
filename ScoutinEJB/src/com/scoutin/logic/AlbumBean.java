@@ -4,6 +4,7 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
+import javax.persistence.EntityExistsException;
 
 import com.scoutin.application.exception.ApplicationException;
 import com.scoutin.application.interfaces.AlbumBeanRemote;
@@ -35,11 +36,12 @@ public class AlbumBean implements AlbumBeanRemote {
 	}
 
 	@Override
-	public boolean blockAlbum(Integer followingAccountId, Long followedAlbumId) {
+	public void blockAlbum(Integer followingAccountId, Long followedAlbumId, boolean blocked) {
 		try {
-			return albumService.followAlbum(followingAccountId, followedAlbumId);
+			albumService.blockAlbum(followingAccountId, followedAlbumId, blocked);
 		} catch (Throwable t) {
-			throw new ApplicationException(t.getMessage());
+			if (t.getCause() instanceof EntityExistsException == false)
+				throw new ApplicationException(t.getMessage());
 		}
 	}
 

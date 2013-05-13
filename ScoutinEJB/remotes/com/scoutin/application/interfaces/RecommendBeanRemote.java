@@ -1,5 +1,7 @@
 package com.scoutin.application.interfaces;
 
+import java.util.List;
+
 import javax.ejb.Remote;
 
 import com.scoutin.entities.Card;
@@ -25,18 +27,18 @@ public interface RecommendBeanRemote {
 	 * @return unvisited news count
 	 * @throws ApplicationException if failed
 	 */
-	public int getNewsCount(Integer accountId);
+	public long getNewsCount(Integer accountId);
 	
 	/*
 	 * @param accountId:(Integer) must be existent
-	 * @param date:(String) can't be null
+	 * @param date:(long)
 	 * @param forward:(boolean)
 	 * @param limit:(limit) must greater than 0 and less than MaxNewsLimit
 	 * @return unvisited cards, cards.cardBody
 	 * @throws ApplicationException if failed
 	 * may have same-date problems(too less limit)
 	 */
-	public Card[] getNews(Integer accountId, String date, boolean forward, int limit);
+	public List<Card> getNews(Integer accountId, long date, boolean forward, int limit);
 	
 	/*
 	 * @param accountId:(Integer) must be existent
@@ -49,11 +51,11 @@ public interface RecommendBeanRemote {
 	 * @return unvisited recommendations count
 	 * @throws ApplicationException if failed
 	 */
-	public int getRecommendationsCount(Integer accountId);
+	public long getRecommendationsCount(Integer accountId);
 	
 	/*
 	 * @param accountId:(Integer) must be existent
-	 * @param date:(String) can't be null
+	 * @param date:(long)
 	 * @param forward:(boolean)
 	 * @param viewed:(Boolean) may be null
 	 * @param limit:(limit) must greater than 0 and less than MaxRecommendationsLimit
@@ -61,7 +63,7 @@ public interface RecommendBeanRemote {
 	 * @throws ApplicationException if failed
 	 * may have same-date problems(too less limit)
 	 */
-	public Recommendation[] getRecommendations(Integer accountId, String date, boolean forward, Boolean viewed, int limit);
+	public List<Recommendation> getRecommendations(Integer accountId, long date, boolean forward, Boolean viewed, int limit);
 	
 
 	/*

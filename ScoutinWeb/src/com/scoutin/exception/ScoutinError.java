@@ -50,8 +50,7 @@ public interface ScoutinError {
 	public static final String Card_EditCard_Input_Message = "error.card.editcard.input";
 	public static final int Card_EditCard_Failure_Status = 20009;
 	public static final String Card_EditCard_Failure_Message = "error.card.editcard.failure";
-	public static final int Card_RecommendCard_Failure_Status = 20010;
-	public static final String Card_RecommendCard_Failure_Message = "error.card.recommendcard.failure";
+	
 	//public static final int Card_EditCard_Modified_Status = 20010;
 	//public static final String Card_EditCard_Modified_Message = "error.card.modified.failure";
 
@@ -82,5 +81,18 @@ public interface ScoutinError {
 	public static final String Image_Upload_Failure_Message = "error.image.upload.failure";
 	/* 
 	 * image ends
+	 */
+	
+	/* 
+	 * recommend begins
+	 */
+	public static final int Recommend_RecommendCard_Failure_Status = 50000;
+	public static final String Recommend_RecommendCard_Failure_Message = "error.recommend.recommendcard.failure";
+	public static final int Recommend_GetNewsCount_Failure_Status = 50001;
+	public static final String Recommend_GetNewsCount_Failure_Message = "error.recommend.getnews.failure";
+	public static final int Recommend_GetNews_Failure_Status = 50002;
+	public static final String Recommend_GetNews_Failure_Message = "error.recommend.getnews.failure";
+	/* 
+	 * recommend begins
 	 */
 }

@@ -154,9 +154,9 @@ public class TestAccount {
 	public void testBlockAlbum() {
 		int followingAccountId = 1;
 		long followedAlbumId = 2L;
+		boolean blocked = true;
 		try {
-			boolean followed = AlbumService.blockAlbum(followingAccountId, followedAlbumId);
-			System.out.println("BlockAlbum followed: "+followed);
+			AlbumService.blockAlbum(followingAccountId, followedAlbumId, blocked);
 			Assert.assertTrue(true);
 		} catch (ScoutinException e) {
 			e.printStackTrace();
